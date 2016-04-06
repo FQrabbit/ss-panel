@@ -4,6 +4,7 @@
         <h1 class="header center">{$config["appName"]}</h1>
         <div class="row center">
             <h5 class="header col s12 light">轻松科学上网   保护个人隐私</h5>
+            {$homeIndexMsg}
         </div>
         {if $user->isLogin}
             <div class="row center">

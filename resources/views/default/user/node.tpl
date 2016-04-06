@@ -20,7 +20,7 @@
                     <p>请勿在任何地方公开节点地址！</p>
                     <p>流量比例为0.5即使用1000MB按照500MB流量记录记录结算.</p>
                     <p>以下节点均已支持auth_sha1协议，同时兼容原协议。并且支持开启tls1.0_session_auth插件。<a href="https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md" target="_blank">欲了解协议插件相关文档，请点此。</a></p>
-					{$msg}
+		    <p>{$msg}</p>
                 </div>
             </div>
         </div>

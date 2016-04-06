@@ -31,6 +31,7 @@
                                     <li>流量不会重置，可以通过签到获取流量。</li> 
                                     <li>免费用户每次签到可获得10-100M流量，捐助用户每次签到可获得300-400M流量。</li>
                                     <li>自动清理三周不签到的免费用户(不包含付费用户与捐助用户)</li>
+				    <li>{$msg}</li>
                                 </ol>
                                 <p><button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show()>捐助</button></p>
                             </div><!-- /.box-body -->
