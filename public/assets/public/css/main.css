@@ -1,0 +1,87 @@
+.main-sidebar{
+	background: #121213 !important;
+}
+.main-header .logo{
+	background-color: #121213 !important;
+	font-family: Arial;
+}
+.main-header .navbar{
+	background-color: #121213 !important;
+}
+.skin-blue .wrapper{
+	background-color: #121213 !important;
+}
+
+#join {
+    display: block;
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15);
+    transition:all .3s ease-out;
+    border:none;
+    background-color: #CE5454;
+    color: white;
+    border-radius: 2px;
+    font-family: 'Microsoft Yahei';
+    font-size: 15px;
+    padding:5px;
+    margin-left: 10px;
+    text-align: center;
+}
+#join:hover{
+    background:rgb(199, 44, 44) !important;
+}
+
+.callout.callout-warning{
+	background-color: #376938 !important;
+	border-color: #444;
+}
+
+.register-logo{
+    background: black;
+    font-family: cursive;
+    color: white;
+    opacity: 0.8;
+    -moz-box-shadow: 0 0 20px black; 
+    -webkit-box-shadow: 0 0 20px black; 
+    box-shadow: 0 0 20px black;
+}
+
+.buyt{
+    font-family: Microsoft Yahei;
+    background-color: white;
+}
+.center{
+    text-align: center;
+    margin: 0 auto;
+}
+
+input.w3-btn.w3-xxlarge.w3-center.w3-teal{
+    width: 98%;
+    margin-bottom: 5px;
+}
+
+.main-footer{
+    background: rgba(0, 0, 0, 0.15);
+    color: #ccc;
+}
+*{
+    font-family: "Microsoft Yahei";
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: "Microsoft Yahei" !important;
+}
+code, kbd, pre, samp {
+    font-family: "Yahei Consolas Hybrid" !important;
+}
+.margin{
+    margin:2px !important;
+}
+
+.card{
+    -webkit-transition: all .1s ease-out;
+    -o-transition: all .1s ease-out;
+    transition: all .1s ease-out;
+}
+
+.card:hover{
+    box-shadow: 0 16px 24px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21) !important;
+}

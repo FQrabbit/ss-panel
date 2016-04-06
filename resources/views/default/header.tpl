@@ -8,13 +8,41 @@
     <link href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet">
     <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" href="/assets/public/css/indexpage.css">
+    <script src="/assets/public/js/jQuery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.toggle').mouseover(function(){
+                $(this).children('ul').show();
+            })
+            $('.toggle').mouseout(function(){
+                $(this).children('ul').hide();
+            })
+        });
+    </script>
 </head>
 <body>
-<nav class="light-blue lighten-1" role="navigation">
+<nav class=" lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">{$config["appName"]}</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/">首页</a></li>
-            <li><a href="http://shadowsocks.org/en/download/clients.html">客户端下载</a></li>
+            <li class="toggle">
+                <a href=#>客户端下载</a>
+                
+                <ul class="content" style="display:none">
+                    <li><a href="http://pan.baidu.com/s/1dEu2XhB" target="_blank">Windows客户端</a></li>
+                    <li><a href="http://pan.baidu.com/s/1mg4baXE" target="_blank">Android客户端</a></li>
+                    <li><a href="http://pan.baidu.com/s/1bnVb4D5">Mac客户端</a>
+                    <li class="toggle">
+                        <a href="#" class="toggle">iOS客户端</a>
+                        <ul class="content" style="display:none" id="iosul">
+                            <li><a href="http://apt.thebigboss.org/onepackage.php?bundleid=com.linusyang.shadowsocks">已越狱</a></li>
+                            <li><a href="https://itunes.apple.com/tc/app/shadowsocks/id665729974?mt=8">未越狱</a></li>
+                        </ul>
+                    </li>
+                    </li>
+                </ul>
+            </li>
             <li><a href="/code">邀请码</a></li>
             {if $user->isLogin}
                 <li><a href="/user">用户中心</a></li>

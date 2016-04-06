@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\InviteCode;
-use App\Services\Auth;
+use App\Services\Auth, App\Models\User;
 use App\Models\Node, App\Models\TrafficLog, App\Models\CheckInLog;
 use App\Services\Config,App\Services\DbConfig;
 use App\Utils\Hash, App\Utils\Tools;
@@ -41,7 +41,7 @@ class UserController extends BaseController
     {
         $msg = DbConfig::get('user-node');
         $user = Auth::getUser();
-        $nodes = Node::where('type', 1)->orderBy('sort')->get();
+        $nodes = Node::where('type', ">=", 0)->orderBy('sort')->get();
         return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg',$msg)->display('user/node.tpl');
     }
 
@@ -112,7 +112,34 @@ class UserController extends BaseController
 
     public function sys()
     {
-        return $this->view()->assign('ana', "")->display('user/sys.tpl');
+        $users = User::select("*")->get();
+        $u = User::sum("u");
+        $d = User::sum("d");
+        $usedTransfer = Tools::flowAutoShow($u + $d);
+        $allUserCount = count($users);
+        $paidUserCount = User::where("plan", "=", "B")->count();
+        $activeUserCount = User::where("d", "!=", 0)->count();
+        $checkinCount = User::where("last_check_in_time", ">", (time()-24*3600))->count();
+        $donateUserCount = User::where("ref_by", "=", 3)->count();
+        $ana = array('allUserCount' => $allUserCount, 'paidUserCount' => $paidUserCount, 'donateUserCount' => $donateUserCount, 'usedTransfer' => $usedTransfer, 'activeUserCount' => $activeUserCount, "checkinCount" => $checkinCount);
+        return $this->view()->assign('ana', $ana)->assign('users', $users)->display('user/sys.tpl');
+    }
+
+    public function purchase()
+    {
+        $user = Auth::getUser();
+        $menu1 = array(
+                ["name"=>"1元试玩套餐","transfer"=>"2G","price"=>1,"body"=>"基础","time"=>"3天"],
+                ["name"=>"5元基础套餐","transfer"=>"15G","price"=>5,"body"=>"基础","time"=>"永久"],
+                ["name"=>"10元标准套餐","transfer"=>"35G","price"=>10,"body"=>"标准","time"=>"永久"],
+                ["name"=>"20元高级套餐","transfer"=>"75G","price"=>20,"body"=>"高级","time"=>"永久"]
+            );
+        $menu2 = array(
+            ["name"=>"10元包月无限流量套餐","price"=>10,"body"=>"包月","time"=>"一月"],
+            ["name"=>"25元包季无限流量套餐","price"=>25,"body"=>"包季","time"=>"一季"],
+            ["name"=>"80元包年无限流量套餐","price"=>80,"body"=>"包年","time"=>"一年"]
+        );
+        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->display('user/purchase.tpl');
     }
 
     public function updatePassword($request, $response, $args)
@@ -174,17 +201,27 @@ class UserController extends BaseController
 
     public function doCheckIn($request, $response, $args)
     {
+        $secret = '6LcptxMTAAAAAKsSEmhau0bDIdjgWBXUelo0TDZS';
+        $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+        $resp = $recaptcha->verify($_POST['recaptcharesponse'], $_SERVER['REMOTE_ADDR']);
         if (!$this->user->isAbleToCheckin()) {
             $res['msg'] = "您似乎已经签到过了...";
             $res['ret'] = 1;
             return $response->getBody()->write(json_encode($res));
+        }elseif (!$resp->isSuccess() || 1) {
+            $res['msg'] = "人机身份验证失败，请重新验证";
+        }else{
+            if ($this->user->ref_by == 3) {
+                $traffic = rand(300, 400);
+            }else{
+                $traffic = rand(Config::get('checkinMin'), Config::get('checkinMax'));
+            }
+            $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic);
+            $this->user->last_check_in_time = time();
+            $this->user->save();
+            $res['msg'] = sprintf("获得了 %u MB流量.", $traffic);
+            $res['ret'] = 1;
         }
-        $traffic = rand(Config::get('checkinMin'), Config::get('checkinMax'));
-        $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic);
-        $this->user->last_check_in_time = time();
-        $this->user->save();
-        $res['msg'] = sprintf("获得了 %u MB流量.", $traffic);
-        $res['ret'] = 1;
         return $this->echoJson($response, $res);
     }
 

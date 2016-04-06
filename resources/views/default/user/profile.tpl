@@ -21,10 +21,22 @@
                     </div>
                     <div class="box-body">
                         <dl class="dl-horizontal">
+                            <dt>uid</dt>
+                            <dd>{$user->id}</dd>
                             <dt>用户名</dt>
                             <dd>{$user->user_name}</dd>
                             <dt>邮箱</dt>
                             <dd>{$user->email}</dd>
+                            <dt>用户类型</dt>
+                            {if $user->plan == "A"}
+                                <dd>免费会员</dd>
+                            {elseif $user->plan == "C"}
+                                <dd>特殊会员</dd>
+                            {elseif $user->type == 1}
+                                <dd>付费会员</dd>
+                            {else}
+                                <dd>{$user->type}会员</dd>
+                            {/if}
                         </dl>
 
                     </div>

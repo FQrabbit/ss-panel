@@ -16,8 +16,14 @@
          folder instead of downloading all of them to reduce the load. -->
     <link href="/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
 
+    <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/>
     <!-- jQuery 2.1.3 -->
     <script src="/assets/public/js/jquery.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/public/css/jquery.dataTables.min.css">
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script> 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -132,6 +138,17 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/user/sys">
+                        <i class="fa fa-align-left"></i> <span>系统信息</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/user/purchase">
+                        <i class="fa fa-shopping-cart"></i> <span>购买</span>
+                    </a>
+                </li>
                 {if $user->isAdmin()}
                     <li>
                         <a href="/admin">

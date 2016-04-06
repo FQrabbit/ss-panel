@@ -13,7 +13,6 @@ class Node extends Model
 {
     protected $table = "ss_node";
 
-
     public function getLastNodeInfoLog()
     {
         $id = $this->attributes['id'];
@@ -52,13 +51,18 @@ class Node extends Model
         return $log;
     }
 
-    function getOnlineUserCount()
+    function getOnlineUserCount($timeLen=0.2)
     {
-        $log = $this->getLastNodeOnlineLog();
-        if ($log == null) {
-            return "暂无数据";
-        }
-        return $log->online_user;
+        // $id = $this->attributes['id'];
+        $fieldName = $this->attributes['field_name'];
+        $time = time() - $timeLen*60;
+        $num = User::where($fieldName, ">", $time)->count();
+        // $log = NodeOnlineLog::where('node_id', $id)->orderBy('id', 'desc')->first();
+        // if ($log == null) {
+        //     return "暂无数据";
+        // }
+        // return $log->online_user;
+        return $num;
     }
 
     function getTrafficFromLogs()
