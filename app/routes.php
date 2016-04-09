@@ -1,13 +1,12 @@
 <?php
 
-use Slim\App;
-use Slim\Container;
 use App\Controllers;
-use App\Middleware\Auth;
-use App\Middleware\Guest;
 use App\Middleware\Admin;
 use App\Middleware\Api;
+use App\Middleware\Auth;
+use App\Middleware\Guest;
 use App\Middleware\Mu;
+use Slim\App;
 use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
 
 /***
@@ -141,6 +140,6 @@ $app->group('/res', function () {
     $this->get('/captcha/{id}', 'App\Controllers\ResController:captcha');
 });
 
-// Run Slim Routes for App
-$app->run();
+return $app;
+
 
