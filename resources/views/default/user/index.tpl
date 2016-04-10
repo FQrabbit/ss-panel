@@ -26,15 +26,18 @@
                                 <a id="join" class="pull-right" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3">加入QQ群</a>
                             </div>
                             <!-- /.box-header -->
-                            <div class="box-body" style="margin:-25px 0 0 0">
-                                <ol>
-                                    <li>流量不会重置，可以通过签到获取流量。</li>
-                                    <li>免费用户每次签到可获得10-100M流量，捐助用户每次签到可获得300-400M流量。</li>
-                                    <li>自动清理三周不签到的免费用户(不包含付费用户与捐助用户)</li>
-				    <li>{$msg}</li>
-                                </ol>
-                                <p><button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show()>捐助</button></p>
-                            </div><!-- /.box-body -->
+                            <div class="box-body" style="margin-top:-13px">
+      	                        <div>1. 流量不会重置，可以通过签到获取流量。</div>
+      	                        <div>2. 免费用户和付费用户每次签到可获得10-100M流量，捐助用户每次签到可获得300-400M流量。</div>
+      	                        <div>3. 自动清理注册超过一周不验证邮箱和三周不签到的免费用户(不包含付费用户与捐助用户)</div>
+                                <div>{$msg}</div>
+      	                        <div class="w3-btn-group" style="margin-top:10px">
+        		                        <a href="https://telegram.me/joinchat/BdFlBwGgEH9rdgp5JSaxGA" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right" style="width:33.3%;border-color:white !important">Telegram</a>
+        		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right w3-border-left" style="width:33.3%;border-color:white !important">G+社群</a>
+        		                        <a class="w3-btn w3-green w3-border-white w3-border-left" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3" style="width:33.3%;border-color:white !important">QQ群</a>
+      	                        </div>
+                  							<button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
+      	                    </div><!-- /.box-body -->
                         </div>
                         <!-- /.box -->
                     </div>
@@ -52,11 +55,6 @@
 
                                 <p>上次签到时间：<code>{$user->lastCheckInTime()}</code></p>
                                 {if $user->isAbleToCheckin() }
-                                            <!-- 人机验证 -->
-                                    <!-- <div class="g-recaptcha form-group has-feedback" data-sitekey="6LcptxMTAAAAANWZMjTw7PXymdU2KE8jkqqcjv7Y"></div>
-                                    <script type="text/javascript"
-                                            src="https://www.google.com/recaptcha/api.js">
-                                    </script> -->
                                     <p id="checkin-btn">
                                         <button id="checkin" class="btn btn-success  btn-flat">签到</button>
                                     </p>
