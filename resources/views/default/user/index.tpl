@@ -22,8 +22,6 @@
                                 <i class="fa fa-bullhorn"></i>
 
                                 <h3 class="box-title">公告&FAQ</h3>
-                                <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="pull-right" id="join">加入G+社群</a>
-                                <a id="join" class="pull-right" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3">加入QQ群</a>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
@@ -160,14 +158,10 @@
 <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
-            if($("#g-recaptcha-response").val()){
                 $.ajax({
                     type: "POST",
                     url: "/user/checkin",
                     dataType: "json",
-                    // data:{
-                    //     recaptcharesponse: $("#g-recaptcha-response").val()
-                    // },
                     success: function (data) {
                         $("#checkin-msg").html(data.msg);
                         $("#checkin-btn").hide();
@@ -176,10 +170,6 @@
                         alert("发生错误：" + jqXHR.status);
                     }
                 })
-                // $(".g-recaptcha").hide(1000);
-            // }else{
-            //     alert("请先开启代理进行人机身份验证。");
-            // }
         })
         {if $user->enable == 1}
             var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="my.php" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
