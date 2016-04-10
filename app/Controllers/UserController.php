@@ -21,11 +21,11 @@ class UserController extends BaseController
     {
         $this->user = Auth::getUser();
     }
-    
+
     public function view()
     {
         $userFooter = DbConfig::get('user-footer');
-        return parent::view()->assign('userFooter',$userFooter); 
+        return parent::view()->assign('userFooter',$userFooter);
     }
 
     public function index($request, $response, $args)
@@ -201,15 +201,10 @@ class UserController extends BaseController
 
     public function doCheckIn($request, $response, $args)
     {
-        $secret = '6LcptxMTAAAAAKsSEmhau0bDIdjgWBXUelo0TDZS';
-        $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-        $resp = $recaptcha->verify($_POST['recaptcharesponse'], $_SERVER['REMOTE_ADDR']);
         if (!$this->user->isAbleToCheckin()) {
             $res['msg'] = "您似乎已经签到过了...";
             $res['ret'] = 1;
             return $response->getBody()->write(json_encode($res));
-        }elseif (!$resp->isSuccess() || 1) {
-            $res['msg'] = "人机身份验证失败，请重新验证";
         }else{
             if ($this->user->ref_by == 3) {
                 $traffic = rand(300, 400);

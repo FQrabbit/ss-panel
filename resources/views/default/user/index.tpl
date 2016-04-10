@@ -28,7 +28,7 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="margin:-25px 0 0 0">
                                 <ol>
-                                    <li>流量不会重置，可以通过签到获取流量。</li> 
+                                    <li>流量不会重置，可以通过签到获取流量。</li>
                                     <li>免费用户每次签到可获得10-100M流量，捐助用户每次签到可获得300-400M流量。</li>
                                     <li>自动清理三周不签到的免费用户(不包含付费用户与捐助用户)</li>
 				    <li>{$msg}</li>
@@ -53,10 +53,10 @@
                                 <p>上次签到时间：<code>{$user->lastCheckInTime()}</code></p>
                                 {if $user->isAbleToCheckin() }
                                             <!-- 人机验证 -->
-                                    <div class="g-recaptcha form-group has-feedback" data-sitekey="6LcptxMTAAAAANWZMjTw7PXymdU2KE8jkqqcjv7Y"></div>
+                                    <!-- <div class="g-recaptcha form-group has-feedback" data-sitekey="6LcptxMTAAAAANWZMjTw7PXymdU2KE8jkqqcjv7Y"></div>
                                     <script type="text/javascript"
                                             src="https://www.google.com/recaptcha/api.js">
-                                    </script>
+                                    </script> -->
                                     <p id="checkin-btn">
                                         <button id="checkin" class="btn btn-success  btn-flat">签到</button>
                                     </p>
@@ -167,9 +167,9 @@
                     type: "POST",
                     url: "/user/checkin",
                     dataType: "json",
-                    data:{
-                        recaptcharesponse: $("#g-recaptcha-response").val()
-                    },
+                    // data:{
+                    //     recaptcharesponse: $("#g-recaptcha-response").val()
+                    // },
                     success: function (data) {
                         $("#checkin-msg").html(data.msg);
                         $("#checkin-btn").hide();
@@ -178,14 +178,19 @@
                         alert("发生错误：" + jqXHR.status);
                     }
                 })
-                $(".g-recaptcha").hide(1000);
-            }else{
-                alert("请先开启代理进行人机身份验证。");
-            }
+                // $(".g-recaptcha").hide(1000);
+            // }else{
+            //     alert("请先开启代理进行人机身份验证。");
+            // }
         })
+        {if $user->enable == 1}
+            var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="my.php" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
+            $("body").append(notifyModal);
+            $("#notifyModal").show();
+            $("#notifyModal").css("zIndex", 999);
+        {/if}
     })
 </script>
-
 
 {include file='user/footer.tpl'}
 
@@ -233,41 +238,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function(){
-        $("#checkin").click(function(){
-            if($("#g-recaptcha-response").val()){
-                $.ajax({
-                    type:"POST",
-                    url:"_checkin.php",
-                    dataType:"json",
-                    data:{
-                        recaptcharesponse: $("#g-recaptcha-response").val()
-                    },
-                    success:function(data){
-                        if(data.ok){
-                            $("#checkin-msg").html(data.msg);
-                            $("#checkin-btn").hide();
-                        }else{
-                            $("#checkin-msg").html(data.msg);
-                        }
-                    },
-                    error:function(jqXHR){
-                        alert("发生错误："+jqXHR.status);
-                    }
-                })
-                $(".g-recaptcha").hide(1000);
-            }else{
-                alert("请先开启代理进行人机身份验证。");
-            }
-        })
-        
-        // {if $user->enable == 1}
-        // var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="my.php" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用，如果长时间不激活账号，你的账号将有被删的风险。</p></div></div></div>';
-        // $("body").append(notifyModal);
-        // $("#notifyModal").show();
-        // $("#notifyModal").css("zIndex", 999);       
-        // {/if}
-    // })
-</script>
