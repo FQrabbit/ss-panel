@@ -171,8 +171,8 @@
                     }
                 })
         })
-        {if $user->enable == 1}
-            var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="my.php" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
+        {if $user->enable == 0}
+            var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="profile" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
             $("body").append(notifyModal);
             $("#notifyModal").show();
             $("#notifyModal").css("zIndex", 999);
