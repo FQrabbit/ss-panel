@@ -45,10 +45,6 @@
     box-shadow: 0 0 20px black;
 }
 
-.buyt{
-    font-family: Microsoft Yahei;
-    background-color: white;
-}
 .center{
     text-align: center;
     margin: 0 auto;
@@ -84,4 +80,24 @@ code, kbd, pre, samp {
 
 .card:hover{
     box-shadow: 0 16px 24px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21) !important;
+}
+
+@media (min-width: 768px){
+    .dl-horizontal dt {
+        width: 165px !important;
+    }
+}
+
+a,p,h5{
+    webkit-transition: all .1s ease-out;
+    -moz-transition: all .1s ease-out;
+    -o-transition: all .1s ease-out;
+    -ms-transition: all .1s ease-out;
+    transition: all .1s ease-out;
+    font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif, '宋体';
+}
+
+::selection {
+    background: #666;
+    color: white;
 }

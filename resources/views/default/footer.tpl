@@ -35,7 +35,7 @@
 	</div>
 	<div class="footer-copyright">
 		<div class="container">
-			&copy; {$config["appName"]}  Powered by <a class="-text text-lighten-3" href="https://github.com/orvice/ss-panel">ss-panel</a> {$config["version"]}
+			&copy; {$config["appName"]}  Powered by ss-panel {$config["version"]}
 		 Theme by <a class="text-lighten-3" href="http://materializecss.com">Materialize</a>
 		</div>
 		<div style="display:none;">

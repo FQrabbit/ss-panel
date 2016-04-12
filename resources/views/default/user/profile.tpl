@@ -28,14 +28,28 @@
                             <dt>邮箱</dt>
                             <dd>{$user->email}</dd>
                             <dt>用户类型</dt>
-                            {if $user->plan == "A"}
-                                <dd>免费会员</dd>
-                            {elseif $user->plan == "C"}
-                                <dd>特殊会员</dd>
-                            {elseif $user->type == 1}
-                                <dd>付费会员</dd>
-                            {else}
-                                <dd>{$user->type}会员</dd>
+                            <dd>
+                                {if $user->plan == "A"}
+                                    <span class="badge bg-green">免费用户</span>
+                                {elseif $user->plan == "C"}
+                                    <span class="badge bg-green">特殊用户</span>
+                                {else}
+                                    <span class="badge bg-green">付费用户</span>
+                                {/if}
+
+                                {if $user->ref_by == 3}
+                                    <span class="badge bg-green">捐助用户</span>
+                                {/if}
+                            </dd>
+                            {if $user->type != 1}
+                            <dt>当前套餐</dt>
+                            <dd>
+                                <span class="badge bg-green">{$user->type}套餐</span>
+                            </dd>
+                            {/if}
+                            {if $user->expire_date != 0}
+                                <dt>到期时间</dt>
+                                <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
                             {/if}
                         </dl>
 

@@ -34,7 +34,7 @@
         		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right w3-border-left" style="width:33.3%;border-color:white !important">G+社群</a>
         		                        <a class="w3-btn w3-green w3-border-white w3-border-left" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3" style="width:33.3%;border-color:white !important">QQ群</a>
       	                        </div>
-                  							<button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
+      							<button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
       	                    </div><!-- /.box-body -->
                         </div>
                         <!-- /.box -->
@@ -51,7 +51,7 @@
                             <div class="box-body">
                                 <p> 每{$config['checkinTime']}小时可以签到一次。</p>
 
-                                <p>上次签到时间：<code>{$user->lastCheckInTime()}</code></p>
+                                <p>上次签到时间：<span class="badge bg-teal">{$user->lastCheckInTime()}</span></p>
                                 {if $user->isAbleToCheckin() }
                                     <p id="checkin-btn">
                                         <button id="checkin" class="btn btn-success  btn-flat">签到</button>
@@ -75,7 +75,7 @@
                             <div class="box-header">
                                 <i class="fa fa-exchange"></i>
 
-                                <h3 class="box-title">流量使用情况</h3>
+                                <h3 class="box-title">本月流量使用情况</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
                                 <dl class="dl-horizontal">
-                                    <dt>总流量</dt>
+                                    <dt>(上月末剩余流量)总流量</dt>
                                     <dd>{$user->enableTraffic()}</dd>
                                     <dt>已用流量</dt>
                                     <dd>{$user->usedTraffic()}</dd>
@@ -119,26 +119,33 @@
                                     <dd>{$user->port}</dd>
                                     <dt>密码</dt>
                                     <dd>{$user->passwd}</dd>
-                                    <dt>自定义加密方式</dt>
-                                    <dd>{$user->method}</dd>
+                                    <!-- <dt>自定义加密方式</dt>
+                                    <dd>{$user->method}</dd> -->
                                     <dt>上次使用</dt>
                                     <dd>{$user->lastSsTime()}</dd>
                                     <dt>用户类型</dt>
-                                    {if $user->plan == "A"}
-                                        <dd><code class="bg-red flat">免费会员</code></dd>
-                                    {elseif $user->plan == "C"}
-                                        <dd><code class="bg-red flat">特殊会员</code></dd>
-                                    {elseif $user->type == 1}
-                                        <dd><code class="bg-red flat">付费会员</code></dd>
-                                    {else}
-                                        <dd><code class="bg-red flat">{$user->type}会员</code></dd>
+                                    <dd>
+                                        {if $user->plan == "A"}
+                                            <span class="badge bg-green">免费用户</span>
+                                        {elseif $user->plan == "C"}
+                                            <span class="badge bg-green">特殊用户</span>
+                                        {else}
+                                            <span class="badge bg-green">付费用户</span>
+                                        {/if}
+
+                                        {if $user->ref_by == 3}
+                                            <span class="badge bg-green">捐助用户</span>
+                                        {/if}
+                                    </dd>
+                                    {if $user->type != 1}
+                                    <dt>当前套餐</dt>
+                                    <dd>
+                                        <span class="badge bg-green">{$user->type}套餐</span>
+                                    </dd>
                                     {/if}
                                     {if $user->expire_date != 0}
-                                    {if $user->ref_by == 3}
-                                        <dd><code class="bg-red flat">捐助用户</code></dd>
-                                    {/if}
                                         <dt>到期时间</dt>
-                                        <dd>{$user->expire_date}</dd>
+                                        <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
                                     {/if}
                                 </dl>
                             </div>
@@ -189,7 +196,7 @@
             <h3>捐助本站{$user->id}</h3>
         </header>
         <div class="w3-container">
-            <form action=../pay/donatealipayapi.php method=post target="_blank">
+            <form action=/pay/donatealipayapi.php method=post target="_blank">
                 <div class="w3-row">
                         <lable class="w3-label">请输入捐助金额：</label>
                         <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
@@ -199,25 +206,25 @@
             </form>
             <div class="w3-row w3-margin-top">
                 <div class="w3-quarter">
-                    <form action=../pay/donatealipayapi.php method=post target="_blank">
+                    <form action=/pay/donatealipayapi.php method=post target="_blank">
                         <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
                         <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=2>
                     </form>
                 </div>
                 <div class="w3-quarter">
-                    <form action=../pay/donatealipayapi.php method=post target="_blank">
+                    <form action=/pay/donatealipayapi.php method=post target="_blank">
                         <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
                         <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=5>
                     </form>
                 </div>
                 <div class="w3-quarter">
-                    <form action=../pay/donatealipayapi.php method=post target="_blank">
+                    <form action=/pay/donatealipayapi.php method=post target="_blank">
                         <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
                         <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=10>
                     </form>
                 </div>
                 <div class="w3-quarter">
-                    <form action=../pay/donatealipayapi.php method=post target="_blank">
+                    <form action=/pay/donatealipayapi.php method=post target="_blank">
                         <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
                         <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=20>
                     </form>

@@ -15,8 +15,8 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-body">
-                        <p>支付完成后请<strong>不要立即关闭页面</strong>，请等待跳转至提示开通成功页面，如果没有跳转或遇到其他问题请加群咨询或email反馈。</p>
-                        <table class="table table-striped buyt">
+                        <!-- <p>支付完成后请<strong>不要立即关闭页面</strong>，请等待跳转至提示开通成功页面，如果没有跳转或遇到其他问题请加群咨询或email反馈。</p> -->
+                        <table class="table table-striped">
                             <caption class="center"><h4><strong>按流量购买</strong></h4></caption>
                             <thead>
                                 <tr>
@@ -36,7 +36,7 @@
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
                                         <td>
-                                            <form name=alipayment action=./pay/alipayapi.php method=post target="_blank">
+                                            <form name=alipayment action=/pay/alipayapi.php method=post target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
@@ -49,7 +49,9 @@
                             </tbody>
                         </table>
 
-                        <table class="table table-striped buyt">
+                        <hr />
+
+                        <table class="table table-striped">
                             <caption class="center"><h4><strong>按时间购买</strong></h4></caption>
                             <thead>
                             <tr>
@@ -69,7 +71,7 @@
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
                                         <td>
-                                            <form name=alipayment action=./pay/alipayapi.php method=post target="_blank">
+                                            <form name=alipayment action=/pay/alipayapi.php method=post target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />

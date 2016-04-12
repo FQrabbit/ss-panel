@@ -119,11 +119,11 @@
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="/user/trafficlog">
                         <i class="fa fa-history"></i> <span>流量记录</span>
                     </a>
-                </li>
+                </li> -->
 
 
                 <li>
@@ -132,11 +132,11 @@
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="/user/invite">
                         <i class="fa fa-users"></i> <span>邀请好友</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="/user/sys">
