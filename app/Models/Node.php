@@ -13,6 +13,7 @@ class Node extends Model
 {
     protected $table = "ss_node";
 
+
     public function getLastNodeInfoLog()
     {
         $id = $this->attributes['id'];

@@ -41,9 +41,4 @@ class HomeController extends BaseController
         return $this->view()->display('tos.tpl');
     }
 
-    public function return_url()
-    {
-        return $this->view()->display('return.tpl');
-    }
-
 }

@@ -5,7 +5,7 @@ namespace App\Services;
 /***
  * Mail Service
  */
-use App\Services\Logger;
+
 use App\Services\Mail\Mailgun;
 use App\Services\Mail\Ses;
 use App\Services\Mail\Smtp;
