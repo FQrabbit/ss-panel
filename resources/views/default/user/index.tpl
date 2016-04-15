@@ -26,9 +26,8 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
       	                        <div>1. 流量不会重置，可以通过签到获取流量。</div>
-      	                        <div>2. 免费用户和付费用户每次签到可获得10-100M流量，捐助用户每次签到可获得300-400M流量。</div>
+      	                        <div>2. 免费用户和付费用户每次签到可获得30-100M流量，捐助用户每次签到可获得300-400M流量。</div>
       	                        <div>3. 自动清理注册超过一周不验证邮箱和三周不签到的免费用户(不包含付费用户与捐助用户)</div>
-                                <div>{$msg}</div>
       	                        <div class="w3-btn-group" style="margin-top:10px">
         		                        <a href="https://telegram.me/joinchat/BdFlBwGgEH9rdgp5JSaxGA" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right" style="width:33.3%;border-color:white !important">Telegram</a>
         		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right w3-border-left" style="width:33.3%;border-color:white !important">G+社群</a>
@@ -178,8 +177,8 @@
                     }
                 })
         })
-        {if $user->enable == 0}
-            var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="profile" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
+        {if $user->status == 0}
+            var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="user/profile" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
             $("body").append(notifyModal);
             $("#notifyModal").show();
             $("#notifyModal").css("zIndex", 999);
@@ -193,7 +192,7 @@
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container w3-teal">
             <span onclick=$("#donateModal").hide() class="w3-closebtn">×</span>
-            <h3>捐助本站{$user->id}</h3>
+            <h3>捐助Shadowsky</h3>
         </header>
         <div class="w3-container">
             <form action=/pay/donatealipayapi.php method=post target="_blank">
@@ -205,30 +204,14 @@
                 </div>
             </form>
             <div class="w3-row w3-margin-top">
+                {foreach [2,5,10,20] as $a}
                 <div class="w3-quarter">
                     <form action=/pay/donatealipayapi.php method=post target="_blank">
                         <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
-                        <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=2>
+                        <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
                     </form>
                 </div>
-                <div class="w3-quarter">
-                    <form action=/pay/donatealipayapi.php method=post target="_blank">
-                        <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
-                        <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=5>
-                    </form>
-                </div>
-                <div class="w3-quarter">
-                    <form action=/pay/donatealipayapi.php method=post target="_blank">
-                        <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
-                        <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=10>
-                    </form>
-                </div>
-                <div class="w3-quarter">
-                    <form action=/pay/donatealipayapi.php method=post target="_blank">
-                        <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
-                        <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value=20>
-                    </form>
-                </div>
+                {/foreach}
             </div>
         </div>
     </div>

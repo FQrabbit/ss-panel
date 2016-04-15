@@ -71,16 +71,16 @@ class AuthController extends BaseController
         $email = strtolower($email);
         $passwd = $request->getParam('passwd');
         $repasswd = $request->getParam('repasswd');
-        $code = $request->getParam('code');
+        // $code = $request->getParam('code');
         $verifycode = $request->getParam('verifycode');
 
         // check code
-        $c = InviteCode::where('code', $code)->first();
-        if ($c == null) {
-            $res['ret'] = 0;
-            $res['msg'] = "邀请码无效";
-            return $this->echoJson($response, $res);
-        }
+        // $c = InviteCode::where('code', $code)->first();
+        // if ($c == null) {
+        //     $res['ret'] = 0;
+        //     $res['msg'] = "邀请码无效";
+        //     return $this->echoJson($response, $res);
+        // }
 
         // check email format
         if (!Check::isEmailLegal($email)) {
@@ -130,12 +130,13 @@ class AuthController extends BaseController
         $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));
         $user->invite_num = Config::get('inviteNum');
         $user->reg_ip = Http::getClientIP();
-        $user->ref_by = $c->user_id;
+        $user->ref_by = 0;
+        // $user->ref_by = $c->user_id;
 
         if ($user->save()) {
             $res['ret'] = 1;
             $res['msg'] = "注册成功";
-            $c->delete();
+            // $c->delete();
             return $this->echoJson($response, $res);
         }
         $res['ret'] = 0;

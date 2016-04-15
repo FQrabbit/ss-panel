@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\AdminController;
 use App\Models\User;
 use App\Utils\Hash;
+use App\Utils\Tools;
 
 class UserController extends AdminController
 {
@@ -47,7 +48,13 @@ class UserController extends AdminController
         $user->method = $request->getParam('method');
         $user->enable = $request->getParam('enable');
         $user->is_admin = $request->getParam('is_admin');
+        $user->money = $request->getParam('money');
+        $user->user_type = $request->getParam('user_type');
+        $user->type = $request->getParam('type');
+        $user->plan = $request->getParam('plan');
         $user->ref_by = $request->getParam('ref_by');
+        $user->status = $request->getParam('status');
+        $user->expire_date = $request->getParam('expire_date');
         if (!$user->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

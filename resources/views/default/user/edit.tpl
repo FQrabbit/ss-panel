@@ -99,15 +99,15 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">连接密码</label>
 
-                                <div class="col-sm-7">
+                                <div class="col-sm-9">
                                     <input type="text" id="sspwd" placeholder="输入新连接密码" class="form-control">
                                 </div>
-                                <div clss="col-sm-2">
+                                <!-- div clss="col-sm-2">
                                     <button type="submit" id="ss-pwd-update" class="btn btn-primary">修改</button>
-                                </div>
+                                </div> -->
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label class="col-sm-3 control-label">加密方式</label>
 
                                 <div class="col-sm-7">
@@ -116,10 +116,12 @@
                                 <div clss="col-sm-2">
                                     <button type="submit" id="method-update" class="btn btn-primary">修改</button>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
-                        <div class="box-footer"></div>
+                        <div class="box-footer">
+                            <button type="submit" id="ss-pwd-update" class="btn btn-primary">修改</button>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -197,30 +199,30 @@
 
 
 <script>
-    $(document).ready(function () {
-        $("#method-update").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "method",
-                dataType: "json",
-                data: {
-                    method: $("#method").val()
-                },
-                success: function (data) {
-                    if (data.ret) {
-                        $("#ss-msg-success").show();
-                        $("#ss-msg-success-p").html(data.msg);
-                    } else {
-                        $("#ss-msg-error").show();
-                        $("#ss-msg-error-p").html(data.msg);
-                    }
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            })
-        })
-    })
+    // $(document).ready(function () {
+    //     $("#method-update").click(function () {
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "method",
+    //             dataType: "json",
+    //             data: {
+    //                 method: $("#method").val()
+    //             },
+    //             success: function (data) {
+    //                 if (data.ret) {
+    //                     $("#ss-msg-success").show();
+    //                     $("#ss-msg-success-p").html(data.msg);
+    //                 } else {
+    //                     $("#ss-msg-error").show();
+    //                     $("#ss-msg-error-p").html(data.msg);
+    //                 }
+    //             },
+    //             error: function (jqXHR) {
+    //                 alert("发生错误：" + jqXHR.status);
+    //             }
+    //         })
+    //     })
+    // })
 </script>
 
 

@@ -8,16 +8,15 @@
         </h1>
     </section>
     <!-- Main content -->
-    <!-- Main content -->
         <section class="content">
             <div class="row">
                 <!-- left column -->
                 <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="box box-primary">
-                        <div class="box-header">
-                            <h3 class="box-title"><?php echo $site_name; ?> 统计信息</h3>
-                        </div><!-- /.box-header -->
+                        <!-- div class="box-header">
+                            <h3 class="box-title">统计信息</h3>
+                        </div><!-- /.box-header --> 
                         <div class="box-body">
                             <div class="callout callout-warning">
                                 <h4>注意！</h4>
@@ -61,7 +60,7 @@
                                             <tr>
                                                 <th>uid</th>
                                                 <th>用户名</th>
-                                                <th>捐助金额</th>
+                                                <th>捐助金额(元)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -90,7 +89,7 @@
         $('#donate_table').DataTable({
         "scrollY": "390px",
         "scrollX": false,
-        "ordering": false
+        "order": [2, "desc"]
         });
         $('#paid_user_table').DataTable({
         "scrollY": "390px",

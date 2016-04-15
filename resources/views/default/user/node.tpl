@@ -18,14 +18,14 @@
                 <div class="callout callout-warning">
                     <h4>注意!</h4>
                     <p>请勿在任何地方公开节点地址！</p>
-                    <p>流量比例为0.5即使用1000MB按照500MB流量记录记录结算.</p>
                     <p>以下节点均已支持auth_sha1协议，同时兼容原协议。并且支持开启tls1.0_session_auth插件。<a href="https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md" target="_blank">欲了解协议插件相关文档，请点此。</a></p>
 				    <p>{$msg}</p>
                 </div>
             </div>
         </div>
-        
+
 		{foreach $nodes as $node}
+			<!-- 对免费用户做的处理 -->
 			{if $user->plan == "A" and $node->type == 1}
 		  <div class="row">
 			<div class="col-md-12">
@@ -49,29 +49,32 @@
 				<div class="row">
 					<div class="col-md-6">
 					  <ul class="nav nav-stacked">
-						<li><a href="#">节点地址 <span class="pull-right badge bg-blue">付费用户可见
+						<li><a href="javascript:void(0);">节点地址 <span class="pull-right badge bg-blue">付费用户可见
 						</span></a></li>
-						<li><a href="#">连接端口 <span class="pull-right badge bg-aqua">{$user->port}</span></a></li>
-						<li><a href="#">加密方式 <span class="pull-right badge bg-green">{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</span></a></li>
-                        <!-- <li><a href="#">负载: <span class="pull-right badge bg-green">{$node->getNodeLoad()}</span></a></li> -->
+						<li><a href="javascript:void(0);">连接端口 <span class="pull-right badge bg-aqua">{$user->port}</span></a></li>
+						<li><a href="javascript:void(0);">加密方式 <span class="pull-right badge bg-green">{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</span></a></li>
+                        <!-- <li><a href="javascript:void(0);">负载: <span class="pull-right badge bg-green">{$node->getNodeLoad()}</span></a></li> -->
 					  </ul>
 					</div>
 					<div class="col-md-6">
 					  <ul class="nav nav-stacked">
-						<!-- <li><a href="#">流量比例 <span class="pull-right badge bg-blue">{$node->traffic_rate}</span></a></li> -->
-						<li><a href="./node/{$node->id}">连接密码 <span class="pull-right badge bg-blue">{$user->passwd}</span></a></li>
-						<li><a href="#">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li>
-						<li><a href="#">15分钟在线人数 <span class="pull-right badge bg-green">{$node->getOnlineUserCount(15)}</span></a></li>
-                    	<!-- <li><a href="#">Uptime: <span class="pull-right badge bg-green">{$node->getNodeUptime()}</span></a></li> -->
+						<!-- <li><a href="javascript:void(0);">流量比例 <span class="pull-right badge bg-blue">{$node->traffic_rate}</span></a></li> -->
+            <li><a href="javascript:void(0);">IP地址 <span class="pull-right badge bg-blue">付费用户可见</span></a></li>
+						<li><a href="javascript:void(0);">连接密码 <span class="pull-right badge bg-aqua">{$user->passwd}</span></a></li>
+						<!-- <li><a href="javascript:void(0);">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li> -->
+						<li><a href="javascript:void(0);">15分钟在线人数 <span class="pull-right badge bg-green">{$node->getOnlineUserCount(15)}</span></a></li>
+                    	<!-- <li><a href="javascript:void(0);">Uptime: <span class="pull-right badge bg-green">{$node->getNodeUptime()}</span></a></li> -->
 					  </ul>
 					</div>
 				</div>
-				  
+
 				</div>
 			  </div><!-- /.widget-user -->
 			</div><!-- /.col -->
 		  </div><!-- /.row -->
+
 			{else}
+
 		  <div class="row">
 			<div class="col-md-12">
 			  <div class="box box-widget">
@@ -105,7 +108,8 @@
 					  <ul class="nav nav-stacked">
 						<!-- <li><a href="./node/{$node->id}">流量比例 <span class="pull-right badge bg-blue">{$node->traffic_rate}</span></a></li> -->
 						<li><a href="./node/{$node->id}">连接密码 <span class="pull-right badge bg-blue">{$user->passwd}</span></a></li>
-						<li><a href="./node/{$node->id}">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li>
+						<!-- <li><a href="./node/{$node->id}">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li> -->
+						<li><a href="./node/{$node->id}">IP地址 <span class="pull-right badge bg-aqua">{$node->ip}</span></a></li>
 						<li><a href="./node/{$node->id}">15分钟在线人数 <span class="pull-right badge bg-green">{$node->getOnlineUserCount(15)}</span></a></li>
 						<!-- <li><a href="./node/{$node->id}">产生流量 <span class="pull-right badge bg-green">{$node->getTrafficFromLogs()}</span></a></li> -->
 						<!-- <li><a href="./node/{$node->id}">Uptime: <span class="pull-right badge bg-green">{$node->getNodeUptime()}</span></a> -->
@@ -113,14 +117,14 @@
 					  </ul>
 					</div>
 				</div>
-				  
+
 				</div>
 			  </div><!-- /.widget-user -->
 			</div><!-- /.col -->
 		  </div><!-- /.row -->
 			{/if}
-			
-			
+
+
 		{/foreach}
     </section>
     <!-- /.content -->

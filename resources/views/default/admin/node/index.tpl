@@ -22,6 +22,7 @@
                                 <th>ID</th>
                                 <th>节点</th>
                                 <th>加密</th>
+                                <th>IP地址</th>
                                 <th>描述</th>
                                 <th>排序</th>
                                 <th>操作</th>
@@ -31,6 +32,7 @@
                                 <td>#{$node->id}</td>
                                 <td> {$node->name}</td>
                                 <td>{$node->method}</td>
+                                <td>{$node->ip}</td>
                                 <td>{$node->info}</td>
                                 <td>{$node->sort}</td>
                                 <td>

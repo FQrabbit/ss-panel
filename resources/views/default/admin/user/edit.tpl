@@ -36,16 +36,16 @@
                     <div class="box-body">
                         <div class="form-horizontal">
                             <div class="row">
-                                <fieldset class="col-sm-6">
+                                <fieldset class="col-sm-12">
                                     <legend>帐号信息</legend>
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">邮箱</label>
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="email" type="email" value="{$user->email}">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">密码</label>
 
                                         <div class="col-sm-9">
@@ -53,7 +53,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">是否管理员</label>
 
                                         <div class="col-sm-9">
@@ -68,8 +68,7 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">用户状态</label>
 
                                         <div class="col-sm-9"><select class="form-control" id="enable">
@@ -83,10 +82,105 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">是否捐助</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="ref_by">
+                                                <option value="0" {if $user->ref_by!=3}selected="selected"{/if}>
+                                                    否
+                                                </option>
+                                                <option value="3" {if $user->ref_by==3}selected="selected"{/if}>
+                                                    是
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">捐助金额</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="money" value="{$user->money}" type="number">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">付费金额</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="user_type" value="{$user->user_type}" type="number">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">套餐</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="type">
+                                                <option value=1 {if $user->type==1}selected="selected"{/if}>
+                                                    无
+                                                </option>
+                                                {foreach ["试玩","基础","标准","高级","包月","包季","包年"] as $a}
+                                                    <option value={$a} {if $user->type=={$a}}selected="selected"{/if}>
+                                                        {$a}
+                                                    </option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">plan</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="plan">
+                                                <option value="A" {if $user->plan=="A"}selected="selected"{/if}>
+                                                    A
+                                                </option>
+                                                <option value="B" {if $user->plan=="B"}selected="selected"{/if}>
+                                                    B
+                                                </option>
+                                                <option value="C" {if $user->plan=="C"}selected="selected"{/if}>
+                                                    C
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">邮箱验证状态</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="status">
+                                                <option value="1" {if $user->status=="1"}selected="selected"{/if}>
+                                                    已验证
+                                                </option>
+                                                <option value="0" {if $user->status=="0"}selected="selected"{/if}>
+                                                    未验证
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">过期时间</label>
+
+                                        <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
+                                            <input class="form-control" id="expire_date" value="{$user->expire_date}">
+                                            <div class="input-group-btn">
+                                                <button type="button" id="timeReseter" class="btn btn-default btn-flat">此时</button>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button type="button" id="tozero" class="btn btn-default btn-flat">归零</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </fieldset>
-                                <fieldset class="col-sm-6">
+                                <fieldset class="col-sm-12">
                                     <legend>ShadowSocks连接信息</legend>
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">连接端口</label>
 
                                         <div class="col-sm-9">
@@ -94,7 +188,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">连接密码</label>
 
                                         <div class="col-sm-9">
@@ -102,7 +196,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">自定义加密</label>
 
                                         <div class="col-sm-9">
@@ -112,9 +206,9 @@
                                 </fieldset>
                             </div>
                             <div class="row">
-                                <fieldset class="col-sm-6">
+                                <fieldset class="col-sm-12">
                                     <legend>流量</legend>
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">总流量</label>
 
                                         <div class="col-sm-9">
@@ -128,7 +222,7 @@
                                     </div>
 
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">已用流量</label>
 
                                         <div class="col-sm-9">
@@ -137,9 +231,9 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                <fieldset class="col-sm-6">
+                                <fieldset class="col-sm-12">
                                     <legend>邀请</legend>
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">可用邀请数量</label>
 
                                         <div class="col-sm-9">
@@ -148,7 +242,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">邀请人ID</label>
 
                                         <div class="col-sm-9">
@@ -191,14 +285,20 @@
                     method: $("#method").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
-                    ref_by: $("#ref_by").val()
+                    money: $("#money").val(),
+                    user_type: $("#user_type").val(),
+                    type: $("#type").val(),
+                    plan: $("#plan").val(),
+                    ref_by: $("#ref_by").val(),
+                    expire_date: $("#expire_date").val(),
+                    status: $("#status").val()
                 },
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user'", 2000);
+                        window.setTimeout("location.href='/admin/user/{$user->id}/edit'", 2000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
@@ -215,7 +315,7 @@
 
         $("html").keydown(function (event) {
             if (event.keyCode == 13) {
-                login();
+                submit();
             }
         });
         $("#submit").click(function () {
@@ -226,6 +326,30 @@
         });
         $("#error-close").click(function () {
             $("#msg-error").hide(100);
+        });
+
+        function resetTime(){
+            var time,Y,M,D,H,M,S,nowdate;
+            time = new Date();
+            Y = time.getFullYear();
+            M = time.getMonth() + 1;
+            D = time.getDate();
+            H = time.getHours();
+            i = time.getMinutes();
+            S = time.getSeconds();
+            nowdate = Y+"-"+M+"-"+D+" "+H+":"+i+":"+S;
+            $("#expire_date").val(nowdate);
+        }
+
+        function tozero(){
+            $("#expire_date").val("00-00-00 00:00:00");
+        }
+
+        $("#tozero").click(function(){
+            tozero();
+        });
+        $("#timeReseter").click(function(){
+            resetTime();
         });
     })
 </script>

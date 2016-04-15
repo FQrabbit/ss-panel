@@ -55,6 +55,22 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="ip" class="col-sm-3 control-label">IP地址</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="ip" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="field_name" class="col-sm-3 control-label">字段名</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="field_name" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
 
                                         <div class="col-sm-9">
@@ -155,6 +171,8 @@
                 data: {
                     name: $("#name").val(),
                     server: $("#server").val(),
+                    ip: $("#ip").val(),
+                    filed_name: $("#filed_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
                     rate: $("#rate").val(),

@@ -1,5 +1,9 @@
 {include file='user/main.tpl'}
-
+{if $user->plan == "A" and $node->type == 1}
+    <script>
+        window.location.href = "/user/node";
+    </script>
+{/if}
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
@@ -37,6 +41,7 @@
                         <i class="fa fa-code"></i>
 
                         <h3 class="box-title">配置地址</h3>
+                        <a href="{$ssqr}" class="btn w3-teal w3-small pull-right">手机用户点此一键导入</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

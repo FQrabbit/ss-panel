@@ -55,6 +55,22 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="ip" class="col-sm-3 control-label">IP地址</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="ip" value="{$node->ip}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="field_name" class="col-sm-3 control-label">字段名</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="field_name" value="{$node->field_name}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
 
                                         <div class="col-sm-9">
@@ -94,13 +110,13 @@
                                 <fieldset class="col-sm-6">
                                     <legend>描述信息</legend>
                                     <div class="form-group">
-                                        <label for="type" class="col-sm-3 control-label">是否显示</label>
+                                        <label for="type" class="col-sm-3 control-label">是否为付费节点</label>
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="type">
-                                                <option value="1" {if $node->type==1}selected="selected"{/if}>显示
+                                                <option value="1" {if $node->type==1}selected="selected"{/if}>付费节点
                                                 </option>
-                                                <option value="0" {if $node->type==0}selected="selected"{/if}>隐藏
+                                                <option value="0" {if $node->type==0}selected="selected"{/if}>免费节点
                                                 </option>
                                             </select>
                                         </div>
@@ -156,6 +172,8 @@
                 data: {
                     name: $("#name").val(),
                     server: $("#server").val(),
+                    ip: $("#ip").val(),
+                    field_name: $("#field_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
                     rate: $("#rate").val(),
@@ -169,7 +187,7 @@
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/node'", 2000);
+                        window.setTimeout("location.href='/admin/node/{$node->id}/edit'", 2000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);

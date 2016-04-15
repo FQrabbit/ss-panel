@@ -70,7 +70,7 @@ class UserController extends BaseController
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
-        return $this->view()->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
+        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
     }
 
     public function profile($request, $response, $args)
@@ -122,7 +122,7 @@ class UserController extends BaseController
         $checkinCount = User::where("last_check_in_time", ">", (time()-24*3600))->count();
         $donateUserCount = User::where("ref_by", "=", 3)->count();
         $ana = array('allUserCount' => $allUserCount, 'paidUserCount' => $paidUserCount, 'donateUserCount' => $donateUserCount, 'usedTransfer' => $usedTransfer, 'activeUserCount' => $activeUserCount, "checkinCount" => $checkinCount);
-        return $this->view()->assign('ana', $ana)->assign('users', $users)->display('user/sys.tpl');
+        return $this->view()->assign('ana', $ana)->assign('url', $_SERVER['REQUEST_URI'])->assign('users', $users)->display('user/sys.tpl');
     }
 
     public function purchase()
@@ -140,6 +140,11 @@ class UserController extends BaseController
             ["name"=>"80元包年无限流量套餐","price"=>80,"body"=>"包年","time"=>"一年"]
         );
         return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->display('user/purchase.tpl');
+    }
+
+    public function qna()
+    {
+        return $this->view()->display('user/qna.tpl');
     }
 
     public function updatePassword($request, $response, $args)

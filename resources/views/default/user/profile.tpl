@@ -21,12 +21,20 @@
                     </div>
                     <div class="box-body">
                         <dl class="dl-horizontal">
-                            <dt>uid</dt>
+                            <dt>id</dt>
                             <dd>{$user->id}</dd>
                             <dt>用户名</dt>
                             <dd>{$user->user_name}</dd>
                             <dt>邮箱</dt>
                             <dd>{$user->email}</dd>
+                            <dt>邮箱验证状态</dt>
+                            <dd>
+                                {if $user->status == 1}
+                                    <code>已验证</code>
+                                {else}
+                                    <code>未验证</code><a id='validate' class='btn btn-success btn-sm' href='#' style='margin-left:10px'>点击发送验证邮件</a>
+                                {/if}
+                            </dd>
                             <dt>用户类型</dt>
                             <dd>
                                 {if $user->plan == "A"}
@@ -57,6 +65,17 @@
                     <div class="box-footer">
                         <a class="btn btn-danger btn-sm" href="kill">删除我的账户</a>
                     </div>
+                    <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
+                        <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-info"></i> 成功!</h4>
+                        <p id="msg-success-p"></p>
+                    </div>
+            
+                    <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
+                        <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
+                        <p id="msg-error-p"></p>
+                    </div>
                     <!-- /.box -->
                 </div>
             </div>
@@ -64,4 +83,45 @@
     </section>
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
+<script>
+    $(document).ready(function(){
+         function validate(){
+                $.ajax({
+                    type:"GET",
+                    url:"/_validate.php",
+                    dataType:"json",
+                    data:{
+                        email: "{$user->email}",
+                        id: "{$user->id}"
+                    },
+                    success:function(data){
+                        if(data.ok){
+                            $("#msg-error").hide(10);
+                            $("#msg-success").show(100);
+                            $("#msg-success-p").html(data.msg);
+                        }else{
+                            $("#msg-error").hide(10);
+                            $("#msg-error").show(100);
+                            $("#msg-error-p").html(data.msg);
+                        }
+                    },
+                    error:function(jqXHR){
+                        $("#msg-error").hide(10);
+                        $("#msg-error").show(100);
+                        $("#msg-error-p").html("发生错误："+jqXHR.status);
+                    }
+                }); 
+        }
+        $("#validate").click(function(){
+            validate();
+            $(this).hide(500);
+        });
+        $("#ok-close").click(function(){
+            $("#msg-success").hide(100);
+        });
+        $("#error-close").click(function(){
+            $("#msg-error").hide(100);
+        });
+    })
+</script>
 {include file='user/footer.tpl'}

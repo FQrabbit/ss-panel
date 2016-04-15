@@ -101,3 +101,7 @@ a,p,h5{
     background: #666;
     color: white;
 }
+
+a.btn.w3-teal.w3-small.pull-right:hover{
+    background: #1B8655 !important;
+}
