@@ -20,7 +20,7 @@
     <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/>
     <!-- jQuery 2.1.3 -->
     <script src="/assets/public/js/jquery.min.js"></script>
-    {if $url == "/user/sys"}
+    {if isset($url) }
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/public/css/jquery.dataTables.min.css">
     <!-- DataTables -->
