@@ -30,6 +30,12 @@ class UserController extends AdminController
         return $this->view()->assign('user', $user)->display('admin/user/edit.tpl');
     }
 
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
     public function update($request, $response, $args)
     {
         $id = $args['id'];

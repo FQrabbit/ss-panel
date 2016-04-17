@@ -9,6 +9,7 @@ namespace App\Models;
 use App\Services\Config;
 use App\Utils\Hash;
 use App\Utils\Tools;
+use App\Models\Node;
 
 class User extends Model
 
@@ -42,10 +43,17 @@ class User extends Model
 
     public function lastSsTime()
     {
-        if ($this->attributes['t'] == 0) {
+        $max = $this->attributes['us1t'];
+        if ($max == 0) {
             return "从未使用喵";
         }
-        return Tools::toDateTime($this->attributes['t']);
+        $node_t_list = Node::select('field_name');
+        foreach ($node_t_list as $a) {
+            if ($this->attributes[$a]>$max) {
+                $max = $this->attributes[$a];
+            }
+        }
+        return Tools::toDateTime($max);
     }
 
     public function lastCheckInTime()

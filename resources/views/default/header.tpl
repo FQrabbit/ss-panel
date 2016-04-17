@@ -9,17 +9,6 @@
     <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link rel="stylesheet" href="/assets/public/css/indexpage.css">
-    <script src="/assets/public/js/jQuery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.toggle').mouseover(function(){
-                $(this).children('ul').show();
-            })
-            $('.toggle').mouseout(function(){
-                $(this).children('ul').hide();
-            })
-        });
-    </script>
 </head>
 <body>
 <nav class=" lighten-1" role="navigation">
@@ -28,7 +17,7 @@
             <li><a href="/">首页</a></li>
             <li class="toggle">
                 <a href=#>客户端下载</a>
-                
+
                 <ul class="content" style="display:none">
                     <li><a href="http://pan.baidu.com/s/1dEu2XhB" target="_blank">Windows客户端</a></li>
                     <li><a href="http://pan.baidu.com/s/1mg4baXE" target="_blank">Android客户端</a></li>
@@ -56,7 +45,7 @@
 
         <ul id="nav-mobile" class="side-nav">
             <li><a href="/">首页</a></li>
-            <li><a href="http://shadowsocks.org/en/download/clients.html">客户端下载</a></li>
+            <li><a href="/clients.html">客户端下载</a></li>
             <li><a href="/code">邀请码</a></li>
             {if $user->isLogin}
                 <li><a href="/user">用户中心</a></li>
