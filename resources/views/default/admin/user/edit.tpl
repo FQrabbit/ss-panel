@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            用户编辑 #{$user->id}
+            用户编辑 #{$user->id} {$user->user_name}
             <small>Edit User</small>
         </h1>
     </section>
@@ -169,10 +169,24 @@
                                         <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
                                             <input class="form-control" id="expire_date" value="{$user->expire_date}">
                                             <div class="input-group-btn">
-                                                <button type="button" id="timeReseter" class="btn btn-default btn-flat">此时</button>
+                                                <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
                                             </div>
                                             <div class="input-group-btn">
-                                                <button type="button" id="tozero" class="btn btn-default btn-flat">归零</button>
+                                                <button type="button" class="btn btn-default btn-flat tozero">归零</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">购买时间</label>
+
+                                        <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
+                                            <input class="form-control" id="buy_date" value="{$user->buy_date}">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-flat tozero">归零</button>
                                             </div>
                                         </div>
                                     </div>
@@ -233,14 +247,14 @@
                                 </fieldset>
                                 <fieldset class="col-sm-12">
                                     <legend>邀请</legend>
-                                    <div class="form-group col-sm-6">
+                                    <!-- <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">可用邀请数量</label>
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="invite_num" type="number"
                                                    value="{$user->invite_num}">
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">邀请人ID</label>
@@ -281,7 +295,7 @@
                     port: $("#port").val(),
                     passwd: $("#passwd").val(),
                     transfer_enable: $("#transfer_enable").val(),
-                    invite_num: $("#invite_num").val(),
+                    // invite_num: $("#invite_num").val(),
                     method: $("#method").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
@@ -291,6 +305,7 @@
                     plan: $("#plan").val(),
                     ref_by: $("#ref_by").val(),
                     expire_date: $("#expire_date").val(),
+                    buy_date: $("#buy_date").val(),
                     status: $("#status").val()
                 },
                 success: function (data) {
@@ -328,7 +343,10 @@
             $("#msg-error").hide(100);
         });
 
-        function resetTime(){
+        $(".tozero").click(function(){
+            $(this).parent().parent().children("input").val("00-00-00 00:00:00");
+        });
+        $(".timeReseter").click(function(){
             var time,Y,M,D,H,M,S,nowdate;
             time = new Date();
             Y = time.getFullYear();
@@ -338,18 +356,7 @@
             i = time.getMinutes();
             S = time.getSeconds();
             nowdate = Y+"-"+M+"-"+D+" "+H+":"+i+":"+S;
-            $("#expire_date").val(nowdate);
-        }
-
-        function tozero(){
-            $("#expire_date").val("00-00-00 00:00:00");
-        }
-
-        $("#tozero").click(function(){
-            tozero();
-        });
-        $("#timeReseter").click(function(){
-            resetTime();
+            $(this).parent().parent().children("input").val(nowdate);
         });
     })
 </script>

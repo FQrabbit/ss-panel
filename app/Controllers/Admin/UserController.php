@@ -50,7 +50,7 @@ class UserController extends AdminController
         }
         $user->port = $request->getParam('port');
         $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
-        $user->invite_num = $request->getParam('invite_num');
+        // $user->invite_num = $request->getParam('invite_num');
         $user->method = $request->getParam('method');
         $user->enable = $request->getParam('enable');
         $user->is_admin = $request->getParam('is_admin');
@@ -61,6 +61,7 @@ class UserController extends AdminController
         $user->ref_by = $request->getParam('ref_by');
         $user->status = $request->getParam('status');
         $user->expire_date = $request->getParam('expire_date');
+        $user->buy_date = $request->getParam('buy_date');
         if (!$user->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";
