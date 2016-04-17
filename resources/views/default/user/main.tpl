@@ -26,7 +26,7 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/public/css/jquery.dataTables.min.css">
     <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script> 
+    <script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script>
     {/if}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

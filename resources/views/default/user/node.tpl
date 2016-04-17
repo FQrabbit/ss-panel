@@ -18,8 +18,8 @@
                 <div class="callout callout-warning">
                     <h4>注意!</h4>
                     <p>请勿在任何地方公开节点地址！</p>
-                    <p>以下节点均已支持auth_sha1协议，同时兼容原协议。并且支持开启tls1.0_session_auth插件。<a href="https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md" target="_blank">欲了解协议插件相关文档，请点此。</a></p>
-				    <p>{$msg}</p>
+                    <p>以下节点均已支持auth_sha1协议，同时兼容原协议。并且支持开启http_simple插件。<a href="https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md" target="_blank">欲了解协议插件相关文档，请点此。</a></p>
+				            <p>{$msg}</p>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
 						<img src="../assets/public/img/iconfont-server.png" alt="Server Node">
 					  </div>
 					  <div class="product-info">
-						<a href="#" class="product-title">{$node->name} <span class="label label-info pull-right">{$node->status}</span></a>
+						<a href="javascript:void(0);" class="product-title">{$node->name} <span class="label label-info pull-right">{$node->status}</span></a>
 						<p>
 						  {$node->info}
 						</p>
@@ -107,9 +107,9 @@
 					<div class="col-md-6">
 					  <ul class="nav nav-stacked">
 						<!-- <li><a href="./node/{$node->id}">流量比例 <span class="pull-right badge bg-blue">{$node->traffic_rate}</span></a></li> -->
-						<li><a href="./node/{$node->id}">连接密码 <span class="pull-right badge bg-blue">{$user->passwd}</span></a></li>
+            <li><a href="./node/{$node->id}">IP地址 <span class="pull-right badge bg-blue">{$node->ip}</span></a></li>
+						<li><a href="./node/{$node->id}">连接密码 <span class="pull-right badge bg-aqua">{$user->passwd}</span></a></li>
 						<!-- <li><a href="./node/{$node->id}">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li> -->
-						<li><a href="./node/{$node->id}">IP地址 <span class="pull-right badge bg-aqua">{$node->ip}</span></a></li>
 						<li><a href="./node/{$node->id}">15分钟在线人数 <span class="pull-right badge bg-green">{$node->getOnlineUserCount(15)}</span></a></li>
 						<!-- <li><a href="./node/{$node->id}">产生流量 <span class="pull-right badge bg-green">{$node->getTrafficFromLogs()}</span></a></li> -->
 						<!-- <li><a href="./node/{$node->id}">Uptime: <span class="pull-right badge bg-green">{$node->getNodeUptime()}</span></a> -->
