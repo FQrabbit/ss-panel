@@ -61,6 +61,7 @@ class AdminController extends UserController
         $conf = [
             "app-name" => DbConfig::get('app-name'),
             "home-code" => DbConfig::get('home-code'),
+            "home-purchase" => DbConfig::get('home-purchase'),
             "analytics-code" => DbConfig::get('analytics-code'),
             "user-index" => DbConfig::get('user-index'),
             "user-node" => DbConfig::get('user-node'),
@@ -73,6 +74,7 @@ class AdminController extends UserController
         $config = [
             "analytics-code" => $request->getParam('analyticsCode'),
             "home-code" => $request->getParam('homeCode'),
+            "home-purchase" => $request->getParam('homePurchase'),
             "app-name" => $request->getParam('appName'),
             "user-index" => $request->getParam('userIndex'),
             "user-node" => $request->getParam('userNode'),

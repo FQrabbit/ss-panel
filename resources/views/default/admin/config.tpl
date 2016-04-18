@@ -48,6 +48,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>购买页公告</label>
+                                <textarea class="form-control" id="home-purchase" rows="3"
+                                          placeholder="Enter ...">{$conf['home-purchase']}</textarea>
+                            </div>
+
+                            <div class="form-group">
                                 <label>邀请页公告</label>
                                 <textarea class="form-control" id="home-code" rows="3"
                                           placeholder="Enter ...">{$conf['home-code']}</textarea>
@@ -102,6 +108,7 @@
                 data: {
                     analyticsCode: $("#analytics-code").val(),
                     homeCode: $("#home-code").val(),
+                    homePurchase: $("#home-purchase").val(),
                     appName: $("#app-name").val(),
                     userIndex: $("#user-index").val(),
                     userNode: $("#user-node").val()
