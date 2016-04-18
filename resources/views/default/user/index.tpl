@@ -25,9 +25,7 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
-      	                        <div>1. 流量不会重置，可以通过签到获取流量。</div>
-      	                        <div>2. 免费用户和付费用户每次签到可获得30-100M流量，捐助用户每次签到可获得300-400M流量。</div>
-      	                        <div>3. 自动清理注册超过一周不验证邮箱和三周不签到的免费用户(不包含付费用户与捐助用户)</div>
+                                <p>{$msg}</p>
       	                        <div class="w3-btn-group" style="margin-top:10px">
         		                        <a href="https://telegram.me/joinchat/BdFlBwGgEH9rdgp5JSaxGA" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right" style="width:33.3%;border-color:white !important">Telegram</a>
         		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right w3-border-left" style="width:33.3%;border-color:white !important">G+社群</a>

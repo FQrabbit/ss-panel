@@ -17,9 +17,7 @@
             <div class="col-md-12">
                 <div class="callout callout-warning">
                     <h4>注意!</h4>
-                    <p>请勿在任何地方公开节点地址！</p>
-                    <p>以下节点均已支持auth_sha1协议，同时兼容原协议。并且支持开启http_simple插件。<a href="https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md" target="_blank">欲了解协议插件相关文档，请点此。</a></p>
-				            <p>{$msg}</p>
+		            <p>{$msg}</p>
                 </div>
             </div>
         </div>

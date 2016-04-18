@@ -47,18 +47,18 @@
 
 <!--  Scripts-->
 <!-- <script src="/assets/public/js/jquery.min.js"></script> -->
-<script src="/assets/public/js/jQuery.min.js"></script>
+<script src="/assets/public/js/jquery.min.js"></script>
 <script src="/assets/materialize/js/materialize.min.js"></script>
 <script src="/assets/materialize/js/init.js"></script>
 <script>
-		$(document).ready(function() {
-				$('.toggle').mouseover(function(){
-						$(this).children('ul').show();
-				})
-				$('.toggle').mouseout(function(){
-						$(this).children('ul').hide();
-				})
-		});
+	$(document).ready(function() {
+			$('.toggle').mouseover(function(){
+					$(this).children('ul').show();
+			})
+			$('.toggle').mouseout(function(){
+					$(this).children('ul').hide();
+			})
+	});
 </script>
 </body>
 </html>
