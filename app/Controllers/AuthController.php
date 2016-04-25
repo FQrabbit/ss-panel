@@ -38,13 +38,13 @@ class AuthController extends BaseController
 
         if ($user == null) {
             $res['ret'] = 0;
-            $res['msg'] = "401 邮箱或者密码错误";
+            $res['msg'] = "401 账号不存在。";
             return $this->echoJson($response, $res);
         }
 
         if (!Hash::checkPassword($user->pass, $passwd)) {
             $res['ret'] = 0;
-            $res['msg'] = "402 邮箱或者密码错误";
+            $res['msg'] = "402 密码错误, 请重新输入。";
             return $this->echoJson($response, $res);
         }
         // @todo
@@ -86,6 +86,13 @@ class AuthController extends BaseController
         //     $res['msg'] = "邀请码无效";
         //     return $this->echoJson($response, $res);
         // }
+
+        // check name length
+        if(strlen($name) < 1) {
+        	$res['ret'] = 0;
+        	$res['msg'] = "昵称太短";
+            return $this->echoJson($response, $res);
+        }
 
         // check email format
         if (!Check::isEmailLegal($email)) {
