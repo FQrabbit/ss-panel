@@ -98,15 +98,7 @@
                         <div class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">连接密码</label>
-
                                 <div class="col-sm-9">
-<<<<<<< HEAD
-                                    <input type="text" id="sspwd" placeholder="输入新连接密码" class="form-control">
-                                </div>
-                                <!-- div clss="col-sm-2">
-                                    <button type="submit" id="ss-pwd-update" class="btn btn-primary">修改</button>
-                                </div> -->
-=======
                                     <div class="input-group">
                                         <input type="text" id="sspwd" placeholder="输入新连接密码" class="form-control">
                                         <div class="input-group-btn">
@@ -114,25 +106,7 @@
                                         </div>
                                     </div>
                                 </div>
->>>>>>> refs/remotes/orvice/master
                             </div>
-
-                            <!-- <div class="form-group">
-                                <label class="col-sm-3 control-label">加密方式</label>
-
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input type="text" id="method" placeholder="输入新加密方式" class="form-control">
-                                        <div class="input-group-btn">
-                                            <button type="submit" id="method-update" class="btn btn-primary">修改</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
-                        </div>
-                        <div class="box-footer">
-                            <button type="submit" id="ss-pwd-update" class="btn btn-primary">修改</button>
                         </div>
                     </div>
                     <!-- /.box-body -->
