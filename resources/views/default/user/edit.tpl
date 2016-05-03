@@ -107,11 +107,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">当前端口</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" id="ssport" placeholder="{$user->port}" class="form-control" disabled>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="portreset" class="btn btn-primary">重置端口</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
+
             </div>
             <!-- /.col (right) -->
 
@@ -183,6 +195,29 @@
     })
 </script>
 
+<script>
+    $(document).ready(function () {
+        $("#portreset").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "resetport",
+                dataType: "json",
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
 
 <script>
     // $(document).ready(function () {

@@ -186,6 +186,19 @@ class UserController extends BaseController
         $res['ret'] = 1;
         return $this->echoJson($response, $res);
     }
+    
+    public function ResetPort($request, $response, $args)
+    {
+        
+        $user = Auth::getUser();
+        $user->port=Tools::getAvPort();
+        $user->save();
+        
+        
+        $res['ret'] = 1;
+        $res['msg'] = "设置成功，新端口是".$user->port;
+        return $response->getBody()->write(json_encode($res));
+    }
 
     public function updateMethod($request, $response, $args)
     {
