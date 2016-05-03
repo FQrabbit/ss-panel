@@ -169,4 +169,25 @@ class Tools
         }
         return $user->port;
     }
+    
+    public static function getAvPort()
+    {
+        $retry=10;
+        $i=0;
+        while($i<$retry)
+        {
+            $port=(int)rand(10002,65535);
+            $user = User::where('port', $port)->first();
+            if ($user == null) {
+                return $port; 
+            }
+            else
+            {
+                $i++;
+            }
+            
+        }
+        
+        return (int)Rand(0,65535);
+    }
 }

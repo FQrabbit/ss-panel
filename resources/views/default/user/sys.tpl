@@ -14,16 +14,13 @@
                 <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="box box-primary">
-                        <!-- div class="box-header">
-                            <h3 class="box-title">统计信息</h3>
-                        </div><!-- /.box-header --> 
                         <div class="box-body">
                             <div class="callout callout-warning">
                                 <h4>注意！</h4>
                                 <p>流量统计仅供参考，在线人数有一小会儿的延迟。</p>
                             </div>
                             <p>当前时间：{date("Y-m-d H:i",time())}</p>
-                            <p>{$config["appName"]}本月已经产生流量<code>{$ana["usedTransfer"]}</code>GB。</p>
+                            <p>{$config["appName"]}本月已经产生流量<code>{$ana["usedTransfer"]}</code>。</p>
                             <p>注册用户：<code>{$ana["allUserCount"]}</code></p>
                             <p>已经有<code>{$ana["activeUserCount"]}</code>个用户使用了{$config["appName"]}服务。</p>
                             <p>24小时签到用户：<code>{$ana["checkinCount"]}</code></p>

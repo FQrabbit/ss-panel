@@ -27,7 +27,7 @@
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
       	                        <div class="w3-btn-group" style="margin-top:10px">
-        		                        <a href="https://telegram.me/joinchat/BdFlBwGgEH9rdgp5JSaxGA" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right" style="width:33.3%;border-color:white !important">Telegram</a>
+        		                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right" style="width:33.3%;border-color:white !important">Telegram群组</a>
         		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right w3-border-left" style="width:33.3%;border-color:white !important">G+社群</a>
         		                        <a class="w3-btn w3-green w3-border-white w3-border-left" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3" style="width:33.3%;border-color:white !important">QQ群</a>
       	                        </div>

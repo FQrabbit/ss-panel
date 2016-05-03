@@ -84,7 +84,12 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h4>Surge使用步骤</h4>
-
+                                <p>您要先安装 surge:(以下安装方法来源于互联网)</p>
+                                <ol>
+                                    <li>电脑上安装 PP 助手 http://pro.25pp.com。</li>
+                                    <li>然后 手机连电脑，然后信任 PP助手。</li>
+                                    <li>下载 <a href="/downloads/Surge_pp.ipa">surge</a>，用 PP 助手安装。</li>
+                                </ol>
                                 <p>基础配置只需要做一次：
                                 <ol>
                                     <li>打开 Surge ，点击右上角“Edit”，点击“Download Configuration from URL”</li>

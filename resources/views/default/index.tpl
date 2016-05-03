@@ -58,10 +58,8 @@
 			<ul id="headernavigation" class="nav navbar-nav">
 				<li class="active"><a href="#page-top">Home</a></li>
 				<li><a href="#about">Plan</a></li>
-				<li><a href="#subscribe">Clients</a></li>
+				<li><a href="#subscribe">Client</a></li>
 				<li><a href="#contact">Contact</a></li>
-				<!-- <li><a href="/auth/register">Register</a></li>
-				<li><a href="/user">Sign in</a></li> -->
 			</ul> <!-- /.nav .navbar-nav -->
 		</nav> <!-- /.navbar-collapse  -->
 	</div><!-- /#main-menu -->
@@ -96,7 +94,7 @@
 			<div class="container">
 				<h3 class="section-name">
 					<span>
-						Plans
+						Plan
 					</span>
 				</h3><!-- /.section-name -->
 				<h2 class="section-title">
@@ -280,11 +278,6 @@
 				</p><!-- /.section-description -->
 
 				<div class="social-btn-container">
-
-					<!-- <span class="social-btn-box">
-						<a target="_blank" href="#" class="twitter-btn"><i class="fa fa-twitter"></i></a>
-					</span> --><!-- /.social-btn-box -->
-
 					<span class="social-btn-box">
 						<a target="_blank" href="https://plus.google.com/communities/102799415585211637190" class="google-plus-btn"><i class="fa fa-google-plus"></i></a>
 					</span><!-- /.social-btn-box -->
@@ -294,7 +287,7 @@
 					</span><!-- /.social-btn-box -->
 
 					<span class="social-btn-box">
-						<a target="_blank" href="https://telegram.me/joinchat/BdFlBwGgEH9rdgp5JSaxGA" class="telegram-btn"><i class="fa fa-paper-plane"></i></a>
+						<a target="_blank" href="https://telegram.me/shadowsky" class="telegram-btn"><i class="fa fa-paper-plane"></i></a>
 					</span><!-- /.social-btn-box -->
 
 

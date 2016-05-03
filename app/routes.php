@@ -56,6 +56,7 @@ $app->group('/user', function () {
     $this->get('/kill', 'App\Controllers\UserController:kill');
     $this->post('/kill', 'App\Controllers\UserController:handleKill');
     $this->get('/logout', 'App\Controllers\UserController:logout');
+    $this->post('/resetport', 'App\Controllers\UserController:ResetPort');
     $this->get('/purchase', 'App\Controllers\UserController:purchase');
     $this->get('/qna', 'App\Controllers\UserController:qna');
 })->add(new Auth());

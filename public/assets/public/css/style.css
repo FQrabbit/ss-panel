@@ -987,9 +987,10 @@ form.news-letter .btn:hover{
 	text-align: center;
 	line-height: 30px;
 	color: #1a1a1a;
+    font-weight: bolder;
 }
 #footer-section p a{
-	color: #3498db;
+	color: black;
 }
 /* 8 - Footer Section End 
 ---------------------------------------------------------------------- */
