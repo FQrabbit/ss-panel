@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests;
+
+use PHPUnit_Framework_TestCase;
 use App\Services\Config;
 use Slim\Http\Environment;
 use Slim\HTTP\Request;
@@ -10,6 +13,11 @@ class TestCase extends PHPUnit_Framework_TestCase
     public $app;
 
     public $request, $response;
+
+    public function setUp()
+    {
+        $this->setTestingEnv();
+    }
 
 
     public function requestFactory($method, $path, $options)

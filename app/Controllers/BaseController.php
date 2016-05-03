@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-
+use Slim\App;
 use App\Services\Auth;
 use App\Services\View;
 
@@ -12,21 +12,28 @@ use App\Services\View;
 class BaseController
 {
 
-    public $view;
+    protected $view;
 
-    public $smarty;
+    protected $smarty;
+
+    protected $app;
 
     public function construct__()
     {
-
     }
 
+    /**
+     * @return \Smarty
+     */
     public function smarty()
     {
         $this->smarty = View::getSmarty();
         return $this->smarty;
     }
 
+    /**
+     * @return \Smarty
+     */
     public function view()
     {
         return $this->smarty();
@@ -44,6 +51,11 @@ class BaseController
         return $newResponse;
     }
 
+    /**
+     * @param $response
+     * @param $to
+     * @return mixed
+     */
     public function redirect($response, $to)
     {
         $newResponse = $response->withStatus(302)->withHeader('Location', $to);

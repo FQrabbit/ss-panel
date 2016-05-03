@@ -1,8 +1,11 @@
 <?php
 
+namespace Tests;
+
 
 class AuthTest extends TestCase
 {
+
     public function testAuthLogin()
     {
         $this->setProdEnv();
@@ -12,6 +15,7 @@ class AuthTest extends TestCase
 
     public function testAuthRegister()
     {
+        $this->setProdEnv();
         $this->get('/auth/register');
         $this->assertEquals('200', $this->response->getStatusCode());
     }
