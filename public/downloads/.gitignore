@@ -1,1 +1,4 @@
-Surge_pp.ipa
+*
+!.gitignore
+!ProxyBase.conf
+!SSEncrypt.module
