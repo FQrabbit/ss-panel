@@ -1,3 +1,8 @@
-pay/
-tools/
-Medoo.php
+*
+!assets/
+!downloads/
+!.gitignore
+!.htaccess
+!favicon.ico
+!index.php
+!robots.txt
