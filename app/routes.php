@@ -35,6 +35,7 @@ $app->get('/', 'App\Controllers\HomeController:index');
 $app->get('/code', 'App\Controllers\HomeController:code');
 $app->get('/purchase', 'App\Controllers\HomeController:purchase');
 $app->get('/tos', 'App\Controllers\HomeController:tos');
+$app->get('/clients', 'App\Controllers\HomeController:clients');
 $app->get('/debug', 'App\Controllers\HomeController:debug');
 
 // User Center

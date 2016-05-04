@@ -2,9 +2,3 @@
 .env
 vendor/
 composer.phar
-public/pay
-public/tools
-public/test.php
-public/_validate.php
-public/activate.php
-public/Medoo.php
