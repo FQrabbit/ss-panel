@@ -178,7 +178,8 @@ code, kbd, pre, samp {
     margin:2px !important;
 }
 .btn.focus, .btn:focus, .btn:hover {
-    background-color: black !important;
+    background-color: rgba(0, 0, 0, 0.63) !important;
+    border-color: rgba(0, 0, 0, 0.63) !important;
 }
 .card{
     -webkit-transition: all .1s ease-out;
@@ -216,6 +217,7 @@ a.btn.w3-teal.w3-small.pull-right:hover{
 
 .node-list>tbody>tr>td{
     padding:12px !important;
+    border: none;
 }
 
 .bb-wrapper {
