@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-group has-feedback">
-            <input type="text" id="email" class="form-control" placeholder="邮箱"/>
+            <input type="text" id="email" class="form-control" placeholder="邮箱(请尽量不要用qq邮箱)"/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
 
@@ -67,6 +67,20 @@
         <a href="/auth/login" class="text-center">已经注册？请登录</a>
     </div><!-- /.form-box -->
 </div><!-- /.register-box -->
+<div class="bb-wrapper">
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
 
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>

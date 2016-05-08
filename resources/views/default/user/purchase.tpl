@@ -24,6 +24,7 @@
                                     <th>价格</th>
                                     <th>期限</th>
                                     <th>节点</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,6 +60,7 @@
                                 <th>价格</th>
                                 <th>期限</th>
                                 <th>节点</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>

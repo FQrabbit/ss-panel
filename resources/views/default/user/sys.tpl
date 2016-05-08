@@ -29,7 +29,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 style="text-align:center"><strong>付费用户列表</strong></h4>
-                                    <table id="paid_user_table" class="display" cellspacing="0" width="100%">
+                                    <table id="paid_user_table" class="display">
                                         <thead>
                                             <tr>
                                                 <th>uid</th>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h4 style="text-align:center"><strong>捐助榜</strong></h4>
-                                    <table id="donate_table" class="display" cellspacing="0">
+                                    <table id="donate_table" class="display">
                                         <thead>
                                             <tr>
                                                 <th>uid</th>

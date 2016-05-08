@@ -3,12 +3,12 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+<!--     <section class="content-header">
         <h1>
             节点列表
             <small>Node List</small>
         </h1>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,108 +22,60 @@
             </div>
         </div>
 
+
+
+		  <div class="row">
+		  	<div class="col-md-12">
+		  		<div class="panel">
+		  			<div class="panel-heading">
+		  				<h3>节点列表</h3>
+		  			</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="table-responsive">
+									<table class="table table-hover table-striped node-list">
+										<thead>
+											<tr>
+												<th>节点名</th>
+												<th>状态</th>
+												<th>地址</th>
+												<th>加密</th>
+												<th>15分钟在线人数</th>
+												<th>说明</th>
+											</tr>
+										</thead>
+										<tbody>
 		{foreach $nodes as $node}
-			<!-- 对免费用户做的处理 -->
 			{if $user->plan == "A" and $node->type == 1}
-		  <div class="row">
-			<div class="col-md-12">
-			  <div class="box box-widget">
-				<div class="box-body">
-				  <ul class="products-list product-list-in-box">
-					<li class="item">
-					  <div class="product-img">
-						<img src="../assets/public/img/iconfont-server.png" alt="Server Node">
-					  </div>
-					  <div class="product-info">
-						<a href="javascript:void(0);" class="product-title">{$node->name} <span class="label label-info pull-right">{$node->status}</span></a>
-						<p>
-						  {$node->info}
-						</p>
-					  </div>
-					</li><!-- /.item -->
-				  </ul>
-				</div>
-				<div class="box-footer no-padding">
-				<div class="row">
-					<div class="col-md-6">
-					  <ul class="nav nav-stacked">
-						<li><a href="javascript:void(0);">节点地址 <span class="pull-right badge bg-blue">付费用户可见
-						</span></a></li>
-						<li><a href="javascript:void(0);">连接端口 <span class="pull-right badge bg-aqua">{$user->port}</span></a></li>
-						<li><a href="javascript:void(0);">加密方式 <span class="pull-right badge bg-green">{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</span></a></li>
-                        <!-- <li><a href="javascript:void(0);">负载: <span class="pull-right badge bg-green">{$node->getNodeLoad()}</span></a></li> -->
-					  </ul>
-					</div>
-					<div class="col-md-6">
-					  <ul class="nav nav-stacked">
-						<!-- <li><a href="javascript:void(0);">流量比例 <span class="pull-right badge bg-blue">{$node->traffic_rate}</span></a></li> -->
-            <li><a href="javascript:void(0);">IP地址 <span class="pull-right badge bg-blue">付费用户可见</span></a></li>
-						<li><a href="javascript:void(0);">连接密码 <span class="pull-right badge bg-aqua">{$user->passwd}</span></a></li>
-						<!-- <li><a href="javascript:void(0);">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li> -->
-						<li><a href="javascript:void(0);">15分钟在线人数 <span class="pull-right badge bg-green">{$node->getOnlineUserCount(15)}</span></a></li>
-                    	<!-- <li><a href="javascript:void(0);">Uptime: <span class="pull-right badge bg-green">{$node->getNodeUptime()}</span></a></li> -->
-					  </ul>
-					</div>
-				</div>
-
-				</div>
-			  </div><!-- /.widget-user -->
-			</div><!-- /.col -->
-		  </div><!-- /.row -->
-
+												<tr>
+													<td><b>{$node->name}</b></td>
+													<td><span class="label label-success">{$node->status}</span></td>
+													<td>付费用户可见</td>
+													<td>{$node->method}</td>
+													<td><span class="badge">{$node->getOnlineUserCount(15)}</span></td>
+													<td>{$node->info}</td>
+												</tr>
 			{else}
-
-		  <div class="row">
-			<div class="col-md-12">
-			  <div class="box box-widget">
-				<div class="box-body">
-				  <ul class="products-list product-list-in-box">
-					<li class="item">
-					  <div class="product-img">
-						<img src="../assets/public/img/iconfont-server.png" alt="Server Node">
-					  </div>
-					  <div class="product-info">
-						<a href="./node/{$node->id}" class="product-title">{$node->name} <span class="label label-info pull-right">{$node->status}</span></a>
-						<p>
-						  {$node->info}
-						</p>
-					  </div>
-					</li><!-- /.item -->
-				  </ul>
-				</div>
-				<div class="box-footer no-padding">
-				<div class="row">
-					<div class="col-md-6">
-					  <ul class="nav nav-stacked">
-						<li><a href="./node/{$node->id}">节点地址 <span class="pull-right badge bg-blue">{$node->server}
-						</span></a></li>
-						<li><a href="./node/{$node->id}">连接端口 <span class="pull-right badge bg-aqua">{$user->port}</span></a></li>
-						<li><a href="./node/{$node->id}">加密方式 <span class="pull-right badge bg-green">{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</span></a></li>
-	                    <!-- <li><a href="./node/{$node->id}">负载: <span class="pull-right badge bg-green">{$node->getNodeLoad()}</span></a></li> -->
-					  </ul>
-					</div>
-					<div class="col-md-6">
-					  <ul class="nav nav-stacked">
-						<!-- <li><a href="./node/{$node->id}">流量比例 <span class="pull-right badge bg-blue">{$node->traffic_rate}</span></a></li> -->
-            <li><a href="./node/{$node->id}">IP地址 <span class="pull-right badge bg-blue">{$node->ip}</span></a></li>
-						<li><a href="./node/{$node->id}">连接密码 <span class="pull-right badge bg-aqua">{$user->passwd}</span></a></li>
-						<!-- <li><a href="./node/{$node->id}">实时在线人数 <span class="pull-right badge bg-aqua">{$node->getOnlineUserCount()}</span></a></li> -->
-						<li><a href="./node/{$node->id}">15分钟在线人数 <span class="pull-right badge bg-green">{$node->getOnlineUserCount(15)}</span></a></li>
-						<!-- <li><a href="./node/{$node->id}">产生流量 <span class="pull-right badge bg-green">{$node->getTrafficFromLogs()}</span></a></li> -->
-						<!-- <li><a href="./node/{$node->id}">Uptime: <span class="pull-right badge bg-green">{$node->getNodeUptime()}</span></a> -->
-	                	</li>
-					  </ul>
-					</div>
-				</div>
-
-				</div>
-			  </div><!-- /.widget-user -->
-			</div><!-- /.col -->
-		  </div><!-- /.row -->
+												<tr onclick="window.document.location='./node/{$node->id}'" style="cursor: pointer;">
+													<td><b>{$node->name}</b></td>
+													<td><span class="label label-success">{$node->status}</span></td>
+													<td>{$node->server}</td>
+													<td>{$node->method}</td>
+													<td><span class="badge">{$node->getOnlineUserCount(15)}</span></td>
+													<td>{$node->info}</td>
+												</tr>
 			{/if}
-
-
 		{/foreach}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+		  		</div>
+		  	</div>
+		  </div>
     </section>
     <!-- /.content -->
 </div><!-- /.content-wrapper -->

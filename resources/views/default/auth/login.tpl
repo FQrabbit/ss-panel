@@ -44,6 +44,20 @@
 
     </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->
+<div class="bb-wrapper">
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
 
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>
