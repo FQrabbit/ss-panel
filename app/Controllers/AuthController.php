@@ -7,12 +7,12 @@ use App\Models\User;
 use App\Services\Auth;
 use App\Services\Auth\EmailVerify;
 use App\Services\Config;
+use App\Services\Logger;
 use App\Services\Mail;
 use App\Utils\Check;
 use App\Utils\Hash;
 use App\Utils\Http;
 use App\Utils\Tools;
-use App\Services\Logger;
 
 
 /**
@@ -20,8 +20,22 @@ use App\Services\Logger;
  */
 class AuthController extends BaseController
 {
+    // Register Error Code
+    const WrongCode = 501;
+    const IllegalEmail = 502;
+    const PasswordTooShort = 511;
+    const PasswordNotEqual = 512;
+    const EmailUsed = 521;
 
-    public function login()
+    // Login Error Code
+    const UserNotExist = 601;
+    const UserPasswordWrong = 602;
+
+    // Verify Email
+    const VerifyEmailWrongEmail = 701;
+    const VerifyEmailExist = 702;
+
+    public function login($request, $response, $args)
     {
         return $this->view()->display('auth/login.tpl');
     }
@@ -39,13 +53,15 @@ class AuthController extends BaseController
 
         if ($user == null) {
             $res['ret'] = 0;
-            $res['msg'] = "401 账号不存在。";
+            $res['error_code'] = self::UserNotExist;
+            $res['msg'] = "账号不存在。";
             return $this->echoJson($response, $res);
         }
 
         if (!Hash::checkPassword($user->pass, $passwd)) {
             $res['ret'] = 0;
-            $res['msg'] = "402 密码错误, 请重新输入。";
+            $res['error_code'] = self::UserPasswordWrong;
+            $res['msg'] = "密码错误, 请重新输入。";
             return $this->echoJson($response, $res);
         }
         // @todo
@@ -61,7 +77,7 @@ class AuthController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function register($request, $response, $next)
+    public function register($request, $response, $args)
     {
         $ary = $request->getQueryParams();
         $code = "";
@@ -72,7 +88,7 @@ class AuthController extends BaseController
         return $this->view()->assign('code', $code)->assign('requireEmailVerification', $requireEmailVerification)->display('auth/register.tpl');
     }
 
-    public function registerHandle($request, $response, $next)
+    public function registerHandle($request, $response, $args)
     {
         $name = $request->getParam('name');
         $email = $request->getParam('email');
@@ -86,26 +102,29 @@ class AuthController extends BaseController
         // $c = InviteCode::where('code', $code)->first();
         // if ($c == null) {
         //     $res['ret'] = 0;
+        //     $res['error_code'] = self::WrongCode;
         //     $res['msg'] = "邀请码无效";
         //     return $this->echoJson($response, $res);
         // }
 
         // check name length
         if(strlen($name) < 1) {
-        	$res['ret'] = 0;
-        	$res['msg'] = "昵称太短";
+            $res['ret'] = 0;
+            $res['msg'] = "昵称太短";
             return $this->echoJson($response, $res);
         }
 
         // check email format
         if (!Check::isEmailLegal($email)) {
             $res['ret'] = 0;
+            $res['error_code'] = self::IllegalEmail;
             $res['msg'] = "邮箱无效";
             return $this->echoJson($response, $res);
         }
         // check pwd length
         if (strlen($passwd) < 8) {
             $res['ret'] = 0;
+            $res['error_code'] = self::PasswordTooShort;
             $res['msg'] = "密码太短";
             return $this->echoJson($response, $res);
         }
@@ -113,6 +132,7 @@ class AuthController extends BaseController
         // check pwd re
         if ($passwd != $repasswd) {
             $res['ret'] = 0;
+            $res['error_code'] = self::PasswordNotEqual;
             $res['msg'] = "两次密码输入不符";
             return $this->echoJson($response, $res);
         }
@@ -121,6 +141,7 @@ class AuthController extends BaseController
         $user = User::where('email', $email)->first();
         if ($user != null) {
             $res['ret'] = 0;
+            $res['error_code'] = self::EmailUsed;
             $res['msg'] = "邮箱已经被注册了";
             return $this->echoJson($response, $res);
         }
@@ -168,13 +189,14 @@ class AuthController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function sendVerifyEmail($request, $response, $next)
+    public function sendVerifyEmail($request, $response, $args)
     {
-        $res = array();
+        $res = [];
         $email = $request->getParam('email');
 
         if (!Check::isEmailLegal($email)) {
             $res['ret'] = 0;
+            $res['error_code'] = self::VerifyEmailWrongEmail;
             $res['msg'] = '邮箱无效';
             return $this->echoJson($response, $res);
         }
@@ -183,6 +205,7 @@ class AuthController extends BaseController
         $user = User::where('email', $email)->first();
         if ($user != null) {
             $res['ret'] = 0;
+            $res['error_code'] = self::VerifyEmailExist;
             $res['msg'] = "邮箱已经被注册了";
             return $this->echoJson($response, $res);
         }
@@ -190,18 +213,17 @@ class AuthController extends BaseController
         if (EmailVerify::sendVerification($email)) {
             $res['ret'] = 1;
             $res['msg'] = '验证代码已发送至您的邮箱，请在登录邮箱后将验证码填到相应位置.';
-        } else {
-            $res['ret'] = 0;
-            $res['msg'] = '邮件发送失败，请联系管理员';
+            return $this->echoJson($response, $res);
         }
+        $res['ret'] = 0;
+        $res['msg'] = '邮件发送失败，请联系管理员';
         return $this->echoJson($response, $res);
     }
 
-    public function logout($request, $response, $next)
+    public function logout($request, $response, $args)
     {
         Auth::logout();
-        $newResponse = $response->withStatus(302)->withHeader('Location', '/auth/login');
-        return $newResponse;
+        return $this->redirect($response, '/auth/login');
     }
 
 }

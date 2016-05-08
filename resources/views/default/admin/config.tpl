@@ -102,7 +102,7 @@
     $(document).ready(function () {
         $("#update").click(function () {
             $.ajax({
-                type: "POST",
+                type: "PUT",
                 url: "/admin/config",
                 dataType: "json",
                 data: {

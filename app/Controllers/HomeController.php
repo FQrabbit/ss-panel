@@ -2,6 +2,11 @@
 
 namespace App\Controllers;
 
+//use Psr\Http\Message\ServerRequestInterface as Request;
+//use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
+
 use App\Models\InviteCode;
 use App\Services\Auth;
 use App\Services\Config;
@@ -48,7 +53,12 @@ class HomeController extends BaseController
 
     public function debug($request, $response, $args)
     {
+        $server = [
+            "headers" => $request->getHeaders(),
+            "content_type" => $request->getContentType()
+        ];
         $res = [
+            "server_info" => $server,
             "ip" => Http::getClientIP(),
             "version" => Config::get('version'),
             "reg_count" => Check::getIpRegCount(Http::getClientIP()),
@@ -67,4 +77,14 @@ class HomeController extends BaseController
         return $this->view()->display('clients.tpl');
     }
 
+    public function postDebug(Request $request,Response $response, $args)
+    {
+        $res = [
+            "body" => $request->getBody(),
+            "pa" => $request->getParsedBody(),
+            "params" => $request->getParams(),
+            "name" => $request->getParam('name'),
+        ];
+        return $this->echoJson($response, $res);
+    }
 }

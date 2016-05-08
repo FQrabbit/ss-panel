@@ -37,6 +37,7 @@ $app->get('/purchase', 'App\Controllers\HomeController:purchase');
 $app->get('/tos', 'App\Controllers\HomeController:tos');
 $app->get('/clients', 'App\Controllers\HomeController:clients');
 $app->get('/debug', 'App\Controllers\HomeController:debug');
+$app->post('/debug', 'App\Controllers\HomeController:postDebug');
 
 // User Center
 $app->group('/user', function () {
@@ -85,9 +86,10 @@ $app->group('/admin', function () {
     $this->get('', 'App\Controllers\AdminController:index');
     $this->get('/', 'App\Controllers\AdminController:index');
     $this->get('/trafficlog', 'App\Controllers\AdminController:trafficLog');
+    $this->get('/checkinlog', 'App\Controllers\AdminController:checkinLog');
     // app config
     $this->get('/config', 'App\Controllers\AdminController:config');
-    $this->post('/config', 'App\Controllers\AdminController:updateConfig');
+    $this->put('/config', 'App\Controllers\AdminController:updateConfig');
     // Node Mange
     $this->get('/node', 'App\Controllers\Admin\NodeController:index');
     $this->get('/node/create', 'App\Controllers\Admin\NodeController:create');
