@@ -23,6 +23,9 @@ body{
     background-color: rgba(0, 0, 0, 0) !important;
     font-family: 'Pacifico','Microsoft Yahei';
 }
+.sidebar-toggle:hover{
+    background-color: #009688 !important;;
+}
 @media (min-width: 767px){
     .main-sidebar, .left-side, .main-header .logo {
     position: fixed !important;
@@ -174,7 +177,9 @@ code, kbd, pre, samp {
 .margin{
     margin:2px !important;
 }
-
+.btn.focus, .btn:focus, .btn:hover {
+    background-color: black !important;
+}
 .card{
     -webkit-transition: all .1s ease-out;
     -o-transition: all .1s ease-out;
