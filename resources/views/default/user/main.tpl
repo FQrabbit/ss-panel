@@ -36,6 +36,20 @@
     <![endif]-->
 </head>
 <body class="skin-blue">
+    <div class="bb-wrapper">
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 <!-- Site wrapper -->
 <div class="wrapper">
 
