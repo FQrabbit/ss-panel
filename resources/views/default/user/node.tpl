@@ -27,8 +27,8 @@
 		  <div class="row">
 		  	<div class="col-md-12">
 		  		<div class="panel">
-		  			<div class="panel-heading">
-		  				<h3>节点列表</h3>
+		  			<div class="panel-heading"><a id="android_add" class="btn w3-teal w3-small pull-right">android导入所有节点</a>
+		  				<h3>节点列表</h3> 
 		  			</div>
 					<div class="panel-body">
 						<div class="row">
@@ -40,8 +40,9 @@
 												<th>节点名</th>
 												<th>状态</th>
 												<th>地址</th>
-												<th>加密</th>
 												<th>15分钟在线人数</th>
+												<th>加密</th>
+												<th>二维码</th>
 												<th>说明</th>
 											</tr>
 										</thead>
@@ -52,17 +53,24 @@
 													<td><b>{$node->name}</b></td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>付费用户可见</td>
-													<td>{$node->method}</td>
 													<td><span class="badge">{$node->getOnlineUserCount(15)}</span></td>
+													<td>{$node->method}</td>
+													<td>
+														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
+													</td>
 													<td>{$node->info}</td>
 												</tr>
 			{else}
-												<tr onclick="window.document.location='./node/{$node->id}'" style="cursor: pointer;">
-													<td><b>{$node->name}</b></td>
+												<tr>
+													<td onclick="window.document.location='./node/{$node->id}'" style="cursor: pointer;"><b>{$node->name}</b></td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>{$node->server}</td>
-													<td>{$node->method}</td>
 													<td><span class="badge">{$node->getOnlineUserCount(15)}</span></td>
+													<td>{$node->method}</td>
+													<td>
+														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
+														<div class="qrcode" id="{$node->name}"></div>
+													</td>
 													<td>{$node->info}</td>
 												</tr>
 			{/if}
@@ -80,5 +88,32 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+<script src=" /assets/public/js/jquery.qrcode.min.js "></script>
+<script>
+	$("#android_add").click(function(){
+		var links = new Array({$android_add});
+		for(var i=0; i<links.length; i++){
+			window.open(links[i]);
+		}
+	});
+	$(".qr-toggle").click(function(){
+		$(this).next("div").toggle();
+		$(this).children().toggleClass("text-teal larger-text");
+	})
+	$(".qrcode").click(function(){
+		$(this).hide();
+		$(this).prev().children().toggleClass("text-teal larger-text");
+	})
+</script>
+
+<script>
+	$(document).ready(function(){
+		{foreach $node_to_add as $node}
+			jQuery("#{$node->name}").qrcode({
+		        "text":  '{$ssqrs[$node->name]}'
+		    })
+		{/foreach}
+	})
+</script>
 
 {include file='user/footer.tpl'}

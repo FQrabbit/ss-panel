@@ -220,6 +220,28 @@ a.btn.w3-teal.w3-small.pull-right:hover{
     border: none;
 }
 
+table>tbody>tr>td{
+  position: relative;
+}
+
+.qr-toggle{
+  cursor: pointer;
+}
+
+.qrcode{
+  position:fixed;
+  padding:15px 15px 10px;
+  background-color:white;
+  left:40%;
+  top:30%;
+  z-index:99;
+  display:none;
+}
+
+.larger-text{
+  font-size: larger;
+}
+
 .bb-wrapper {
     overflow: hidden;
     min-height: 100%;

@@ -47,7 +47,36 @@ class UserController extends BaseController
         $msg = DbConfig::get('user-node');
         $user = Auth::getUser();
         $nodes = Node::where('type', ">=", 0)->orderBy('sort')->get();
-        return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg', $msg)->display('user/node.tpl');
+        $free_nodes = Node::where('type', 0)->orderBy('sort')->get();
+        $android_add = "";
+        $ssqrs = array();
+        if ($user->plan == "A")
+        {
+            $node_to_add = $free_nodes;
+        }
+        else
+        {
+            $node_to_add = $nodes;
+        }
+        foreach ($node_to_add as $node)
+        {
+            $ary['server'] = $node->server;
+            $ary['server_port'] = $user->port;
+            $ary['password'] = $user->passwd;
+            $ary['method'] = $node->method;
+            $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
+            $ssqr = "ss://" . base64_encode($ssurl);
+            $ssqrs[$node->name] = $ssqr;
+            if ($android_add == "")
+            {
+                $android_add .="'".$ssqr."'";
+            }
+            else 
+            {
+                $android_add .=",'".$ssqr."'";
+            }
+        }
+        return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg',$msg)->assign('android_add',$android_add)->assign('ssqrs',$ssqrs)->assign('node_to_add',$node_to_add)->display('user/node.tpl');
     }
 
 
