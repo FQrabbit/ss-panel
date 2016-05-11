@@ -29,7 +29,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 style="text-align:center"><strong>付费用户列表</strong></h4>
-                                    <table id="paid_user_table" class="display">
+                                    <table id="paid_user_table" class="display hover">
                                         <thead>
                                             <tr>
                                                 <th>uid</th>
@@ -42,7 +42,7 @@
                                         {if $user->plan == "B"}
                                             <tr>
                                                 <td>{$user->id}</td>
-                                                <td>{$user->user_name}</td>
+                                                <td>{mb_substr($user->user_name, 0, 4, 'utf-8')}***</td>
                                                 <td>{$user->type}</td>
                                             </tr>
                                         {/if}
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h4 style="text-align:center"><strong>捐助榜</strong></h4>
-                                    <table id="donate_table" class="display">
+                                    <table id="donate_table" class="display hover">
                                         <thead>
                                             <tr>
                                                 <th>uid</th>
@@ -65,7 +65,7 @@
                                             {if $user->ref_by == 3}
                                                 <tr>
                                                     <td>{$user->id}</td>
-                                                    <td>{$user->user_name}</td>
+                                                    <td>{mb_substr($user->user_name, 0, 4, 'utf-8')}***</td>
                                                     <td>{$user->money}</td>
                                                 </tr>
                                             {/if}

@@ -27,9 +27,9 @@
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
       	                        <div class="w3-btn-group" style="margin-top:10px">
-        		                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right" style="width:33.3%;border-color:white !important">Telegram群组</a>
-        		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-white w3-border-right w3-border-left" style="width:33.3%;border-color:white !important">G+社群</a>
-        		                        <a class="w3-btn w3-green w3-border-white w3-border-left" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3" style="width:33.3%;border-color:white !important">QQ群</a>
+        		                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-right" style="width:33.3%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
+        		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-right w3-border-left" style="width:33.3%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
+        		                        <a class="w3-btn w3-green w3-border-left" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3" style="width:33.3%;border-color:rgba(0,0,0,0.2) !important">QQ群</a>
       	                        </div>
       							<button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
       	                    </div><!-- /.box-body -->
@@ -159,33 +159,6 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<script>
-    $(document).ready(function () {
-        $("#checkin").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/user/checkin",
-                    dataType: "json",
-                    success: function (data) {
-                        $("#checkin-msg").html(data.msg);
-                        $("#checkin-btn").hide();
-                    },
-                    error: function (jqXHR) {
-                        alert("发生错误：" + jqXHR.status);
-                    }
-                })
-        })
-        {if $user->status == 0}
-            var notifyModal = '<div id="notifyModal" class="w3-modal"><div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%"><header class="w3-container w3-teal"> <span onclick=$("#notifyModal").hide() class="w3-closebtn">×</span><h2>请验证邮箱</h2></header><div class="w3-container"><p style="padding-top:15px">请前往<a href="user/profile" class="w3-btn w3-teal w3-round w3-small w3-ripple">我的信息</a>页面验证邮箱以激活账号，否则节点将不可用。如果从注册时起超过两天不验证邮箱，账号将会被自动删除。</p></div></div></div>';
-            $("body").append(notifyModal);
-            $("#notifyModal").show();
-            $("#notifyModal").css("zIndex", 999);
-        {/if}
-    })
-</script>
-
-{include file='user/footer.tpl'}
-
 <div id="donateModal" class="w3-modal" style="z-index:999">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container w3-teal">
@@ -214,3 +187,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#checkin").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/checkin",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#checkin-msg").html(data.msg);
+                        $("#checkin-btn").hide();
+                    },
+                    error: function (jqXHR) {
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                })
+        })
+    })
+</script>
+
+{include file='user/footer.tpl'}

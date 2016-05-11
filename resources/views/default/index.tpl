@@ -274,7 +274,7 @@
 					Get in Touch 
 				</h2><!-- /.Section-title  -->
 				<p class="section-description">
-					如有任何疑問，歡迎通過一下方式與我取得聯係。
+					如有任何疑問，歡迎通過以下方式與我取得聯係。
 				</p><!-- /.section-description -->
 
 				<div class="social-btn-container">

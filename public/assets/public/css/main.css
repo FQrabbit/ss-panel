@@ -207,8 +207,12 @@ a,p,h5{
 }
 
 ::selection {
-    background: #666;
+    background: #B2DFDB;
     color: white;
+}
+
+.bg-dark-teal{
+  background-color: #00695C;
 }
 
 a.btn.w3-teal.w3-small.pull-right:hover{
@@ -245,25 +249,17 @@ table>tbody>tr>td{
 .bb-wrapper {
     overflow: hidden;
     min-height: 100%;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
 }
-/*.bg-bubbles {
-  position: absolute;
-  top: -150px;
-  left: 0;
-  width: 100%;
-  height: 130%;
-  z-index: 1;
-}*/
 .bg-bubbles li {
   position: absolute;
   list-style: none;
   display: block;
   width: 40px;
   height: 40px;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0);
   bottom: -160px;
   -webkit-animation: square 25s infinite;
   animation: square 25s infinite;
@@ -346,29 +342,39 @@ table>tbody>tr>td{
 }
 @-webkit-keyframes square {
   0% {
-    -webkit-transform: translateY(-20px);
-            transform: translateY(-20px);
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  5% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+            background-color: rgba(255, 255, 255, 0.15);
   }
   95%{
     background-color: rgba(255, 255, 255, 0.15);
   }
   100% {
-    -webkit-transform: translateY(-1000px) rotate(600deg);
-            transform: translateY(-1000px) rotate(600deg);
-    background-color: rgba(255, 255, 255, 0);
+    -webkit-transform: translateY(-700px) rotate(600deg);
+            transform: translateY(-700px) rotate(600deg);
+            background-color: rgba(255, 255, 255, 0);
   }
 }
 @keyframes square {
   0% {
-    -webkit-transform: translateY(-20px);
-            transform: translateY(-20px);
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  5% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+            background-color: rgba(255, 255, 255, 0.15);
   }
   95%{
     background-color: rgba(255, 255, 255, 0.15);
   }
   100% {
-    -webkit-transform: translateY(-1000px) rotate(600deg);
-            transform: translateY(-1000px) rotate(600deg);
-    background-color: rgba(255, 255, 255, 0);
+    -webkit-transform: translateY(-700px) rotate(600deg);
+            transform: translateY(-700px) rotate(600deg);
+            background-color: rgba(255, 255, 255, 0);
   }
 }

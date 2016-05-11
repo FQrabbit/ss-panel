@@ -53,7 +53,7 @@
 													<td><b>{$node->name}</b></td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>付费用户可见</td>
-													<td><span class="badge">{$node->getOnlineUserCount(15)}</span></td>
+													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
 													<td>{$node->method}</td>
 													<td>
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
@@ -65,7 +65,7 @@
 													<td onclick="window.document.location='./node/{$node->id}'" style="cursor: pointer;"><b>{$node->name}</b></td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>{$node->server}</td>
-													<td><span class="badge">{$node->getOnlineUserCount(15)}</span></td>
+													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
 													<td>{$node->method}</td>
 													<td>
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
