@@ -224,6 +224,16 @@ a.btn.w3-teal.w3-small.pull-right:hover{
     border: none;
 }
 
+.node-name{
+  color: #26A69A !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.node-name:hover{
+  color: #B2DFDB !important;
+}
+
 table>tbody>tr>td{
   position: relative;
 }
@@ -252,6 +262,7 @@ table>tbody>tr>td{
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: -1;
 }
 .bg-bubbles li {
   position: absolute;

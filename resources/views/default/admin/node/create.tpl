@@ -55,10 +55,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ip" class="col-sm-3 control-label">IP地址</label>
+                                        <label for="domain" class="col-sm-3 control-label">域名</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="ip" value="">
+                                            <input class="form-control" id="domain" value="">
                                         </div>
                                     </div>
 
@@ -72,9 +72,12 @@
 
                                     <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
-
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="method" value="">
+                                            <select class="form-control" id="method">
+                                                <option value="aes-256-cfb" selected="selected">aes-256-cfb</option>
+                                                <option value="chacha20">chacha20</option>
+                                                <option value="rc4-md5">rc4-md5</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -111,12 +114,13 @@
                                 <fieldset class="col-sm-6">
                                     <legend>描述信息</legend>
                                     <div class="form-group">
-                                        <label for="type" class="col-sm-3 control-label">是否显示</label>
+                                        <label for="type" class="col-sm-3 control-label">等级（0为免费，1为付费）</label>
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="type">
-                                                <option value="1" selected="selected">显示</option>
-                                                <option value="0">隐藏</option>
+                                                <option value="1" selected="selected">付费</option>
+                                                <option value="0">免费</option>
+                                                <option value="2">其他，测试，隐藏</option>
                                             </select>
                                         </div>
                                     </div>
@@ -171,8 +175,8 @@
                 data: {
                     name: $("#name").val(),
                     server: $("#server").val(),
-                    ip: $("#ip").val(),
-                    filed_name: $("#filed_name").val(),
+                    domain: $("#domain").val(),
+                    field_name: $("#field_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
                     rate: $("#rate").val(),

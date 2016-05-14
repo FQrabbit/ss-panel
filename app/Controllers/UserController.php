@@ -106,6 +106,67 @@ class UserController extends BaseController
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
         return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
     }
+    
+    public function getconf($request, $response, $args){
+        $user = Auth::getUser();
+        if ($user->plan=="A") {
+            $nodes = Node::where('type', 0)->orderBy('sort')->get();
+        }else{
+            $nodes = Node::where('type', ">=", 0)->orderBy('sort')->get();
+        }
+        $string='
+{
+        "index" : 1,
+        "random" : false,
+        "global" : false,
+        "enabled" : true,
+        "shareOverLan" : false,
+        "isDefault" : false,
+        "bypassWhiteList" : false,
+        "localPort" : 1080,
+        "pacUrl" : null,
+        "useOnlinePac" : false,
+        "reconnectTimes" : 3,
+        "randomAlgorithm" : 3,
+        "TTL" : 10,
+        "proxyEnable" : false,
+        "proxyType" : 0,
+        "proxyHost" : "",
+        "proxyPort" : 0,
+        "proxyAuthUser" : "",
+        "proxyAuthPass" : "",
+        "authUser" : "",
+        "authPass" : "",
+        "autoBan" : false,
+        "sameHostForSameTarget" : false
+}
+        ';
+        
+        
+        $json=json_decode($string,TRUE);
+        $temparray=array();
+        foreach($nodes as $node)
+        {
+            array_push($temparray,array("remarks"=>$node->name,
+                                        "server"=>$node->server,
+                                        "server_port"=>$user->port,
+                                        "method"=>($node->custom_method==1?$user->method:$node->method),
+                                        "obfs"=>$node->obfs,
+                                        "obfsparam"=>"cloudflare.com",
+                                        "remarks_base64"=>base64_encode($node->name),
+                                        "password"=>$user->passwd,
+                                        "tcp_over_udp"=>false,
+                                        "udp_over_tcp"=>false,
+                                        "protocol"=>$node->protocol,
+                                        "obfs_udp"=>false,
+                                        "enable"=>true));
+        }
+        $json["configs"]=$temparray;
+        $json = json_encode($json,JSON_PRETTY_PRINT);
+        $newResponse = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=gui-config.json');
+        $newResponse->getBody()->write($json);
+        return $newResponse;
+    }
 
     public function profile($request, $response, $args)
     {

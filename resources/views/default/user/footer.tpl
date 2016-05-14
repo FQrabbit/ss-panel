@@ -10,6 +10,20 @@
 </footer>
 </div><!-- ./wrapper -->
 
+<div class="bb-wrapper">
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
 
 <!-- Bootstrap 3.3.2 JS -->
 <script src="/assets/public/js/bootstrap.min.js" type="text/javascript"></script>

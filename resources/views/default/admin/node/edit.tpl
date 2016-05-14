@@ -55,10 +55,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ip" class="col-sm-3 control-label">IP地址</label>
+                                        <label for="domain" class="col-sm-3 control-label">域名</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="ip" value="{$node->ip}">
+                                            <input class="form-control" id="domain" value="{$node->domain}">
                                         </div>
                                     </div>
 
@@ -172,7 +172,7 @@
                 data: {
                     name: $("#name").val(),
                     server: $("#server").val(),
-                    ip: $("#ip").val(),
+                    domain: $("#domain").val(),
                     field_name: $("#field_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),

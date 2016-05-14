@@ -27,7 +27,9 @@
 		  <div class="row">
 		  	<div class="col-md-12">
 		  		<div class="panel">
-		  			<div class="panel-heading"><a id="android_add" class="btn w3-teal w3-small pull-right">android导入所有节点</a>
+		  			<div class="panel-heading">
+			  			<a id="android_add" class="btn w3-teal w3-small pull-right">android导入所有节点</a>
+			  			<a href="./getconf" class="btn w3-teal w3-small pull-right w3-margin-right">下载pc配置文件</a>
 		  				<h3>节点列表</h3> 
 		  			</div>
 					<div class="panel-body">
@@ -50,19 +52,18 @@
 		{foreach $nodes as $node}
 			{if $user->plan == "A" and $node->type == 1}
 												<tr>
-													<td><b>{$node->name}</b></td>
+													<td>{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>付费用户可见</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
 													<td>{$node->method}</td>
 													<td>
-														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
 													</td>
 													<td>{$node->info}</td>
 												</tr>
 			{else}
 												<tr>
-													<td onclick="window.document.location='./node/{$node->id}'" style="cursor: pointer;"><b>{$node->name}</b></td>
+													<td class="node-name" onclick="window.document.location='./node/{$node->id}'">{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>{$node->server}</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
