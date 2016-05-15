@@ -116,34 +116,27 @@
                                     <dd>{$user->port}</dd>
                                     <dt>密码</dt>
                                     <dd>{$user->passwd}</dd>
-                                    <!-- <dt>自定义加密方式</dt>
-                                    <dd>{$user->method}</dd> -->
                                     <dt>上次使用</dt>
                                     <dd>{$user->lastSsTime()}</dd>
                                     <dt>用户类型</dt>
                                     <dd>
-                                        {if $user->plan == "A"}
-                                            <span class="badge bg-green">免费用户</span>
-                                        {elseif $user->plan == "C"}
-                                            <span class="badge bg-green">特殊用户</span>
-                                        {else}
-                                            <span class="badge bg-green">付费用户</span>
-                                        {/if}
-
-                                        {if $user->ref_by == 3}
-                                            <span class="badge bg-green">捐助用户</span>
-                                        {/if}
+                                        <span class="badge bg-green">{$user->getUserClassName()}</span>
+                                {if $user->isDonator()}
+                                        <span class="badge bg-green">捐助用户</span>
+                                {/if}
                                     </dd>
-                                    {if $user->type != 1}
+
+                                {if $user->type != 1}
                                     <dt>当前套餐</dt>
                                     <dd>
                                         <span class="badge bg-green">{$user->type}套餐</span>
                                     </dd>
-                                    {/if}
-                                    {if $user->expire_date != 0}
-                                        <dt>到期时间</dt>
-                                        <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
-                                    {/if}
+                                {/if}
+
+                                {if $user->expire_date != 0}
+                                    <dt>到期时间</dt>
+                                    <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
+                                {/if}
                                 </dl>
                             </div>
                             <!-- /.box-body -->

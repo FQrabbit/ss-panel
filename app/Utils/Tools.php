@@ -212,7 +212,7 @@ class Tools
         $i=0;
         while($i<$retry)
         {
-            $port=(int)rand(10002,65535);
+            $port=(int)rand(10002,30000);
             $user = User::where('port', $port)->first();
             if ($user == null) {
                 return $port; 
@@ -226,4 +226,5 @@ class Tools
         
         return (int)Rand(0,65535);
     }
+
 }

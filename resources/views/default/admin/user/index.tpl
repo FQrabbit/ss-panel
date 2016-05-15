@@ -22,14 +22,16 @@
                                 <th>ID</th>
                                 <th>邮箱</th>
                                 <th>端口</th>
-                                <th>状态</th>
-                                <th>加密方式</th>
+                                <th>plan</th>
+                                <!-- <th>状态</th> -->
+                                <!-- <th>加密方式</th> -->
                                 <th>已用流量/总流量</th>
-                                <th>最后在线时间</th>
+                                <!-- <th>最后在线时间</th> -->
                                 <th>最后签到时间</th>
+                                <th>本月签到次数</th>
                                 <th>注册时间</th>
                                 <th>注册IP</th>
-                                <th>邀请者</th>
+                                <!-- <th>邀请者</th> -->
                                 <th>操作</th>
                             </tr>
                             {foreach $users as $user}
@@ -37,14 +39,16 @@
                                 <td>#{$user->id}</td>
                                 <td>{$user->email}</td>
                                 <td>{$user->port}</td>
-                                <td>{$user->enable}</td>
-                                <td>{$user->method}</td>
+                                <td>{$user->plan}</td>
+                                <!-- <td>{$user->enable}</td> -->
+                                <!-- <td>{$user->method}</td> -->
                                 <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
-                                <td>{$user->lastSsTime()}</td>
+                                <!-- <td>{$user->lastSsTime()}</td> -->
                                 <td>{$user->lastCheckInTime()}</td>
-                                <th>{$user->reg_date}</th>
-                                <th>{$user->reg_ip}</th>
-                                <th>{$user->ref_by}</th>
+                                <td>{$user->CheckInTimes()}</td>
+                                <td>{$user->reg_date}</td>
+                                <td>{$user->reg_ip}</td>
+                                <!-- <td>{$user->ref_by}</td> -->
                                 <td>
                                     <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
                                     <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="/admin/user/{$user->id}/delete">删除</a>

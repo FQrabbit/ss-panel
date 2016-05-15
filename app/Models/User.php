@@ -10,6 +10,7 @@ use App\Services\Config;
 use App\Utils\Hash;
 use App\Utils\Tools;
 use App\Models\Node;
+use App\Models\CheckInLog;
 
 class User extends Model
 
@@ -41,17 +42,22 @@ class User extends Model
         return $this->attributes['is_admin'];
     }
 
+    public function isDonator()
+    {
+        return $this->attributes['ref_by'] == 3;
+    }
+
     public function lastSsTime()
     {
-        $max = $this->attributes['us1t'];
-        if ($max == 0) {
-            return "从未使用喵";
-        }
-        $node_t_list = Node::select('field_name');
+        $max = 0;
+        $node_t_list = Node::lists("field_name");
         foreach ($node_t_list as $a) {
             if ($this->attributes[$a]>$max) {
                 $max = $this->attributes[$a];
             }
+        }
+        if ($max == 0) {
+            return "从未使用喵";
         }
         return Tools::toDateTime($max);
     }
@@ -62,6 +68,19 @@ class User extends Model
             return "从未签到";
         }
         return Tools::toDateTime($this->attributes['last_check_in_time']);
+    }
+
+    // 本月签到次数
+    public function checkInTimes()
+    {
+        $m = date("m");
+        $d = date("d");
+        $Y = date("Y");
+        $monthBeginTime = mktime(0, 0, 0, $m, 1, $Y);
+        $num = CheckInLog::where("user_id", $this->attributes['id'])
+                            ->where("checkin_at", ">", $monthBeginTime)
+                            ->count();
+        return $num;
     }
 
     public function regDate()
@@ -163,5 +182,23 @@ class User extends Model
         $uid = $this->attributes['id'];
         return InviteCode::where('user_id', $uid)->get();
     }
+    
+    public function getUserClassName()
+    {
+        $userplan = $this->attributes['plan'];
+        switch ($userplan) {
+                case 'B':
+                    $class = "付费用户";
+                    break;
 
+                case 'C':
+                    $class = "特殊用户";
+                    break;
+
+                default:
+                    $class = "免费用户";
+                    break;
+            }
+            return $class;
+    }
 }
