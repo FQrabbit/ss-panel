@@ -11,9 +11,41 @@ body{
 .content-wrapper{
     background: none !important;
 }
+@media (max-width: 767px){
+  .sidebar-open .main-header {
+      -webkit-transform: translate(230px, 0);
+      -ms-transform: translate(230px, 0);
+      -o-transform: translate(230px, 0);
+      transform: translate(230px, 0);
+  }
+}
+@media (min-width: 767px){
+  .dl-horizontal dt {
+    width: 165px !important;
+  }
+  #getconfbtn{
+    display: block;
+  }
+  #android_add{
+    display: none;
+  }
+}
+@media (min-width: 1000px) {
+  .main-sidebar, .left-side, .main-header .logo {
+    position: fixed !important;
+  }
+  .sidebar-toggle{
+    display: none;
+  }
+}
 .main-sidebar{
     background: rgba(18, 18, 19, 0.24) !important;
     position: fixed !important;
+    height: 100%;
+    overflow-y: auto;
+}
+.main-sidebar,.main-header,.content-wrapper,.main-footer{
+  transition: transform .5s cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 .skin-blue .sidebar-menu>li>a:hover, .skin-blue .sidebar-menu>li.active>a {
     background: rgba(0, 150, 136, 0.5) !important;
@@ -31,23 +63,6 @@ body{
 }
 #android_add{
   display: block;
-}
-@media (min-width: 767px){
-    .main-sidebar, .left-side, .main-header .logo {
-      position: fixed !important;
-    }
-    .sidebar-toggle{
-      display: none;
-    }
-    .dl-horizontal dt {
-      width: 165px !important;
-    }
-    #getconfbtn{
-      display: block;
-    }
-    #android_add{
-      display: none;
-    }
 }
 .main-header .navbar{
     background-color: rgba(0, 0, 0, 0) !important;
