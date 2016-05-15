@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\CheckInLog;
+use App\Models\PurchaseLog;
+use App\Models\DonateLog;
 use App\Models\InviteCode;
 use App\Models\TrafficLog;
 use App\Services\Analytics;
@@ -57,6 +59,28 @@ class AdminController extends UserController
         $traffic = CheckInLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
         $traffic->setPath('/admin/checkinlog');
         return $this->view()->assign('logs', $traffic)->display('admin/checkinlog.tpl');
+    }
+
+    public function purchaseLog($request, $response, $args)
+    {
+        $pageNum = 1;
+        if (isset($request->getQueryParams()["page"])) {
+            $pageNum = $request->getQueryParams()["page"];
+        }
+        $purchase = PurchaseLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+        $purchase->setPath('/admin/purchaselog');
+        return $this->view()->assign('logs', $purchase)->display('admin/purchaselog.tpl');
+    }
+
+    public function donateLog($request, $response, $args)
+    {
+        $pageNum = 1;
+        if (isset($request->getQueryParams()["page"])) {
+            $pageNum = $request->getQueryParams()["page"];
+        }
+        $donate = DonateLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+        $donate->setPath('/admin/donatelog');
+        return $this->view()->assign('logs', $donate)->display('admin/donatelog.tpl');
     }
 
     public function trafficLog($request, $response, $args)

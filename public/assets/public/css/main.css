@@ -26,12 +26,27 @@ body{
 .sidebar-toggle:hover{
     background-color: #009688 !important;;
 }
+#getconfbtn{
+  display: none;
+}
+#android_add{
+  display: block;
+}
 @media (min-width: 767px){
     .main-sidebar, .left-side, .main-header .logo {
-    position: fixed !important;
+      position: fixed !important;
     }
     .sidebar-toggle{
-        display: none;
+      display: none;
+    }
+    .dl-horizontal dt {
+      width: 165px !important;
+    }
+    #getconfbtn{
+      display: block;
+    }
+    #android_add{
+      display: none;
     }
 }
 .main-header .navbar{
@@ -45,6 +60,9 @@ body{
 }
 .navbar-nav>.user-menu>.dropdown-menu>.user-footer {
     background-color: rgba(0, 0, 0, 0.9);
+}
+.w3-modal .w3-modal-content {
+    background-color: rgba(0, 0, 0, 0.75);
 }
 .btn-default {
     background-color: rgba(96, 125, 139, 0.19) !important;
@@ -189,12 +207,6 @@ code, kbd, pre, samp {
 
 .card:hover{
     box-shadow: 0 16px 24px 0 rgba(0,0,0,0.22),0 25px 55px 0 rgba(0,0,0,0.21) !important;
-}
-
-@media (min-width: 768px){
-    .dl-horizontal dt {
-        width: 165px !important;
-    }
 }
 
 a,p,h5{

@@ -88,6 +88,8 @@ $app->group('/admin', function () {
     $this->get('/', 'App\Controllers\AdminController:index');
     $this->get('/trafficlog', 'App\Controllers\AdminController:trafficLog');
     $this->get('/checkinlog', 'App\Controllers\AdminController:checkinLog');
+    $this->get('/purchaselog', 'App\Controllers\AdminController:purchaseLog');
+    $this->get('/donatelog', 'App\Controllers\AdminController:donateLog');
     // app config
     $this->get('/config', 'App\Controllers\AdminController:config');
     $this->put('/config', 'App\Controllers\AdminController:updateConfig');

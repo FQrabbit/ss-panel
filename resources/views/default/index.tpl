@@ -190,7 +190,7 @@
 				</div>
 				
 				<div class="next-section">
-					<a class="go-to-contact"><span></span></a>
+					<a class="go-to-subscribe"><span></span></a>
 				</div><!-- /.next-section -->
 
 			</div><!-- /.container -->

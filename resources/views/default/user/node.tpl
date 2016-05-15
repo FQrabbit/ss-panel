@@ -29,7 +29,7 @@
 		  		<div class="panel">
 		  			<div class="panel-heading">
 			  			<a id="android_add" class="btn w3-teal w3-small pull-right">android导入所有节点</a>
-			  			<a href="./getconf" class="btn w3-teal w3-small pull-right w3-margin-right">下载pc配置文件</a>
+			  			<a href="./getconf" class="btn w3-teal w3-small pull-right w3-margin-right" id="getconfbtn">下载pc配置文件</a>
 		  				<h3>节点列表</h3> 
 		  			</div>
 					<div class="panel-body">

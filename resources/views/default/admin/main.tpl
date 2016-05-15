@@ -138,6 +138,18 @@
                 </li>
 
                 <li>
+                    <a href="/admin/purchaselog">
+                        <i class="fa fa-shopping-cart"></i> <span>购买日志</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin/donatelog">
+                        <i class="fa fa-users"></i> <span>捐助日志</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="/user">
                         <i class="fa fa-reply-all"></i> <span>用户中心</span>
                     </a>
