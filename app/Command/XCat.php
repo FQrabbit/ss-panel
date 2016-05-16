@@ -35,6 +35,8 @@ class XCat
                 return DailyMail::sendDailyMail();
             case("resetUserPlan"):
                 return Job::resetUserPlan();
+            case("updateNodeUsage"):
+                return Job::updateNodeUsage();
             default:
                 return $this->defaultAction();
         }

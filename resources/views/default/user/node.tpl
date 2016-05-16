@@ -42,9 +42,10 @@
 												<th>节点名</th>
 												<th>状态</th>
 												<th>地址</th>
-												<th>15分钟在线人数</th>
+												<th>在线</th>
 												<th>加密</th>
 												<th>二维码</th>
+												<th>使用情况</th>
 												<th>说明</th>
 											</tr>
 										</thead>
@@ -65,12 +66,20 @@
 												<tr>
 													<td class="node-name" onclick="window.document.location='./node/{$node->id}'">{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
-													<td>{$node->server}</td>
-													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
-													<td>{$node->method}</td>
-													<td>
+													<td class="server-td">{$node->server}</td>
+													<td class="count-td"><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
+													<td class="method-td">{$node->method}</td>
+													<td class="qr-td">
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
 														<div class="qrcode" id="{$node->name}"></div>
+													</td>
+													<td class="progbar-td">
+													  <div class="progress">
+													    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
+													    	{$node->node_usage}%
+													      <span class="sr-only">{$node->node_usage}% Complete</span>
+													    </div>
+													  </div>
 													</td>
 													<td>{$node->info}</td>
 												</tr>

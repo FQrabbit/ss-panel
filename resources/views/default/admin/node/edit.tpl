@@ -55,10 +55,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="domain" class="col-sm-3 control-label">域名</label>
+                                        <label for="ip" class="col-sm-3 control-label">IP</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="domain" value="{$node->domain}">
+                                            <input class="form-control" id="ip" value="{$node->ip}">
                                         </div>
                                     </div>
 
@@ -138,11 +138,20 @@
                                             <input class="form-control" id="sort" type="number" value="{$node->sort}">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="info" class="col-sm-3 control-label">节点描述</label>
 
                                         <div class="col-sm-9">
                                             <textarea class="form-control" id="info" rows="3">{$node->info}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="node_usage" class="col-sm-3 control-label">使用情况</label>
+
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="node_usage" rows="3">{$node->node_usage}</textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -172,7 +181,7 @@
                 data: {
                     name: $("#name").val(),
                     server: $("#server").val(),
-                    domain: $("#domain").val(),
+                    ip: $("#ip").val(),
                     field_name: $("#field_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
@@ -180,7 +189,8 @@
                     info: $("#info").val(),
                     type: $("#type").val(),
                     status: $("#status").val(),
-                    sort: $("#sort").val()
+                    sort: $("#sort").val(),
+                    node_usage: $("#node_usage").val()
                 },
                 success: function (data) {
                     if (data.ret) {

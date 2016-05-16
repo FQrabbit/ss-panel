@@ -238,6 +238,22 @@ table>tbody>tr>td{
   position: relative;
 }
 
+td.method-td {
+  min-width: 110px;
+}
+
+td.qr-td{
+  min-width: 64px;
+}
+
+td.progbar-td{
+  min-width: 120px;
+}
+
+.progress{
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 .qr-toggle{
   cursor: pointer;
 }
