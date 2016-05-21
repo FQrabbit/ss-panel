@@ -220,7 +220,7 @@ class Tools
 
     public static function isPortUsed($port)
     {
-        if (User::has("port", $port)) {
+        if (!User::where("port", $port)->get()->isEmpty()) {
             return true;
         }
         return false;
@@ -229,13 +229,13 @@ class Tools
     /**
      * @return int
      */
-    public static function getNextPortUnused($port)
+    public static function getPortUnused()
     {
-        $port = $port + 1;
-        while ($this->isPortUsed($port)) {
-            $port++;
+        $fromport = 10003;
+        while (Tools::isPortUsed($fromport)) {
+            $fromport++;
         }
-        return $port;
+        return $fromport;
     }
     
     public static function getAvPort()
