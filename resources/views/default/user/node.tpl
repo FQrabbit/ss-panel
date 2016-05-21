@@ -58,7 +58,14 @@
 													<td>付费用户可见</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
 													<td>{$node->method}</td>
-													<td>
+													<td></td>
+													<td class="progbar-td">
+													  <div class="progress">
+													    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
+													    	{$node->node_usage}%
+													      <span class="sr-only">{$node->node_usage}% Complete</span>
+													    </div>
+													  </div>
 													</td>
 													<td>{$node->info}</td>
 												</tr>

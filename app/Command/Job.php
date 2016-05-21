@@ -55,7 +55,7 @@ class Job
             $node = Node::where("name", $name)->update(array("node_usage" => $name_usage));
             echo $name.":".$name_usage."\n";
         }
-        
+        echo date("Y-m-d H:i:s",time())."\n\n";
     }
 
 

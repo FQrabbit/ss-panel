@@ -205,6 +205,38 @@ class Tools
         }
         return $user->port;
     }
+
+    /**
+     * @return int
+     */
+    public static function getLastUserPort()
+    {
+        $user = User::orderBy('id', 'desc')->first();
+        if ($user == null) {
+            return 1024; // @todo
+        }
+        return $user->port;
+    }
+
+    public static function isPortUsed($port)
+    {
+        if (User::has("port", $port)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getNextPortUnused($port)
+    {
+        $port = $port + 1;
+        while ($this->isPortUsed($port)) {
+            $port++;
+        }
+        return $port;
+    }
     
     public static function getAvPort()
     {
