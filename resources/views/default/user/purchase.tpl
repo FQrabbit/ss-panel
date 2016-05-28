@@ -14,7 +14,7 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-body">
-                        <!-- <p>支付完成后请<strong>不要立即关闭页面</strong>，请等待跳转至提示开通成功页面，如果没有跳转或遇到其他问题请加群咨询或email反馈。</p> -->
+                        <p>{$msg}</p>
                         <table class="table table-striped">
                             <caption class="center"><h4><strong>按流量购买</strong></h4></caption>
                             <thead>

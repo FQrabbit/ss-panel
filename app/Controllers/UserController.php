@@ -222,6 +222,7 @@ class UserController extends BaseController
 
     public function purchase()
     {
+        $msg = DbConfig::get('user-purchase');
         $user = Auth::getUser();
         $menu1 = array(
             ["name"=>"1元2G试玩套餐","transfer"=>"2G","price"=>1,"body"=>"试玩","time"=>"3天"],
@@ -234,7 +235,7 @@ class UserController extends BaseController
             ["name"=>"25元包季无限流量套餐","price"=>25,"body"=>"包季","time"=>"一季"],
             ["name"=>"80元包年无限流量套餐","price"=>80,"body"=>"包年","time"=>"一年"]
         );
-        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->display('user/purchase.tpl');
+        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->display('user/purchase.tpl');
     }
 
     public function qna()

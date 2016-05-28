@@ -103,6 +103,7 @@ class AdminController extends UserController
             "analytics-code" => DbConfig::get('analytics-code'),
             "user-index" => DbConfig::get('user-index'),
             "user-node" => DbConfig::get('user-node'),
+            "user-purchase" => DbConfig::get('user-purchase'),
         ];
         return $this->view()->assign('conf', $conf)->display('admin/config.tpl');
     }
@@ -116,6 +117,7 @@ class AdminController extends UserController
             "app-name" => $request->getParam('appName'),
             "user-index" => $request->getParam('userIndex'),
             "user-node" => $request->getParam('userNode'),
+            "user-purchase" => $request->getParam('userPurchase'),
         ];
         foreach ($config as $key => $value) {
             DbConfig::set($key, $value);
