@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/css?family=Pacifico);
+@import url(//fonts.googleapis.com/css?family=Roboto:400,300,400italic,700);
 * {
   box-sizing: border-box;
   margin: 0;
@@ -31,7 +33,7 @@ a:hover{
   margin: 0 auto;
 }
 .login-logo a,.register-logo a{
-  font-family: 'Pacifico';
+  font-family: 'Pacifico','Microsoft Yahei';
   font-size: 60px;
 }
 .login-box-body,.register-box-body{

@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Models\User;
+use App\Models\DelUser;
 use App\Models\Node;
 use App\Services\Config;
 use App\Services\Mail;
@@ -14,7 +15,76 @@ class Job
     {
         $users = User::where("expire_date", ">", "0000-00-00 00:00:00")->where("plan", "B")->get();
         foreach ($users as $user) {
-            echo $user->id."\n";
+            if ($user->expire_date < date('Y-m-d H:i:s')) {
+
+                $to = $user->email;
+                $subject = Config::get('appName') . "-会员到期提醒";
+                try {
+                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', [
+                        "user" => $user
+                    ], [
+                    ]);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+
+                if (in_array($user->type, ['包月','包季','包年'])) {
+                    $user->plan = "A";
+                    $user->transfer_enable = 524288000;
+                    $user->u = 0;
+                    $user->d = 0;
+                    $user->type = 1;
+                    $user->save();
+                }else {
+                    $user->plan = "A";
+                    $user->type = 1;
+                    $user->save();
+                }
+
+                echo date("Y-m-d H:i:s")."\n";
+                echo "已更新用户".$user->user_name."的plan为A\n";
+            }
+        }
+    }
+
+    public function delUncheckinUser()
+    {
+        $week = 7*24*3600;
+        $three_week = 3*$week;
+        $last_week = time() - $week;
+        $last_three_week = time() - $three_week;
+        $last_week_date = date("Y-m-d H:i:s",$last_week);
+        $users = User::where("last_check_in_time", "<", $last_three_week)
+                    ->where("plan", "A")
+                    ->where("ref_by", "!=", 3)
+                    ->where("reg_date", "<", $last_week_date)
+                    ->get();
+        // $users = User::where("id", 2)->get();
+        foreach ($users as $user) {
+            echo $user->id." ".$user->user_name." ".($user->transfer_enable/1000000000)."\n";
+            $fields = array(
+                "id",
+                "user_name",
+                "plan",
+                "port",
+                "last_check_in_time",
+                "reg_date",
+                "email",
+                "pass",
+                "passwd",
+                "u",
+                "d",
+                "user_type",
+                "transfer_enable"
+            );
+            $u = new DelUser;
+            foreach ($fields as $field) {
+                $u->$field = $user->$field;
+            }
+            $u->save();
+            echo date("Y-m-d H:i:s",time())."\n";
+            echo "已删除 ".$user->user_name."(id".$user->id.")\n\n";
+            $user->delete();
         }
     }
 
@@ -34,7 +104,6 @@ class Job
         $out = json_decode($out);
         $arr = [
             "jp1" => "3868748",
-            "jp3" => "3614066",
             "jp4" => "3682976"
         ];
         foreach ($arr as $name => $subid) {
@@ -48,7 +117,7 @@ class Job
         $out = json_decode($out);
         $arr = [
             "jp2" => "3158192",
-            "us2" => "3869089"
+            "jp3" => "3963638"
         ];
         foreach ($arr as $name => $subid) {
             $name_usage = ($out->$subid->current_bandwidth_gb / $out->$subid->allowed_bandwidth_gb) * 100;

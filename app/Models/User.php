@@ -160,6 +160,13 @@ class User extends Model
         return Tools::flowAutoShow($transfer_enable - $total);
     }
 
+    public function unusedTrafficInB()
+    {
+        $total = $this->attributes['u'] + $this->attributes['d'];
+        $transfer_enable = $this->attributes['transfer_enable'];
+        return ($transfer_enable - $total);
+    }
+
     public function isAbleToCheckin()
     {
         $last = $this->attributes['last_check_in_time'];

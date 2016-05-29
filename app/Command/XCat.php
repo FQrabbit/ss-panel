@@ -37,6 +37,8 @@ class XCat
                 return Job::resetUserPlan();
             case("updateNodeUsage"):
                 return Job::updateNodeUsage();
+            case("delUncheckinUser"):
+                return Job::delUncheckinUser();
             default:
                 return $this->defaultAction();
         }
@@ -94,15 +96,21 @@ class XCat
 
     public function resetTraffic()
     {
-        try {
-            User::where("enable", 1)->update([
-                'd' => 0,
-                'u' => 0,
-            ]);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-            return false;
+        if (date('d')==1 && date('H')=='00') {
+            $users = User::all();
+            foreach ($users as $user) {
+                if (in_array($user->type, ['包月','包季','包年']) && $user->plan == "B" || $user->plan == "C") {
+                    $transfer = 999*1024*1024*1024;
+                    $user->transfer_enable = $transfer;
+                }else {
+                    $user->transfer_enable = $user->unusedTrafficInB();
+                }
+                $user->u = 0;
+                $user->d = 0;
+                $user->save();
+            }
+            echo date("Y-m-d H:i:s",time())."\n";
+            echo "reset traffic successful\n\n";
         }
-        return "reset traffic successful";
     }
 }
