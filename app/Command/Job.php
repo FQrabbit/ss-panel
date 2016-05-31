@@ -42,7 +42,7 @@ class Job
                 }
 
                 echo date("Y-m-d H:i:s")."\n";
-                echo "已更新用户".$user->user_name."的plan为A\n\n";
+                echo "已更新用户".$user->user_name."(id:".$user->id.")的plan为A\n\n";
             }
         }
     }
@@ -82,7 +82,7 @@ class Job
             }
             $u->save();
             echo date("Y-m-d H:i:s",time())."\n";
-            echo "已删除 ".$user->user_name."(id:".$user->id.") ".($user->transfer_enable/1073741824)." 上次签到时间:".date("Y-m-d H:i:s", $user->last_check_in_time)."\n\n";
+            echo "已删除 ".$user->user_name."(id:".$user->id.") ".($user->transfer_enable/1073741824)." 上次签到时间:".date("Y-m-d H:i:s", $user->last_check_in_time)." 注册时间:".$user->reg_date."\n\n";
             $user->delete();
         }
     }

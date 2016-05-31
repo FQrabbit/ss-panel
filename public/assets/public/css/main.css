@@ -20,7 +20,7 @@ body{
     overflow-y: auto;
 }
 .main-sidebar,.main-header,.content-wrapper,.main-footer{
-  transition: transform .5s cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: transform .5s cubic-bezier(0.2, 0, 0.36, 1);
 }
 .skin-blue .sidebar-menu>li>a:hover, .skin-blue .sidebar-menu>li.active>a {
     background: rgba(0, 150, 136, 0.5) !important;

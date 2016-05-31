@@ -41,7 +41,7 @@
                         <i class="fa fa-code"></i>
 
                         <h3 class="box-title">配置地址</h3>
-                        <a href="{$ssqr}" class="btn w3-teal w3-small pull-right">手机用户点此一键导入</a>
+                        <a href="{$ssqr}" class="btn w3-teal w3-small pull-right">手机用户点此导入该节点配置</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -88,7 +88,7 @@
                                 <ol>
                                     <li>电脑上安装 PP 助手 http://pro.25pp.com。</li>
                                     <li>然后 手机连电脑，然后信任 PP助手。</li>
-                                    <li>下载 <a href="/downloads/Surge_pp.ipa" style="color: #4caf50 !important;">surge</a>，用 PP 助手安装。</li>
+                                    <li>下载 <a href="https://pan.baidu.com/s/1skZzQWH" style="color: #4caf50 !important;">surge</a>，用 PP 助手安装。</li>
                                 </ol>
                                 <p>基础配置只需要做一次：
                                 <ol>
