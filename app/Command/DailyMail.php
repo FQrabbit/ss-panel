@@ -27,4 +27,28 @@ class DailyMail
             }
         }
     }
+
+    public static function sendDbMail()
+    {
+        try {
+            $to = "zhwalker20@gmail.com";
+            $subject = "备份数据库";
+            $file = ["/root/backup/database.sql"];
+            Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function sendSiteMail()
+    {
+        try {
+            $to = "zhwalker20@gmail.com";
+            $subject = "备份网站";
+            $file = ["/root/backup/site.tgz"];
+            Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }
