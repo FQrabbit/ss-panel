@@ -38,6 +38,8 @@ class DailyMail
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+        echo date("Y-m-d H:i:s",time())."\n";
+        echo "Send database backup successful\n\n";
     }
 
     public static function sendSiteMail()
@@ -49,6 +51,24 @@ class DailyMail
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
         } catch (Exception $e) {
             echo $e->getMessage();
+        }
+        echo date("Y-m-d H:i:s",time())."\n";
+        echo "Send website backup successful\n\n";
+    }
+
+    public static function sendGeneralEmail()
+    {
+        $users = User::all();
+        // $users = User::where("id", 1)->get();
+        foreach ($users as $user) {
+            try {
+                $to = $user->email;
+                $subject = "Shadowsky";
+                Mail::send($to, $subject, 'news/general-report.tpl', [], []);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+            echo "Send to " . $user->user_name . " successfully\n";
         }
     }
 }

@@ -57,7 +57,7 @@ class Job
         $users = User::where("last_check_in_time", "<", $last_three_week)
                     ->where("plan", "A")
                     ->where("ref_by", "!=", 3)
-                    ->where("reg_date", "<", $last_week_date)
+                    ->where("reg_date", "<", $last_three_week)
                     ->get();
         // $users = User::where("id", 2)->get();
         foreach ($users as $user) {

@@ -33,6 +33,8 @@ class XCat
                 return $this->resetTraffic();
             case("sendDiaryMail"):
                 return DailyMail::sendDailyMail();
+            case("sendGeneralEmail"):
+                return DailyMail::sendGeneralEmail();
             case("sendDbMail"):
                 return DailyMail::sendDbMail();
             case("sendSiteMail"):
@@ -100,7 +102,7 @@ class XCat
 
     public function resetTraffic()
     {
-        if (date('d')==1 && date('H')=='00') {
+        if (date('d')==1) {
             $users = User::all();
             foreach ($users as $user) {
                 if (in_array($user->type, ['包月','包季','包年']) && $user->plan == "B" || $user->plan == "C") {
