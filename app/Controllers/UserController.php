@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CheckInLog;
 use App\Models\InviteCode;
 use App\Models\User;
+use App\Models\DelUser;
 use App\Models\Node;
 use App\Models\TrafficLog;
 use App\Services\Auth;
@@ -321,7 +322,7 @@ class UserController extends BaseController
             return $response->getBody()->write(json_encode($res));
         }else{
             if ($this->user->ref_by == 3) {
-                $traffic = rand(300, 400);
+                $traffic = rand(100, 400);
             }else{
                 $traffic = rand(Config::get('checkinMin'), Config::get('checkinMax'));
             }
@@ -361,6 +362,26 @@ class UserController extends BaseController
             return $this->echoJson($response, $res);
         }
         Auth::logout();
+        $fields = array(
+            "id",
+            "user_name",
+            "plan",
+            "port",
+            "last_check_in_time",
+            "reg_date",
+            "email",
+            "pass",
+            "passwd",
+            "u",
+            "d",
+            "user_type",
+            "transfer_enable"
+        );
+        $u = new DelUser;
+        foreach ($fields as $field) {
+            $u->$field = $user->$field;
+        }
+        $u->save();
         $user->delete();
         $res['ret'] = 1;
         $res['msg'] = "GG!您的帐号已经从我们的系统中删除.";

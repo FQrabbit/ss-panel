@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\InviteCode;
 use App\Models\User;
+use App\Models\DelUser;
 use App\Services\Auth;
 use App\Services\Auth\EmailVerify;
 use App\Services\Config;
@@ -97,7 +98,8 @@ class AuthController extends BaseController
         $repasswd = $request->getParam('repasswd');
         // $code = $request->getParam('code');
         $verifycode = $request->getParam('verifycode');
-
+        $deleted = DelUser::where('email', $email)->get();
+        $deleted = !empty($deleted);
         // check code
         // $c = InviteCode::where('code', $code)->first();
         // if ($c == null) {
@@ -106,7 +108,13 @@ class AuthController extends BaseController
         //     $res['msg'] = "邀请码无效";
         //     return $this->echoJson($response, $res);
         // }
-
+        // check if deleted before
+        if ($deleted) {
+            $res['ret'] = 0;
+            $res['msg'] = "此邮箱曾注册过，现已被删除，请用新的邮箱";
+            return $this->echoJson($response, $res);
+         } 
+        
         // check name length
         if(strlen($name) < 1) {
             $res['ret'] = 0;
