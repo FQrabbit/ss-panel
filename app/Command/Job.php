@@ -53,13 +53,15 @@ class Job
         $three_week = 3*$week;
         $last_week = time() - $week;
         $last_three_week = time() - $three_week;
+        $last_three_week_date = date("Y-m-d H:i:s",$last_three_week);
         $last_week_date = date("Y-m-d H:i:s",$last_week);
         $users = User::where("last_check_in_time", "<", $last_three_week)
                     ->where("plan", "A")
                     ->where("ref_by", "!=", 3)
-                    ->where("reg_date", "<", $last_three_week)
+                    ->where("reg_date", "<", $last_three_week_date)
                     ->get();
         // $users = User::where("id", 2)->get();
+        // echo count($users);
         foreach ($users as $user) {
             $fields = array(
                 "id",
