@@ -322,7 +322,8 @@ class UserController extends BaseController
             return $response->getBody()->write(json_encode($res));
         }else{
             if ($this->user->ref_by == 3) {
-                $traffic = rand(100, 400);
+            	$money = $this->user->money;
+                $traffic = 200*log10($money)+rand(100,200);
             }else{
                 $traffic = rand(Config::get('checkinMin'), Config::get('checkinMax'));
             }
