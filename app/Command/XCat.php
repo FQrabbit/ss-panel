@@ -43,8 +43,14 @@ class XCat
                 return Job::resetUserPlan();
             case("updateNodeUsage"):
                 return Job::updateNodeUsage();
+            case("getNoTransferUser"):
+                return Job::getNoTransferUser();
+            case("getUncheckinUser"):
+                return Job::getUncheckinUser();
             case("delUncheckinUser"):
                 return Job::delUncheckinUser();
+            case("delNoTransferUser"):
+                return Job::delNoTransferUser();
             default:
                 return $this->defaultAction();
         }
