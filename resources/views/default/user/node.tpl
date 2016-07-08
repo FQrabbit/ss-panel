@@ -56,7 +56,7 @@
 													<td>{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>付费用户可见</td>
-													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
+													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
 													<td>{$node->method}</td>
 													<td></td>
 													<td class="progbar-td">
@@ -74,7 +74,7 @@
 													<td class="node-name" onclick="window.document.location='./node/{$node->id}'">{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td class="server-td">{$node->server}</td>
-													<td class="count-td"><span class="badge bg-dark-teal">{$node->getOnlineUserCount(15)}</span></td>
+													<td class="count-td"><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
 													<td class="method-td">{$node->method}</td>
 													<td class="qr-td">
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>

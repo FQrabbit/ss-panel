@@ -52,7 +52,7 @@ class Node extends Model
         return $log;
     }
 
-    function getOnlineUserCount($timeLen=0.2)
+    function getOnlineUserCount($timeLen=2)
     {
         // $id = $this->attributes['id'];
         $fieldName = $this->attributes['field_name'];
