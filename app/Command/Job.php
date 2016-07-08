@@ -47,21 +47,32 @@ class Job
         }
     }
 
-    public function delUncheckinUser()
+    public static function getNoTransferUser()
     {
-        $week = 7*24*3600;
-        $three_week = 3*$week;
-        $last_week = time() - $week;
-        $last_three_week = time() - $three_week;
-        $last_three_week_date = date("Y-m-d H:i:s",$last_three_week);
-        $last_week_date = date("Y-m-d H:i:s",$last_week);
-        $users = User::where("last_check_in_time", "<", $last_three_week)
+        $day = 24*3600;
+        $last_three_week_date = date("Y-m-d H:i:s",(time() - 21*$day));
+        $users = User::where("d", 0)
                     ->where("plan", "A")
                     ->where("ref_by", "!=", 3)
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
-        // $users = User::where("id", 2)->get();
-        // echo count($users);
+        return $users;
+    }
+
+    public static function getUncheckinUser()
+    {
+        $day = 24*3600;
+        $last_three_week_date = date("Y-m-d H:i:s",(time() - 21*$day));
+        $users = User::where("last_check_in_time", "<", (time()-21*$day))
+                    ->where("plan", "A")
+                    ->where("ref_by", "!=", 3)
+                    ->where("reg_date", "<", $last_three_week_date)
+                    ->get();
+        return $users;
+    }
+
+    public static function delete($users)
+    {
         foreach ($users as $user) {
             $fields = array(
                 "id",
@@ -87,6 +98,18 @@ class Job
             echo "已删除 ".$user->user_name."(id:".$user->id.") ".($user->transfer_enable/1073741824)." 上次签到时间:".date("Y-m-d H:i:s", $user->last_check_in_time)." 注册时间:".$user->reg_date."\n\n";
             $user->delete();
         }
+    }
+
+    public static function delUncheckinUser()
+    {
+    	$users = Job::getUncheckinUser();
+    	Job::delete($users);
+    }
+
+    public static function delNoTransferUser()
+    {
+    	$users = Job::getNoTransferUser();
+    	Job::delete($users);
     }
 
     public static function updateNodeUsage()
