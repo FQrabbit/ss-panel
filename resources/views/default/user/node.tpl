@@ -46,6 +46,8 @@
 												<th>加密</th>
 												<th>二维码</th>
 												<th>使用情况</th>
+												<th>产生流量</th>
+												<th>负载</th>
 												<th>说明</th>
 											</tr>
 										</thead>
@@ -57,7 +59,7 @@
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>付费用户可见</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
-													<td>{$node->method}</td>
+													<td>{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</td>
 													<td></td>
 													<td class="progbar-td">
 													  <div class="progress">
@@ -67,7 +69,9 @@
 													    </div>
 													  </div>
 													</td>
-													<td>{$node->info}</td>
+													<td class="node-traffic">{$node->getTrafficFromLogs()}</td>
+													<td class="node-uptime">{$node->getNodeUptime()}</td>
+													<td class="node-info">{$node->info}</td>
 												</tr>
 			{else}
 												<tr>
@@ -88,7 +92,9 @@
 													    </div>
 													  </div>
 													</td>
-													<td>{$node->info}</td>
+													<td class="node-traffic">{$node->getTrafficFromLogs()}</td>
+													<td class="node-uptime">{$node->getNodeUptime()}</td>
+													<td class="node-info">{$node->info}</td>
 												</tr>
 			{/if}
 		{/foreach}

@@ -252,6 +252,14 @@ td.progbar-td{
   min-width: 120px;
 }
 
+td.node-uptime{
+  min-width: 234px;
+}
+
+td.node-info{
+  min-width: 400px;
+}
+
 .progress{
   background-color: rgba(255, 255, 255, 0.2);
 }
