@@ -56,6 +56,11 @@ class Job
                     ->where("ref_by", "!=", 3)
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
+        // foreach ($users as $user) {
+        //     echo $user->id."\t";
+        //     echo $user->user_name."\t\n";
+        // }
+        // echo "\nsum:".count($users)."\n";
         return $users;
     }
 
@@ -68,6 +73,10 @@ class Job
                     ->where("ref_by", "!=", 3)
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
+        // foreach ($users as $user) {
+        //     echo $user->user_name."\n";
+        // }
+        // echo "\nsum:".count($users)."\n";
         return $users;
     }
 

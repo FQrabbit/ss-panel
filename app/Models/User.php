@@ -56,17 +56,10 @@ class User extends Model
 
     public function lastSsTime()
     {
-        $max = 0;
-        $node_t_list = Node::lists("field_name");
-        foreach ($node_t_list as $a) {
-            if ($this->attributes[$a]>$max) {
-                $max = $this->attributes[$a];
-            }
-        }
-        if ($max == 0) {
+        if ($this->attributes['t'] == 0) {
             return "从未使用喵";
         }
-        return Tools::toDateTime($max);
+        return Tools::toDateTime($this->attributes['t']);
     }
 
     public function lastCheckInTime()

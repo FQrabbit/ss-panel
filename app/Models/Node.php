@@ -52,18 +52,14 @@ class Node extends Model
         return $log;
     }
 
-    function getOnlineUserCount($timeLen=2)
+    function getOnlineUserCount()
     {
-        $id = $this->attributes['id'];
-        // $fieldName = $this->attributes['field_name'];
-        // $time = time() - $timeLen*60;
-        // $num = User::where($fieldName, ">", $time)->count();
-        $log = NodeOnlineLog::where('node_id', $id)->orderBy('id', 'desc')->first();
+        $log = $this->getLastNodeOnlineLog();
         if ($log == null) {
             return "暂无数据";
         }
         return $log->online_user;
-        // return $num;
+        $id = $this->attributes['id'];
     }
 
     function getTrafficFromLogs()
