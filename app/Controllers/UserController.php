@@ -226,10 +226,10 @@ class UserController extends BaseController
         $msg = DbConfig::get('user-purchase');
         $user = Auth::getUser();
         $menu1 = array(
-            ["name"=>"1元2G试玩套餐","transfer"=>"2G","price"=>1,"body"=>"试玩","time"=>"3天"],
-            ["name"=>"5元15G基础套餐","transfer"=>"15G","price"=>5,"body"=>"基础","time"=>"永久"],
-            ["name"=>"10元35G标准套餐","transfer"=>"35G","price"=>10,"body"=>"标准","time"=>"永久"],
-            ["name"=>"20元75G高级套餐","transfer"=>"75G","price"=>20,"body"=>"高级","time"=>"永久"]
+            ["name"=>"1元1G试玩套餐","transfer"=>"1G","price"=>1,"body"=>"试玩","time"=>"3天"],
+            ["name"=>"5元10G基础套餐","transfer"=>"10G","price"=>5,"body"=>"基础","time"=>"永久"],
+            ["name"=>"10元25G标准套餐","transfer"=>"25G","price"=>10,"body"=>"标准","time"=>"永久"],
+            ["name"=>"20元55G高级套餐","transfer"=>"55G","price"=>20,"body"=>"高级","time"=>"永久"]
         );
         $menu2 = array(
             ["name"=>"10元包月无限流量套餐","price"=>10,"body"=>"包月","time"=>"一月"],
