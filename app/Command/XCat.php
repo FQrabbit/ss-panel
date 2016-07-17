@@ -51,6 +51,8 @@ class XCat
                 return Job::delUncheckinUser();
             case("delNoTransferUser"):
                 return Job::delNoTransferUser();
+            case("clearLog"):
+                return Job::clearLog();
             default:
                 return $this->defaultAction();
         }

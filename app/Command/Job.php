@@ -5,6 +5,10 @@ namespace App\Command;
 use App\Models\User;
 use App\Models\DelUser;
 use App\Models\Node;
+use App\Models\TrafficLog;
+use App\Models\NodeInfoLog;
+use App\Models\NodeOnlineLog;
+use App\Models\CheckInLog;
 use App\Services\Config;
 use App\Services\Mail;
 
@@ -167,6 +171,12 @@ class Job
         echo date("Y-m-d H:i:s",time())."\n\n";
     }
 
-
+    public static function clearLog()
+    {
+        TrafficLog::where("log_time", "<", (time()-12*3600))->delete();
+        NodeOnlineLog::where("log_time", "<", (time()-12*3600))->delete();
+        NodeInfoLog::where("log_time", "<", (time()-12*3600))->delete();
+        CheckInLog::where("checkin_at", "<", (time()-30*12*3600))->delete();
+    }
 
 }

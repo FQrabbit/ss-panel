@@ -240,23 +240,27 @@ table>tbody>tr>td{
   position: relative;
 }
 
-td.method-td {
+#t-method {
   min-width: 110px;
 }
 
-td.qr-td{
-  min-width: 64px;
+#t-qr{
+  min-width: 61px;
 }
 
-td.progbar-td{
-  min-width: 120px;
+#t-percent{
+  min-width: 106px;
 }
 
-td.node-uptime{
+#t-traffic{
+  min-width: 106px;
+}
+
+#t-uptime{
   min-width: 234px;
 }
 
-td.node-info{
+#t-info{
   min-width: 400px;
 }
 
