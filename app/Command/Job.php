@@ -30,7 +30,7 @@ class Job
 
                 if (in_array($user->type, ['包月','包季','包年'])) {
                     $user->plan = "A";
-                    $user->transfer_enable = 524288000;
+                    $user->transfer_enable = 104857600;
                     $user->u = 0;
                     $user->d = 0;
                     $user->type = 1;
@@ -56,11 +56,15 @@ class Job
                     ->where("ref_by", "!=", 3)
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
-        // foreach ($users as $user) {
-        //     echo $user->id."\t";
-        //     echo $user->user_name."\t\n";
-        // }
-        // echo "\nsum:".count($users)."\n";
+        if (!$users->isEmpty()) {
+            echo date("Y-m-d H:i:s",time())." 删除以下未使用用户：\n";
+            echo "sum:".count($users)."\n";
+            echo "uid\t"."用户名\t\t"."流量\t\t\t"."上次签到时间\t\t"."注册时间\n";
+            foreach ($users as $user) {
+                echo $user->id."\t".$user->user_name."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\n";
+            }
+            echo "\n";
+        }
         return $users;
     }
 
@@ -73,10 +77,15 @@ class Job
                     ->where("ref_by", "!=", 3)
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
-        // foreach ($users as $user) {
-        //     echo $user->user_name."\n";
-        // }
-        // echo "\nsum:".count($users)."\n";
+        if (!$users->isEmpty()) {
+            echo date("Y-m-d H:i:s",time())." 删除以下未签到用户：\n";
+            echo "sum:".count($users)."\n";
+            echo "uid\t"."用户名\t\t"."流量\t\t\t"."上次签到时间\t\t"."注册时间\n";
+            foreach ($users as $user) {
+                echo $user->id."\t".$user->user_name."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\n";
+            }
+            echo "\n";
+        }
         return $users;
     }
 
@@ -103,22 +112,20 @@ class Job
                 $u->$field = $user->$field;
             }
             $u->save();
-            echo date("Y-m-d H:i:s",time())."\n";
-            echo "已删除 ".$user->user_name."(id:".$user->id.") ".($user->transfer_enable/1073741824)." 上次签到时间:".date("Y-m-d H:i:s", $user->last_check_in_time)." 注册时间:".$user->reg_date."\n\n";
             $user->delete();
         }
     }
 
     public static function delUncheckinUser()
     {
-    	$users = Job::getUncheckinUser();
-    	Job::delete($users);
+    	$users = self::getUncheckinUser();
+    	self::delete($users);
     }
 
     public static function delNoTransferUser()
     {
-    	$users = Job::getNoTransferUser();
-    	Job::delete($users);
+    	$users = self::getNoTransferUser();
+    	self::delete($users);
     }
 
     public static function updateNodeUsage()
@@ -132,7 +139,7 @@ class Job
         $node->save();
         echo "us1:".$usage."\n";
 
-        //jp1,jp3,jp4
+        //jp1,jp4
         $out = file_get_contents("https://api.vultr.com/v1/server/list?api_key=YH7LQH4WIRA2RSLCGHXSFH4E23XZ4L");
         $out = json_decode($out);
         $arr = [
@@ -145,7 +152,7 @@ class Job
             echo $name.":".$name_usage."\n";
         }
 
-        //jp2,us2
+        //jp2,jp3
         $out = file_get_contents("https://api.vultr.com/v1/server/list?api_key=WW62CTHYRPTBVWNNIBIGHOO2AFQLUB");
         $out = json_decode($out);
         $arr = [
