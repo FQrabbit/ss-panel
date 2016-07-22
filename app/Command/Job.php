@@ -9,6 +9,7 @@ use App\Models\TrafficLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\CheckInLog;
+use App\Models\PasswordReset;
 use App\Services\Config;
 use App\Services\Mail;
 
@@ -173,10 +174,11 @@ class Job
 
     public static function clearLog()
     {
-        TrafficLog::where("log_time", "<", (time()-12*3600))->delete();
-        NodeOnlineLog::where("log_time", "<", (time()-12*3600))->delete();
-        NodeInfoLog::where("log_time", "<", (time()-12*3600))->delete();
+	TrafficLog::truncate();
+        NodeInfoLog::where("log_time", "<", (time()-120))->delete();
         CheckInLog::where("checkin_at", "<", (time()-30*12*3600))->delete();
+	PasswordReset::where("expire_time", "<", time())->delete();
+	NodeOnlineLog::where("log_time", "<", (time()-120))->delete();
     }
 
 }

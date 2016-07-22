@@ -80,11 +80,6 @@
                 }
             });
         }
-        $("html").keydown(function(event){
-            if(event.keyCode==13){
-                login();
-            }
-        });
         $("#delete").click(function(){
             delete();
         });

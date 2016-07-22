@@ -82,7 +82,7 @@
                                         <label for="rate" class="col-sm-3 control-label">流量比例</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="rate" value="{$node->traffic_rate}">
+                                            <input class="form-control" id="rate" value="{$node->traffic_rate}" type="number">
                                         </div>
 
                                     </div>
@@ -151,7 +151,7 @@
                                         <label for="node_usage" class="col-sm-3 control-label">使用情况</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="node_usage" rows="3">{$node->node_usage}</textarea>
+                                            <input class="form-control" id="node_usage" value="{$node->node_usage}" type="number">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -214,7 +214,7 @@
 
         $("html").keydown(function (event) {
             if (event.keyCode == 13) {
-                login();
+                submit();
             }
         });
         $("#submit").click(function () {

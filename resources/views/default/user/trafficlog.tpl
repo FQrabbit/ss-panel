@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <div class="callout callout-warning">
                     <h4>注意!</h4>
-                    <p>仅记保存一天的流量记录，部分节点不支持流量记录.</p>
+                    <p>仅保存当日的流量记录，部分节点不支持流量记录.</p>
                 </div>
             </div>
         </div>
