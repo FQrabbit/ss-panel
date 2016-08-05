@@ -55,7 +55,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ip" class="col-sm-3 control-label">IP</label>
+                                        <label for="ip" class="col-sm-3 control-label">IP地址</label>
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="ip" value="{$node->ip}">
@@ -63,18 +63,15 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="field_name" class="col-sm-3 control-label">字段名</label>
-
-                                        <div class="col-sm-9">
-                                            <input class="form-control" id="field_name" value="{$node->field_name}">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="method" value="{$node->method}">
+                                            <select class="form-control" id="method">
+                                                <option value="{$node->method}" selected="selected">{$node->method}</option>
+                                                <option value="aes-256-cfb">aes-256-cfb</option>
+                                                <option value="chacha20">chacha20</option>
+                                                <option value="rc4-md5">rc4-md5</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -182,7 +179,6 @@
                     name: $("#name").val(),
                     server: $("#server").val(),
                     ip: $("#ip").val(),
-                    field_name: $("#field_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
                     rate: $("#rate").val(),

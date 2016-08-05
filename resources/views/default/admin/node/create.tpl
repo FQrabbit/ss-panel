@@ -50,12 +50,12 @@
                                         <label for="server" class="col-sm-3 control-label">节点地址</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="server" value="">
+                                            <input class="form-control" id="server" value=".shadowsky.site">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ip" class="col-sm-3 control-label">域名</label>
+                                        <label for="ip" class="col-sm-3 control-label">IP地址</label>
 
                                         <div class="col-sm-9">
                                             <input class="form-control" id="ip" value="">
@@ -63,15 +63,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="field_name" class="col-sm-3 control-label">字段名</label>
-
-                                        <div class="col-sm-9">
-                                            <input class="form-control" id="field_name" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
+
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
                                                 <option value="aes-256-cfb" selected="selected">aes-256-cfb</option>
@@ -129,7 +122,7 @@
                                         <label for="status" class="col-sm-3 control-label">节点状态</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="status" value="">
+                                            <input class="form-control" id="status" value="可用">
                                         </div>
                                     </div>
 
@@ -145,7 +138,7 @@
                                         <label for="info" class="col-sm-3 control-label">节点描述</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="info" rows="3"></textarea>
+                                            <textarea class="form-control" id="info" rows="3" value="付费节点"></textarea>
                                         </div>
                                     </div>
 
@@ -153,7 +146,7 @@
                                         <label for="node_usage" class="col-sm-3 control-label">使用情况</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="node_usage" rows="3"></textarea>
+                                            <input class="form-control" id="node_usage" rows="3" type="number" value="0">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -185,7 +178,6 @@
                     name: $("#name").val(),
                     server: $("#server").val(),
                     ip: $("#ip").val(),
-                    field_name: $("#field_name").val(),
                     method: $("#method").val(),
                     custom_method: $("#custom_method").val(),
                     rate: $("#rate").val(),
