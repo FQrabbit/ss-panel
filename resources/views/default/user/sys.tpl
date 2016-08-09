@@ -26,7 +26,7 @@
                             <p>24小时签到用户：<code>{$ana["checkinCount"]}</code></p>
                             <p>付费用户人数：<code>{$ana["paidUserCount"]}</code>。</p>
                             <p>捐助用户人数：<code>{$ana["donateUserCount"]}</code>。</p>
-                            <div class="row">
+                            <div class="row" style="display:none" id="row1">
                                 <div class="col-md-6">
                                     <h4 style="text-align:center"><strong>付费用户列表</strong></h4>
                                     <table id="paid_user_table" class="display hover">
@@ -51,7 +51,7 @@
                                     </table>
                                 </div>
                                 <div class="col-md-6">
-                                    <h4 style="text-align:center"><strong>捐助榜</strong></h4>
+                                    <h4 style="text-align:center"><strong>捐助列表</strong></h4>
                                     <table id="donate_table" class="display hover">
                                         <thead>
                                             <tr>
@@ -93,5 +93,7 @@
         "scrollX": false,
         "order": [[ 2, "asc" ],[0,"asc"]]
         });
+        $(".dataTables_scrollHeadInner").width("100%");
+        $("#row1").show();
     } );
 </script>
