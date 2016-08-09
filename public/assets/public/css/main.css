@@ -95,11 +95,14 @@ code, kbd, pre, samp{
 input, optgroup, select, textarea{
     background-color: rgba(0, 0, 0, 0.11) !important;
 }
+option{
+    background-color: #072b1e;
+}
 table tr,td{
     background-color: rgba(0, 0, 0, 0.33) !important;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button a{
-    color: white !important;
+.row .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #ffffff !important;
 }
 #paid_user_table,#donate_table{
     margin: 0 !important;
@@ -107,27 +110,20 @@ table tr,td{
 .dataTable{
     width: 100% !important;
 }
-.dataTables_wrapper .dataTables_paginate span > .paginate_button {
-    color: #fff !important;
+.row .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    background-color: rgba(0, 0, 0, 0.31) !important;
+    background: none;
+    border-color: transparent;
 }
-.dataTables_wrapper .dataTables_paginate > .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-    color: #fff !important;
+.row .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .row .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .row .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{
+    color: #eee !important;
+    background: none !important;
 }
-.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
-    color: #23527c;
-    background-color: rgba(0, 0, 0, 0.81);
-    border-color: #ddd;
-}
-.pagination>li>a {
-    background: rgba(0, 0, 0, 0.16);
-    color: #666;
-}
-.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
-    background-color: rgba(0, 0, 0, 0.14);
-}
-.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-    background-color: rgba(0, 0, 0, 0.81);
-    border-color: #ddd;
+.row .dataTables_wrapper .dataTables_paginate .paginate_button.current, .row .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+    background-color: rgba(0, 0, 0, 0.31) !important;
+    background: none;
+    border-color: transparent;
+    color: #ffffff !important;
 }
 .input-group .input-group-addon {
     background-color: rgba(0, 0, 0, 0.31);
