@@ -56,6 +56,9 @@ body{
 }
 .btn-default {
     background-color: rgba(96, 125, 139, 0.19) !important;
+    -webkit-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
 }
 .dropdown-menu {
     background-color: rgba(0,0,0,0.5) !important;
@@ -188,6 +191,7 @@ code, kbd, pre, samp {
 .btn.focus, .btn:focus, .btn:hover {
     background-color: #009688 !important;
     border-color: #009688 !important;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .card{
     -webkit-transition: all .1s ease-out;

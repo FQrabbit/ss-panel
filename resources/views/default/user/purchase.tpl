@@ -41,7 +41,7 @@
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
-                                                <input type="submit" value="购买" class="btn">
+                                                <input type="submit" value="购买" class="btn btn-default btn-flat">
                                             </form>
                                         </td>
                                     </tr>
@@ -77,7 +77,7 @@
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
-                                                <input type="submit" value="购买" class="btn">
+                                                <input type="submit" value="购买" class="btn btn-default btn-flat">
                                             </form>
                                         </td>
                                     </tr>
