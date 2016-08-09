@@ -184,6 +184,9 @@
 <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
+                $(this).hide(0, function(){
+                    $("#checkin-msg").html("loading...");
+                })
                 $.ajax({
                     type: "POST",
                     url: "/user/checkin",
