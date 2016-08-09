@@ -94,7 +94,7 @@
                                     <div class="input-group">
                                         <input type="text" id="sspwd" placeholder="输入新连接密码" class="form-control" required="required">
                                         <div class="input-group-btn">
-                                            <button type="submit" id="ss-pwd-update" class="btn btn-primary">修改</button>
+                                            <button type="submit" id="ss-pwd-update" class="btn btn-default btn-flat">修改</button>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="input-group">
                                         <input type="text" id="ssport" placeholder="{$user->port}" class="form-control" disabled>
                                         <div class="input-group-btn">
-                                            <button type="submit" id="portreset" class="btn btn-primary">重置端口</button>
+                                            <button type="submit" id="portreset" class="btn btn-default btn-flat">重置端口</button>
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" id="pwd-update" class="btn btn-primary">修改</button>
+                        <button type="submit" id="pwd-update" class="btn btn-default btn-flat">修改</button>
                     </div>
 
                 </div>
@@ -194,12 +194,16 @@
                                     <input type="email" class="form-control" placeholder="新邮箱(必填)" required="required" id="email">
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">确认邮箱</label>
+                                <label class="col-sm-3 control-label">邮箱验证码</label>
 
                                 <div class="col-sm-9">
-                                    <input type="email" placeholder="确认邮箱(必填)" class="form-control" required="required" id="reemail">
+                                    <div class="input-group">
+                                        <input type="text" id="verifycode" class="form-control" placeholder="邮箱验证码"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" id="sendcode" class="btn btn-default btn-flat">发送验证码</button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +211,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" id="email-update" class="btn btn-primary">修改</button>
+                        <button type="submit" id="email-update" class="btn btn-default btn-flat">修改</button>
                     </div>
 
                 </div>
@@ -262,6 +266,7 @@
                 dataType: "json",
                 data: {
                     email: $("#email").val(),
+                    verifycode: $("#verifycode").val(),
                     reemail: $("#reemail").val()
                 },
                 success: function (data) {
@@ -282,6 +287,65 @@
                 }
             })
         })
+
+        $("#sendcode").on("click", function () {
+            var count = sessionStorage.getItem('email-code-count') || 0;
+            var timer, countdown = 60, $btn = $(this);
+            if (count > 3 || timer) return false;
+
+            if (!email) {
+                $("#msg-error").show(500, function(){
+                    $(this).delay(3000).hide(500);
+                });
+                $("#msg-error-p").html("请先填写邮箱!");
+                return $("#email").focus();
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "sendcode",
+                dataType: "json",
+                data: {
+                    email: $("#email").val(),
+                },
+                success: function (data) {
+                    if (data.ret == 1) {
+                        $("#msg-success").show(500, function(){
+                            $(this).delay(3000).hide(500);
+                        });
+                        $("#msg-success-p").html(data.msg);
+                        timer = setInterval(function () {
+                            --countdown;
+                            if (countdown) {
+                                $btn.text('重新发送 (' + countdown + '秒)');
+                            } else {
+                                clearTimer();
+                            }
+                        }, 1000);
+                    } else {
+                        $("#msg-error").show(500, function(){
+                            $(this).delay(3000).hide(500);
+                        });
+                        $("#msg-error-p").html(data.msg);
+                        clearTimer();
+                    }
+                },
+                error: function (jqXHR) {
+                    $("#msg-error").show(500, function(){
+                        $(this).delay(3000).hide(500);
+                    });
+                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                    clearTimer();
+                }
+            });
+            $btn.addClass("disabled").prop("disabled", true).text('发送中...');
+            $("#verifycode").select();
+            function clearTimer() {
+                $btn.text('重新发送').removeClass("disabled").prop("disabled", false);
+                clearInterval(timer);
+                timer = null;
+            }
+        });
     })
 </script>
 

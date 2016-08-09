@@ -11,6 +11,7 @@ use App\Models\TrafficLog;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
+use App\Services\Auth\EmailVerify;
 use App\Utils\Hash;
 use App\Utils\Check;
 use App\Utils\Tools;
@@ -278,15 +279,10 @@ class UserController extends BaseController
 
     public function updateEmail($request, $response, $args)
     {
+        $verifycode = $request->getParam('verifycode');
         $email = $request->getParam('email');
         $reemail = $request->getParam('reemail');
         $user = $this->user;
-
-        if ($email != $reemail) {
-            $res['ret'] = 0;
-            $res['msg'] = "两次输入不符合";
-            return $response->getBody()->write(json_encode($res));
-        }
 
         // check email format
         if (!Check::isEmailLegal($email)) {
@@ -300,6 +296,13 @@ class UserController extends BaseController
         if ($userexist != null) {
             $res['ret'] = 0;
             $res['msg'] = "此邮箱已存在";
+            return $response->getBody()->write(json_encode($res));
+        }
+
+        // verify email
+        if (!EmailVerify::checkVerifyCode($email, $verifycode)) {
+            $res['ret'] = 0;
+            $res['msg'] = '邮箱验证代码不正确';
             return $response->getBody()->write(json_encode($res));
         }
 
