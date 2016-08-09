@@ -12,6 +12,7 @@ use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
 use App\Utils\Hash;
+use App\Utils\Check;
 use App\Utils\Tools;
 
 
@@ -268,6 +269,41 @@ class UserController extends BaseController
         }
         $hashPwd = Hash::passwordHash($pwd);
         $user->pass = $hashPwd;
+        $user->save();
+
+        $res['ret'] = 1;
+        $res['msg'] = "ok";
+        return $this->echoJson($response, $res);
+    }
+
+    public function updateEmail($request, $response, $args)
+    {
+        $email = $request->getParam('email');
+        $reemail = $request->getParam('reemail');
+        $user = $this->user;
+
+        if ($email != $reemail) {
+            $res['ret'] = 0;
+            $res['msg'] = "两次输入不符合";
+            return $response->getBody()->write(json_encode($res));
+        }
+
+        // check email format
+        if (!Check::isEmailLegal($email)) {
+            $res['ret'] = 0;
+            $res['msg'] = "邮箱无效";
+            return $response->getBody()->write(json_encode($res));
+        }
+
+        // check email
+        $userexist = User::where('email', $email)->first();
+        if ($userexist != null) {
+            $res['ret'] = 0;
+            $res['msg'] = "此邮箱已存在";
+            return $response->getBody()->write(json_encode($res));
+        }
+
+        $user->email = $email;
         $user->save();
 
         $res['ret'] = 1;

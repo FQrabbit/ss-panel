@@ -121,6 +121,7 @@ class AuthController extends BaseController
             $res['msg'] = "邮箱无效";
             return $this->echoJson($response, $res);
         }
+        
         // check pwd length
         if (strlen($passwd) < 8) {
             $res['ret'] = 0;
