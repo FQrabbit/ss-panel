@@ -186,8 +186,8 @@ code, kbd, pre, samp {
     margin:2px !important;
 }
 .btn.focus, .btn:focus, .btn:hover {
-    background-color: rgba(0, 0, 0, 0.63) !important;
-    border-color: rgba(0, 0, 0, 0.63) !important;
+    background-color: #009688 !important;
+    border-color: #009688 !important;
 }
 .card{
     -webkit-transition: all .1s ease-out;
