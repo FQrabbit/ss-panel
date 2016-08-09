@@ -310,7 +310,7 @@ class UserController extends BaseController
         $user->save();
 
         $res['ret'] = 1;
-        $res['msg'] = "ok";
+        $res['msg'] = "下次请用新邮箱登陆。";
         return $this->echoJson($response, $res);
     }
 
