@@ -192,7 +192,7 @@
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/node'", 2000);
+                        window.setTimeout("location.reload()", 2000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);

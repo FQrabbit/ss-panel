@@ -149,21 +149,6 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label class="col-sm-3 control-label">邮箱验证状态</label>
-
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="status">
-                                                <option value="1" {if $user->status=="1"}selected="selected"{/if}>
-                                                    已验证
-                                                </option>
-                                                <option value="0" {if $user->status=="0"}selected="selected"{/if}>
-                                                    未验证
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">过期时间</label>
 
                                         <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
@@ -260,7 +245,7 @@
                                         <label class="col-sm-3 control-label">邀请人ID</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="ref_by" type="number"
+                                            <input class="form-control" id="ref_by1" type="number"
                                                    value="{$user->ref_by}" readonly>
                                         </div>
                                     </div>
@@ -306,14 +291,13 @@
                     ref_by: $("#ref_by").val(),
                     expire_date: $("#expire_date").val(),
                     buy_date: $("#buy_date").val(),
-                    status: $("#status").val()
                 },
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user/{$user->id}/edit'", 2000);
+                        window.setTimeout("location.reload()", 2000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);

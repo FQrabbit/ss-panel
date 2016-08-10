@@ -208,11 +208,6 @@ a,p,h5{
     font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif, '宋体';
 }
 
-::selection {
-    background: #B2DFDB;
-    color: white;
-}
-
 .bg-dark-teal{
   background-color: #00695C;
 }
@@ -442,7 +437,19 @@ table>tbody>tr>td{
   .main-sidebar, .left-side {
     position: fixed !important;
   }
-/*  .sidebar-toggle{
-    display: none;
-  }*/
+}
+.pagination>li>a {
+    background: rgba(0, 0, 0, 0.16);
+    color:#666;
+}
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
+    background-color: #009688;
+}
+.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover{
+    background-color: rgba(0, 0, 0, 0.14);
+    color: grey !important;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #009688;
+    border-color: #ddd;
 }

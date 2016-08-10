@@ -15,7 +15,7 @@
                 <div class="box box-primary">
                     <div class="box-body">
                         <p>{$msg}</p>
-                        <table class="table table-striped">
+                        <table class="table table-striped table-hover">
                             <caption class="center"><h4><strong>按流量购买</strong></h4></caption>
                             <thead>
                                 <tr>
@@ -51,7 +51,7 @@
 
                         <hr />
 
-                        <table class="table table-striped">
+                        <table class="table table-striped table-hover">
                             <caption class="center"><h4><strong>按时间购买</strong></h4></caption>
                             <thead>
                             <tr>

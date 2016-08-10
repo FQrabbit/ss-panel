@@ -59,7 +59,6 @@ class UserController extends AdminController
         $user->type = $request->getParam('type');
         $user->plan = $request->getParam('plan');
         $user->ref_by = $request->getParam('ref_by');
-        $user->status = $request->getParam('status');
         $user->expire_date = $request->getParam('expire_date');
         $user->buy_date = $request->getParam('buy_date');
         if (!$user->save()) {
