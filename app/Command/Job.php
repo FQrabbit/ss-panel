@@ -55,18 +55,20 @@ class Job
     public static function getNoTransferUser()
     {
         $day = 24*3600;
-        $last_three_week_date = date("Y-m-d H:i:s",(time() - 21*$day));
-        $users = User::where("d", 0)
+        $period = date("Y-m-d H:i:s",(time() - 30*$day));
+        $users = User::where("t", "<" , $period)
+                    // ->where("d", 0)
                     ->where("plan", "A")
                     ->where("ref_by", "!=", 3)
-                    ->where("reg_date", "<", $last_three_week_date)
+                    ->where("reg_date", "<", $period)
+                    ->orderBy("t")
                     ->get();
         if (!$users->isEmpty()) {
             echo date("Y-m-d H:i:s",time())." 删除以下未使用用户：\n";
             echo "sum:".count($users)."\n";
-            echo "uid\t"."用户名\t\t"."流量\t\t\t"."上次签到时间\t\t"."注册时间\n";
+            echo "uid\t"."上次签到时间\t\t"."注册时间\t\t"."上次使用时间\t\t"."流量\t\t\t"."用户名\n";
             foreach ($users as $user) {
-                echo $user->id."\t".$user->user_name."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\n";
+                echo $user->id."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\t".date("Y-m-d H:i:s", $user->t)."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t\t".$user->user_name."\n";
             }
             echo "\n";
         }
@@ -85,9 +87,9 @@ class Job
         if (!$users->isEmpty()) {
             echo date("Y-m-d H:i:s",time())." 删除以下未签到用户：\n";
             echo "sum:".count($users)."\n";
-            echo "uid\t"."用户名\t\t"."流量\t\t\t"."上次签到时间\t\t"."注册时间\n";
+            echo "uid\t"."上次签到时间\t\t"."注册时间\t\t"."上次使用时间\t\t"."流量\t\t\t"."用户名\n";
             foreach ($users as $user) {
-                echo $user->id."\t".$user->user_name."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\n";
+                echo $user->id."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\t".date("Y-m-d H:i:s", $user->t)."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t\t".$user->user_name."\n";
             }
             echo "\n";
         }

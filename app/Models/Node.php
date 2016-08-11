@@ -45,7 +45,7 @@ class Node extends Model
     public function getLastNodeOnlineLog()
     {
         $id = $this->attributes['id'];
-        $log = NodeOnlineLog::where('node_id', $id)->orderBy('id', 'desc')->first();
+        $log = NodeOnlineLog::where('node_id', $id)->where("log_time", ">", (time()-300))->orderBy('id', 'desc')->first();
         if ($log == null) {
             return null;
         }
