@@ -47,8 +47,8 @@
 												<th id="t-qr">二维码</th>
 												<th id="t-percent">流量使用情况</th>
 												<th id="t-traffic">本日产生流量</th>
-												<th id="t-uptime">负载</th>
 												<th id="t-info">说明</th>
+												<th id="t-uptime">负载</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -70,8 +70,8 @@
 														</div>
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
-													<td>{$node->getNodeUptime()}</td>
 													<td>{$node->info}</td>
+													<td>{$node->getNodeUptime()}</td>
 												</tr>
 			{else}
 												<tr>
@@ -93,8 +93,8 @@
 														</div>
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
-													<td>{$node->getNodeUptime()}</td>
 													<td>{$node->info}</td>
+													<td>{$node->getNodeUptime()}</td>
 												</tr>
 			{/if}
 		{/foreach}
