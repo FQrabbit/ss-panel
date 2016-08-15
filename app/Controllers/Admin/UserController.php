@@ -22,10 +22,15 @@ class UserController extends AdminController
 
     public function edit($request, $response, $args)
     {
-        $id = $args['id'];
-        $user = User::find($id);
+        if (isset($args['port'])) {
+            $port = $args['port'];
+            $user = User::where('port', $port)->first();
+        }else{
+            $id = $args['id'];
+            $user = User::find($id);
+        }
         if ($user == null) {
-
+            return "空";
         }
         return $this->view()->assign('user', $user)->display('admin/user/edit.tpl');
     }

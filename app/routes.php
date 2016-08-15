@@ -100,6 +100,7 @@ $app->group('/admin', function () {
     $this->get('/node/create', 'App\Controllers\Admin\NodeController:create');
     $this->post('/node', 'App\Controllers\Admin\NodeController:add');
     $this->get('/node/{id}/edit', 'App\Controllers\Admin\NodeController:edit');
+    $this->get('/user/edit/{port}', 'App\Controllers\Admin\UserController:edit');
     $this->put('/node/{id}', 'App\Controllers\Admin\NodeController:update');
     $this->delete('/node/{id}', 'App\Controllers\Admin\NodeController:delete');
     $this->get('/node/{id}/delete', 'App\Controllers\Admin\NodeController:deleteGet');
