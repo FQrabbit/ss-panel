@@ -23,11 +23,11 @@
 		</header>
 		<div class="container clearfix">
 			<div class="sixteen columns">
-				<h1 class="page-title">Clients<a href="https://github.com/madeye/shadowsocks-org/edit/master/docs/download/01-clients.md" data-tooltip="Edit this page on GitHub" class="edit colorTipContainer white"><i class="icon-edit"></i><span class="colorTip">Edit this page on GitHub<span class="pointyTipShadow"></span><span class="pointyTip"></span></span><span class="colorTip">Edit this page on GitHub<span class="pointyTipShadow"></span><span class="pointyTip"></span></span></a><span class="line"></span>
-				</h1>
+				<h1 class="page-title">Clients</h1>
 			</div>
 			<div class="page-columns">
 				<div id="markdown" class="sixteen columns bottom">
+					<p style="margin-top:20px">BitTorrent Sync：<a href="https://link.getsync.com/#f=shadowsocks&sz=23E6&t=1&s=RVKKUV3FSAFIN4R46O5AAM6UPD2Z67IV&i=CZHVIF3AQBDMZGCDXLR344POAVBNBMK2E&v=2.3">B6H6RITQOLTYZZJTKQKHU253CZXVOAFPQ</a></p>
 					<div id="download" class="container">
 						<div class="sixteen columns"><br></div>
 						<div class="one-third column">
@@ -38,14 +38,14 @@
 								<ul>
 									<li>shadowsocks(原版)
 										<ul>
-											<li><a href="https://pan.baidu.com/s/1dEu2XhB">Baidu Yun</a></li>
+											<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a>(密码：tu6d.后同)</li>
 											<li><a href="https://github.com/shadowsocks/shadowsocks-csharp/releases">Github</a></li>
 										</ul>
 									</li>
 
 									<li>shadowsocksR(增强版，支持混淆插件)
 										<ul>
-											<li><a href="https://pan.baidu.com/s/1dEu2XhB">Baidu Yun</a></li>
+											<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li>
 										</ul>
 									</li>
@@ -60,13 +60,13 @@
 								<li>ShadowsocksX:
 									<ul>
 										<li><a href="https://github.com/shadowsocks/shadowsocks-iOS/releases">Github</a></li>
-										<li><a href="https://pan.baidu.com/s/1dEu2XhB">Baidu Yun</a></li>
+										<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 									</ul>
 								</li>
 								<li>GoAgentX:
 									<ul>
 										<li><a href="https://goagentx.googlecode.com/files/GoAgentX-v2.2.9.dmg">v2.2.9.dmg</a></li>
-										<li><a href="https://pan.baidu.com/s/1dEu2XhB">Baidu Yun</a></li>
+										<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -89,7 +89,7 @@
 								<li>shadowsocks-android:
 									<ul>
 										<li><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks">Google Play</a></li>
-										<li><a href="https://pan.baidu.com/s/1dEu2XhB">Baidu Yun</a></li>
+										<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 										<li><a href="https://github.com/shadowsocks/shadowsocks-android/releases">Github</a></li>
 									</ul>
 								</li>
@@ -98,9 +98,16 @@
 						<div class="one-third column last">
 							<h3><i class="fa fa-apple fa-3x"></i> &nbsp; iOS</h3>
 							<ul>
-								<li>shadowsocks-iOS:
+								<li>App Store:
 									<ul>
-										<li><a href="https://itunes.apple.com/tc/app/shadowsocks/id665729974?mt=8">App Store</a></li></ul></li><li>MobileShadowSocks:<ul><li><a href="http://apt.thebigboss.org/onepackage.php?bundleid=com.linusyang.shadowsocks">Big Boss</a></li>
+										<li><a href="https://itunes.apple.com/tc/app/shadowsocks/id665729974?mt=8">shadowsocks-iOS</a></li>
+										<li><a href="https://itunes.apple.com/app/apple-store/id1070901416?mt=8">Potatso</a></li>
+										<li><a href="https://itunes.apple.com/us/app/shadowrocket/id932747118?mt=8">Shadowrocket</a></li>
+										<li><a href="https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8">Surge</a></li>
+									</ul>
+								<li>Big Boss:
+									<ul>
+										<li><a href="http://apt.thebigboss.org/onepackage.php?bundleid=com.linusyang.shadowsocks">MobileShadowSocks</a></li>
 									</ul>
 								</li>
 							</ul>

@@ -63,7 +63,7 @@
 													<td></td>
 													<td>
 														<div class="progress">
-														    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
+														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
 													    	{$node->node_usage}%
 													    		<span class="sr-only">{$node->node_usage}% Complete</span>
 														    </div>
@@ -86,7 +86,7 @@
 													</td>
 													<td>
 														<div class="progress">
-														    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
+														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
 													    	{$node->node_usage}%
 													    		<span class="sr-only">{$node->node_usage}% Complete</span>
 														    </div>

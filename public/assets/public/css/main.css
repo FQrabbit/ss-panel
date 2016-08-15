@@ -469,6 +469,6 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
 }
 
 ::selection {
-    background: #666;
+    background: #00a65a;
     color: white;
 }
