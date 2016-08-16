@@ -27,7 +27,8 @@
 			</div>
 			<div class="page-columns">
 				<div id="markdown" class="sixteen columns bottom">
-					<p style="margin-top:20px">BitTorrent Sync：<a href="https://link.getsync.com/#f=shadowsocks&sz=23E6&t=1&s=RVKKUV3FSAFIN4R46O5AAM6UPD2Z67IV&i=CZHVIF3AQBDMZGCDXLR344POAVBNBMK2E&v=2.3">B6H6RITQOLTYZZJTKQKHU253CZXVOAFPQ</a></p>
+					<p>Github下载慢可用BitTorrent Sync下载</p>
+					<p>BitTorrent Sync：<a href="https://link.getsync.com/#f=shadowsocks&sz=23E6&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CCMJCUFHLJ2X4JFCGJBXTFI4DADHWJ3FQ&v=2.3">BIKEZT3XG6KCGWAHGO7G3DTSAA5G3WRB2</a></p>
 					<div id="download" class="container">
 						<div class="sixteen columns"><br></div>
 						<div class="one-third column">
@@ -38,14 +39,12 @@
 								<ul>
 									<li>shadowsocks(原版)
 										<ul>
-											<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a>(密码：tu6d.后同)</li>
 											<li><a href="https://github.com/shadowsocks/shadowsocks-csharp/releases">Github</a></li>
 										</ul>
 									</li>
 
 									<li>shadowsocksR(增强版，支持混淆插件)
 										<ul>
-											<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li>
 										</ul>
 									</li>
@@ -60,13 +59,11 @@
 								<li>ShadowsocksX:
 									<ul>
 										<li><a href="https://github.com/shadowsocks/shadowsocks-iOS/releases">Github</a></li>
-										<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 									</ul>
 								</li>
 								<li>GoAgentX:
 									<ul>
 										<li><a href="https://goagentx.googlecode.com/files/GoAgentX-v2.2.9.dmg">v2.2.9.dmg</a></li>
-										<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -89,7 +86,6 @@
 								<li>shadowsocks-android:
 									<ul>
 										<li><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks">Google Play</a></li>
-										<li><a href="http://pan.baidu.com/s/1pLD3AuJ">Baidu Yun</a></li>
 										<li><a href="https://github.com/shadowsocks/shadowsocks-android/releases">Github</a></li>
 									</ul>
 								</li>

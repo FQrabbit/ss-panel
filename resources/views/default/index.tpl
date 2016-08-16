@@ -146,7 +146,7 @@
 							<div class="plan">
 								<div class="plan-name">試用</div>
 								<div class="plan-content">
-									<p>2G流量</p>
+									<p>1G流量</p>
 									<p>3天</p>
 									<p>免費節點+付費節點</p>
 									<h3>￥1</h3>
@@ -157,7 +157,7 @@
 							<div class="plan">
 								<div class="plan-name">基礎</div>
 								<div class="plan-content">
-									<p>15G流量</p>
+									<p>10G流量</p>
 									<p>無時限</p>
 									<p>免費節點+付費節點</p>
 									<h3>￥5</h3>
@@ -168,7 +168,7 @@
 							<div class="plan">
 								<div class="plan-name">標準</div>
 								<div class="plan-content">
-									<p>35G流量</p>
+									<p>25G流量</p>
 									<p>無時限</p>
 									<p>免費節點+付費節點</p>
 									<h3>￥10</h3>
@@ -179,7 +179,7 @@
 							<div class="plan">
 								<div class="plan-name">高級</div>
 								<div class="plan-content">
-									<p>75G流量</p>
+									<p>55G流量</p>
 									<p>無時限</p>
 									<p>免費節點+付費節點</p>
 									<h3>￥20</h3>
