@@ -1,14 +1,14 @@
-{include file='user/main.tpl'}
+{include file='user/head-info.tpl'}
 {if $user->plan == "A" and $node->type == 1}
     <script>
         window.location.href = "/user/node";
     </script>
 {/if}
-<div class="content-wrapper">
+<div class="content-wrapper" style="margin:0">
     <section class="content-header">
         <h1>
-            节点列表
-            <small>Node List</small>
+            节点信息
+            <small>Node Info</small>
         </h1>
     </section>
     <!-- Main content -->
@@ -20,6 +20,7 @@
                     <h4>注意!</h4>
 
                     <p>配置文件以及二维码请勿泄露！</p>
+                    <p>二维码不仅可以扫 :)</p>
                 </div>
             </div>
 
@@ -98,7 +99,6 @@
                         <i class="fa fa-code"></i>
 
                         <h3 class="box-title">配置地址</h3>
-                        <a href="{$ssqr}" class="btn w3-teal w3-small pull-right">手机用户点此导入该节点配置</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -144,15 +144,15 @@
 
                                 <div class="text-center">
                                     <div id="surge-base-qr" class="qr-background"></div>
-                                </div>
-                                <textarea id="surge-base-text" class="form-control" rows="6">{$surge_base}</textarea>
+                                </div><br>
+                                <textarea id="surge-base-text" class="form-control">{$surge_base}</textarea>
                             </div>
                             <div class="col-md-4">
                                 <h4>代理配置</h4>
 
                                 <div class="text-center">
                                     <div id="surge-proxy-qr" class="qr-background"></div>
-                                </div>
+                                </div><br>
                                 <textarea id="surge-proxy-text" class="form-control" rows="6">{$surge_proxy}</textarea>
                             </div>
                         </div>
@@ -162,33 +162,37 @@
         </div>
         <!-- /.row -->
         <!-- END PROGRESS BARS -->
-        <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
-        <script>
-            var text_qrcode1 = '{$ssqr}';
-            jQuery('#ss-qr-y').qrcode({
-                "text": text_qrcode1
-            });
-
-            var text_qrcode = '{$ssqr_s}';
-            jQuery('#ss-qr').qrcode({
-                "text": text_qrcode
-            });
-            
-            var text_qrcode2 = '{$ssqr_s_new}';
-            jQuery('#ss-qr-n').qrcode({
-                "text": text_qrcode2
-            });
-
-            var text_surge_base = jQuery('#surge-base-text').val();
-            jQuery('#surge-base-qr').qrcode({
-                "text": text_surge_base
-            });
-            var text_surge_proxy = jQuery('#surge-proxy-text').text();
-            jQuery('#surge-proxy-qr').qrcode({
-                "text": text_surge_proxy
-            });
-        </script>
-    </section>
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
-{include file='user/footer.tpl'}
+<script src=" /assets/public/js/jquery.qrcode.min.js "></script>
+<script>
+    var text_qrcode1 = '{$ssqr}';
+    jQuery('#ss-qr-y').qrcode({
+        "text": text_qrcode1
+    });
+
+    var text_qrcode = '{$ssqr_s}';
+    jQuery('#ss-qr').qrcode({
+        "text": text_qrcode
+    });
+    
+    var text_qrcode2 = '{$ssqr_s_new}';
+    jQuery('#ss-qr-n').qrcode({
+        "text": text_qrcode2
+    });
+
+    var text_surge_base = jQuery('#surge-base-text').val();
+    jQuery('#surge-base-qr').qrcode({
+        "text": text_surge_base
+    });
+    var text_surge_proxy = jQuery('#surge-proxy-text').text();
+    jQuery('#surge-proxy-qr').qrcode({
+        "text": text_surge_proxy
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $(".content-wrapper,.main-footer").css("margin-left", 0);
+    })
+</script>

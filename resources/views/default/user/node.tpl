@@ -29,7 +29,7 @@
 
 
 
-		  <div class="row">
+		<div class="row">
 		  	<div class="col-md-12">
 		  		<div class="panel">
 		  			<div class="panel-heading">
@@ -47,7 +47,7 @@
 												<th id="t-server">地址</th>
 												<th id="t-online">在线</th>
 												<th id="t-method">加密</th>
-												<th id="t-qr">原版二维码</th>
+												<!-- <th id="t-qr">原版二维码</th> -->
 												<th id="t-qr-new">SSR二维码</th>
 												<th id="t-percent">流量使用情况</th>
 												<th id="t-traffic">本日产生流量</th>
@@ -64,8 +64,8 @@
 													<td>付费用户可见</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
 													<td>{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</td>
-													<td>Meow</td>
-													<td>Meow</td>
+													<!-- <td>Meow</td>
+													<td>Meow</td> -->
 													<td>
 														<div class="progress">
 														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
@@ -80,15 +80,15 @@
 												</tr>
 			{else}
 												<tr>
-													<td class="node-name" onclick="window.document.location='./node/{$node->id}'">{$node->name}</td>
+													<td class="node-name" onclick="urlChange('{$node->id}')">{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td>{$node->server}</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
 													<td>{$node->method}</td>
-													<td>
+													<!-- <td>
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
 														<a href="{$ssqrs[$node->name]}"><div class="qrcode" id="{$node->name}"></div></a>
-													</td>
+													</td> -->
 													<td>
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
 														<a href="{$ssqrs_new[$node->name]}"><div class="qrcode" id="{$node->name}-new"></div></a>
@@ -115,10 +115,18 @@
 					</div>
 		  		</div>
 		  	</div>
-		  </div>
+		</div>
     </section>
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+<div aria-hidden="true" class="modal fade" id="nodeinfo" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-full">
+		<div class="modal-content">
+			<iframe class="iframe-seamless" title="Modal with iFrame" id="infoifram"></iframe>
+		</div>
+	</div>
+</div>
 
 <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
 <script>
@@ -135,14 +143,22 @@
 <script>
 	$(document).ready(function(){
 		{foreach $nodes_available as $node}
-			jQuery("#{$node->name}").qrcode({
-		        "text":  '{$ssqrs[$node->name]}'
-		    })
+			// jQuery("#{$node->name}").qrcode({
+		        // "text":  '{$ssqrs[$node->name]}'
+		    // })
 			jQuery("#{$node->name}-new").qrcode({
 		        "text":  '{$ssqrs_new[$node->name]}'
 		    })
 		{/foreach}
 	})
+</script>
+
+<script>
+function urlChange(id) {
+    var site = './node/'+id;
+		document.getElementById('infoifram').src = site;
+	$("#nodeinfo").modal();
+}
 </script>
 
 {include file='user/footer.tpl'}
