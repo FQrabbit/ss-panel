@@ -24,6 +24,35 @@
                 </div>
             </div>
 
+            <div class="col-md-12">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-code"></i>
+
+                        <h3 class="box-title">配置Json</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <textarea class="form-control" rows="9">{$json_show}</textarea>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-code"></i>
+
+                        <h3 class="box-title">配置地址</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <input id="ss-qr-text" class="form-control" value="{$ssqr}">
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col (right) -->
             <div class="col-md-4">
                 <div class="box box-solid">
                     <div class="box-header">
@@ -74,35 +103,6 @@
                         <div class="text-center">
                             <a href="{$ssqr_s_new}"><div id="ss-qr-n" class="qr-background"></div></a>
                         </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col (right) -->
-            <div class="col-md-12">
-                <div class="box box-solid">
-                    <div class="box-header">
-                        <i class="fa fa-code"></i>
-
-                        <h3 class="box-title">配置Json</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <textarea class="form-control" rows="9">{$json_show}</textarea>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-                <div class="box box-solid">
-                    <div class="box-header">
-                        <i class="fa fa-code"></i>
-
-                        <h3 class="box-title">配置地址</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <input id="ss-qr-text" class="form-control" value="{$ssqr}">
                     </div>
                     <!-- /.box-body -->
                 </div>
