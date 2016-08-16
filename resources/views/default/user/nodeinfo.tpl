@@ -22,7 +22,64 @@
                     <p>配置文件以及二维码请勿泄露！</p>
                 </div>
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-4">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-qrcode"></i>
+
+                        <h3 class="box-title">原版配置二维码</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="text-center">
+                            <a href="{$ssqr}"><div id="ss-qr-y" class="qr-background"></div></a>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col (right) -->
+
+            <div class="col-md-4">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-qrcode"></i>
+
+                        <h3 class="box-title">SSR 旧版(3.8.3之前)配置二维码</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="text-center">
+                            <a href="{$ssqr_s}"><div id="ss-qr" class="qr-background"></div></a>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col (right) -->
+
+            <div class="col-md-4">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-qrcode"></i>
+
+                        <h3 class="box-title">SSR 新版(3.8.3之后)配置二维码</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="text-center">
+                            <a href="{$ssqr_s_new}"><div id="ss-qr-n" class="qr-background"></div></a>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col (right) -->
+            <div class="col-md-12">
                 <div class="box box-solid">
                     <div class="box-header">
                         <i class="fa fa-code"></i>
@@ -31,7 +88,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <textarea class="form-control" rows="6">{$json_show}</textarea>
+                        <textarea class="form-control" rows="9">{$json_show}</textarea>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -52,25 +109,6 @@
                 <!-- /.box -->
             </div>
             <!-- /.col (right) -->
-
-            <div class="col-md-6">
-                <div class="box box-solid">
-                    <div class="box-header">
-                        <i class="fa fa-qrcode"></i>
-
-                        <h3 class="box-title">配置二维码</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="text-center">
-                            <div id="ss-qr"></div>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col (right) -->
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -84,12 +122,6 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h4>Surge使用步骤</h4>
-                                <p>您要先安装 surge:(以下安装方法来源于互联网)</p>
-                                <ol>
-                                    <li>电脑上安装 PP 助手 http://pro.25pp.com。</li>
-                                    <li>然后 手机连电脑，然后信任 PP助手。</li>
-                                    <li>下载 <a href="https://pan.baidu.com/s/1skZzQWH" style="color: #4caf50 !important;">surge</a>，用 PP 助手安装。</li>
-                                </ol>
                                 <p>基础配置只需要做一次：
                                 <ol>
                                     <li>打开 Surge ，点击右上角“Edit”，点击“Download Configuration from URL”</li>
@@ -111,7 +143,7 @@
                                 <h4>基础配置</h4>
 
                                 <div class="text-center">
-                                    <div id="surge-base-qr"></div>
+                                    <div id="surge-base-qr" class="qr-background"></div>
                                 </div>
                                 <textarea id="surge-base-text" class="form-control" rows="6">{$surge_base}</textarea>
                             </div>
@@ -119,7 +151,7 @@
                                 <h4>代理配置</h4>
 
                                 <div class="text-center">
-                                    <div id="surge-proxy-qr"></div>
+                                    <div id="surge-proxy-qr" class="qr-background"></div>
                                 </div>
                                 <textarea id="surge-proxy-text" class="form-control" rows="6">{$surge_proxy}</textarea>
                             </div>
@@ -132,10 +164,21 @@
         <!-- END PROGRESS BARS -->
         <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
         <script>
-            var text_qrcode = jQuery('#ss-qr-text').val();
+            var text_qrcode1 = '{$ssqr}';
+            jQuery('#ss-qr-y').qrcode({
+                "text": text_qrcode1
+            });
+
+            var text_qrcode = '{$ssqr_s}';
             jQuery('#ss-qr').qrcode({
                 "text": text_qrcode
             });
+            
+            var text_qrcode2 = '{$ssqr_s_new}';
+            jQuery('#ss-qr-n').qrcode({
+                "text": text_qrcode2
+            });
+
             var text_surge_base = jQuery('#surge-base-text').val();
             jQuery('#surge-base-qr').qrcode({
                 "text": text_surge_base

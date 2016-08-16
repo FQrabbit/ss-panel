@@ -50,9 +50,6 @@ body{
 #getconfbtn{
   display: none;
 }
-#android_add{
-  display: block;
-}
 .main-header .navbar{
     background-color: rgba(0, 0, 0, 0) !important;
 }
@@ -257,6 +254,13 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   min-width: 61px;
 }
 
+#t-qr-new{
+  min-width: 56px;
+}
+.qr-background{
+  padding:20px;
+  background-color: rgba(255, 255, 255, 0.62);
+}
 #t-percent{
   min-width: 106px;
 }
@@ -271,6 +275,11 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
 
 #t-info{
   min-width: 400px;
+  text-align: left;
+}
+
+.node-list>tbody>tr>td.info{
+  text-align: left;
 }
 
 .progress{
@@ -441,12 +450,6 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
 @media (min-width: 767px){
   .dl-horizontal dt {
     width: 165px !important;
-  }
-  #getconfbtn{
-    display: block;
-  }
-  #android_add{
-    display: none;
   }
   .main-sidebar, .left-side {
     position: fixed !important;

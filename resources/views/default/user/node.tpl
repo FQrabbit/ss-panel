@@ -18,6 +18,11 @@
                 <div class="callout callout-warning">
                     <h4>注意!</h4>
 		            <p>{$msg}</p>
+		            <div class="w3-btn-group">
+		  				<a href="{$android_add}" class="w3-btn w3-teal w3-small w3-round w3-ripple w3-margin-right w3-margin-top">手机原版客户端导入所有节点</a>
+		  				<a href="{$android_add_new}" class="w3-btn w3-teal w3-small w3-round w3-ripple w3-margin-right w3-margin-top">手机SSR客户端导入所有节点</a>
+		  				<a href="./getconf" class="w3-btn w3-teal w3-small w3-round w3-ripple w3-margin-right w3-margin-top">下载pc配置文件</a>
+		  			</div>
                 </div>
             </div>
         </div>
@@ -28,8 +33,6 @@
 		  	<div class="col-md-12">
 		  		<div class="panel">
 		  			<div class="panel-heading">
-			  			<a id="android_add" class="btn w3-teal w3-small pull-right">android导入所有节点</a>
-			  			<a href="./getconf" class="btn w3-teal w3-small pull-right w3-margin-right" id="getconfbtn">下载pc配置文件</a>
 		  				<h3>节点列表</h3> 
 		  			</div>
 					<div class="panel-body">
@@ -44,7 +47,8 @@
 												<th id="t-server">地址</th>
 												<th id="t-online">在线</th>
 												<th id="t-method">加密</th>
-												<th id="t-qr">二维码</th>
+												<th id="t-qr">原版二维码</th>
+												<th id="t-qr-new">SSR二维码</th>
 												<th id="t-percent">流量使用情况</th>
 												<th id="t-traffic">本日产生流量</th>
 												<th id="t-info">说明</th>
@@ -60,7 +64,8 @@
 													<td>付费用户可见</td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
 													<td>{if $node->custom_method == 1} {$user->method} {else} {$node->method} {/if}</td>
-													<td></td>
+													<td>Meow</td>
+													<td>Meow</td>
 													<td>
 														<div class="progress">
 														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
@@ -70,7 +75,7 @@
 														</div>
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
-													<td>{$node->info}</td>
+													<td class="info">{$node->info}</td>
 													<td>{$node->getNodeUptime()}</td>
 												</tr>
 			{else}
@@ -82,7 +87,11 @@
 													<td>{$node->method}</td>
 													<td>
 														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
-														<div class="qrcode" id="{$node->name}"></div>
+														<a href="{$ssqrs[$node->name]}"><div class="qrcode" id="{$node->name}"></div></a>
+													</td>
+													<td>
+														<span class="qr-toggle"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
+														<a href="{$ssqrs_new[$node->name]}"><div class="qrcode" id="{$node->name}-new"></div></a>
 													</td>
 													<td>
 														<div class="progress">
@@ -93,7 +102,7 @@
 														</div>
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
-													<td>{$node->info}</td>
+													<td class="info">{$node->info}</td>
 													<td>{$node->getNodeUptime()}</td>
 												</tr>
 			{/if}
@@ -113,27 +122,24 @@
 
 <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
 <script>
-	$("#android_add").click(function(){
-		var links = new Array({$android_add});
-		for(var i=0; i<links.length; i++){
-			window.open(links[i]);
-		}
-	});
 	$(".qr-toggle").click(function(){
-		$(this).next("div").toggle();
+		$(this).next().children().toggle();
 		$(this).children().toggleClass("text-teal larger-text");
 	})
 	$(".qrcode").click(function(){
 		$(this).hide();
-		$(this).prev().children().toggleClass("text-teal larger-text");
+		$(this).parent().prev().children().toggleClass("text-teal larger-text");
 	})
 </script>
 
 <script>
 	$(document).ready(function(){
-		{foreach $node_to_add as $node}
+		{foreach $nodes_available as $node}
 			jQuery("#{$node->name}").qrcode({
 		        "text":  '{$ssqrs[$node->name]}'
+		    })
+			jQuery("#{$node->name}-new").qrcode({
+		        "text":  '{$ssqrs_new[$node->name]}'
 		    })
 		{/foreach}
 	})

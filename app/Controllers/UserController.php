@@ -49,37 +49,41 @@ class UserController extends BaseController
     {
         $msg = DbConfig::get('user-node');
         $user = Auth::getUser();
-        $nodes = Node::where('type', ">=", 0)->orderBy('sort')->get();
-        $free_nodes = Node::where('type', 0)->orderBy('sort')->get();
         $android_add = "";
+        $android_add_new = "";
         $ssqrs = array();
+        $ssqrs_new = array();
+        $allnodes = Node::where('type', '>=', 0)->orderBy('sort')->get();
+        $free_nodes = Node::where('type', 0)->orderBy('sort')->get();
         if ($user->plan == "A")
         {
-            $node_to_add = $free_nodes;
+            $nodes_available = $free_nodes;
         }
         else
         {
-            $node_to_add = $nodes;
+            $nodes_available = $allnodes;
         }
-        foreach ($node_to_add as $node)
+        foreach ($nodes_available as $node)
         {
             $ary['server'] = $node->server;
             $ary['server_port'] = $user->port;
             $ary['password'] = $user->passwd;
             $ary['method'] = $node->method;
+
             $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
-            $ssqr = "ss://" . base64_encode($ssurl);
+            $ssqr = "ss://" . base64_encode($ssurl); //原版
+            $android_add .= $ssqr."|";
             $ssqrs[$node->name] = $ssqr;
-            if ($android_add == "")
-            {
-                $android_add .="'".$ssqr."'";
-            }
-            else 
-            {
-                $android_add .=",'".$ssqr."'";
-            }
+
+            $ssurl = str_replace("_compatible","",$node->obfs).":".str_replace("_compatible","",$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
+            $ssqr_s = "ss://" . base64_encode($ssurl);  //SSR (3.8.3之前)
+
+            $ssurl = $ary['server']. ":" . $ary['server_port'].":".str_replace("_compatible","",$node->protocol).":".$ary['method'].":".str_replace("_compatible","",$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name);
+            $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl);  //SSR 新版(3.8.3之后)
+            $android_add_new .= $ssqr_s_new."|";
+            $ssqrs_new[$node->name] = $ssqr_s_new;
         }
-        return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg',$msg)->assign('android_add',$android_add)->assign('ssqrs',$ssqrs)->assign('node_to_add',$node_to_add)->display('user/node.tpl');
+        return $this->view()->assign('nodes', $allnodes)->assign('user', $user)->assign('msg',$msg)->assign('android_add',$android_add)->assign('android_add_new',$android_add_new)->assign('ssqrs',$ssqrs)->assign('ssqrs_new',$ssqrs_new)->assign('nodes_available',$nodes_available)->display('user/node.tpl');
     }
 
 
@@ -95,19 +99,27 @@ class UserController extends BaseController
         $ary['server_port'] = $this->user->port;
         $ary['password'] = $this->user->passwd;
         $ary['method'] = $node->method;
+        $ary['obfs'] = $node->obfs;
+        $ary['obfs_param'] = $node->obfs_param;
+        $ary['protocol'] = $node->protocol;
         if ($node->custom_method) {
             $ary['method'] = $this->user->method;
         }
         $json = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
+
         $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
-        $ssqr = "ss://" . base64_encode($ssurl);
+        $ssqr = "ss://" . base64_encode($ssurl); //原版
+        $ssurl = str_replace("_compatible","",$node->obfs).":".str_replace("_compatible","",$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
+        $ssqr_s = "ss://" . base64_encode($ssurl);  //SSR (3.8.3之前)
+        $ssurl = $ary['server']. ":" . $ary['server_port'].":".str_replace("_compatible","",$node->protocol).":".$ary['method'].":".str_replace("_compatible","",$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name);
+        $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl);  //SSR 新版(3.8.3之后)
 
         $surge_base = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
-        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
+        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('ssqr_s', $ssqr_s)->assign('ssqr_s_new', $ssqr_s_new)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
     }
     
     public function getconf($request, $response, $args){
