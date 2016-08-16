@@ -20,6 +20,7 @@
                     <h4>注意!</h4>
 
                     <p>配置文件以及二维码请勿泄露！</p>
+                    <p>手机点击二维码也可导入。</p>
                 </div>
             </div>
 
@@ -98,7 +99,6 @@
                         <i class="fa fa-code"></i>
 
                         <h3 class="box-title">配置地址</h3>
-                        <a href="{$ssqr}" class="btn w3-teal w3-small pull-right">手机用户点此导入该节点配置</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
