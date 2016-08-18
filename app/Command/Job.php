@@ -176,11 +176,22 @@ class Job
 
     public static function clearLog()
     {
-	TrafficLog::truncate();
+        echo date("Y-m-d H:i:s",time())."\n";
+
+        TrafficLog::truncate();
+        echo "clear trafficlog\n";
+
         NodeInfoLog::where("log_time", "<", (time()-120))->delete();
+        echo "clear nodeinfolog\n";
+
         CheckInLog::where("checkin_at", "<", (time()-30*12*3600))->delete();
-	PasswordReset::where("expire_time", "<", time())->delete();
-	NodeOnlineLog::where("log_time", "<", (time()-120))->delete();
+        echo "clear checkinlog\n";
+
+        PasswordReset::truncate();
+        echo "clear passwordresetlog\n";
+        
+        NodeOnlineLog::where("log_time", "<", (time()-120))->delete();
+        echo "clear nodeonlinelog\n\n";
     }
 
 }

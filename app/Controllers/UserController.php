@@ -78,7 +78,7 @@ class UserController extends BaseController
             $ssurl = str_replace("_compatible","",$node->obfs).":".str_replace("_compatible","",$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
             $ssqr_s = "ss://" . base64_encode($ssurl);  //SSR (3.8.3之前)
 
-            $ssurl = $ary['server']. ":" . $ary['server_port'].":".str_replace("_compatible","",$node->protocol).":".$ary['method'].":".str_replace("_compatible","",$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name);
+            $ssurl = $ary['server']. ":" . $ary['server_port'].":".str_replace("_compatible","",$node->protocol).":".$ary['method'].":".str_replace("_compatible","",$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name)."&group=".Tools::base64_url_encode("shadowsky");
             $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl);  //SSR 新版(3.8.3之后)
             $android_add_new .= $ssqr_s_new."|";
             $ssqrs_new[$node->name] = $ssqr_s_new;
@@ -112,7 +112,7 @@ class UserController extends BaseController
         $ssqr = "ss://" . base64_encode($ssurl); //原版
         $ssurl = str_replace("_compatible","",$node->obfs).":".str_replace("_compatible","",$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
         $ssqr_s = "ss://" . base64_encode($ssurl);  //SSR (3.8.3之前)
-        $ssurl = $ary['server']. ":" . $ary['server_port'].":".str_replace("_compatible","",$node->protocol).":".$ary['method'].":".str_replace("_compatible","",$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name);
+        $ssurl = $ary['server']. ":" . $ary['server_port'].":".str_replace("_compatible","",$node->protocol).":".$ary['method'].":".str_replace("_compatible","",$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name)."&group=".Tools::base64_url_encode("shadowsky");
         $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl);  //SSR 新版(3.8.3之后)
 
         $surge_base = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
@@ -131,29 +131,37 @@ class UserController extends BaseController
         }
         $string='
 {
-        "index" : 1,
-        "random" : false,
-        "global" : false,
-        "enabled" : true,
-        "shareOverLan" : false,
-        "isDefault" : false,
-        "bypassWhiteList" : false,
-        "localPort" : 1080,
-        "pacUrl" : null,
-        "useOnlinePac" : false,
-        "reconnectTimes" : 3,
-        "randomAlgorithm" : 3,
-        "TTL" : 10,
-        "proxyEnable" : false,
-        "proxyType" : 0,
-        "proxyHost" : "",
-        "proxyPort" : 0,
-        "proxyAuthUser" : "",
-        "proxyAuthPass" : "",
-        "authUser" : "",
-        "authPass" : "",
-        "autoBan" : false,
-        "sameHostForSameTarget" : false
+    "index" : 0,
+    "random" : false,
+    "global" : false,
+    "enabled" : false,
+    "shareOverLan" : false,
+    "isDefault" : false,
+    "bypassWhiteList" : false,
+    "localPort" : 1080,
+    "reconnectTimes" : 3,
+    "randomAlgorithm" : 0,
+    "TTL" : 0,
+    "proxyEnable" : false,
+    "pacDirectGoProxy" : false,
+    "proxyType" : 0,
+    "proxyHost" : null,
+    "proxyPort" : 0,
+    "proxyAuthUser" : null,
+    "proxyAuthPass" : null,
+    "proxyUserAgent" : null,
+    "authUser" : null,
+    "authPass" : null,
+    "autoBan" : false,
+    "sameHostForSameTarget" : false,
+    "keepVisitTime" : 180,
+    "dns_server" : null,
+    "token" : {
+
+    },
+    "portMap" : {
+
+    }
 }
         ';
         
@@ -162,19 +170,21 @@ class UserController extends BaseController
         $temparray=array();
         foreach($nodes as $node)
         {
-            array_push($temparray,array("remarks"=>$node->name,
+            array_push($temparray,array(
+                                        "remarks"=>$node->name,
                                         "server"=>$node->server,
                                         "server_port"=>$user->port,
+                                        "server_udp_port"=>0,
+                                        "password"=>$user->passwd,
                                         "method"=>($node->custom_method==1?$user->method:$node->method),
-                                        "obfs"=>$node->obfs,
+                                        "obfs"=>str_replace("_compatible", "", $node->obfs),
                                         "obfsparam"=>"cloudflare.com",
                                         "remarks_base64"=>base64_encode($node->name),
-                                        "password"=>$user->passwd,
-                                        "tcp_over_udp"=>false,
+                                        "group"=>"shadowsky",
                                         "udp_over_tcp"=>false,
-                                        "protocol"=>$node->protocol,
-                                        "obfs_udp"=>false,
-                                        "enable"=>true));
+                                        "protocol"=>str_replace("_compatible", "", $node->protocol),
+                                        "enable"=>true
+            ));
         }
         $json["configs"]=$temparray;
         $json = json_encode($json,JSON_PRETTY_PRINT);
