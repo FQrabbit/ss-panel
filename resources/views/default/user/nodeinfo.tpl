@@ -194,5 +194,9 @@
 <script>
     $(document).ready(function(){
         $(".content-wrapper,.main-footer").css("margin-left", 0);
+
+        function hidemodal () {
+            $("#nodeinfo").modal("hide");
+        }
     })
 </script>
