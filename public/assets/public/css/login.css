@@ -14,7 +14,7 @@
   color: white;
 }
 html,body{
-  min-height: 115%;
+  min-height: 100%;
 }
 a,p{
   color:white;
@@ -47,11 +47,6 @@ a:hover{
   position: relative;
   z-index: 2;
 }
-input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-    background-color: rgba(0, 0, 0, 0.05) !important;
-    background-image: none;
-    color: white !important;
-}
 .form-control{
   color:white;
   background-color: rgba(0, 0, 0, 0.05);
@@ -67,9 +62,19 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 .btn-primary:hover {
   background-color: rgba(0, 0, 0, 0.02);
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color:white !important;
+}
+.form-control-feedback{
+  right:3%;
+}
 .bb-wrapper {
     overflow: hidden;
-    min-height: 115%;
+    min-height: 100%;
     position: absolute;
     width: 100%;
     top: 0;

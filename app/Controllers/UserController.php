@@ -99,9 +99,9 @@ class UserController extends BaseController
         $ary['server_port'] = $this->user->port;
         $ary['password'] = $this->user->passwd;
         $ary['method'] = $node->method;
-        $ary['obfs'] = $node->obfs;
+        $ary['obfs'] = str_replace("_compatible","",$node->obfs);
         $ary['obfs_param'] = $node->obfs_param;
-        $ary['protocol'] = $node->protocol;
+        $ary['protocol'] = str_replace("_compatible","",$node->protocol);
         if ($node->custom_method) {
             $ary['method'] = $this->user->method;
         }
