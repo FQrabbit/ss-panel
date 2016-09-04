@@ -137,41 +137,33 @@ class Job
 
     public static function updateNodeUsage()
     {
-        //us1
-        $request = "https://api.64clouds.com/v1/getServiceInfo?veid=149769&api_key=private_7pmMhX8OPI6jkof3U6bHxJT3";
-        $serviceInfo = json_decode (file_get_contents ($request));
-        $usage = ($serviceInfo->data_counter / $serviceInfo->plan_monthly_data) * 100;
-        $node = Node::find(1);
-        $node->node_usage = $usage;
-        $node->save();
-        echo "us1:".$usage."\n";
-
-        //jp1,jp4
-        $out = file_get_contents("https://api.vultr.com/v1/server/list?api_key=YH7LQH4WIRA2RSLCGHXSFH4E23XZ4L");
-        $out = json_decode($out);
-        $arr = [
-            "jp1" => "3868748",
-            "jp4" => "3682976"
-        ];
-        foreach ($arr as $name => $subid) {
-            $name_usage = ($out->$subid->current_bandwidth_gb / $out->$subid->allowed_bandwidth_gb) * 100;
-            $node = Node::where("name", $name)->update(array("node_usage" => $name_usage));
-            echo $name.":".$name_usage."\n";
+        // bandwagon-us1
+        try {
+            $node = Node::find(21);
+            $request = $node->api;
+            $serviceInfo = json_decode (file_get_contents ($request));
+            $usage = round(($serviceInfo->data_counter / $serviceInfo->plan_monthly_data) * 100, 2);
+            $node->node_usage = $usage;
+            $node->save();
+            echo $node->name.":".$usage."\n";
+        } catch (Exception $e) {
+            echo $e->getMessage()."\n";
         }
-
-        //jp2,jp3
-        $out = file_get_contents("https://api.vultr.com/v1/server/list?api_key=WW62CTHYRPTBVWNNIBIGHOO2AFQLUB");
-        $out = json_decode($out);
-        $arr = [
-            "jp2" => "3158192",
-            "jp3" => "3963638"
-        ];
-        foreach ($arr as $name => $subid) {
-            $name_usage = ($out->$subid->current_bandwidth_gb / $out->$subid->allowed_bandwidth_gb) * 100;
-            $node = Node::where("name", $name)->update(array("node_usage" => $name_usage));
-            echo $name.":".$name_usage."\n";
+        // vultr
+        $nodes = Node::where('vps', 'vultr')->get();
+        foreach ($nodes as $node) {
+            try {
+                $request = $node->api;
+                $out = json_decode (file_get_contents ($request));
+                $subid = $node->subid;
+                $name_usage = round(($out->$subid->current_bandwidth_gb / $out->$subid->allowed_bandwidth_gb) * 100 ,2);
+                $node->node_usage = $name_usage;
+                $node->save();
+                echo $node->name.":".$name_usage."\n";
+            } catch (Exception $e) {
+                echo $e->getMessage()."\n";
+            }
         }
-        echo date("Y-m-d H:i:s",time())."\n\n";
     }
 
     public static function clearLog()
