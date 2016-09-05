@@ -75,6 +75,8 @@
                             <dd>{$user->port}</dd>
                             <dt>密码</dt>
                             <dd>{$user->passwd}</dd>
+                            <dt>自定义加密</dt>
+                            <dd>{$user->method}</dd>
                             <dt>自定义协议</dt>
                             <dd>{$user->protocol}</dd>
                             <dt>自定义混淆</dt>
@@ -115,6 +117,32 @@
                                         <input type="text" id="ssport" placeholder="{$user->port}" class="form-control" disabled>
                                         <div class="input-group-btn">
                                             <button type="submit" id="portreset" class="btn btn-default btn-flat">重置端口</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">加密方式</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select id="method" class="form-control">
+                                            <option value="aes-256-ctr">AES-256-CTR</option>
+                                            <option value="camellia-128-cfb">CAMELLIA-128-CFB</option>
+                                            <option value="camellia-192-cfb">CAMELLIA-192-CFB</option>
+                                            <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
+                                            <option value="bf-cfb">BF-CFB</option>
+                                            <option value="cast5-cfb">CAST5-CFB</option>
+                                            <option value="des-cfb">DES-CFB</option>
+                                            <option value="des-cfb">DES-EDE3-CFB</option>
+                                            <option value="idea-cfb">IDEA-CFB</option>
+                                            <option value="rc2-cfb">RC2-CFB</option>
+                                            <option value="seed-cfb">SEED-CFB</option>
+                                            <option value="salsa20">SALSA20</option>
+                                            <option value="chacha20">CHACHA20</option>
+                                            <option value="chacha20-ietf">CHACHA20-IETF</option>
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="updateMethod" class="btn btn-default btn-flat">修改</button>
                                         </div>
                                     </div>
                                 </div>
@@ -484,6 +512,33 @@
                             window.setTimeout("location.reload()",5000);
                         });
                         $("#msg-success-p").html("有的节点不支持自定义混淆插件，请进入节点详情页查看。");
+                    } else {
+                        $("#msg-error").show(500, function(){
+                            window.setTimeout("location.reload()",5000);
+                        });
+                        $("#msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+
+        $("#updateMethod").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "method",
+                dataType: "json",
+                data: {
+                    obfs: $("#method").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#msg-success").show(500, function(){
+                            window.setTimeout("location.reload()",5000);
+                        });
+                        $("#msg-success-p").html("有的节点不支持自定义加密，请进入节点详情页查看。");
                     } else {
                         $("#msg-error").show(500, function(){
                             window.setTimeout("location.reload()",5000);
