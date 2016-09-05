@@ -47,7 +47,7 @@ class Job
                 }
 
                 echo date("Y-m-d H:i:s")."\n";
-                echo "已更新用户".$user->user_name."(id:".$user->id.")的plan为A\n\n";
+                echo "已更新用户".$user->user_name."(id:".$user->id.")的plan为A</br>";
             }
         }
     }
@@ -56,21 +56,20 @@ class Job
     {
         $day = 24*3600;
         $period = date("Y-m-d H:i:s",(time() - 30*$day));
-        $users = User::where("t", "<" , $period)
-                    // ->where("d", 0)
-                    ->where("plan", "A")
-                    ->where("ref_by", "!=", 3)
-                    ->where("reg_date", "<", $period)
-                    ->orderBy("t")
-                    ->get();
+        $users = User::where("plan", "A")
+                        ->where("ref_by", "!=", 3)
+                        ->where("reg_date", "<", $period)
+                        ->where("t", "<", (time() - 60*$day))
+                        ->orderBy("t")
+                        ->get();
         if (!$users->isEmpty()) {
-            echo date("Y-m-d H:i:s",time())." 删除以下未使用用户：\n";
+            echo date("Y-m-d H:i:s",time())." 删除以下长时间未使用用户：</br>";
             echo "sum:".count($users)."\n";
-            echo "uid\t"."上次签到时间\t\t"."注册时间\t\t"."上次使用时间\t\t"."流量\t\t\t"."用户名\n";
+            echo "<table><thead><tr><th>uid</th><th>用户名</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {
-                echo $user->id."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\t".date("Y-m-d H:i:s", $user->t)."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t\t".$user->user_name."\n";
+                echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
             }
-            echo "\n";
+            echo "</tbody></table></br>";
         }
         return $users;
     }
@@ -85,15 +84,43 @@ class Job
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
         if (!$users->isEmpty()) {
-            echo date("Y-m-d H:i:s",time())." 删除以下未签到用户：\n";
+            echo date("Y-m-d H:i:s",time())." 删除以下长时间未签到用户：</br>";
             echo "sum:".count($users)."\n";
-            echo "uid\t"."上次签到时间\t\t"."注册时间\t\t"."上次使用时间\t\t"."流量\t\t\t"."用户名\n";
+            echo "<table><thead><tr><th>uid</th><th>用户名</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {
-                echo $user->id."\t".date("Y-m-d H:i:s", $user->last_check_in_time)."\t".$user->reg_date."\t".date("Y-m-d H:i:s", $user->t)."\t".$user->usedTraffic()."/".$user->enableTraffic()."\t\t".$user->user_name."\n";
+                echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
             }
-            echo "\n";
+            echo "</tbody></table></br>";
         }
         return $users;
+    }
+
+    public static function freezeuser()
+    {
+        $day = 24*3600;
+        $t = time() - 30*$day;
+        $period = date("Y-m-d H:i:s",$t);
+        User::where("t", "<", $t)
+            ->where("reg_date", "<", $period)
+            ->where("plan", "!=", "C")
+            ->where("enable", 1)
+            ->orderBy("t")
+            ->update(['enable' => 0]);
+        $users = User::where("t", "<", $t)
+                        ->where("reg_date", "<", $period)
+                        ->where("plan", "!=", "C")
+                        ->where("enable", 1)
+                        ->orderBy("t")
+                        ->get();
+        if (!$users->isEmpty()) {
+            echo date("Y-m-d H:i:s",time())." 冻结一下用户：</br>";
+            echo "sum:".count($users)."\n";
+            echo "<table><thead><tr><th>uid</th><th>用户名</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
+            foreach ($users as $user) {
+                echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
+            }
+            echo "</tbody></table></br>";
+        }
     }
 
     public static function delete($users)

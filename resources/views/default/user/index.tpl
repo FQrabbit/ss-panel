@@ -138,6 +138,7 @@
                                     <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
                                 {/if}
                                 </dl>
+
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -181,6 +182,26 @@
     </div>
 </div>
 
+<div id="activate-modal" class="w3-modal" style="z-index:999">
+    <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
+        <header class="w3-container w3-teal">
+            <span onclick=$("#activate-modal").hide() class="w3-closebtn">×</span>
+            <h3>激活账号</h3>
+        </header>
+        <div class="w3-container">
+            <br>
+            <p>Hello, {$user->user_name}。由于您已超过一个月没有使用本站的ss了，为了释放服务器资源，您的账号已被冻结，点击下面的按钮可重新激活账号。</p>
+            <button id="activate" class="btn btn-default btn-flat btn-sm w3-margin">点此激活账号</button>
+            <br>
+            <p id="activate-msg"></p>
+        </div>
+    </div>
+</div>
+{if !$user->enable}
+<script>
+    $("#activate-modal").show();
+</script>
+{/if}
 <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
@@ -194,6 +215,21 @@
                     success: function (data) {
                         $("#checkin-msg").html(data.msg);
                         $("#checkin-btn").hide();
+                    },
+                    error: function (jqXHR) {
+                        alert("发生错误：" + jqXHR.status);
+                    }
+                })
+        })
+
+        $("#activate").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/activate",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#activate-msg").html(data.msg);
+                        window.setTimeout("location.reload()", 3000);
                     },
                     error: function (jqXHR) {
                         alert("发生错误：" + jqXHR.status);

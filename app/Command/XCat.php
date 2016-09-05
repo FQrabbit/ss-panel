@@ -53,6 +53,8 @@ class XCat
                 return Job::delNoTransferUser();
             case("clearLog"):
                 return Job::clearLog();
+            case("freezeuser"):
+                return Job::freezeuser();
             default:
                 return $this->defaultAction();
         }

@@ -237,7 +237,7 @@ class UserController extends BaseController
         $d = User::sum("d");
         $usedTransfer = Tools::flowAutoShow($u + $d);
         $allUserCount = count($users);
-        $paidUserCount = User::where("plan", "=", "B")->count();
+        $paidUserCount = User::where("plan", "=", "B")->where("enable", 1)->count();
         $activeUserCount = User::where("d", "!=", 0)->count();
         $checkinCount = User::where("last_check_in_time", ">", (time()-24*3600))->count();
         $donateUserCount = User::where("ref_by", "=", 3)->count();
@@ -373,6 +373,19 @@ class UserController extends BaseController
         Auth::logout();
         $newResponse = $response->withStatus(302)->withHeader('Location', '/auth/login');
         return $newResponse;
+    }
+
+    public function activate($request, $response, $args)
+    {
+        $user = Auth::getUser();
+        try {
+            $user->enable = 1;
+            $user->save();
+            $res['msg'] = "激活成功，稍等片刻您的账号就可以正常使用了。";
+            $res['ret'] = 1;
+            return $this->echoJson($response, $res);
+        } catch (Exception $e) {
+        }
     }
 
     public function doCheckIn($request, $response, $args)

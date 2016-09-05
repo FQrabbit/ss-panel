@@ -24,7 +24,7 @@
                             <p>注册用户：<code>{$ana["allUserCount"]}</code></p>
                             <p>已经有<code>{$ana["activeUserCount"]}</code>个用户使用了{$config["appName"]}服务。</p>
                             <p>24小时签到用户：<code>{$ana["checkinCount"]}</code></p>
-                            <p>付费用户人数：<code>{$ana["paidUserCount"]}</code>。</p>
+                            <p>活跃付费用户人数：<code>{$ana["paidUserCount"]}</code>。</p>
                             <p>捐助用户人数：<code>{$ana["donateUserCount"]}</code>。</p>
                             <div class="row" style="display:none" id="row1">
                                 <div class="col-md-6">

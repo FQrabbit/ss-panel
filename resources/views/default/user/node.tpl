@@ -40,6 +40,7 @@
 												<th id="t-online">在线</th>
 												<th id="t-percent">流量使用情况</th>
 												<th id="t-traffic">本日产生流量</th>
+												<th id="t-traffic-reset-day">流量重置日</th>
 												<th id="t-info">说明</th>
 												<th id="t-uptime">负载</th>
 											</tr>
@@ -60,7 +61,8 @@
 														</div>
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
-													<td class="info">{$node->info}</td>
+													<td>{$node->transfer_reset_day}</td>
+													<td class="info">{$node->info} - 总流量: {$node->transfer}G</td>
 													<td>{$node->getNodeUptime()}</td>
 												</tr>
 			{else}
@@ -77,7 +79,8 @@
 														</div>
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
-													<td class="info">{$node->info}</td>
+													<td>{$node->transfer_reset_day}</td>
+													<td class="info">{$node->info} - 总流量: {$node->transfer}G</td>
 													<td>{$node->getNodeUptime()}</td>
 												</tr>
 			{/if}
