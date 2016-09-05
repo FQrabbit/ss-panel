@@ -368,28 +368,6 @@ class UserController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function updateProtocol($request, $response, $args)
-    {
-        $user = Auth::getUser();
-        $protocol = $request->getParam('protocol');
-        $protocol = strtolower($protocol);
-        $user->protocol = $protocol;
-        $user->save();
-        $res['ret'] = 1;
-        return $this->echoJson($response, $res);
-    }
-
-    public function updateObfs($request, $response, $args)
-    {
-        $user = Auth::getUser();
-        $obfs = $request->getParam('obfs');
-        $obfs = strtolower($obfs);
-        $user->obfs = $obfs;
-        $user->save();
-        $res['ret'] = 1;
-        return $this->echoJson($response, $res);
-    }
-
     public function logout($request, $response, $args)
     {
         Auth::logout();
