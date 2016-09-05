@@ -38,6 +38,7 @@
 												<th id="t-name">节点名</th>
 												<th id="t-status">状态</th>
 												<th id="t-online">在线</th>
+												<th id="t-ip">ip地址(备不时之需)</th>
 												<th id="t-percent">流量使用情况</th>
 												<th id="t-traffic">本日产生流量</th>
 												<th id="t-info">说明</th>
@@ -51,6 +52,7 @@
 													<td>{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
+													<td>Meow</td>
 													<td>
 														<div class="progress">
 														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
@@ -68,6 +70,7 @@
 													<td class="node-name" onclick="urlChange('{$node->id}')">{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
+													<td>{$node->ip}</td>
 													<td>
 														<div class="progress">
 														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
