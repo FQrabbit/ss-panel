@@ -75,10 +75,10 @@ class UserController extends BaseController
             $android_add .= $ssqr."|";
             $ssqrs[$node->name] = $ssqr;
 
-            $ssurl = ($node->custom_rss==1?str_replace("_compatible", "", $node->obfs):$node->obfs).":".($node->custom_rss==1?str_replace("_compatible", "", $node->protocol):$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
+            $ssurl = ($node->custom_rss==1?str_replace("_compatible", "", $user->obfs):$node->obfs).":".($node->custom_rss==1?str_replace("_compatible", "", $user->protocol):$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
             $ssqr_s = "ss://" . base64_encode($ssurl);  //SSR (3.8.3之前)
 
-            $ssurl = $ary['server']. ":" . $ary['server_port'].":".($node->custom_rss==1?str_replace("_compatible", "", $node->protocol):$node->protocol).":".$ary['method'].":".($node->custom_rss==1?str_replace("_compatible", "", $node->obfs):$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name)."&group=".Tools::base64_url_encode("shadowsky");
+            $ssurl = $ary['server']. ":" . $ary['server_port'].":".($node->custom_rss==1?str_replace("_compatible", "", $user->protocol):$node->protocol).":".$ary['method'].":".($node->custom_rss==1?str_replace("_compatible", "", $user->obfs):$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name)."&group=".Tools::base64_url_encode("shadowsky");
             $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl);  //SSR 新版(3.8.3之后)
             $android_add_new .= $ssqr_s_new."|";
             $ssqrs_new[$node->name] = $ssqr_s_new;
@@ -99,9 +99,9 @@ class UserController extends BaseController
         $ary['server_port'] = $this->user->port;
         $ary['password'] = $this->user->passwd;
         $ary['method'] = $node->method;
-        $ary['obfs'] = ($node->custom_rss==1?str_replace("_compatible", "", $node->obfs):$node->obfs);
+        $ary['obfs'] = ($node->custom_rss==1?str_replace("_compatible", "", $user->obfs):$node->obfs);
         $ary['obfs_param'] = $node->obfs_param;
-        $ary['protocol'] = ($node->custom_rss==1?str_replace("_compatible", "", $node->protocol):$node->protocol);
+        $ary['protocol'] = ($node->custom_rss==1?str_replace("_compatible", "", $user->protocol):$node->protocol);
         if ($node->custom_method) {
             $ary['method'] = $this->user->method;
         }
@@ -110,9 +110,9 @@ class UserController extends BaseController
 
         $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
         $ssqr = "ss://" . base64_encode($ssurl); //原版
-        $ssurl = ($node->custom_rss==1?str_replace("_compatible", "", $node->obfs):$node->obfs).":".($node->custom_rss==1?str_replace("_compatible", "", $node->protocol):$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
+        $ssurl = ($node->custom_rss==1?str_replace("_compatible", "", $user->obfs):$node->obfs).":".($node->custom_rss==1?str_replace("_compatible", "", $user->protocol):$node->protocol).":".$ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port']."/".base64_encode($node->obfs_param);
         $ssqr_s = "ss://" . base64_encode($ssurl);  //SSR (3.8.3之前)
-        $ssurl = $ary['server']. ":" . $ary['server_port'].":".($node->custom_rss==1?str_replace("_compatible", "", $node->protocol):$node->protocol).":".$ary['method'].":".($node->custom_rss==1?str_replace("_compatible", "", $node->obfs):$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name)."&group=".Tools::base64_url_encode("shadowsky");
+        $ssurl = $ary['server']. ":" . $ary['server_port'].":".($node->custom_rss==1?str_replace("_compatible", "", $user->protocol):$node->protocol).":".$ary['method'].":".($node->custom_rss==1?str_replace("_compatible", "", $user->obfs):$node->obfs).":".Tools::base64_url_encode($ary['password'])."/?obfsparam=".Tools::base64_url_encode($node->obfs_param)."&remarks=".Tools::base64_url_encode($node->name)."&group=".Tools::base64_url_encode("shadowsky");
         $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl);  //SSR 新版(3.8.3之后)
 
         $surge_base = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
@@ -177,12 +177,12 @@ class UserController extends BaseController
                                         "server_udp_port"=>0,
                                         "password"=>$user->passwd,
                                         "method"=>($node->custom_method==1?$user->method:$node->method),
-                                        "obfs"=>($node->custom_rss==1?str_replace("_compatible", "", $node->obfs):$node->obfs),
+                                        "obfs"=>($node->custom_rss==1?str_replace("_compatible", "", $user->obfs):$node->obfs),
                                         "obfsparam"=>"cloudflare.com",
                                         "remarks_base64"=>base64_encode($node->name),
                                         "group"=>"shadowsky",
                                         "udp_over_tcp"=>false,
-                                        "protocol"=>($node->custom_rss==1?str_replace("_compatible", "", $node->protocol):$node->protocol),
+                                        "protocol"=>($node->custom_rss==1?str_replace("_compatible", "", $user->protocol):$node->protocol),
                                         "enable"=>true
             ));
         }
