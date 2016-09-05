@@ -70,6 +70,15 @@
                                 <dt>到期时间</dt>
                                 <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
                             {/if}
+                            <br>
+                            <dt>端口</dt>
+                            <dd>{$user->port}</dd>
+                            <dt>密码</dt>
+                            <dd>{$user->passwd}</dd>
+                            <dt>自定义协议</dt>
+                            <dd>{$user->protocol}</dd>
+                            <dt>自定义混淆</dt>
+                            <dd>{$user->obfs}</dd>
                         </dl>
 
                     </div>
@@ -106,6 +115,34 @@
                                         <input type="text" id="ssport" placeholder="{$user->port}" class="form-control" disabled>
                                         <div class="input-group-btn">
                                             <button type="submit" id="portreset" class="btn btn-default btn-flat">重置端口</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">协议</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="protocol">
+                                            <option value="auth_sha1_compatible">auth_sha1_compatible</option>
+                                            <option value="auth_sha1_v3_compatible">auth_sha1_v3_compatible</option>
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="updateProtocol" class="btn btn-default btn-flat">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">混淆</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="obfs">
+                                            <option value="http_simple_compatible">http_simple_compatible</option>
+                                            <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                        </select>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="updateObfs" class="btn btn-default btn-flat">修改</button>
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +280,7 @@
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-success").show(500, function(){
-                            $(this).delay(3000).hide(500);
+                            window.setTimeout("location.reload()",5000);
                         });
                         $("#msg-success-p").html(data.msg);
                     } else {
@@ -362,7 +399,7 @@
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-success").show(500, function(){
-                            $(this).delay(3000).hide(500);
+                            window.setTimeout("location.reload()",5000);
                         });
                         $("#msg-success-p").html(data.msg);
                     } else {
@@ -390,12 +427,66 @@
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-success").show(500, function(){
-                            $(this).delay(3000).hide(500);
+                            window.setTimeout("location.reload()",5000);
                         });
                         $("#msg-success-p").html(data.msg);
                     } else {
                         $("#msg-error").show(500, function(){
-                            $(this).delay(3000).hide(500);
+                            window.setTimeout("location.reload()",5000);
+                        });
+                        $("#msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+
+        $("#updateProtocol").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "protocol",
+                dataType: "json",
+                data: {
+                    protocol: $("#protocol").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#msg-success").show(500, function(){
+                            window.setTimeout("location.reload()",5000);
+                        });
+                        $("#msg-success-p").html("有的节点不支持自定义协议，请进入节点详情页查看。");
+                    } else {
+                        $("#msg-error").show(500, function(){
+                            window.setTimeout("location.reload()",5000);
+                        });
+                        $("#msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+
+        $("#updateObfs").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "obfs",
+                dataType: "json",
+                data: {
+                    obfs: $("#obfs").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#msg-success").show(500, function(){
+                            window.setTimeout("location.reload()",5000);
+                        });
+                        $("#msg-success-p").html("有的节点不支持自定义混淆插件，请进入节点详情页查看。");
+                    } else {
+                        $("#msg-error").show(500, function(){
+                            window.setTimeout("location.reload()",5000);
                         });
                         $("#msg-error-p").html(data.msg);
                     }

@@ -52,6 +52,13 @@ class Node extends Model
         return $log;
     }
 
+    public function getNodeIp()
+    {
+        $name = $this->attributes['server'];
+        $ip = gethostbyname($name);
+        return $ip;
+    }
+
     function getOnlineUserCount()
     {
         $log = $this->getLastNodeOnlineLog();
