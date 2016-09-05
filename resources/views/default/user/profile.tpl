@@ -531,7 +531,7 @@
                 url: "method",
                 dataType: "json",
                 data: {
-                    obfs: $("#method").val()
+                    method: $("#method").val()
                 },
                 success: function (data) {
                     if (data.ret) {
