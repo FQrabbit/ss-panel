@@ -9,6 +9,7 @@ use App\Models\TrafficLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\CheckInLog;
+use App\Models\EmailVerify;
 use App\Models\PasswordReset;
 use App\Services\Config;
 use App\Services\Mail;
@@ -198,19 +199,22 @@ class Job
         echo date("Y-m-d H:i:s",time())."\n";
 
         TrafficLog::truncate();
-        echo "clear trafficlog\n";
+        echo "clear TrafficLog\n";
+
+        EmailVerify::truncate();
+        echo "clear EmailVerifyLog\n";
 
         NodeInfoLog::where("log_time", "<", (time()-120))->delete();
-        echo "clear nodeinfolog\n";
+        echo "clear NodeInfoLog\n";
 
         CheckInLog::where("checkin_at", "<", (time()-30*12*3600))->delete();
-        echo "clear checkinlog\n";
+        echo "clear CheckinLog\n";
 
         PasswordReset::truncate();
-        echo "clear passwordresetlog\n";
+        echo "clear PasswordResetLog\n";
         
         NodeOnlineLog::where("log_time", "<", (time()-120))->delete();
-        echo "clear nodeonlinelog\n\n";
+        echo "clear NodeOnlineLog\n\n";
     }
 
 }
