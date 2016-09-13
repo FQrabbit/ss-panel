@@ -69,9 +69,9 @@ class UserController extends BaseController
             $ary['server_port'] = $user->port;
             $ary['password'] = $user->passwd;
             $ary['method'] = ($node->custom_method==1?$user->method:$node->method);
-            $ary['obfs'] = ($node->custom_rss==1?str_replace("_compatible", "", $this->user->obfs):$node->obfs);
+            $ary['obfs'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->obfs:$node->obfs));
             $ary['obfs_param'] = $node->obfs_param;
-            $ary['protocol'] = ($node->custom_rss==1?str_replace("_compatible", "", $this->user->protocol):$node->protocol);
+            $ary['protocol'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->protocol:$node->protocol));
 
             $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
             $ssqr = "ss://" . base64_encode($ssurl); //原版
@@ -102,9 +102,9 @@ class UserController extends BaseController
         $ary['server_port'] = $this->user->port;
         $ary['password'] = $this->user->passwd;
         $ary['method'] = ($node->custom_method==1?$user->method:$node->method);
-        $ary['obfs'] = ($node->custom_rss==1?str_replace("_compatible", "", $this->user->obfs):$node->obfs);
+        $ary['obfs'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->obfs:$node->obfs));
         $ary['obfs_param'] = $node->obfs_param;
-        $ary['protocol'] = ($node->custom_rss==1?str_replace("_compatible", "", $this->user->protocol):$node->protocol);
+        $ary['protocol'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->protocol:$node->protocol));
         if ($node->custom_method) {
             $ary['method'] = $this->user->method;
         }
@@ -180,12 +180,12 @@ class UserController extends BaseController
                                         "server_udp_port"=>0,
                                         "password"=>$user->passwd,
                                         "method"=>($node->custom_method==1?$user->method:$node->method),
-                                        "obfs"=>($node->custom_rss==1?str_replace("_compatible", "", $this->user->obfs):$node->obfs),
-                                        "obfsparam"=>"cloudflare.com",
+                                        "obfs"=>str_replace("_compatible", "", ($node->custom_rss==1?$this->user->obfs:$node->obfs)),
+                                        "obfsparam"=>$node->obfs_param,
                                         "remarks_base64"=>base64_encode($node->name),
                                         "group"=>"shadowsky",
                                         "udp_over_tcp"=>false,
-                                        "protocol"=>($node->custom_rss==1?str_replace("_compatible", "", $this->user->protocol):$node->protocol),
+                                        "protocol"=>str_replace("_compatible", "", ($node->custom_rss==1?$this->user->protocol:$node->protocol)),
                                         "enable"=>true
             ));
         }
