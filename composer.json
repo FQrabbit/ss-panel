@@ -2,8 +2,7 @@
   "require": {
     "pongtan/framework": "dev-master",
     "pongtan/utils": "dev-master",
-    "ramsey/uuid": "^3.3",
-    "paypal/rest-api-sdk-php": "*"
+    "ramsey/uuid": "^3.3"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.0",

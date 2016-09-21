@@ -81,6 +81,7 @@ class Job
         $users = User::where("last_check_in_time", "<", (time()-21*$day))
                     ->where("plan", "A")
                     ->where("ref_by", "!=", 3)
+                    ->where("buy_date", ">", "0000-00-00 00:00:00")
                     ->where("reg_date", "<", $last_three_week_date)
                     ->get();
         if (!$users->isEmpty()) {
@@ -100,20 +101,20 @@ class Job
         $day = 24*3600;
         $t = time() - 30*$day;
         $period = date("Y-m-d H:i:s",$t);
-        User::where("t", "<", $t)
-            ->where("reg_date", "<", $period)
-            ->where("plan", "!=", "C")
-            ->where("enable", 1)
-            ->orderBy("t")
-            ->update(['enable' => 0]);
         $users = User::where("t", "<", $t)
                         ->where("reg_date", "<", $period)
                         ->where("plan", "!=", "C")
                         ->where("enable", 1)
                         ->orderBy("t")
                         ->get();
+        User::where("t", "<", $t)
+            ->where("reg_date", "<", $period)
+            ->where("plan", "!=", "C")
+            ->where("enable", 1)
+            ->orderBy("t")
+            ->update(['enable' => 0]);
         if (!$users->isEmpty()) {
-            echo date("Y-m-d H:i:s",time())." 冻结一下用户：</br>";
+            echo date("Y-m-d H:i:s",time())." 冻结以下用户：</br>";
             echo "sum:".count($users)."\n";
             echo "<table><thead><tr><th>uid</th><th>用户名</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {

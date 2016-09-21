@@ -67,7 +67,7 @@ $app->group('/user', function () {
     $this->post('/resetport', 'App\Controllers\UserController:ResetPort');
     $this->get('/purchase', 'App\Controllers\UserController:purchase');
     $this->get('/qna', 'App\Controllers\UserController:qna');
-    $this->get('/payreturn', 'App\Controllers\PayController:handlePay');
+    // $this->get('/payreturn', 'App\Controllers\PayController:handlePay');
 })->add(new Auth());
 
 // Auth
