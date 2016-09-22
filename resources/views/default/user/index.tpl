@@ -27,9 +27,8 @@
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
       	                        <div class="w3-btn-group" style="margin-top:10px">
-        		                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-right" style="width:33.3%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
-        		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-right w3-border-left" style="width:33.3%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
-        		                        <a class="w3-btn w3-green w3-border-left" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=c49710b2362e96840cd04aee8185cd10ad4132f5746f8041e2eb9b76dbc3e2d3" style="width:33.3%;border-color:rgba(0,0,0,0.2) !important">QQ群</a>
+        		                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
+        		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
       	                        </div>
       							<button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
       	                    </div><!-- /.box-body -->

@@ -126,17 +126,9 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select id="method" class="form-control">
+                                            <option value="aes-256-cfb">AES-256-CFB</option>
                                             <option value="aes-256-ctr">AES-256-CTR</option>
-                                            <option value="camellia-128-cfb">CAMELLIA-128-CFB</option>
-                                            <option value="camellia-192-cfb">CAMELLIA-192-CFB</option>
                                             <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
-                                            <option value="bf-cfb">BF-CFB</option>
-                                            <option value="cast5-cfb">CAST5-CFB</option>
-                                            <option value="des-cfb">DES-CFB</option>
-                                            <option value="des-cfb">DES-EDE3-CFB</option>
-                                            <option value="idea-cfb">IDEA-CFB</option>
-                                            <option value="rc2-cfb">RC2-CFB</option>
-                                            <option value="seed-cfb">SEED-CFB</option>
                                             <option value="salsa20">SALSA20</option>
                                             <option value="chacha20">CHACHA20</option>
                                             <option value="chacha20-ietf">CHACHA20-IETF</option>
@@ -153,7 +145,9 @@
                                     <div class="input-group">
                                         <select class="form-control" id="protocol">
                                             <option value="auth_sha1_compatible">auth_sha1_compatible</option>
+                                            <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
                                             <option value="auth_sha1_v3_compatible">auth_sha1_v3_compatible</option>
+                                            <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
                                         </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="updateProtocol" class="btn btn-default btn-flat">修改</button>
@@ -166,8 +160,8 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select class="form-control" id="obfs">
-                                            <option value="http_simple_compatible">http_simple_compatible</option>
                                             <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                            <option value="http_simple_compatible">http_simple_compatible</option>
                                         </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="updateObfs" class="btn btn-default btn-flat">修改</button>
