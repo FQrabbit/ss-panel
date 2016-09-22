@@ -4,6 +4,7 @@
 namespace App\Command;
 
 use App\Models\User;
+use App\Models\Ann;
 use App\Services\Config;
 use App\Services\Mail;
 
@@ -56,15 +57,25 @@ class DailyMail
         echo "Send website backup successful\n\n";
     }
 
-    public static function sendGeneralEmail()
+    public static function sendAnnMail()
     {
-        $users = User::all();
-        // $users = User::where("id", 1)->get();
+        // $users = User::all();
+        $users = User::where("id", 1)->get();
+        $ann = Ann::orderBy('id', 'desc')->fisrt();
+        $title = $ann->title;
+        $content = $ann->content;
+        $arr = [
+            "title" => $title,
+            "content" => $content,
+            "user" => ""
+        ];
+        echo $users[0]->email;
         foreach ($users as $user) {
+            $arr["user"] = $user;
             try {
                 $to = $user->email;
-                $subject = "Shadowsky";
-                Mail::send($to, $subject, 'news/general-report.tpl', [], []);
+                $subject = "Shadowsky - ".$title;
+                Mail::send($to, $subject, 'news/announcement.tpl', $arr, []);
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
