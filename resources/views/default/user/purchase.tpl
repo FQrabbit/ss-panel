@@ -36,7 +36,7 @@
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
                                         <td>
-                                            <form name=alipayment action=/pay/alipayapi.php method=post target="_blank">
+                                            <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
@@ -72,12 +72,13 @@
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
                                         <td>
-                                            <form name=alipayment action=/pay/alipayapi.php method=post target="_blank">
+                                            <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
-                                                <input type="submit" value="购买" class="btn btn-default btn-flat">
+                                                <input type="submit" value="购买" class="btn btn-default btn-flat" 
+                                                        {if $B_able_to_buy==1 }disabled="disabled"{/if}>
                                             </form>
                                         </td>
                                     </tr>

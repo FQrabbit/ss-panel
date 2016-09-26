@@ -251,19 +251,23 @@ class UserController extends BaseController
     public function purchase()
     {
         $msg = DbConfig::get('user-purchase');
+        $now_date = date("Y-m-d H:i:s");
+        echo $B_count = User::where("expire_date", ">", $now_date)->get()->count() ."\n";
+        echo $nodes_count = Node::all()->count() ."\n";
+        echo $B_able_to_buy = (($nodes_count*10)<$B_count)?1:0;
         $user = Auth::getUser();
         $menu1 = array(
             ["name"=>"1元1G试玩套餐","transfer"=>"1G","price"=>1,"body"=>"试玩","time"=>"3天"],
-            ["name"=>"5元10G基础套餐","transfer"=>"10G","price"=>5,"body"=>"基础","time"=>"永久"],
-            ["name"=>"10元25G标准套餐","transfer"=>"25G","price"=>10,"body"=>"标准","time"=>"永久"],
-            ["name"=>"20元55G高级套餐","transfer"=>"55G","price"=>20,"body"=>"高级","time"=>"永久"]
+            ["name"=>"5元10G基础套餐","transfer"=>"10G","price"=>5,"body"=>"基础","time"=>"永久"]
+            // ["name"=>"10元25G标准套餐","transfer"=>"25G","price"=>10,"body"=>"标准","time"=>"永久"],
+            // ["name"=>"20元55G高级套餐","transfer"=>"55G","price"=>20,"body"=>"高级","time"=>"永久"]
         );
         $menu2 = array(
             ["name"=>"10元包月无限流量套餐","price"=>10,"body"=>"包月","time"=>"一月"],
             ["name"=>"25元包季无限流量套餐","price"=>25,"body"=>"包季","time"=>"一季"],
             ["name"=>"80元包年无限流量套餐","price"=>80,"body"=>"包年","time"=>"一年"]
         );
-        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->display('user/purchase.tpl');
+        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
     }
 
     public function qna()
