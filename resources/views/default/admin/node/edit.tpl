@@ -157,7 +157,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" id="submit" name="action" value="add" class="btn btn-primary">修改</button>
+                        <button type="submit" id="submit" name="action" value="add" class="btn btn-default flat">修改</button>
                     </div>
                 </div>
             </div>

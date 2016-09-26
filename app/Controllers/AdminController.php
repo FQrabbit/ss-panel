@@ -7,6 +7,7 @@ use App\Models\PurchaseLog;
 use App\Models\DonateLog;
 use App\Models\InviteCode;
 use App\Models\TrafficLog;
+use App\Models\Ann;
 use App\Services\Analytics;
 use App\Services\DbConfig;
 use App\Utils\Tools;
@@ -105,7 +106,8 @@ class AdminController extends UserController
             "user-node" => DbConfig::get('user-node'),
             "user-purchase" => DbConfig::get('user-purchase'),
         ];
-        return $this->view()->assign('conf', $conf)->display('admin/config.tpl');
+        $ann = Ann::orderBy("id", "desc")->get()->first();
+        return $this->view()->assign('conf', $conf)->assign('ann', $ann)->display('admin/config.tpl');
     }
 
     public function updateConfig($request, $response, $args)
@@ -124,6 +126,19 @@ class AdminController extends UserController
         }
         $res['ret'] = 1;
         $res['msg'] = "更新成功";
+        return $response->getBody()->write(json_encode($res));
+    }
+
+    public function updateAnn($request, $response, $args)
+    {
+        $ann_title = $request->getParam('ann_title');
+        $ann_content = $request->getParam('ann_content');
+        $ann = Ann::orderBy("id", "desc")->get()->first();
+        $ann->title = $ann_title;
+        $ann->content = $ann_content;
+        $ann->save();
+        $res['ret'] = 1;
+        $res['msg'] = "更新邮箱公告成功";
         return $response->getBody()->write(json_encode($res));
     }
 

@@ -14,9 +14,9 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
-                <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
+                <div id="msg-success" class="alert alert-success alert-dismissable" style="display: none;">
                     <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-info"></i> 成功!</h4>
+                    <h4><i class="icon fa fa-check"></i> 成功!</h4>
 
                     <p id="msg-success-p"></p>
                 </div>
@@ -82,7 +82,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button id="update" type="submit" name="update" value="update" class="btn btn-primary">更新配置
+                        <button id="update" type="submit" name="update" value="update" class="btn btn-default flat">更新配置
                         </button>
                     </div>
 
@@ -91,9 +91,29 @@
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">其他信息</h3>
+                        <h3 class="box-title">邮件公告</h3>
                     </div>
+
+                    <div class="box-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>标题</label>
+                                <input type="text" class="form-control" placeholder="Enter ..." id="ann_title"
+                                       value="{$ann->title}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>内容</label>
+                                <textarea class="form-control" id="ann_content" rows="8"
+                                          placeholder="Enter ...">{$ann->content}</textarea>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.box-body -->
                     <div class="box-footer">
+                        <button id="update_ann" type="submit" name="update" value="update" class="btn btn-default flat">更新配置
+                        </button>
                     </div>
                 </div>
             </div>
@@ -118,21 +138,48 @@
                     appName: $("#app-name").val(),
                     userIndex: $("#user-index").val(),
                     userNode: $("#user-node").val(),
-                    userPurchase: $("#user-purchase").val()
+                    userPurchase: $("#user-purchase").val(),
+                    ann_title: $("#ann_title").val(),
+                    ann_content: $("#ann_content").val()
                 },
                 success: function (data) {
                     if (data.ret) {
+                        $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        //window.setTimeout("location.href='/admin/invite'", 2000);
+                        window.setTimeout("location.reload()", 2000);
                     }
-                    // window.location.reload();
                 },
                 error: function (jqXHR) {
                     alert("发生错误：" + jqXHR.status);
                 }
             })
         })
+        $("#update_ann").click(function () {
+            $.ajax({
+                type: "PUT",
+                url: "/admin/announcement",
+                dataType: "json",
+                data: {
+                    ann_title: $("#ann_title").val(),
+                    ann_content: $("#ann_content").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#msg-error").hide(100);
+                        $("#msg-success").show(100);
+                        $("#msg-success-p").html(data.msg);
+                        window.setTimeout("location.reload()", 2000);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+        $("#ok-close").click(function () {
+            $("#msg-success").hide(100);
+        });
     })
 </script>
 

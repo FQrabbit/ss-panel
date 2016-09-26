@@ -99,6 +99,7 @@ $app->group('/admin', function () {
     // app config
     $this->get('/config', 'App\Controllers\AdminController:config');
     $this->put('/config', 'App\Controllers\AdminController:updateConfig');
+    $this->put('/announcement', 'App\Controllers\AdminController:updateAnn');
     // Node Mange
     $this->get('/node', 'App\Controllers\Admin\NodeController:index');
     $this->get('/node/create', 'App\Controllers\Admin\NodeController:create');

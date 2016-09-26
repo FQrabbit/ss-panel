@@ -4,7 +4,7 @@
 namespace App\Models;
 
 
-class CheckInLog extends Model
+class Ann extends Model
 {
     protected $table = "ann";
 }

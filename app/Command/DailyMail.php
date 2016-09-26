@@ -60,26 +60,29 @@ class DailyMail
     public static function sendAnnMail()
     {
         // $users = User::all();
-        $users = User::where("id", 1)->get();
-        $ann = Ann::orderBy('id', 'desc')->fisrt();
-        $title = $ann->title;
-        $content = $ann->content;
-        $arr = [
-            "title" => $title,
-            "content" => $content,
-            "user" => ""
-        ];
-        echo $users[0]->email;
-        foreach ($users as $user) {
-            $arr["user"] = $user;
-            try {
-                $to = $user->email;
-                $subject = "Shadowsky - ".$title;
-                Mail::send($to, $subject, 'news/announcement.tpl', $arr, []);
-            } catch (Exception $e) {
-                echo $e->getMessage();
+        $ann = Ann::orderBy('id', 'desc')->get()->first();
+        if ($ann->title) {
+            $users = User::where("id", 1)->get();
+            $title = $ann->title;
+            $content = $ann->content;
+            $arr = [
+                "title" => $title,
+                "content" => $content,
+                "user" => ""
+            ];
+            foreach ($users as $user) {
+                $arr["user"] = $user;
+                try {
+                    $to = $user->email;
+                    $subject = "Shadowsky - ".$title;
+                    Mail::send($to, $subject, 'news/announcement.tpl', $arr, []);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                echo "Sent to " . $user->user_name . "\n";
             }
-            echo "Send to " . $user->user_name . " successfully\n";
+        }else {
+            echo "空";
         }
     }
 }

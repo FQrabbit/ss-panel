@@ -33,6 +33,8 @@ class XCat
                 return $this->resetTraffic();
             case("sendDiaryMail"):
                 return DailyMail::sendDailyMail();
+            case("sendAnnMail"):
+                return DailyMail::sendAnnMail();
             case("sendGeneralEmail"):
                 return DailyMail::sendGeneralEmail();
             case("sendDbMail"):
