@@ -252,9 +252,9 @@ class UserController extends BaseController
     {
         $msg = DbConfig::get('user-purchase');
         $now_date = date("Y-m-d H:i:s");
-        echo $B_count = User::where("expire_date", ">", $now_date)->get()->count() ."\n";
-        echo $nodes_count = Node::all()->count() ."\n";
-        echo $B_able_to_buy = (($nodes_count*10)<$B_count)?1:0;
+        $B_count = User::where("expire_date", ">", $now_date)->get()->count() ."\n";
+        $nodes_count = Node::all()->count() ."\n";
+        $B_able_to_buy = (($nodes_count*10)>$B_count) ? 1 : 0;
         $user = Auth::getUser();
         $menu1 = array(
             ["name"=>"1元1G试玩套餐","transfer"=>"1G","price"=>1,"body"=>"试玩","time"=>"3天"],

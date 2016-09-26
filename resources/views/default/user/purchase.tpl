@@ -52,7 +52,7 @@
                         <hr />
 
                         <table class="table table-striped table-hover">
-                            <caption class="center"><h4><strong>按时间购买</strong></h4></caption>
+                            <caption class="center"><h4><strong>按时间购买 </strong>{if $B_able_to_buy==0 }<small>(out of stock)</small>{/if}</h4></caption>
                             <thead>
                             <tr>
                                 <th>套餐名</th>
@@ -78,7 +78,7 @@
                                                 <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
                                                 <input type="submit" value="购买" class="btn btn-default btn-flat" 
-                                                        {if $B_able_to_buy==1 }disabled="disabled"{/if}>
+                                                        {if $B_able_to_buy==0 }disabled="disabled"{/if}>
                                             </form>
                                         </td>
                                     </tr>
