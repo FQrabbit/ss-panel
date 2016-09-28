@@ -148,6 +148,7 @@
                                             <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
                                             <option value="auth_sha1_v3_compatible">auth_sha1_v3_compatible</option>
                                             <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                            <option value="auth_aes128">auth_aes128</option>
                                         </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="updateProtocol" class="btn btn-default btn-flat">修改</button>
