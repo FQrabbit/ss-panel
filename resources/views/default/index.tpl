@@ -141,8 +141,8 @@
 					<br>
 					<hr>
 					<h3>按流量</h3>
-					<div class="row">
-						<div class="col-xs-6 col-sm-6 col-md-3">
+					<div class="row center">
+						<div class="col-xs-6 col-sm-6 col-md-6">
 							<div class="plan">
 								<div class="plan-name">試用</div>
 								<div class="plan-content">
@@ -153,7 +153,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-6 col-sm-6 col-md-3">
+						<div class="col-xs-6 col-sm-6 col-md-6">
 							<div class="plan">
 								<div class="plan-name">基礎</div>
 								<div class="plan-content">
@@ -164,7 +164,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-6 col-sm-6 col-md-3">
+						<!-- <div class="col-xs-6 col-sm-6 col-md-3">
 							<div class="plan">
 								<div class="plan-name">標準</div>
 								<div class="plan-content">
@@ -185,7 +185,7 @@
 									<h3>￥20</h3>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				

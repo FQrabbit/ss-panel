@@ -45,7 +45,7 @@
 
 									<li>shadowsocksR(增强版，支持混淆插件)
 										<ul>
-											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li>
+											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a>(此处已不再更新，请用上面的BT Sync链接下载最新版)</li>
 										</ul>
 									</li>
 								</ul>
@@ -87,6 +87,11 @@
 									<ul>
 										<li><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks">Google Play</a></li>
 										<li><a href="https://github.com/shadowsocks/shadowsocks-android/releases">Github</a></li>
+									</ul>
+								</li>
+								<li>ssr-android:
+									<ul>
+										<li><a href="https://link.getsync.com/#f=shadowsocks&sz=23E6&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CCMJCUFHLJ2X4JFCGJBXTFI4DADHWJ3FQ&v=2.3">BT Sync</a></li>
 									</ul>
 								</li>
 							</ul>

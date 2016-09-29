@@ -126,6 +126,7 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select id="method" class="form-control">
+                                            <option value="{$user->method}">{strtoupper($user->method)} (当前)</option>
                                             <option value="aes-256-cfb">AES-256-CFB</option>
                                             <option value="aes-256-ctr">AES-256-CTR</option>
                                             <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
@@ -144,11 +145,16 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select class="form-control" id="protocol">
+                                            <option value="{$user->protocol}">{$user->protocol} (当前)</option>
                                             <option value="auth_sha1_compatible">auth_sha1_compatible</option>
                                             <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
                                             <option value="auth_sha1_v3_compatible">auth_sha1_v3_compatible</option>
                                             <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                            <option value="auth_aes128">auth_aes128</option>
+                                            <option value="auth_sha1">auth_sha1</option>
+                                            <option value="auth_sha1_v2">auth_sha1_v2</option>
+                                            <option value="auth_sha1_v3">auth_sha1_v3</option>
+                                            <option value="auth_sha1_v4">auth_sha1_v4</option>
+                                            <option value="auth_aes128">auth_aes128 (推荐)</option>
                                         </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="updateProtocol" class="btn btn-default btn-flat">修改</button>
@@ -161,8 +167,11 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select class="form-control" id="obfs">
+                                            <option value="{$user->obfs}">{$user->obfs} (当前)</option>
                                             <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
                                             <option value="http_simple_compatible">http_simple_compatible</option>
+                                            <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
+                                            <option value="http_simple">http_simple</option>
                                         </select>
                                         <div class="input-group-btn">
                                             <button type="submit" id="updateObfs" class="btn btn-default btn-flat">修改</button>

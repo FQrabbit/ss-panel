@@ -39,7 +39,6 @@
                                             <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
-                                                <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
                                                 <input type="submit" value="购买" class="btn btn-default btn-flat">
                                             </form>
@@ -75,7 +74,6 @@
                                             <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
-                                                <input name="WIDprice" type="hidden" value="{$menu["price"]}.00" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
                                                 <input type="submit" value="购买" class="btn btn-default btn-flat" 
                                                         {if $B_able_to_buy==0 }disabled="disabled"{/if}>
