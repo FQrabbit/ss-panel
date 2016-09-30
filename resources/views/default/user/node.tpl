@@ -43,7 +43,7 @@
 												<th id="t-traffic-reset-day">流量重置日</th>
 												<th id="t-info">说明</th>
 												<th id="t-uptime">负载</th>
-												<th id="t-ip">ip地址(备不时之需)</th>
+												<th id="t-ip">ip地址</th>
 											</tr>
 										</thead>
 										<tbody>

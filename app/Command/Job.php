@@ -166,29 +166,31 @@ class Job
 
     public static function updateNodeUsage()
     {
-        // bandwagon-us1
-        try {
-            $node = Node::find(21);
-            $request = $node->api;
-            $serviceInfo = json_decode (file_get_contents ($request));
-            $usage = round(($serviceInfo->data_counter / $serviceInfo->plan_monthly_data) * 100, 2);
-            $node->node_usage = $usage;
-            $node->save();
-            echo $node->name.":".$usage."\n";
-        } catch (Exception $e) {
-            echo $e->getMessage()."\n";
-        }
-        // vultr
-        $nodes = Node::where('vps', 'vultr')->get();
-        foreach ($nodes as $node) {
+        // bandwagon-us1,us3
+        $Bnodes = Node::where('vps', 'bandwagon')->get();
+        foreach ($Bnodes as $node) {
             try {
                 $request = $node->api;
-                $out = json_decode (file_get_contents ($request));
-                $subid = $node->subid;
-                $name_usage = round(($out->$subid->current_bandwidth_gb / $out->$subid->allowed_bandwidth_gb) * 100 ,2);
-                $node->node_usage = $name_usage;
+                $result = json_decode (file_get_contents ($request));
+                $usage = round(($result->data_counter / $result->plan_monthly_data) * 100, 2);
+                $node->node_usage = $usage;
                 $node->save();
-                echo $node->name.":".$name_usage."\n";
+                echo $node->name.":\t".$usage."\n";
+            } catch (Exception $e) {
+                echo $e->getMessage()."\n";
+            }
+        }
+        // vultr - jp1,jp2,jp4
+        $Vnodes = Node::where('vps', 'vultr')->get();
+        foreach ($Vnodes as $node) {
+            try {
+                $request = $node->api;
+                $result = json_decode (file_get_contents ($request));
+                $subid = $node->subid;
+                $usage = round(($result->$subid->current_bandwidth_gb / $result->$subid->allowed_bandwidth_gb) * 100 ,2);
+                $node->node_usage = $usage;
+                $node->save();
+                echo $node->name.":\t".$usage."\n";
             } catch (Exception $e) {
                 echo $e->getMessage()."\n";
             }
