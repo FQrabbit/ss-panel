@@ -134,7 +134,7 @@ class UserController extends BaseController
         }
         $string='
 {
-    "index" : 0,
+    "index" : 1,
     "random" : false,
     "global" : false,
     "enabled" : false,

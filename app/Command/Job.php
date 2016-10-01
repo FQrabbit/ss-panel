@@ -195,6 +195,7 @@ class Job
                 echo $e->getMessage()."\n";
             }
         }
+	echo date("Y-m-d H:i:s",time())."\n\n";
     }
 
     public static function clearLog()

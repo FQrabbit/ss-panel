@@ -146,13 +146,9 @@
                                     <div class="input-group">
                                         <select class="form-control" id="protocol">
                                             <option value="{$user->protocol}" style="background-color:#009688;">{$user->protocol} (当前)</option>
-                                            <option value="auth_sha1_compatible">auth_sha1_compatible</option>
                                             <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
-                                            <option value="auth_sha1_v3_compatible">auth_sha1_v3_compatible</option>
                                             <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                            <option value="auth_sha1">auth_sha1</option>
                                             <option value="auth_sha1_v2">auth_sha1_v2</option>
-                                            <option value="auth_sha1_v3">auth_sha1_v3</option>
                                             <option value="auth_sha1_v4">auth_sha1_v4 (推荐)</option>
                                             <option value="auth_aes128">auth_aes128 (推荐)</option>
                                         </select>
