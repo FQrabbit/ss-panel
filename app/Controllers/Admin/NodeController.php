@@ -36,6 +36,10 @@ class NodeController extends AdminController
         $node->type = $request->getParam('type');
         $node->status = $request->getParam('status');
         $node->sort = $request->getParam('sort');
+        $node->transfer_reset_day = $request->getParam('transfer_reset_day');
+        $node->vps = $request->getParam('vps');
+        $node->subid = $request->getParam('subid');
+        $node->api = $request->getParam('api');
         $node->node_usage = $request->getParam('node_usage');
         if (!$node->save()) {
             $rs['ret'] = 0;
@@ -76,6 +80,10 @@ class NodeController extends AdminController
         $node->type = $request->getParam('type');
         $node->status = $request->getParam('status');
         $node->sort = $request->getParam('sort');
+        $node->transfer_reset_day = $request->getParam('transfer_reset_day');
+        $node->vps = $request->getParam('vps');
+        $node->subid = $request->getParam('subid');
+        $node->api = $request->getParam('api');
         $node->node_usage = $request->getParam('node_usage');
         if (!$node->save()) {
             $rs['ret'] = 0;

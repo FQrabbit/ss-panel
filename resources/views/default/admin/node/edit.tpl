@@ -195,7 +195,39 @@
                                         <label for="info" class="col-sm-3 control-label">节点描述</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="info" rows="3" value="{$node->info}">{$node->info}</textarea>
+                                            <textarea class="form-control" id="info" rows="2" value="{$node->info}">{$node->info}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="transfer_reset_day" class="col-sm-3 control-label">流量重置日</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="transfer_reset_day" value="{$node->transfer_reset_day}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vps" class="col-sm-3 control-label">主机商</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="vps" value="{$node->vps}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="subid" class="col-sm-3 control-label">subid</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="subid" value="{$node->subid}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="api" class="col-sm-3 control-label">api</label>
+
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="api" row="2">{$node->api}</textarea>
                                         </div>
                                     </div>
 
@@ -203,7 +235,7 @@
                                         <label for="node_usage" class="col-sm-3 control-label">使用情况</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="node_usage" rows="3" type="number" value="{$node->node_usage}">
+                                            <input class="form-control" id="node_usage" type="number" value="{$node->node_usage}">
                                         </div>
                                     </div>
 
@@ -254,6 +286,10 @@
                     status: $("#status").val(),
                     sort: $("#sort").val(),
                     transfer: $("#transfer").val(),
+                    transfer_reset_day: $("#transfer_reset_day").val(),
+                    vps: $("#vps").val(),
+                    subid: $("#subid").val(),
+                    api: $("#api").val(),
                     node_usage: $("#node_usage").val()
                 },
                 success: function (data) {

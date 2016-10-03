@@ -193,7 +193,39 @@
                                         <label for="info" class="col-sm-3 control-label">节点描述</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="info" rows="3" value="付费节点"></textarea>
+                                            <textarea class="form-control" id="info" rows="2" value="付费节点"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="transfer_reset_day" class="col-sm-3 control-label">流量重置日</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="transfer_reset_day" value="1st">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vps" class="col-sm-3 control-label">主机商</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="vps" value="vultr">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="subid" class="col-sm-3 control-label">subid</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="subid" placeholder="如:3868748">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="api" class="col-sm-3 control-label">api</label>
+
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" id="api" placeholder="如:https://api.vultr.com/v1/server/list?api_key=" row="2"></textarea>
                                         </div>
                                     </div>
 
@@ -201,7 +233,7 @@
                                         <label for="node_usage" class="col-sm-3 control-label">使用情况</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="node_usage" rows="3" type="number" value="0">
+                                            <input class="form-control" id="node_usage"type="number" value="0">
                                         </div>
                                     </div>
 
@@ -253,6 +285,10 @@
                     status: $("#status").val(),
                     sort: $("#sort").val(),
                     transfer: $("#transfer").val(),
+                    transfer_reset_day: $("#transfer_reset_day").val(),
+                    vps: $("#vps").val(),
+                    subid: $("#subid").val(),
+                    api: $("#api").val(),
                     node_usage: $("#node_usage").val()
                 },
                 success: function (data) {
