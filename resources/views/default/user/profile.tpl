@@ -99,17 +99,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">连接密码</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input type="text" id="sspwd" placeholder="输入新连接密码" class="form-control" required="required">
-                                        <div class="input-group-btn">
-                                            <button type="submit" id="ss-pwd-update" class="btn btn-default btn-flat">修改</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">当前端口</label>
                                 <div class="col-sm-9">
@@ -121,63 +111,59 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">连接密码</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="sspwd" value="{$user->passwd}" class="form-control" required="required">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">加密方式</label>
                                 <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <select id="method" class="form-control">
-                                            <option value="{$user->method}" style="background-color:#009688;">{strtoupper($user->method)} (当前)</option>
-                                            <option value="aes-256-cfb">AES-256-CFB</option>
-                                            <option value="aes-256-ctr">AES-256-CTR</option>
-                                            <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
-                                            <option value="salsa20">SALSA20</option>
-                                            <option value="chacha20">CHACHA20</option>
-                                            <option value="chacha20-ietf">CHACHA20-IETF</option>
-                                        </select>
-                                        <div class="input-group-btn">
-                                            <button type="submit" id="updateMethod" class="btn btn-default btn-flat">修改</button>
-                                        </div>
-                                    </div>
+                                    <select id="method" class="form-control">
+                                        <option value="{$user->method}" style="background-color:#009688;" selected="selected">{strtoupper($user->method)} (当前)</option>
+                                        <option value="aes-256-cfb">AES-256-CFB</option>
+                                        <option value="aes-256-ctr">AES-256-CTR</option>
+                                        <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
+                                        <option value="salsa20">SALSA20</option>
+                                        <option value="chacha20">CHACHA20</option>
+                                        <option value="chacha20-ietf">CHACHA20-IETF</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">协议</label>
                                 <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <select class="form-control" id="protocol">
-                                            <option value="{$user->protocol}" style="background-color:#009688;">{$user->protocol} (当前)</option>
-                                            <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
-                                            <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                            <option value="auth_sha1_v2">auth_sha1_v2</option>
-                                            <option value="auth_sha1_v4">auth_sha1_v4 (推荐)</option>
-                                            <option value="auth_aes128">auth_aes128 (推荐)</option>
-                                        </select>
-                                        <div class="input-group-btn">
-                                            <button type="submit" id="updateProtocol" class="btn btn-default btn-flat">修改</button>
-                                        </div>
-                                    </div>
+                                    <select class="form-control" id="protocol">
+                                        <option value="{$user->protocol}" style="background-color:#009688;" selected="selected">{$user->protocol} (当前)</option>
+                                        <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
+                                        <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                        <option value="auth_sha1_v2">auth_sha1_v2</option>
+                                        <option value="auth_sha1_v4">auth_sha1_v4 (推荐)</option>
+                                        <option value="auth_aes128">auth_aes128 (推荐)</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">混淆</label>
                                 <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <select class="form-control" id="obfs">
-                                            <option value="{$user->obfs}" style="background-color:#009688;">{$user->obfs} (当前)</option>
-                                            <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
-                                            <option value="http_simple_compatible">http_simple_compatible</option>
-                                            <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
-                                            <option value="http_simple">http_simple</option>
-                                        </select>
-                                        <div class="input-group-btn">
-                                            <button type="submit" id="updateObfs" class="btn btn-default btn-flat">修改</button>
-                                        </div>
-                                    </div>
+                                    <select class="form-control" id="obfs">
+                                        <option value="{$user->obfs}" style="background-color:#009688;" selected="selected">{$user->obfs} (当前)</option>
+                                        <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                        <option value="http_simple_compatible">http_simple_compatible</option>
+                                        <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
+                                        <option value="http_simple">http_simple</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" id="config-update" class="btn btn-default btn-flat">修改</button>
+                    </div>
                 </div>
                 <!-- /.box -->
             </div>
@@ -416,13 +402,16 @@
 
 <script>
     $(document).ready(function () {
-        $("#ss-pwd-update").click(function () {
+        $("#config-update").click(function () {
             $.ajax({
                 type: "POST",
-                url: "sspwd",
+                url: "ssconfig",
                 dataType: "json",
                 data: {
-                    sspwd: $("#sspwd").val()
+                    sspwd: $("#sspwd").val(),
+                    method: $("#method").val(),
+                    protocol: $("#protocol").val(),
+                    obfs: $("#obfs").val()
                 },
                 success: function (data) {
                     if (data.ret) {
@@ -458,87 +447,6 @@
                             window.setTimeout("location.reload()",5000);
                         });
                         $("#msg-success-p").html(data.msg);
-                    } else {
-                        $("#msg-error").show(500, function(){
-                            window.setTimeout("location.reload()",5000);
-                        });
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            })
-        })
-
-        $("#updateProtocol").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "protocol",
-                dataType: "json",
-                data: {
-                    protocol: $("#protocol").val()
-                },
-                success: function (data) {
-                    if (data.ret) {
-                        $("#msg-success").show(500, function(){
-                            window.setTimeout("location.reload()",5000);
-                        });
-                        $("#msg-success-p").html("有的节点不支持自定义协议，请进入节点详情页查看。");
-                    } else {
-                        $("#msg-error").show(500, function(){
-                            window.setTimeout("location.reload()",5000);
-                        });
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            })
-        })
-
-        $("#updateObfs").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "obfs",
-                dataType: "json",
-                data: {
-                    obfs: $("#obfs").val()
-                },
-                success: function (data) {
-                    if (data.ret) {
-                        $("#msg-success").show(500, function(){
-                            window.setTimeout("location.reload()",5000);
-                        });
-                        $("#msg-success-p").html("有的节点不支持自定义混淆插件，请进入节点详情页查看。");
-                    } else {
-                        $("#msg-error").show(500, function(){
-                            window.setTimeout("location.reload()",5000);
-                        });
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error: function (jqXHR) {
-                    alert("发生错误：" + jqXHR.status);
-                }
-            })
-        })
-
-        $("#updateMethod").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "method",
-                dataType: "json",
-                data: {
-                    method: $("#method").val()
-                },
-                success: function (data) {
-                    if (data.ret) {
-                        $("#msg-success").show(500, function(){
-                            window.setTimeout("location.reload()",5000);
-                        });
-                        $("#msg-success-p").html("有的节点不支持自定义加密，请进入节点详情页查看。");
                     } else {
                         $("#msg-error").show(500, function(){
                             window.setTimeout("location.reload()",5000);

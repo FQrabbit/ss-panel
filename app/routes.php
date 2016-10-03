@@ -55,10 +55,7 @@ $app->group('/user', function () {
     $this->post('/password', 'App\Controllers\UserController:updatePassword');
     $this->post('/sendcode', 'App\Controllers\AuthController:sendVerifyEmail');
     $this->post('/email', 'App\Controllers\UserController:updateEmail');
-    $this->post('/sspwd', 'App\Controllers\UserController:updateSsPwd');
-    $this->post('/method', 'App\Controllers\UserController:updateMethod');
-    $this->post('/protocol', 'App\Controllers\UserController:updateProtocol');
-    $this->post('/obfs', 'App\Controllers\UserController:updateObfs');
+    $this->post('/ssconfig', 'App\Controllers\UserController:updateSsConfig');
     $this->get('/sys', 'App\Controllers\UserController:sys');
     $this->get('/trafficlog', 'App\Controllers\UserController:trafficLog');
     $this->get('/kill', 'App\Controllers\UserController:kill');

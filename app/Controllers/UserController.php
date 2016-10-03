@@ -343,12 +343,26 @@ class UserController extends BaseController
         return $this->echoJson($response, $res);
     }
 
-    public function updateSsPwd($request, $response, $args)
+    public function updateSsConfig($request, $response, $args)
     {
         $user = Auth::getUser();
-        $pwd = $request->getParam('sspwd');
-        $user->updateSsPwd($pwd);
+
+        $method = $request->getParam('method');
+        $method = strtolower($method);
+
+        $protocol = $request->getParam('protocol');
+        $protocol = strtolower($protocol);
+
+        $obfs = $request->getParam('obfs');
+        $obfs = strtolower($obfs);
+
+        $user->passwd = $request->getParam('sspwd');
+        $user->method = $method;
+        $user->protocol = $protocol;
+        $user->obfs = $obfs;
+        $user->save();
         $res['ret'] = 1;
+        $res['msg'] = "配置修改成功，请重新导入节点配置，新配置将在片刻后生效。";
         return $this->echoJson($response, $res);
     }
     
@@ -363,38 +377,6 @@ class UserController extends BaseController
         $res['ret'] = 1;
         $res['msg'] = "设置成功，新端口是".$user->port;
         return $response->getBody()->write(json_encode($res));
-    }
-
-    public function updateMethod($request, $response, $args)
-    {
-        $user = Auth::getUser();
-        $method = $request->getParam('method');
-        $method = strtolower($method);
-        $user->updateMethod($method);
-        $res['ret'] = 1;
-        return $this->echoJson($response, $res);
-    }
-
-    public function updateProtocol($request, $response, $args)
-    {
-        $user = Auth::getUser();
-        $protocol = $request->getParam('protocol');
-        $protocol = strtolower($protocol);
-        $user->protocol = $protocol;
-        $user->save();
-        $res['ret'] = 1;
-        return $this->echoJson($response, $res);
-    }
-
-    public function updateObfs($request, $response, $args)
-    {
-        $user = Auth::getUser();
-        $obfs = $request->getParam('obfs');
-        $obfs = strtolower($obfs);
-        $user->obfs = $obfs;
-        $user->save();
-        $res['ret'] = 1;
-        return $this->echoJson($response, $res);
     }
 
     public function logout($request, $response, $args)
