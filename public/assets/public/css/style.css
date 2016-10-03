@@ -1041,8 +1041,11 @@ form.news-letter .btn:hover{
 
 
 @media screen and (max-width: 768px){
+	.site-title{
+		font-size: 54px;
+	}
 	.section-title{
-		font-size:40px;
+		font-size:34px;
 	}
 	.login-btn{
 		font-size: 20px;
