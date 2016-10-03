@@ -22,11 +22,15 @@ class NodeController extends AdminController
     public function add($request, $response, $args)
     {
         $node = new Node();
+        $node->id = $request->getParam('id');
         $node->name = $request->getParam('name');
         $node->server = $request->getParam('server');
         $node->ip = $request->getParam('ip');
         $node->method = $request->getParam('method');
+        $node->protocol = $request->getParam('protocol');
+        $node->obfs = $request->getParam('obfs');
         $node->custom_method = $request->getParam('custom_method');
+        $node->custom_rss = $request->getParam('custom_rss');
         $node->traffic_rate = $request->getParam('rate');
         $node->info = $request->getParam('info');
         $node->type = $request->getParam('type');
@@ -58,11 +62,15 @@ class NodeController extends AdminController
         $id = $args['id'];
         $node = Node::find($id);
 
+        $node->id = $request->getParam('id');
         $node->name = $request->getParam('name');
         $node->server = $request->getParam('server');
         $node->ip = $request->getParam('ip');
         $node->method = $request->getParam('method');
+        $node->protocol = $request->getParam('protocol');
+        $node->obfs = $request->getParam('obfs');
         $node->custom_method = $request->getParam('custom_method');
+        $node->custom_rss = $request->getParam('custom_rss');
         $node->traffic_rate = $request->getParam('rate');
         $node->info = $request->getParam('info');
         $node->type = $request->getParam('type');

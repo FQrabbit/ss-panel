@@ -68,9 +68,42 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
                                                 <option value="{$node->method}" selected="selected">{$node->method}</option>
-                                                <option value="aes-256-cfb">aes-256-cfb</option>
-                                                <option value="chacha20">chacha20</option>
-                                                <option value="rc4-md5">rc4-md5</option>
+                                                <option value="aes-256-cfb">AES-256-CFB</option>
+                                                <option value="aes-256-ctr">AES-256-CTR</option>
+                                                <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
+                                                <option value="salsa20">SALSA20</option>
+                                                <option value="chacha20">CHACHA20</option>
+                                                <option value="chacha20-ietf">CHACHA20-IETF</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="protocol" class="col-sm-3 control-label">协议</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="protocol">
+                                                <option value="{$node->protocol}"  selected="selected">{$node->protocol}</option>
+                                                <option value="auth_sha1_compatible">auth_sha1_compatible</option>
+                                                <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
+                                                <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                                <option value="auth_sha1_v2">auth_sha1_v2</option>
+                                                <option value="auth_sha1_v4">auth_sha1_v4</option>
+                                                <option value="auth_aes128">auth_aes128</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="obfs" class="col-sm-3 control-label">混淆</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="obfs">
+                                                <option value="{$node->obfs}" selected="selected">{$node->obfs}</option>
+                                                <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                                <option value="http_simple_compatible">http_simple_compatible</option>
+                                                <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
+                                                <option value="http_simple">http_simple</option>
                                             </select>
                                         </div>
                                     </div>
@@ -103,22 +136,44 @@
                                         </div>
 
                                     </div>
-                                </fieldset>
-                                <fieldset class="col-sm-6">
-                                    <legend>描述信息</legend>
+
                                     <div class="form-group">
-                                        <label for="type" class="col-sm-3 control-label">是否为付费节点</label>
+                                        <label for="rss" class="col-sm-3 control-label">自定义rss</label>
 
                                         <div class="col-sm-9">
-                                            <select class="form-control" id="type">
-                                                <option value="1" {if $node->type==1}selected="selected"{/if}>付费节点
+                                            <select class="form-control" id="custom_rss">
+                                                <option value="0" {if $node->custom_rss==0}selected="selected"{/if}>
+                                                    不支持
                                                 </option>
-                                                <option value="0" {if $node->type==0}selected="selected"{/if}>免费节点
+                                                <option value="1" {if $node->custom_rss==1}selected="selected"{/if}>
+                                                    支持
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
+                                </fieldset>
+                                <fieldset class="col-sm-6">
+                                    <legend>描述信息</legend>
 
+                                    <div class="form-group">
+                                        <label for="id" class="col-sm-3 control-label">id</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="id" type="number" value="{$node->id}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="type" class="col-sm-3 control-label">等级（0为免费，1为付费）</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="type">
+                                                <option value="1" {if $node->type==1}selected="selected"{/if}>付费</option>
+                                                <option value="0" {if $node->type==0}selected="selected"{/if}>免费</option>
+                                                <option value="-1" {if $node->type==-1}selected="selected"{/if}>其他，测试，隐藏</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="status" class="col-sm-3 control-label">节点状态</label>
@@ -135,12 +190,12 @@
                                             <input class="form-control" id="sort" type="number" value="{$node->sort}">
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-group">
                                         <label for="info" class="col-sm-3 control-label">节点描述</label>
 
                                         <div class="col-sm-9">
-                                            <textarea class="form-control" id="info" rows="3">{$node->info}</textarea>
+                                            <textarea class="form-control" id="info" rows="3" value="{$node->info}">{$node->info}</textarea>
                                         </div>
                                     </div>
 
@@ -148,7 +203,15 @@
                                         <label for="node_usage" class="col-sm-3 control-label">使用情况</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="node_usage" value="{$node->node_usage}" type="number">
+                                            <input class="form-control" id="node_usage" rows="3" type="number" value="{$node->node_usage}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="transfer" class="col-sm-3 control-label">总流量</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="transfer" type="number" value="{$node->transfer}">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -176,16 +239,21 @@
                 url: "/admin/node/{$node->id}",
                 dataType: "json",
                 data: {
+                    id: $("#id").val(),
                     name: $("#name").val(),
                     server: $("#server").val(),
                     ip: $("#ip").val(),
                     method: $("#method").val(),
+                    protocol: $("#protocol").val(),
+                    obfs: $("#obfs").val(),
                     custom_method: $("#custom_method").val(),
+                    custom_rss: $("#custom_rss").val(),
                     rate: $("#rate").val(),
                     info: $("#info").val(),
                     type: $("#type").val(),
                     status: $("#status").val(),
                     sort: $("#sort").val(),
+                    transfer: $("#transfer").val(),
                     node_usage: $("#node_usage").val()
                 },
                 success: function (data) {
@@ -193,7 +261,7 @@
                         $("#msg-error").hide(100);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.reload()", 2000);
+                        window.setTimeout("location.assign('/admin/node/'+ $('#id').val() + '/edit')", 2000);
                     } else {
                         $("#msg-error").hide(10);
                         $("#msg-error").show(100);
