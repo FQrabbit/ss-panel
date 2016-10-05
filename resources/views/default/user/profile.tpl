@@ -31,7 +31,6 @@
 
             <!-- left column -->
             <div class="col-md-6">
-                <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="fa fa-user"></i>
@@ -86,10 +85,7 @@
                     </div>
                     <!-- /.box -->
                 </div>
-            </div>
 
-            <div class="col-md-6">
-            <!-- right column -->
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="fa fa-link"></i>
@@ -142,6 +138,7 @@
                                         <option value="auth_sha1_v2">auth_sha1_v2</option>
                                         <option value="auth_sha1_v4">auth_sha1_v4 (推荐)</option>
                                         <option value="auth_aes128">auth_aes128 (推荐)</option>
+                                        <!-- <option value="verify_deflate">verify_deflate</option> -->
                                     </select>
                                 </div>
                             </div>
@@ -165,18 +162,11 @@
                         <button type="submit" id="config-update" class="btn btn-default btn-flat">修改</button>
                     </div>
                 </div>
-                <!-- /.box -->
             </div>
-            <!-- /.col (right) -->
+            <!-- /.col (left) -->
 
-        </div>
-
-        <!-- second row -->
-        <div class="row">
-
-            <!-- left column -->
             <div class="col-md-6">
-                <!-- general form elements -->
+            <!-- right column -->
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="fa fa-key"></i>
@@ -220,13 +210,7 @@
                     </div>
 
                 </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col (left) -->
-
-            <!-- right column -->
-            <div class="col-md-6">
-                <!-- general form elements -->
+                
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="fa fa-key"></i>

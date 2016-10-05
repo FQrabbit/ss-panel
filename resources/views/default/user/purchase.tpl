@@ -24,7 +24,7 @@
                                     <th>价格</th>
                                     <th>期限</th>
                                     <th>节点</th>
-                                    <th></th>
+                                    <th>数量</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +40,7 @@
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
                                                 <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
+                                                <input name="WIDquantity" type="number" value="1"  style="width:50px"/>
                                                 <input type="submit" value="购买" class="btn btn-default btn-flat">
                                             </form>
                                         </td>

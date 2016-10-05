@@ -136,6 +136,11 @@
                                     <dt>到期时间</dt>
                                     <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
                                 {/if}
+
+                                {if !$user->enable && $user->status == 0}
+									<dt>账号状态</dt>
+                                    <dd><span class="badge bg-red">禁用</span></dd>
+                                {/if}
                                 </dl>
 
                             </div>
@@ -196,7 +201,7 @@
         </div>
     </div>
 </div>
-{if !$user->enable}
+{if !$user->enable && $user->status == 1}
 <script>
     $("#activate-modal").show();
 </script>
