@@ -86,12 +86,23 @@ class AdminController extends UserController
 
     public function trafficLog($request, $response, $args)
     {
-        $pageNum = 1;
-        if (isset($request->getQueryParams()["page"])) {
-            $pageNum = $request->getQueryParams()["page"];
+        $pageNum = isset($request->getQueryParams()["page"]) ? $request->getQueryParams()["page"] : 1;
+        $user_id = isset($request->getQueryParams()["user_id"]) ? $request->getQueryParams()["user_id"] : 0;
+        $node_id = isset($request->getQueryParams()["node_id"]) ? $request->getQueryParams()["node_id"] : 0;
+
+        if ($user_id && $node_id) {
+            $logs = TrafficLog::where("user_id", $user_id)->where("node_id", $node_id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+            $logs->setPath('/admin/trafficlog?user_id=' . $user_id . "&node_id=" . $node_id);
+        }elseif ($user_id) {
+            $logs = TrafficLog::where("user_id", $user_id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+            $logs->setPath('/admin/trafficlog?user_id='. $user_id);
+        }elseif ($node_id) {
+            $logs = TrafficLog::where("node_id", $node_id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+            $logs->setPath('/admin/trafficlog?node_id='. $node_id);
+        }else {
+            $logs = TrafficLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+            $logs->setPath('/admin/trafficlog');
         }
-        $logs = TrafficLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-        $logs->setPath('/admin/trafficlog');
         return $this->view()->assign('logs', $logs)->display('admin/trafficlog.tpl');
     }
 

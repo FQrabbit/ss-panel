@@ -20,6 +20,13 @@
                 </div>
             </div>
         </div>
+        <form action="" method="GET" class="form-horizontal">
+            <div class="input-group">
+                <input name="user_id" type="number" placeholder="输入用户id" class="form-control col-md-3">
+                <input name="node_id" type="number" placeholder="输入节点id" class="form-control col-md-3">
+                <button type="submit" class="btn btn-default btn-flat col-md-3">查询</button>
+            </div>
+        </form>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">

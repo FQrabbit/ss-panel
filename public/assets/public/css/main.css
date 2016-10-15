@@ -490,9 +490,19 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   position: absolute;
   right: 3%;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    background-color:transparent;
+    transition: background-color 5000s ease-in-out 0s;
+}
 ::selection {
-    background: #00a65a;
+    background: #666;
     color: white;
+}
+#__lpform_oldpwd,#__lpform_pwd,#__lpform_repwd,#__lpform_sspwd{
+  display: none;
 }
 /*::-webkit-scrollbar { 
     width: 0px;

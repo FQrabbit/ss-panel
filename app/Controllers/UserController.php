@@ -70,7 +70,7 @@ class UserController extends BaseController
             $ary['password'] = $user->passwd;
             $ary['method'] = ($node->custom_method==1?$user->method:$node->method);
             $ary['obfs'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->obfs:$node->obfs));
-            $ary['obfs_param'] = $node->obfs_param;
+            $ary['obfs_param'] = str_replace("_compatible", "", (($node->custom_rss==1&&$this->user->obfs_param!=NULL)?$this->user->obfs_param:$node->obfs_param));
             $ary['protocol'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->protocol:$node->protocol));
 
             $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
@@ -103,7 +103,7 @@ class UserController extends BaseController
         $ary['password'] = $this->user->passwd;
         $ary['method'] = ($node->custom_method==1?$user->method:$node->method);
         $ary['obfs'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->obfs:$node->obfs));
-        $ary['obfs_param'] = $node->obfs_param;
+        $ary['obfs_param'] = (($node->custom_rss==1&&$this->user->obfs_param!=NULL)?$this->user->obfs_param:$node->obfs_param);
         $ary['protocol'] = str_replace("_compatible", "", ($node->custom_rss==1?$this->user->protocol:$node->protocol));
         if ($node->custom_method) {
             $ary['method'] = $this->user->method;
@@ -181,7 +181,7 @@ class UserController extends BaseController
                                         "password"=>$user->passwd,
                                         "method"=>($node->custom_method==1?$user->method:$node->method),
                                         "obfs"=>str_replace("_compatible", "", ($node->custom_rss==1?$this->user->obfs:$node->obfs)),
-                                        "obfsparam"=>$node->obfs_param,
+                                        "obfsparam"=>(($node->custom_rss==1&&$this->user->obfs_param!=NULL)?$this->user->obfs_param:$node->obfs_param),
                                         "remarks_base64"=>base64_encode($node->name),
                                         "group"=>"shadowsky",
                                         "udp_over_tcp"=>false,
@@ -356,10 +356,14 @@ class UserController extends BaseController
         $obfs = $request->getParam('obfs');
         $obfs = strtolower($obfs);
 
+        $obfs_param = $request->getParam('obfs_param');
+        $obfs_param = strtolower($obfs_param);
+
         $user->passwd = $request->getParam('sspwd');
         $user->method = $method;
         $user->protocol = $protocol;
         $user->obfs = $obfs;
+        $user->obfs_param = $obfs_param;
         $user->save();
         $res['ret'] = 1;
         $res['msg'] = "配置修改成功，请重新导入节点配置，新配置将在片刻后生效。";
