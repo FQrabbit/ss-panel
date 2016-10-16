@@ -177,6 +177,7 @@
 		}
 
 		if (sib.hasClass("vote-btn-clicked")) {
+			v = sib.children().first().text();
 			sib.removeClass("vote-btn-clicked");
 			sib.children().first().html(--v);
 		};
