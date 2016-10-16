@@ -188,7 +188,7 @@ input.w3-btn.w3-xxlarge.w3-center.w3-teal{
 
 .main-footer{
     background: rgba(0, 0, 0, 0.15) !important;
-    color: #ccc;
+    color: white;
 }
 h1,h2,h3,h4,h5,h6{
     font-family: "Microsoft Yahei" !important;
@@ -489,6 +489,32 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   font-size: 4em;
   position: absolute;
   right: 3%;
+}
+.vote-btn{
+    padding: 3px;
+    color: rgba(255, 255, 255, 0.69) !important;
+}
+.vote-btn span{
+    padding-left: 5px;
+}
+.vote-btn:hover{
+    color:white !important;
+}
+.like-btn,.dislike-btn {
+    background: transparent;
+    border: none;
+}
+.dislike-btn{
+  padding-left: 7px;
+}
+.like-btn,.dislike-btn:focus {
+    outline:none;
+}
+.like-btn.vote-btn-clicked{
+    color:green !important;
+}
+.dislike-btn.vote-btn-clicked{
+    color:#795548 !important;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

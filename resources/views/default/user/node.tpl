@@ -35,6 +35,7 @@
 									<table class="table table-hover table-striped node-list">
 										<thead>
 											<tr>
+												<th>Vote</th>
 												<th id="t-name">节点名</th>
 												<th id="t-status">状态</th>
 												<th id="t-online">在线</th>
@@ -50,6 +51,10 @@
 		{foreach $nodes as $node}
 			{if $user->plan == "A" and $node->type == 1}
 												<tr>
+													<td>
+														<button class="fa fa-thumbs-up vote-btn like-btn"><span>33</span><span class="sr-only">{$node->id}</span></button><br>
+														<button class="fa fa-thumbs-down vote-btn dislike-btn"><span>33</span><span class="sr-only">{$node->id}</span></button>
+													</td>
 													<td>{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
@@ -69,6 +74,12 @@
 												</tr>
 			{else}
 												<tr>
+													<td>
+													
+														<button class="fa fa-thumbs-up vote-btn like-btn {if $user->getPollOfNode($node->id) == 1}vote-btn-clicked{/if}"><span>{$node->getPollCount(1)}</span><span class="sr-only">{$node->id}</span></button><br>
+														<button class="fa fa-thumbs-down vote-btn dislike-btn {if $user->getPollOfNode($node->id) == -1}vote-btn-clicked{/if}"><span>{$node->getPollCount(-1)}</span><span class="sr-only">{$node->id}</span></button>
+													
+													</td>
 													<td class="node-name" onclick="urlChange('{$node->id}')">{$node->name}</td>
 													<td><span class="label label-success">{$node->status}</span></td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
@@ -122,6 +133,56 @@
 			document.getElementById('infoifram').src = site;
 		$("#nodeinfo").modal();
 	}
+	$(".vote-btn").click(function(){
+		var v = $(this).children().first().text();
+		var sib = $(this).siblings();
+		var nodeid = $(this).children(".sr-only").text();
+		var poll;
+		if ($(this).hasClass("vote-btn-clicked")) {
+			poll = 0;
+		} else if($(this).hasClass("like-btn")) {
+			poll = 1;
+		} else {
+			poll = -1;
+		};
+		$.ajax({
+			type:"POST",
+			url:"vote",
+			dataType:"json",
+			data:{
+				nodeid : nodeid,
+				poll : poll
+			},
+            success: function (data) {
+                if (data.ret) {
+                    // $("#msg-success").show(500, function(){
+                    //     window.setTimeout("location.reload()",5000);
+                    // });
+                    // $("#msg-success-p").html(data.msg);
+                } else {
+                    // $("#msg-error").show(500, function(){
+                    //     $(this).delay(3000).hide(500);
+                    // });
+                    // $("#msg-error-p").html(data.msg);
+                }
+            },
+            error: function (jqXHR) {
+                alert("发生错误：" + jqXHR.status);
+            }
+		});
+		if (!$(this).hasClass("vote-btn-clicked")) {
+			$(this).children().first().html(++v);
+		}else{
+			$(this).children().first().html(--v);
+		}
+
+		if (sib.hasClass("vote-btn-clicked")) {
+			sib.removeClass("vote-btn-clicked");
+			sib.children().first().html(--v);
+		};
+
+		$(this).toggleClass("vote-btn-clicked");
+	})
 </script>
 
 {include file='user/footer.tpl'}

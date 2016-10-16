@@ -55,6 +55,7 @@ $app->group('/user', function () {
     $this->post('/password', 'App\Controllers\UserController:updatePassword');
     $this->post('/sendcode', 'App\Controllers\AuthController:sendVerifyEmail');
     $this->post('/email', 'App\Controllers\UserController:updateEmail');
+    $this->post('/vote', 'App\Controllers\UserController:vote');
     $this->post('/ssconfig', 'App\Controllers\UserController:updateSsConfig');
     $this->get('/sys', 'App\Controllers\UserController:sys');
     $this->get('/trafficlog', 'App\Controllers\UserController:trafficLog');

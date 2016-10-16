@@ -79,4 +79,11 @@ class Node extends Model
         return Tools::flowAutoShow($traffic);
     }
 
+    function getPollCount($p)
+    {
+        $id = $this->attributes['id'];
+        $c = Vote::where('nodeid', $id)->where('poll', $p)->count();
+        return $c;
+    }
+
 }

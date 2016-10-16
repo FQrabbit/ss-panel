@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\DelUser;
 use App\Models\Node;
 use App\Models\TrafficLog;
+use App\Models\Vote;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
@@ -433,6 +434,26 @@ class UserController extends BaseController
             $res['ret'] = 1;
             return $this->echoJson($response, $res);
         }
+    }
+
+    public function vote($request, $response, $args)
+    {
+        $uid = $this->user->id;
+        $nodeid = $request->getParam('nodeid');
+        $poll = $request->getParam('poll');
+        $f = Vote::where("uid", $uid)->where("nodeid", $nodeid)->first();
+        if ($f) {
+            $f->poll = $poll;
+            $f->save();
+        }else {
+            $v = new Vote;
+            $v->uid = $uid;
+            $v->nodeid = $nodeid;
+            $v->poll = $poll;
+            $v->save();
+        }
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
     }
 
     public function kill($request, $response, $args)

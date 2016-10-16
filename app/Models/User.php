@@ -11,6 +11,7 @@ use App\Utils\Hash;
 use App\Utils\Tools;
 use App\Models\Node;
 use App\Models\CheckInLog;
+use App\Models\Vote;
 
 class User extends Model
 
@@ -207,5 +208,15 @@ class User extends Model
                     break;
             }
             return $class;
+    }
+
+    public function getPollOfNode($nodeid)
+    {
+        $uid = $this->attributes['id'];
+        $v = Vote::where('uid', $uid)->where('nodeid', $nodeid)->first();
+        if ($v) {
+            return $v->poll;
+        }
+        return 0;
     }
 }
