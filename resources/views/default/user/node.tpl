@@ -134,7 +134,6 @@
 		$("#nodeinfo").modal();
 	}
 	$(".vote-btn").click(function(){
-		var self = this;
 		var v = $(this).children().first().text();
 		var sib = $(this).siblings();
 		var nodeid = $(this).children(".sr-only").text();
@@ -156,19 +155,10 @@
 			},
             success: function (data) {
                 if (data.ret) {
-					if (!$(self).hasClass("vote-btn-clicked")) {
-						$(self).children().first().html(++v);
-					}else{
-						$(self).children().first().html(--v);
-					}
-
-					if (sib.hasClass("vote-btn-clicked")) {
-						v = sib.children().first().text();
-						sib.removeClass("vote-btn-clicked");
-						sib.children().first().html(--v);
-					};
-
-					$(self).toggleClass("vote-btn-clicked");
+                    // $("#msg-success").show(500, function(){
+                    //     window.setTimeout("location.reload()",5000);
+                    // });
+                    // $("#msg-success-p").html(data.msg);
                 } else {
                     // $("#msg-error").show(500, function(){
                     //     $(this).delay(3000).hide(500);
@@ -180,6 +170,19 @@
                 alert("发生错误：" + jqXHR.status);
             }
 		});
+		if (!$(this).hasClass("vote-btn-clicked")) {
+			$(this).children().first().html(++v);
+		}else{
+			$(this).children().first().html(--v);
+		}
+
+		if (sib.hasClass("vote-btn-clicked")) {
+			v = sib.children().first().text();
+			sib.removeClass("vote-btn-clicked");
+			sib.children().first().html(--v);
+		};
+
+		$(this).toggleClass("vote-btn-clicked");
 	})
 </script>
 
