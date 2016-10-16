@@ -13,6 +13,15 @@
     <!-- Main content -->
     <section class="content">
 
+        <form action="" method="GET" class="form-inline margin-bottom">
+            <div class="form-group">
+                <input name="uid" type="number" placeholder="输入用户id" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-control btn btn-default btn-flat">查询</button>
+            </div>
+        </form>
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">

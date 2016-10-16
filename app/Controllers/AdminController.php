@@ -53,56 +53,69 @@ class AdminController extends UserController
 
     public function checkInLog($request, $response, $args)
     {
-        $pageNum = 1;
-        if (isset($request->getQueryParams()["page"])) {
-            $pageNum = $request->getQueryParams()["page"];
+        $q = $request->getQueryParams();
+        $logs = CheckInLog::where('id', ">" , 0);
+        $path = '/admin/checkinlog?';
+        foreach ($q as $k => $v) {
+            if (!empty($v) && $k != 'page') {
+                $logs = $logs->where($k, $v);
+                $path .= $k.'='.$v.'&';
+            }
         }
-        $traffic = CheckInLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-        $traffic->setPath('/admin/checkinlog');
-        return $this->view()->assign('logs', $traffic)->display('admin/checkinlog.tpl');
+        $path = substr($path,0,strlen($path)-1);
+        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
+        return $this->view()->assign('logs', $logs)->display('admin/checkinlog.tpl');
     }
 
     public function purchaseLog($request, $response, $args)
     {
-        $pageNum = 1;
-        if (isset($request->getQueryParams()["page"])) {
-            $pageNum = $request->getQueryParams()["page"];
+        $q = $request->getQueryParams();
+        $logs = PurchaseLog::where('id', ">" , 0);
+        $path = '/admin/purchaselog?';
+        foreach ($q as $k => $v) {
+            if (!empty($v) && $k != 'page') {
+                $logs = $logs->where($k, $v);
+                $path .= $k.'='.$v.'&';
+            }
         }
-        $purchase = PurchaseLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-        $purchase->setPath('/admin/purchaselog');
-        return $this->view()->assign('logs', $purchase)->display('admin/purchaselog.tpl');
+        $path = substr($path,0,strlen($path)-1);
+        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
+        return $this->view()->assign('logs', $logs)->display('admin/purchaselog.tpl');
     }
 
     public function donateLog($request, $response, $args)
     {
-        $pageNum = 1;
-        if (isset($request->getQueryParams()["page"])) {
-            $pageNum = $request->getQueryParams()["page"];
+        $q = $request->getQueryParams();
+        $logs = DonateLog::where('id', ">" , 0);
+        $path = '/admin/donatelog?';
+        foreach ($q as $k => $v) {
+            if (!empty($v) && $k != 'page') {
+                $logs = $logs->where($k, $v);
+                $path .= $k.'='.$v.'&';
+            }
         }
-        $donate = DonateLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-        $donate->setPath('/admin/donatelog');
-        return $this->view()->assign('logs', $donate)->display('admin/donatelog.tpl');
+        $path = substr($path,0,strlen($path)-1);
+        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
+        return $this->view()->assign('logs', $logs)->display('admin/donatelog.tpl');
     }
 
     public function trafficLog($request, $response, $args)
     {
-        $pageNum = isset($request->getQueryParams()["page"]) ? $request->getQueryParams()["page"] : 1;
-        $user_id = isset($request->getQueryParams()["user_id"]) ? $request->getQueryParams()["user_id"] : 0;
-        $node_id = isset($request->getQueryParams()["node_id"]) ? $request->getQueryParams()["node_id"] : 0;
-
-        if ($user_id && $node_id) {
-            $logs = TrafficLog::where("user_id", $user_id)->where("node_id", $node_id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-            $logs->setPath('/admin/trafficlog?user_id=' . $user_id . "&node_id=" . $node_id);
-        }elseif ($user_id) {
-            $logs = TrafficLog::where("user_id", $user_id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-            $logs->setPath('/admin/trafficlog?user_id='. $user_id);
-        }elseif ($node_id) {
-            $logs = TrafficLog::where("node_id", $node_id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-            $logs->setPath('/admin/trafficlog?node_id='. $node_id);
-        }else {
-            $logs = TrafficLog::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-            $logs->setPath('/admin/trafficlog');
+        $q = $request->getQueryParams();
+        $logs = TrafficLog::where('id', ">" , 0);
+        $path = '/admin/trafficlog?';
+        foreach ($q as $k => $v) {
+            if (!empty($v) && $k != 'page') {
+                $logs = $logs->where($k, $v);
+                $path .= $k.'='.$v.'&';
+            }
         }
+        $path = substr($path,0,strlen($path)-1);
+        $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
         return $this->view()->assign('logs', $logs)->display('admin/trafficlog.tpl');
     }
 

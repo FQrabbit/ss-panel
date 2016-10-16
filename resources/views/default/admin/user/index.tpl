@@ -12,6 +12,37 @@
 
     <!-- Main content -->
     <section class="content">
+        <form action="" method="GET" class="form-inline margin-bottom">
+            <div class="form-group">
+                <input name="id" type="number" placeholder="用户id" class="form-control">
+            </div>
+            <div class="form-group">
+                <input name="email" type="email" placeholder="用户邮箱" class="form-control">
+            </div>
+            <div class="form-group">
+                <input name="port" type="number" placeholder="用户端口" class="form-control">
+            </div>
+            <div class="form-group">
+                <select name="plan" class="form-control">
+                    <option value="">用户类型</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <select name="type" class="form-control">
+                    <option value="">套餐</option>
+                    <option value="试玩">试玩</option>
+                    <option value="基础">基础</option>
+                    <option value="包月">包月</option>
+                    <option value="包季">包季</option>
+                    <option value="包年">包年</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-control btn btn-default btn-flat">查询</button>
+            </div>
+        </form>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">

@@ -490,7 +490,7 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   position: absolute;
   right: 3%;
 }
-.vote-btn{
+.vote-btn,.vote-btn span{
     padding: 3px;
     color: rgba(255, 255, 255, 0.69) !important;
 }
@@ -511,10 +511,16 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
     outline:none;
 }
 .like-btn.vote-btn-clicked{
-    color:green !important;
+    color:#009688 !important;
 }
 .dislike-btn.vote-btn-clicked{
     color:#795548 !important;
+}
+.like-btn.vote-btn-clicked:hover{
+    color:#4DB6AC !important;
+}
+.dislike-btn.vote-btn-clicked:hover{
+    color:#8D6E63 !important;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -522,6 +528,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     background-color:transparent;
     transition: background-color 5000s ease-in-out 0s;
+    color: rgb(255, 255, 255) !important;
 }
 ::selection {
     background: #666;

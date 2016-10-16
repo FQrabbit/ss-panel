@@ -11,13 +11,19 @@ class UserController extends AdminController
 {
     public function index($request, $response, $args)
     {
-        $pageNum = 1;
-        if (isset($request->getQueryParams()["page"])) {
-            $pageNum = $request->getQueryParams()["page"];
+        $q = $request->getQueryParams();
+        $path = '/admin/user?';
+        $users = User::where('id', ">" , 0);
+        foreach ($q as $k => $v) {
+            if (!empty($v) && $k != 'page') {
+                $users = $users->where($k, $v);
+                $path .= $k.'='.$v.'&';
+            }
         }
-        $users = User::paginate(15, ['*'], 'page', $pageNum);
-        $users->setPath('/admin/user');
-        return $this->view()->assign('users', $users)->display('admin/user/index.tpl');
+        $path = substr($path,0,strlen($path)-1);
+        $users = $users->paginate(15, ['*'], 'page', $q['page']);
+        $users->setPath($path);
+        return $this->view()->assign('users', $users)->assign('q', $q)->display('admin/user/index.tpl');
     }
 
     public function edit($request, $response, $args)
