@@ -22,25 +22,10 @@ class NodeController extends AdminController
     public function add($request, $response, $args)
     {
         $node = new Node();
-        $node->id = $request->getParam('id');
-        $node->name = $request->getParam('name');
-        $node->server = $request->getParam('server');
-        $node->ip = $request->getParam('ip');
-        $node->method = $request->getParam('method');
-        $node->protocol = $request->getParam('protocol');
-        $node->obfs = $request->getParam('obfs');
-        $node->custom_method = $request->getParam('custom_method');
-        $node->custom_rss = $request->getParam('custom_rss');
-        $node->traffic_rate = $request->getParam('rate');
-        $node->info = $request->getParam('info');
-        $node->type = $request->getParam('type');
-        $node->status = $request->getParam('status');
-        $node->sort = $request->getParam('sort');
-        $node->transfer_reset_day = $request->getParam('transfer_reset_day');
-        $node->vps = $request->getParam('vps');
-        $node->subid = $request->getParam('subid');
-        $node->api = $request->getParam('api');
-        $node->node_usage = $request->getParam('node_usage');
+        $q = $request->getParsedBody();
+        foreach ($q as $k => $v) {
+            $node->$k = $v;
+        }
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "添加失败";
@@ -66,25 +51,10 @@ class NodeController extends AdminController
         $id = $args['id'];
         $node = Node::find($id);
 
-        $node->id = $request->getParam('id');
-        $node->name = $request->getParam('name');
-        $node->server = $request->getParam('server');
-        $node->ip = $request->getParam('ip');
-        $node->method = $request->getParam('method');
-        $node->protocol = $request->getParam('protocol');
-        $node->obfs = $request->getParam('obfs');
-        $node->custom_method = $request->getParam('custom_method');
-        $node->custom_rss = $request->getParam('custom_rss');
-        $node->traffic_rate = $request->getParam('rate');
-        $node->info = $request->getParam('info');
-        $node->type = $request->getParam('type');
-        $node->status = $request->getParam('status');
-        $node->sort = $request->getParam('sort');
-        $node->transfer_reset_day = $request->getParam('transfer_reset_day');
-        $node->vps = $request->getParam('vps');
-        $node->subid = $request->getParam('subid');
-        $node->api = $request->getParam('api');
-        $node->node_usage = $request->getParam('node_usage');
+        $q = $request->getParsedBody();
+        foreach ($q as $k => $v) {
+            $node->$k = $v;
+        }
         if (!$node->save()) {
             $rs['ret'] = 0;
             $rs['msg'] = "修改失败";

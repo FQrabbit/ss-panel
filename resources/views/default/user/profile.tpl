@@ -120,14 +120,14 @@
                                 <label class="col-sm-3 control-label">加密方式</label>
                                 <div class="col-sm-9">
                                     <select id="method" class="form-control">
-                                        <option value="{$user->method}" style="background-color:#009688;" selected="selected">{strtoupper($user->method)} (当前)</option>
+                                        <option value="{$user->method}" style="background-color:#009688;" selected="selected">{$user->method} (当前)</option>
                                         <option value="{$user->method}" disabled="disabled">======</option>
-                                        <option value="aes-256-cfb">AES-256-CFB</option>
-                                        <option value="aes-256-ctr">AES-256-CTR</option>
-                                        <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
-                                        <option value="salsa20">SALSA20</option>
-                                        <option value="chacha20">CHACHA20</option>
-                                        <option value="chacha20-ietf">CHACHA20-IETF</option>
+                                        <option value="aes-256-cfb">aes-256-cfb</option>
+                                        <option value="aes-256-ctr">aes-256-ctr</option>
+                                        <option value="camellia-256-cfb">camellia-256-cfb</option>
+                                        <option value="salsa20">salsa20</option>
+                                        <option value="chacha20">chacha20</option>
+                                        <option value="chacha20-ietf">chacha20-ietf</option>
                                     </select>
                                 </div>
                             </div>
@@ -147,6 +147,8 @@
                                         <option value="verify_sha1_compatible">verify_sha1_compatible</option>
                                         <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
                                         <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                        <option value="auth_aes128_md5_compatible">auth_aes128_md5_compatible (推荐)</option>
+                                        <option value="auth_aes128_sha1_compatible">auth_aes128_sha1_compatible (推荐)</option>
                                         <!-- <option value="verify_deflate">verify_deflate</option> -->
                                     </select>
                                 </div>

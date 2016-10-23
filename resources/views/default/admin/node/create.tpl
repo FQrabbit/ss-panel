@@ -82,12 +82,18 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="protocol">
-                                                <option value="auth_sha1_compatible"  selected="selected">auth_sha1_compatible</option>
-                                                <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
-                                                <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                                <option value="verify_deflate">verify_deflate</option>
+                                                <option value="verify_sha1">verify_sha1</option>
                                                 <option value="auth_sha1_v2">auth_sha1_v2</option>
                                                 <option value="auth_sha1_v4">auth_sha1_v4</option>
-                                                <option value="auth_aes128">auth_aes128</option>
+                                                <option value="auth_aes128_md5">auth_aes128_md5</option>
+                                                <option value="auth_aes128_sha1">auth_aes128_sha1</option>
+                                                <option disabled="disabled">==以下兼容原协议==</option>
+                                                <option value="verify_sha1_compatible">verify_sha1_compatible</option>
+                                                <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
+                                                <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                                <option value="auth_aes128_md5_compatible">auth_aes128_md5_compatible</option>
+                                                <option value="auth_aes128_sha1_compatible">auth_aes128_sha1_compatible</option>
                                             </select>
                                         </div>
                                     </div>
@@ -97,19 +103,22 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="obfs">
-                                                <option value="tls1.2_ticket_auth_compatible" selected="selected">tls1.2_ticket_auth_compatible</option>
-                                                <option value="http_simple_compatible">http_simple_compatible</option>
-                                                <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
                                                 <option value="http_simple">http_simple</option>
+                                                <option value="http_post">http_post</option>
+                                                <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
+                                                <option value="tls1.2_ticket_auth_compatible" disabled="disabled">==以下兼容原协议==</option>
+                                                <option value="http_simple_compatible">http_simple_compatible</option>
+                                                <option value="http_post_compatible">http_post_compatible</option>
+                                                <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="rate" class="col-sm-3 control-label">流量比例</label>
+                                        <label for="traffic_rate" class="col-sm-3 control-label">流量比例</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="rate" value="1">
+                                            <input class="form-control" id="traffic_rate" value="1">
                                         </div>
 
                                     </div>
@@ -279,7 +288,7 @@
                     obfs: $("#obfs").val(),
                     custom_method: $("#custom_method").val(),
                     custom_rss: $("#custom_rss").val(),
-                    rate: $("#rate").val(),
+                    traffic_rate: $("#traffic_rate").val(),
                     info: $("#info").val(),
                     type: $("#type").val(),
                     status: $("#status").val(),

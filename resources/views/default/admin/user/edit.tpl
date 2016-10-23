@@ -199,7 +199,59 @@
                                         <label class="col-sm-3 control-label">自定义加密</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="method" value="{$user->method}">
+                                            <select id="method" class="form-control">
+                                                <option value="{$user->method}" style="background-color:#009688;" selected="selected">{$user->method} (当前)</option>
+                                                <option value="{$user->method}" disabled="disabled">======</option>
+                                                <option value="aes-256-cfb">aes-256-cfb</option>
+                                                <option value="aes-256-cfb">aes-256-cfb</option>
+                                                <option value="camellia-256-cfb">camellia-256-cfb</option>
+                                                <option value="salsa20">salsa20</option>
+                                                <option value="chacha20">chacha20</option>
+                                                <option value="chacha20-ietf">chacha20-ietf</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">协议</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="protocol">
+                                                <option value="{$user->protocol}" style="background-color:#009688;" selected="selected">{$user->protocol} (当前)</option>
+                                                <option value="{$user->protocol}" disabled="disabled">======</option>
+                                                <option value="verify_deflate">verify_deflate</option>
+                                                <option value="verify_sha1">verify_sha1</option>
+                                                <option value="auth_sha1_v2">auth_sha1_v2</option>
+                                                <option value="auth_sha1_v4">auth_sha1_v4</option>
+                                                <option value="auth_aes128_md5">auth_aes128_md5</option>
+                                                <option value="auth_aes128_sha1">auth_aes128_sha1</option>
+                                                <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议==</option>
+                                                <option value="verify_sha1_compatible">verify_sha1_compatible</option>
+                                                <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
+                                                <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
+                                                <option value="auth_aes128_md5_compatible">auth_aes128_md5_compatible</option>
+                                                <option value="auth_aes128_sha1_compatible">auth_aes128_sha1_compatible</option>
+                                                <!-- <option value="verify_deflate">verify_deflate</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">混淆</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="obfs">
+                                                <option value="{$user->obfs}" style="background-color:#009688;" selected="selected">{$user->obfs} (当前)</option>
+
+                                                <option value="{$user->obfs}" disabled="disabled">======</option>
+                                                <option value="http_simple">http_simple</option>
+                                                <option value="http_post">http_post</option>
+                                                <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
+                                                <option value="tls1.2_ticket_auth_compatible" disabled="disabled">==以下兼容原协议==</option>
+                                                <option value="http_simple_compatible">http_simple_compatible</option>
+                                                <option value="http_post_compatible">http_post_compatible</option>
+                                                <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </fieldset>
