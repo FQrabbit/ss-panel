@@ -14,7 +14,16 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-body">
-                        <p>{$msg}</p>
+                        <dov class="row">
+                            <div class="col-sm-6">
+                                <p>{$msg}</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="center" style="width:200px;background-color:white">
+                                    <a href="https://qr.alipay.com/ap26r3qzaef4zstc30"><img src="/assets/public/images/ali-qr.png" alt="二维码" style="width:200px"></a>
+                                </div>
+                            </div>
+                        </dov>
                         <table class="table table-striped table-hover">
                             <caption class="center"><h4><strong>按流量购买</strong></h4></caption>
                             <thead>
