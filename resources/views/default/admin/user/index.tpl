@@ -1,5 +1,11 @@
 {include file='admin/main.tpl'}
 
+<link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
+<style>
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 5px;
+}
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -12,6 +18,17 @@
 
     <!-- Main content -->
     <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
+                    <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-info"></i> 成功!</h4>
+
+                    <p id="msg-success-p"></p>
+                </div>
+
+            </div>
+        </div>
         <form action="" method="GET" class="form-inline margin-bottom">
             <div class="form-group">
                 <input name="id" type="number" placeholder="用户id" class="form-control">
@@ -46,7 +63,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-body table-responsive no-padding">
+                    <div class="box-body table-responsive">
                         {$users->render()}
                         <table class="table table-hover">
                             <tr>
@@ -81,8 +98,8 @@
                                 <td>{$user->reg_ip}</td>
                                 <!-- <td>{$user->ref_by}</td> -->
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="/admin/user/{$user->id}/delete">删除</a>
+                                    <a class="btn bg-green btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
+                                    <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="javascript:void(0);" onclick="confirm_delete({$user->id});">删除</a>
                                 </td>
                             </tr>
                             {/foreach}
@@ -96,43 +113,49 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-
-<script>
-    $(document).ready(function(){
-        function delete(){
-            $.ajax({
-                type:"DELETE",
-                url:"/admin/user/",
-                dataType:"json",
-                data:{
-                    name: $("#name").val()
-                },
-                success:function(data){
-                    if(data.ret){
-                        $("#msg-error").hide(100);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/admin/user'", 2000);
-                    }else{
-                        $("#msg-error").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error:function(jqXHR){
+<script src="/assets/public/js/jquery-confirm.js"></script>
+<script type="text/javascript"> 
+    function deleteuser(uid){
+        $.ajax({
+            type:"DELETE",
+            url:"/admin/user/" + uid,
+            dataType:"json",
+            success:function(data){
+                if(data.ret){
+                    $("#msg-error").hide(100);
+                    $("#msg-success").show(100);
+                    $("#msg-success-p").html(data.msg);
+                    window.setTimeout("location.href='/admin/user'", 2000);
+                }else{
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误："+jqXHR.status);
+                    $("#msg-error-p").html(data.msg);
                 }
-            });
-        }
-        $("html").keydown(function(event){
-            if(event.keyCode==13){
-                login();
+            },
+            error:function(jqXHR){
+                $("#msg-error").hide(10);
+                $("#msg-error").show(100);
+                $("#msg-error-p").html("发生错误："+jqXHR.status);
             }
         });
-        $("#delete").click(function(){
-            delete();
+    }
+    function confirm_delete(id) {
+        $.confirm({
+            title: '确认操作',
+            content: '你确定要删除这个用户?',
+            confirm: function(){
+                deleteuser(id);
+            },
+            confirmButton: '是',
+            cancelButton: '否',
+            theme: 'black'
+        });
+    }
+    $(document).ready(function(){
+        $("html").keydown(function(event){
+            if(event.keyCode==13){
+                $(form).summit();
+            }
         });
         $("#ok-close").click(function(){
             $("#msg-success").hide(100);

@@ -12,6 +12,9 @@ class UserController extends AdminController
     public function index($request, $response, $args)
     {
         $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
         $path = '/admin/user?';
         $users = User::where('id', ">" , 0);
         foreach ($q as $k => $v) {
