@@ -54,6 +54,9 @@ class AdminController extends UserController
     public function checkInLog($request, $response, $args)
     {
         $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
         $logs = CheckInLog::where('id', ">" , 0);
         $path = '/admin/checkinlog?';
         foreach ($q as $k => $v) {
@@ -71,6 +74,9 @@ class AdminController extends UserController
     public function purchaseLog($request, $response, $args)
     {
         $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
         $logs = PurchaseLog::where('id', ">" , 0);
         $path = '/admin/purchaselog?';
         foreach ($q as $k => $v) {
@@ -88,6 +94,9 @@ class AdminController extends UserController
     public function donateLog($request, $response, $args)
     {
         $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
         $logs = DonateLog::where('id', ">" , 0);
         $path = '/admin/donatelog?';
         foreach ($q as $k => $v) {
@@ -105,6 +114,9 @@ class AdminController extends UserController
     public function trafficLog($request, $response, $args)
     {
         $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
         $logs = TrafficLog::where('id', ">" , 0);
         $path = '/admin/trafficlog?';
         foreach ($q as $k => $v) {
