@@ -24,7 +24,7 @@
                                     <th>价格</th>
                                     <th>期限</th>
                                     <th>节点</th>
-                                    <th>数量</th>
+                                    <!-- <th>数量</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,7 +35,7 @@
                                         <td>￥{$menu["price"]}</td>
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
-                                        <td>
+                                        <!-- <td>
                                             <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
@@ -43,7 +43,7 @@
                                                 <input name="WIDquantity" type="number" value="1"  style="width:50px"/>
                                                 <input type="submit" value="购买" class="btn btn-default btn-flat">
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 {/foreach}
                             </tbody>
@@ -60,7 +60,7 @@
                                 <th>价格</th>
                                 <th>期限</th>
                                 <th>节点</th>
-                                <th></th>
+                                <!-- <th></th> -->
                             </tr>
                             </thead>
                             <tbody>
@@ -71,7 +71,7 @@
                                         <td>￥{$menu["price"]}</td>
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
-                                        <td>
+                                        <!-- <td>
                                             <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
                                                 <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
                                                 <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
@@ -79,7 +79,7 @@
                                                 <input type="submit" value="购买" class="btn btn-default btn-flat" 
                                                         {if $B_able_to_buy==0 }disabled="disabled"{/if}>
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 {/foreach}
                             </tbody>

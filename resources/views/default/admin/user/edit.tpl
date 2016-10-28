@@ -81,7 +81,7 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    <div class="col-sm-12"><hr></div>
                                     <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">是否捐助</label>
 
@@ -104,7 +104,7 @@
                                             <input class="form-control" id="money" value="{$user->money}" type="number">
                                         </div>
                                     </div>
-
+                                    <div class="col-sm-12"><hr></div>
                                     <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">付费金额</label>
 
@@ -152,7 +152,7 @@
                                         <label class="col-sm-3 control-label">过期时间</label>
 
                                         <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
-                                            <input class="form-control" id="expire_date" value="{$user->expire_date}">
+                                            <input class="form-control date" id="expire_date" value="{$user->expire_date}">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
                                             </div>
@@ -166,7 +166,7 @@
                                         <label class="col-sm-3 control-label">购买时间</label>
 
                                         <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
-                                            <input class="form-control" id="buy_date" value="{$user->buy_date}">
+                                            <input class="form-control date" id="buy_date" value="{$user->buy_date}">
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
                                             </div>
@@ -175,7 +175,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </fieldset>
                                 <fieldset class="col-sm-12">
                                     <legend>ShadowSocks连接信息</legend>
@@ -395,7 +394,12 @@
             $(this).parent().parent().children("input").val(nowdate);
         });
     })
+    $('input.date').datetimepicker({
+        format: "yyyy-mm-dd hh:ii:ss",
+        todayBtn: true,
+        clearBtn: true,
+        todayHighlight: true
+    });
 </script>
-
 
 {include file='admin/footer.tpl'}
