@@ -8,8 +8,10 @@ use App\Models\DonateLog;
 use App\Models\InviteCode;
 use App\Models\TrafficLog;
 use App\Models\Ann;
+use App\Models\User;
 use App\Services\Analytics;
 use App\Services\DbConfig;
+use App\Services\Mail;
 use App\Utils\Tools;
 
 /**
@@ -60,7 +62,7 @@ class AdminController extends UserController
         $logs = CheckInLog::where('id', ">" , 0);
         $path = '/admin/checkinlog?';
         foreach ($q as $k => $v) {
-            if (!empty($v) && $k != 'page') {
+            if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
                 $path .= $k.'='.$v.'&';
             }
@@ -80,7 +82,7 @@ class AdminController extends UserController
         $logs = PurchaseLog::where('id', ">" , 0);
         $path = '/admin/purchaselog?';
         foreach ($q as $k => $v) {
-            if (!empty($v) && $k != 'page') {
+            if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
                 $path .= $k.'='.$v.'&';
             }
@@ -118,7 +120,7 @@ class AdminController extends UserController
         $logs = DonateLog::where('id', ">" , 0);
         $path = '/admin/donatelog?';
         foreach ($q as $k => $v) {
-            if (!empty($v) && $k != 'page') {
+            if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
                 $path .= $k.'='.$v.'&';
             }
@@ -138,7 +140,7 @@ class AdminController extends UserController
         $logs = TrafficLog::where('id', ">" , 0);
         $path = '/admin/trafficlog?';
         foreach ($q as $k => $v) {
-            if (!empty($v) && $k != 'page') {
+            if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
                 $path .= $k.'='.$v.'&';
             }
@@ -196,4 +198,44 @@ class AdminController extends UserController
         return $response->getBody()->write(json_encode($res));
     }
 
+    public function sendMailPost($request, $response, $args)
+    {
+        $q = $request->getParsedBody();
+        $users = User::where('id', '>', 0);
+        foreach ($q as $k => $v) {
+            if ($v != "") {
+                $users = $users->where($k, $v);
+            }
+        }
+        $users = $users->get();
+
+        $ann = Ann::orderBy("id", "desc")->get()->first();
+        $arr = [
+            "title" => $ann->title,
+            "content" => $ann->content,
+            "user_name" => ""
+        ];
+
+        $res['names'] = [];
+        $i = 0;
+        if ($users && $ann->title && $ann->content) {
+            foreach ($users as $user) {
+                $arr["user_name"] = $user->user_name;
+                $res['names'][$i++] = $user->user_name;
+                try {
+                    Mail::send($user->email, $ann->title, 'news/announcement.tpl', $arr, []);
+                    $res['ret'] = 1;
+                    $res['msg'] = "发送邮箱公告成功";
+                } catch (\Exception $e) {
+                    $res['ret'] = 0;
+                    $res['msg'] = $e->getMessage();
+                }
+            }
+        }else{
+            $res['ret'] = 0;
+            $res['msg'] = "无符合条件的用户或无公告";
+        }
+        $res['total'] = count($users);
+        return $response->getBody()->write(json_encode($res));
+    }
 }

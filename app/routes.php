@@ -59,6 +59,7 @@ $app->group('/user', function () {
     $this->post('/ssconfig', 'App\Controllers\UserController:updateSsConfig');
     $this->get('/sys', 'App\Controllers\UserController:sys');
     $this->get('/trafficlog', 'App\Controllers\UserController:trafficLog');
+    $this->get('/purchaselog', 'App\Controllers\UserController:purchaseLog');
     $this->get('/kill', 'App\Controllers\UserController:kill');
     $this->post('/kill', 'App\Controllers\UserController:handleKill');
     $this->get('/logout', 'App\Controllers\UserController:logout');
@@ -117,6 +118,7 @@ $app->group('/admin', function () {
     $this->delete('/user/{id}', 'App\Controllers\Admin\UserController:delete');
     $this->get('/user/{id}/delete', 'App\Controllers\Admin\UserController:deleteGet');
 
+    $this->post('/sendmail', 'App\Controllers\AdminController:sendMailPost');
     // Test
     $this->get('/test/sendmail', 'App\Controllers\Admin\TestController:sendMail');
     $this->post('/test/sendmail', 'App\Controllers\Admin\TestController:sendMailPost');
