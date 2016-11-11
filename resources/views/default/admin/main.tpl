@@ -146,6 +146,12 @@
                 </li>
 
                 <li>
+                    <a href="/admin/buy">
+                        <i class="fa fa-shopping-cart"></i> <span>购买</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="/admin/donatelog">
                         <i class="fa fa-users"></i> <span>捐助日志</span>
                     </a>

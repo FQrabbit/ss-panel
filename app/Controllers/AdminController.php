@@ -91,6 +91,24 @@ class AdminController extends UserController
         return $this->view()->assign('logs', $logs)->display('admin/purchaselog.tpl');
     }
 
+    public function addPurchase($request, $response, $args)
+    {
+        $q = $request->getParsedBody();
+        $record = PurchaseLog::create($q);
+        $rs['ret'] = 1;
+        $rs['msg'] = "修改成功";
+        return $response->getBody()->write(json_encode($q));
+    }
+
+    public function buy($request, $response, $args)
+    {
+        $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
+        return $this->view()->display('admin/buy.tpl');
+    }
+
     public function donateLog($request, $response, $args)
     {
         $q = $request->getQueryParams();

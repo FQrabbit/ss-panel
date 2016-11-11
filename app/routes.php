@@ -93,6 +93,8 @@ $app->group('/admin', function () {
     $this->get('/trafficlog', 'App\Controllers\AdminController:trafficLog');
     $this->get('/checkinlog', 'App\Controllers\AdminController:checkinLog');
     $this->get('/purchaselog', 'App\Controllers\AdminController:purchaseLog');
+    $this->post('/addpurchase', 'App\Controllers\AdminController:addPurchase');
+    $this->get('/buy', 'App\Controllers\AdminController:buy');
     $this->get('/donatelog', 'App\Controllers\AdminController:donateLog');
     // app config
     $this->get('/config', 'App\Controllers\AdminController:config');
