@@ -1,5 +1,13 @@
 {include file='admin/main.tpl'}
-
+<link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
+<style>
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 5px;
+}
+.jconfirm .jconfirm-box div.content-pane .content{
+    min-height: auto;
+}
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -32,7 +40,10 @@
 
         <form action="" method="GET" class="form-inline margin-bottom">
             <div class="form-group">
-                <input name="uid" type="number" placeholder="用户id" class="form-control">
+                <input name="uid" type="number" value="{$q['uid']}" placeholder="用户id" class="form-control">
+            </div>
+            <div class="form-group">
+                <input name="port" type="number" value="{$q['port']}" placeholder="用户端口" class="form-control">
             </div>
             <div class="form-group">
                 <select name="body" class="form-control">
@@ -48,10 +59,13 @@
                 <button type="submit" class="form-control btn btn-default btn-flat">查询</button>
             </div>
         </form>
-
+        <hr>
         <fieldset class="form-inline margin-bottom">
             <div class="form-group">
                 <input id="uid" type="number" placeholder="用户id" class="form-control">
+            </div>
+            <div class="form-group">
+                <input id="port" type="number" placeholder="用户端口" class="form-control">
             </div>
             <div class="form-group">
                 <select id="body" class="form-control">
@@ -67,13 +81,13 @@
                 <input id="price" type="number" placeholder="价格" class="form-control">
             </div>
             <div class="form-group">
-                <input id="buy_date" value="2016-11-11 11:11:11" placeholder="购买时间" class="form-control">
+                <input id="buy_date" type="datetime-local" placeholder="购买时间" class="form-control">
             </div>
             <div class="form-group">
-                <input id="trade_no" type="number" placeholder="交易号" class="form-control">
+                <input id="out_trade_no" type="number" placeholder="交易号" class="form-control">
             </div>
             <div class="form-group">
-                <button id="insert" class="form-control btn btn-default btn-flat">插入</button>
+                <button id="insert" class="btn btn-default form-control">插入</button>
             </div>
         </fieldset>
 
@@ -89,7 +103,9 @@
                                 <th>套餐</th>
                                 <th>价格</th>
                                 <th>购买日期</th>
+                                <th>订单号</th>
                                 <th>交易号</th>
+                                <th>操作</th>
                             </tr>
                             {foreach $logs as $log}
                                 <tr>
@@ -99,6 +115,10 @@
                                     <td>{$log->price}</td>
                                     <td>{$log->buy_date}</td>
                                     <td>{$log->trade_no}</td>
+                                    <td>{$log->out_trade_no}</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm" id="delete" href="javascript:void(0);" onclick="confirm_delete({$log->id});">删除</a>
+                                    </td>
                                 </tr>
                             {/foreach}
                         </table>
@@ -111,55 +131,87 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+<script src="/assets/public/js/jquery-confirm.js"></script>
 <script>
-    $(document).ready(function () {
-        function insert() {
-            $.ajax({
-                type: "POST",
-                url: "/admin/addpurchase",
-                dataType: "json",
-                data: {
-                    uid: $("#uid").val(),
-                    price: $("#price").val(),
-                    buy_date: $("#buy_date").val(),
-                    trade_no: $("#trade_no").val(),
-                    body: $("#body").val(),
-                    out_trade_no: "1234"
-                },
-                success: function (data) {
-                    if (data.ret) {
-                        $("#msg-error").hide(100);
-                        $("#msg-success").show(100);
-                        $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.reload()", 2000);
-                    } else {
-                        $("#msg-error").hide(10);
-                        $("#msg-error").show(100);
-                        $("#msg-error-p").html(data.msg);
-                    }
-                },
-                error: function (jqXHR) {
+    function insert() {
+        $.ajax({
+            type: "POST",
+            url: "/admin/addpurchase",
+            dataType: "json",
+            data: {
+                uid: $("#uid").val(),
+                port: $("#port").val(),
+                price: $("#price").val(),
+                buy_date: $("#buy_date").val(),
+                out_trade_no: $("#out_trade_no").val(),
+                body: $("#body").val()
+            },
+            success: function (data) {
+                if (data.ret) {
+                    $("#msg-error").hide(100);
+                    $("#msg-success").show(100);
+                    $("#msg-success-p").html(data.msg);
+                    window.setTimeout("location.reload()", 2000);
+                } else {
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
-                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                    $("#msg-error-p").html(data.msg);
                 }
-            });
-        }
-
-        $("html").keydown(function (event) {
-            if (event.keyCode == 13) {
-                insert();
+            },
+            error: function (jqXHR) {
+                $("#msg-error").hide(10);
+                $("#msg-error").show(100);
+                $("#msg-error-p").html("发生错误：" + jqXHR.status);
             }
         });
-        $("#insert").click(function () {
-            insert();
+    }
+
+    function deleterecord(id) {
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/purchaselog/" + id,
+            dataType:"json",
+            success: function (data) {
+                if (data.ret) {
+                    $("#msg-error").hide(100);
+                    $("#msg-success").show(100);
+                    $("#msg-success-p").html(data.msg);
+                    window.setTimeout("location.reload()", 2000);
+                } else {
+                    $("#msg-error").hide(10);
+                    $("#msg-error").show(100);
+                    $("#msg-error-p").html(data.msg);
+                }
+            },
+            error: function (jqXHR) {
+                $("#msg-error").hide(10);
+                $("#msg-error").show(100);
+                $("#msg-error-p").html("发生错误：" + jqXHR.status);
+            }
         });
-        $("#ok-close").click(function () {
-            $("#msg-success").hide(100);
+    };
+
+    function confirm_delete(id) {
+        $.confirm({
+            title: '确认操作',
+            content: '你确定要删除这条记录?',
+            confirm: function(){
+                deleterecord(id);
+            },
+            confirmButton: '是',
+            cancelButton: '否',
+            theme: 'black'
         });
-        $("#error-close").click(function () {
-            $("#msg-error").hide(100);
-        });
-    })
+    }
+
+    $("#insert").click(function () {
+        insert();
+    });
+    $("#ok-close").click(function () {
+        $("#msg-success").hide(100);
+    });
+    $("#error-close").click(function () {
+        $("#msg-error").hide(100);
+    });
 </script>
 {include file='user/footer.tpl'}

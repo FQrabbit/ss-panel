@@ -79,6 +79,11 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
+        if ($q["port"]!="") {
+            $user = User::where("port", $q["port"])->first();
+            $q["uid"] = $user->id;
+            $q["port"] = "";
+        }
         $logs = PurchaseLog::where('id', ">" , 0);
         $path = '/admin/purchaselog?';
         foreach ($q as $k => $v) {
@@ -90,16 +95,35 @@ class AdminController extends UserController
         $path = substr($path,0,strlen($path)-1);
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
-        return $this->view()->assign('logs', $logs)->display('admin/purchaselog.tpl');
+        return $this->view()->assign('logs', $logs)->assign('q', $q)->display('admin/purchaselog.tpl');
     }
 
     public function addPurchase($request, $response, $args)
     {
         $q = $request->getParsedBody();
+        if ($q["port"]!="") {
+            $user = User::where("port", $q["port"])->first();
+            $q["uid"] = $user->id;
+            unset($q["port"]);
+        }
         $record = PurchaseLog::create($q);
         $rs['ret'] = 1;
-        $rs['msg'] = "修改成功";
-        return $response->getBody()->write(json_encode($q));
+        $rs['msg'] = "添加成功";
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function deletePurchaseLog($request, $response, $args)
+    {
+        $id = $args["id"];
+        $record = PurchaseLog::find($id);
+        if (!$record->delete()) {
+            $rs['ret'] = 0;
+            $rs['msg'] = "删除失败";
+            return $response->getBody()->write(json_encode($rs));
+        }
+        $rs['ret'] = 1;
+        $rs['msg'] = "删除成功";
+        return $response->getBody()->write(json_encode($rs));
     }
 
     public function buy($request, $response, $args)
