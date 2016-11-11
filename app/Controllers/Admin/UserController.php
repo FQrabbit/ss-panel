@@ -18,7 +18,7 @@ class UserController extends AdminController
         $path = '/admin/user?';
         $users = User::where('id', ">" , 0);
         foreach ($q as $k => $v) {
-            if (!empty($v) && $k != 'page') {
+            if ($v != "" && $k != 'page') {
                 $users = $users->where($k, $v);
                 $path .= $k.'='.$v.'&';
             }

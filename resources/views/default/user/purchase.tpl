@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="center" style="width:200px;background-color:white">
-                                    <a href="https://qr.alipay.com/ap26r3qzaef4zstc30"><img src="/assets/public/images/ali-qr.png" alt="二维码" style="width:200px"></a>
+                                    <img src="/assets/public/images/ali-qr.png" alt="二维码" style="width:200px">
                                 </div>
                             </div>
                         </dov>
@@ -33,7 +33,7 @@
                                     <th>价格</th>
                                     <th>期限</th>
                                     <th>节点</th>
-                                    <!-- <th>数量</th> -->
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,15 +44,15 @@
                                         <td>￥{$menu["price"]}</td>
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
-                                        <!-- <td>
-                                            <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
-                                                <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
-                                                <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
-                                                <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
-                                                <input name="WIDquantity" type="number" value="1"  style="width:50px"/>
-                                                <input type="submit" value="购买" class="btn btn-default btn-flat">
+                                        <td>
+                                            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php">
+                                                <input type="hidden" name="uid" value="100001627">
+                                                <input type="hidden" name="payno" value="zhwalker20@gmail.com">
+                                                <input type="hidden" name="price" value="{$menu['price']}">
+                                                <input type="hidden" name="title" value="{$menu['title']}">
+                                                <input type="submit" value="购买" class="btn btn-default btn-flat" {if !$able}disabled{/if}>
                                             </form>
-                                        </td> -->
+                                        </td>
                                     </tr>
                                 {/foreach}
                             </tbody>
@@ -69,7 +69,7 @@
                                 <th>价格</th>
                                 <th>期限</th>
                                 <th>节点</th>
-                                <!-- <th></th> -->
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,15 +80,15 @@
                                         <td>￥{$menu["price"]}</td>
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
-                                        <!-- <td>
-                                            <form name="alipayment" action="/pay/alipayapi.php" method="post" target="_blank">
-                                                <input name="WIDsubject" type="hidden" value="{$menu["name"]}" />
-                                                <input name="WIDbody" type="hidden" value="{$menu["body"]}" />
-                                                <input name="WIDreceive_name" type="hidden" value="uid:{$user["id"]}" />
-                                                <input type="submit" value="购买" class="btn btn-default btn-flat" 
-                                                        {if $B_able_to_buy==0 }disabled="disabled"{/if}>
+                                        <td>
+                                            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php">
+                                                <input type="hidden" name="uid" value="100001627">
+                                                <input type="hidden" name="payno" value="zhwalker20@gmail.com">
+                                                <input type="hidden" name="price" value="{$menu['price']}">
+                                                <input type="hidden" name="title" value="{$menu['title']}">
+                                                <input type="submit" value="购买" class="btn btn-default btn-flat" {if !$able}disabled{/if}>
                                             </form>
-                                        </td> -->
+                                        </td>
                                     </tr>
                                 {/foreach}
                             </tbody>

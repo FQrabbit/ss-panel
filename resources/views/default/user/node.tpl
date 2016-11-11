@@ -68,7 +68,7 @@
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
 													<td>{$node->transfer_reset_day}</td>
-													<td class="info">{$node->info} - 总流量: {$node->transfer}G</td>
+													<td class="info">{$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}</td>
 													<td>{$node->getNodeUptime()}</td>
 													<td>Meow</td>
 												</tr>
@@ -93,7 +93,7 @@
 													</td>
 													<td>{$node->getTrafficFromLogs()}</td>
 													<td>{$node->transfer_reset_day}</td>
-													<td class="info">{$node->info} - 总流量: {$node->transfer}G</td>
+													<td class="info">{$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}</td>
 													<td>{$node->getNodeUptime()}</td>
 													<td>{$node->ip}</td>
 												</tr>

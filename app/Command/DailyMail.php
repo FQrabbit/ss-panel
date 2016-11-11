@@ -50,11 +50,11 @@ class DailyMail
             $subject = "备份网站";
             $file = ["/root/backup/site.tgz"];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
+            echo date("Y-m-d H:i:s",time())."\n";
+            echo "Send website backup successful\n\n";
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-        echo date("Y-m-d H:i:s",time())."\n";
-        echo "Send website backup successful\n\n";
     }
 
     public static function sendAnnMail()
@@ -82,7 +82,7 @@ class DailyMail
                 echo "Sent to " . $user->user_name . "\n";
             }
         }else {
-            echo "空";
+            echo "空\n";
         }
     }
 }

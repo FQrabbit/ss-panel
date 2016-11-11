@@ -127,6 +127,12 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="/user/purchaselog">
+                        <i class="fa fa-archive"></i> <span>购买记录</span>
+                    </a>
+                </li>
+
 
                 <!-- <li>
                     <a href="/user/edit">

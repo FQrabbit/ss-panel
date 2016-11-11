@@ -67,7 +67,7 @@
                             {/if}
                             {if $user->expire_date != 0}
                                 <dt>到期时间</dt>
-                                <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
+                                <dd><span class="badge w3-teal">{$user->expire_date}</span></dd>
                             {/if}
                             <br>
                             <dt>端口</dt>

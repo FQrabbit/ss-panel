@@ -60,6 +60,13 @@
                 </select>
             </div>
             <div class="form-group">
+                <select name="enable" class="form-control">
+                    <option value="">用户状态</option>
+                    <option value="1">可用</option>
+                    <option value="0">禁用</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <button type="submit" class="form-control btn btn-default btn-flat">查询</button>
             </div>
         </form>

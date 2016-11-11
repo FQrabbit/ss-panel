@@ -47,7 +47,7 @@
                             <div class="box-body">
                                 <p> 每{$config['checkinTime']}小时可以签到一次。</p>
 
-                                <p>上次签到时间：<span class="badge bg-teal">{$user->lastCheckInTime()}</span></p>
+                                <p>上次签到时间：<span class="badge bg-green">{$user->lastCheckInTime()}</span></p>
                                 {if $user->isAbleToCheckin() }
                                     <p id="checkin-btn">
                                         <button id="checkin" class="btn btn-success  btn-flat">签到</button>
@@ -134,7 +134,7 @@
 
                                 {if $user->expire_date != 0}
                                     <dt>到期时间</dt>
-                                    <dd><span class="badge bg-teal">{$user->expire_date}</span></dd>
+                                    <dd><span class="badge w3-teal">{$user->expire_date}</span></dd>
                                 {/if}
 
                                 {if !$user->enable && $user->status == 0}
@@ -164,20 +164,24 @@
             <h3>捐助Shadowsky</h3>
         </header>
         <div class="w3-container">
-            <form action=/pay/donatealipayapi.php method=post target="_blank">
+            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
                 <div class="w3-row">
                         <lable class="w3-label">请输入捐助金额：</label>
-                        <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
-                        <input class="w3-input" name="WIDprice" type="number" value=2 style="width:20%;display:inline">
+                        <input class="w3-input" name="price" type="number" value=2 style="width:20%;display:inline">
+                        <input type="hidden" name="uid" value="100001627">
+                        <input type="hidden" name="payno" value="zhwalker20@gmail.com">
+                        <input type="hidden" name="title" value="{$title}">
                         <button class="w3-btn w3-teal" type="submit">确认</button>
                 </div>
             </form>
             <div class="w3-row w3-margin-top">
                 {foreach [2,5,10,20] as $a}
                 <div class="w3-quarter">
-                    <form action=/pay/donatealipayapi.php method=post target="_blank">
-                        <input name="WIDreceive_name" type="hidden" value="uid:{$user->id}" >
-                        <input type="submit" name="WIDprice" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
+                    <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
+                        <input type="hidden" name="uid" value="100001627">
+                        <input type="hidden" name="payno" value="zhwalker20@gmail.com">
+                        <input type="hidden" name="title" value="{$title}">
+                        <input type="submit" name="price" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
                     </form>
                 </div>
                 {/foreach}
