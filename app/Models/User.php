@@ -107,6 +107,30 @@ class User extends Model
         $this->save();
     }
 
+    public function updatePlan($plan)
+    {
+        $this->plan = $plan;
+        $this->save();
+    }
+
+    /*
+     * @param traffic 单位 GB
+     */
+    public function updateEnableTransfer($traffic)
+    {
+        $this->transfer_enable = Tools::toGB($traffic);
+        $this->save();
+    }
+
+    public function updateBuyDate($buy_date)
+    {
+        if (!$buy_date) {
+            $buy_date = Tools::toDateTime();
+        }
+        $this->buy_date = $buy_date;
+        $this->save();
+    }
+
     public function addInviteCode()
     {
         $uid = $this->attributes['id'];
@@ -179,10 +203,12 @@ class User extends Model
     }
 
     /*
-     * @param traffic 单位 MB
+     * @param traffic 单位 GB
      */
     public function addTraffic($traffic)
     {
+        $this->transfer_enable += Tools::toGB($traffic);
+        $this->save();
     }
 
     public function inviteCodes()
@@ -218,5 +244,69 @@ class User extends Model
             return $v->poll;
         }
         return 0;
+    }
+
+    public function  get_expire_date(){
+        return $this->attributes['expire_date'];
+    }
+
+    public function updateExpireDate($time){
+        $expiredate = $this->get_expire_date();
+        $expiretime = strtotime($expiredate);
+        if($expiretime<time()){
+            switch ($time) {
+                case 'A':
+                    $expiretime = strtotime("+1 Month",time());
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                case 'B':
+                    $expiretime = strtotime("+3 Months",time());
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                case 'C':
+                    $expiretime = strtotime("+1 Year",time());
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                case 'D':
+                    $expiretime = strtotime("+3 Days",time());
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                default:
+                    break;
+            }          
+        }else{
+            switch ($time) {
+                case 'A':
+                    $expiretime = strtotime("+1 Month",$expiretime);
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                case 'B':
+                    $expiretime = strtotime("+3 Months",$expiretime);
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                case 'C':
+                    $expiretime = strtotime("+1 Year",$expiretime);
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                case 'D':
+                    $expiretime = strtotime("+3 Days",$expiretime);
+                    $expiredate = date("Y-m-d H:i:s",$expiretime);
+                    break;
+                default:
+                    break;
+            }
+        }
+        $this->expire_date = $expiredate;
+        $this->save();
+    }
+
+    public function resetExpireDate()
+    {
+        $this->expire_date = "0000-00-00 00:00:00";
+        $this->save();
+    }
+
+    public function getFormatedDateTime($datetime) {
+        return strftime('%Y-%m-%dT%H:%M:%S', strtotime($datetime));
     }
 }

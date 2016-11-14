@@ -13,18 +13,21 @@ class DailyMail
 
     public static function sendDailyMail()
     {
+        // $users = User::where("id", 1)->get(); //test
         $users = User::all();
-        foreach ($users as $user) {
-            echo "Send daily mail to user: " . $user->id;
-            $subject = Config::get('appName') . "-每日流量报告";
-            $to = $user->email;
-            try {
-                Mail::send($to, $subject, 'news/daily-traffic-report.tpl', [
-                    "user" => $user
-                ], [
-                ]);
-            } catch (Exception $e) {
-                echo $e->getMessage();
+        if ($users) {
+            echo "Sent monthly mail to users, count: " . count($users) . "\n";
+            foreach ($users as $user) {
+                $subject = Config::get('appName') . "-月流量报告";
+                $to = $user->email;
+                try {
+                    Mail::send($to, $subject, 'news/daily-traffic-report.tpl', [
+                        "user" => $user
+                    ], [
+                    ]);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
             }
         }
     }

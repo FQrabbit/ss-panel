@@ -34,18 +34,14 @@ class Job
                     echo $e->getMessage();
                 }
 
+                $user->plan = "A";
+                $user->type = 1;
                 if (in_array($user->type, ['包月','包季','包年'])) {
-                    $user->plan = "A";
                     $user->transfer_enable = 104857600;
                     $user->u = 0;
                     $user->d = 0;
-                    $user->type = 1;
-                    $user->save();
-                }else {
-                    $user->plan = "A";
-                    $user->type = 1;
-                    $user->save();
                 }
+                $user->save();
 
                 echo date("Y-m-d H:i:s")."\n";
                 echo "已更新用户".$user->user_name."(id:".$user->id.")的plan为A</br>";
@@ -108,17 +104,26 @@ class Job
                         ->where("enable", 1)
                         ->orderBy("t")
                         ->get();
-        User::where("t", "<", $t)
-            ->where("reg_date", "<", $period)
-            ->where("plan", "!=", "C")
-            ->where("enable", 1)
-            ->orderBy("t")
-            ->update(['enable' => 0]);
+        $users = User::find(1);
         if (!$users->isEmpty()) {
+            User::where("t", "<", $t)
+                ->where("reg_date", "<", $period)
+                ->where("plan", "!=", "C")
+                ->where("enable", 1)
+                ->orderBy("t")
+                ->update(['enable' => 0]);
             echo date("Y-m-d H:i:s",time())." 冻结以下用户：</br>";
             echo "sum:".count($users)."\n";
             echo "<table><thead><tr><th>uid</th><th>用户名</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {
+
+                $arr["user_name"] = $user->user_name;
+                try {
+                    Mail::send($user->email, "账号冻结提醒 - Shadowsky", 'news/freeze-report.tpl', $arr, []);
+                } catch (\Exception $e) {
+                    echo $e->getMessage()."\n";
+                }
+
                 echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
             }
             echo "</tbody></table></br>";

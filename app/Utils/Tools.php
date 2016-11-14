@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use App\Models\User;
+use App\Models\Shop;
 use App\Services\Config;
 use DateTime;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
@@ -94,6 +95,9 @@ class Tools
      */
     public static function toDateTime($time)
     {
+        if ($time=='') {
+            $time = time();
+        }
         return date('Y-m-d H:i:s', $time);
     }
 
@@ -267,4 +271,8 @@ class Tools
         return base64_decode(strtr($input, '-_', '+/'));
     }
 
+    public function getPriceOfPlan($plan)
+    {
+        return Shop::where('name', $plan)->first()->price;
+    }
 }

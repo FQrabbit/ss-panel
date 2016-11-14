@@ -101,14 +101,90 @@ class AdminController extends UserController
     public function addPurchase($request, $response, $args)
     {
         $q = $request->getParsedBody();
+        if ($q['uid']=='' && $q['port']=='') {
+            $rs['ret'] = 0;
+            $rs['msg'] = "未找到该用户。";
+            return $response->getBody()->write(json_encode($rs));
+        }
+        if ($q['body']=='') {
+            $rs['ret'] = 0;
+            $rs['msg'] = "请选择套餐。";
+            return $response->getBody()->write(json_encode($rs));
+        }
         if ($q["port"]!="") {
             $user = User::where("port", $q["port"])->first();
+            if (!$user) {
+                $rs['ret'] = 0;
+                $rs['msg'] = "未找到该用户。";
+                return $response->getBody()->write(json_encode($rs));
+            }
             $q["uid"] = $user->id;
             unset($q["port"]);
         }
+        if ($q['buy_date']=='') {
+            $q['buy_date'] = Tools::toDateTime();
+        }
+        $q['price'] = Tools::getPriceOfPlan($q['body']);
         $record = PurchaseLog::create($q);
-        $rs['ret'] = 1;
-        $rs['msg'] = "添加成功";
+        $user = User::find($q['uid']);
+        $user->plan = 'B';
+        $user->buy_date = $q['buy_date'];
+        $user->type = $q['body'];
+        $user->user_type = $q['price'];
+
+        switch ($q['body']) {
+            case '试玩':
+                $user->addTraffic(1);
+                $user->updateExpireDate('D');
+                break;
+            case '基础':
+                $user->addTraffic(10);
+                $user->resetExpireDate();
+                break;
+            case '包月':
+                $user->updateEnableTransfer(999);
+                $user->updateExpireDate("A");
+                break;
+            case '包季':
+                $user->updateEnableTransfer(999);
+                $user->updateExpireDate("B");
+                break;
+            case '包年':
+                $user->updateEnableTransfer(999);
+                $user->updateExpireDate("C");
+                break;
+            
+            default:
+                // code...
+                break;
+        }
+
+        $rs['msg'] .= "添加购买成功。";
+
+
+        try {
+            $arr1 = [
+                'user_name' => $user->user_name,
+                'type' => $user->type
+            ];
+            Mail::send($user->email, "Shadowsky", "news/purchase-report.tpl", $arr1, []);
+
+            $to = 'zhwalker20@gmail.com';
+            $title = 'Shadowsky - 用户购买通知';
+            $tpl = 'news/general-report.tpl';
+            $content = $user->user_name . '（uid:' . $user->id . ', port:' . $user->port . '）已购买' . $user->type . '套餐。金额：' . $q['price'] . "元。";
+            $arr2 = [
+                'content' => $content
+            ];
+            Mail::send($to, $title, $tpl, $arr2, []);
+
+            $rs['ret'] = 1;
+            $rs['msg'] .= "发送邮箱通知成功。";
+        } catch (\Exception $e) {
+            $rs['ret'] = 0;
+            $rs['msg'] = $e->getMessage();
+        }
+
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -124,15 +200,6 @@ class AdminController extends UserController
         $rs['ret'] = 1;
         $rs['msg'] = "删除成功";
         return $response->getBody()->write(json_encode($rs));
-    }
-
-    public function buy($request, $response, $args)
-    {
-        $q = $request->getQueryParams();
-        if (!isset($request->getQueryParams()['page'])) {
-            $q['page'] = 1;
-        }
-        return $this->view()->display('admin/buy.tpl');
     }
 
     public function donateLog($request, $response, $args)
@@ -245,7 +312,6 @@ class AdminController extends UserController
         if ($users && $ann->title && $ann->content) {
             foreach ($users as $user) {
                 $arr["user_name"] = $user->user_name;
-                $res['names'][$i++] = $user->user_name;
                 try {
                     Mail::send($user->email, $ann->title, 'news/announcement.tpl', $arr, []);
                     $res['ret'] = 1;

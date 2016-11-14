@@ -151,13 +151,13 @@
                                     <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">过期时间</label>
 
-                                        <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
-                                            <input class="form-control date" id="expire_date" value="{$user->expire_date}">
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
-                                            </div>
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default btn-flat tozero">归零</button>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input class="form-control" id="expire_date" value="{$user->getFormatedDateTime($user->expire_date)}" type="text" onfocus="(this.type='datetime-local')">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
+                                                    <button type="button" class="btn btn-default btn-flat tozero">归零</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -165,13 +165,13 @@
                                     <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">购买时间</label>
 
-                                        <div class="col-sm-9 input-group" style="padding: 0 15px 0 15px !important">
-                                            <input class="form-control date" id="buy_date" value="{$user->buy_date}">
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
-                                            </div>
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default btn-flat tozero">归零</button>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input class="form-control" id="buy_date" value="{$user->getFormatedDateTime($user->buy_date)}" type="text" onfocus="(this.type='datetime-local')">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
+                                                    <button type="button" class="btn btn-default btn-flat tozero">归零</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -379,7 +379,7 @@
         });
 
         $(".tozero").click(function(){
-            $(this).parent().parent().children("input").val("00-00-00 00:00:00");
+            $(this).parent().parent().children("input").val("00-00-00T00:00:00");
         });
         $(".timeReseter").click(function(){
             var time,Y,M,D,H,M,S,nowdate;
@@ -390,16 +390,16 @@
             H = time.getHours();
             i = time.getMinutes();
             S = time.getSeconds();
-            nowdate = Y+"-"+M+"-"+D+" "+H+":"+i+":"+S;
+            nowdate = Y+"-"+M+"-"+D+"T"+H+":"+i+":"+S;
             $(this).parent().parent().children("input").val(nowdate);
         });
     })
-    $('input.date').datetimepicker({
-        format: "yyyy-mm-dd hh:ii:ss",
-        todayBtn: true,
-        clearBtn: true,
-        todayHighlight: true
-    });
+    // $('input.date').datetimepicker({
+    //     format: "yyyy-mm-dd hh:ii:ss",
+    //     todayBtn: true,
+    //     clearBtn: true,
+    //     todayHighlight: true
+    // });
 </script>
 
 {include file='admin/footer.tpl'}
