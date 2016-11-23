@@ -1,12 +1,7 @@
 {include file='admin/main.tpl'}
-
-<link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
 <style>
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 5px;
-}
-.jconfirm .jconfirm-box div.content-pane .content{
-    min-height: auto;
+.table-responsive>.table>tbody>tr>td, .table-responsive>.table>tbody>tr>th, .table-responsive>.table>tfoot>tr>td, .table-responsive>.table>tfoot>tr>th, .table-responsive>.table>thead>tr>td, .table-responsive>.table>thead>tr>th {
+    white-space: nowrap;
 }
 </style>
 <!-- Content Wrapper. Contains page content -->
@@ -22,14 +17,19 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-12">
-                <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">
-                    <button type="button" class="close" id="ok-close" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-info"></i> 成功!</h4>
+            <div class="col-xs-12">
+                <div id="msg-error" class="alert alert-danger alert-dismissable" style="display:none">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
+
+                    <p id="msg-error-p"></p>
+                </div>
+                <div id="msg-success" class="alert alert-success alert-dismissable" style="display:none">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-info"></i> 修改成功!</h4>
 
                     <p id="msg-success-p"></p>
                 </div>
-
             </div>
         </div>
         <form action="" method="GET" class="form-inline margin-bottom">
@@ -77,40 +77,46 @@
                         {$users->render()}
                         <table class="table table-hover">
                             <tr>
+                                <th>操作</th>
                                 <th>ID</th>
                                 <th>邮箱</th>
                                 <th>端口</th>
+                                <th>是否捐助</th>
                                 <th>plan</th>
-                                <!-- <th>状态</th> -->
+                                <th>套餐</th>
+                                <th>状态</th>
                                 <!-- <th>加密方式</th> -->
                                 <th>已用流量/总流量</th>
-                                <!-- <th>最后在线时间</th> -->
+                                <th>购买时间</th>
+                                <th>到期时间</th>
+                                <th>最后在线时间</th>
                                 <th>最后签到时间</th>
                                 <th>本月签到次数</th>
                                 <th>注册时间</th>
                                 <th>注册IP</th>
-                                <!-- <th>邀请者</th> -->
-                                <th>操作</th>
                             </tr>
                             {foreach $users as $user}
                             <tr>
-                                <td>#{$user->id}</td>
-                                <td>{$user->email}</td>
-                                <td>{$user->port}</td>
-                                <td>{$user->plan}</td>
-                                <!-- <td>{$user->enable}</td> -->
-                                <!-- <td>{$user->method}</td> -->
-                                <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
-                                <!-- <td>{$user->lastSsTime()}</td> -->
-                                <td>{$user->lastCheckInTime()}</td>
-                                <td>{$user->CheckInTimes()}</td>
-                                <td>{$user->reg_date}</td>
-                                <td>{$user->reg_ip}</td>
-                                <!-- <td>{$user->ref_by}</td> -->
                                 <td>
                                     <a class="btn bg-green btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
                                     <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="javascript:void(0);" onclick="confirm_delete({$user->id});">删除</a>
                                 </td>
+                                <td>#{$user->id}</td>
+                                <td>{$user->email}</td>
+                                <td>{$user->port}</td>
+                                <td>{if $user->ref_by==3}&check;{else}X{/if}</td>
+                                <td>{$user->plan}</td>
+                                <td>{$user->type}</td>
+                                <td>{if $user->enable==1}&check;{else}X{/if}</td>
+                                <!-- <td>{$user->method}</td> -->
+                                <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
+                                <td>{$user->buy_date}</td>
+                                <td>{$user->expire_date}</td>
+                                <td>{$user->lastSsTime()}</td>
+                                <td>{$user->lastCheckInTime()}</td>
+                                <td>{$user->CheckInTimes()}</td>
+                                <td>{$user->reg_date}</td>
+                                <td>{$user->reg_ip}</td>
                             </tr>
                             {/foreach}
                         </table>
@@ -123,7 +129,6 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<script src="/assets/public/js/jquery-confirm.js"></script>
 <script type="text/javascript"> 
     function deleteuser(uid){
         $.ajax({

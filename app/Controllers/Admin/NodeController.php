@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Vote;
 use App\Controllers\AdminController;
 use App\Models\Node;
 
@@ -50,7 +51,6 @@ class NodeController extends AdminController
     {
         $id = $args['id'];
         $node = Node::find($id);
-
         $q = $request->getParsedBody();
         foreach ($q as $k => $v) {
             $node->$k = $v;
@@ -70,13 +70,20 @@ class NodeController extends AdminController
     {
         $id = $args['id'];
         $node = Node::find($id);
+        $polls = Vote::where('nodeid', $id)->get();
+        if (!$polls->isEmpty()) {
+            $polls = Vote::where('nodeid', $id)->delete();
+            $rs['msg'] .= "已清空投票。";
+        }else {
+            $rs['msg'] .= "无投票。";
+        }
         if (!$node->delete()) {
             $rs['ret'] = 0;
-            $rs['msg'] = "删除失败";
+            $rs['msg'] .= "节点删除失败。";
             return $response->getBody()->write(json_encode($rs));
         }
         $rs['ret'] = 1;
-        $rs['msg'] = "删除成功";
+        $rs['msg'] .= "节点删除成功。";
         return $response->getBody()->write(json_encode($rs));
     }
 

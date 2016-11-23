@@ -18,10 +18,19 @@
     <link href="/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     <!-- <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/> -->
-
+    <link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
+    <style>
+    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding: 5px;
+    }
+    .jconfirm .jconfirm-box div.content-pane .content{
+        min-height: auto;
+    }
+    </style>
     <!-- jQuery 2.1.3 -->
     <script src="/assets/public/js/jquery.min.js"></script>
     <script src="/assets/public/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/assets/public/js/jquery-confirm.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -142,12 +151,6 @@
                 <li>
                     <a href="/admin/purchaselog">
                         <i class="fa fa-shopping-cart"></i> <span>购买日志</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/admin/buy">
-                        <i class="fa fa-shopping-cart"></i> <span>购买</span>
                     </a>
                 </li>
 

@@ -173,7 +173,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">混淆参数</label>
                                 <div class="col-sm-9">
-                                    <input id="obfs_param" class="form-control" type="text" value="{$user->obfs_param}" placeholder="输入混淆参数，如'cloudflare.com'">
+                                    <input id="obfs_param" class="form-control" type="text" value="{$user->obfs_param}" placeholder="输入混淆参数，如'cloudflare.com'，请勿乱填。">
                                 </div>
                             </div>
                         </div>
@@ -204,7 +204,7 @@
                                 <label class="col-sm-3 control-label">当前密码</label>
 
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control" placeholder="当前密码(必填)" required="required" id="oldpwd">
+                                    <input type="password" class="form-control" placeholder="当前密码" required="required" id="oldpwd">
                                 </div>
                             </div>
 
@@ -248,7 +248,7 @@
                                 <label class="col-sm-3 control-label">新邮箱</label>
 
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" placeholder="新邮箱(必填)" required="required" id="email">
+                                    <input type="email" class="form-control" placeholder="新邮箱" required="required" id="email">
                                 </div>
                             </div>
                             <div class="form-group">

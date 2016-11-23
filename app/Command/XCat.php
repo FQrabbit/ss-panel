@@ -116,6 +116,7 @@ class XCat
     {
         if (date('d')==1) {
             $users = User::all();
+            // $users = User::where("id", 2)->get();
             foreach ($users as $user) {
                 if (in_array($user->type, ['包月','包季','包年']) && $user->plan == "B" || $user->plan == "C") {
                     $transfer = 999*1024*1024*1024;
@@ -129,6 +130,8 @@ class XCat
             }
             echo date("Y-m-d H:i:s",time())."\n";
             echo "reset traffic successful\n\n";
+        }else {
+            echo "今天不是重置日。\n";
         }
     }
 }

@@ -45,7 +45,7 @@
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
                                         <td>
-                                            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php">
+                                            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
                                                 <input type="hidden" name="uid" value="100001627">
                                                 <input type="hidden" name="payno" value="zhwalker20@gmail.com">
                                                 <input type="hidden" name="price" value="{$menu['price']}">
@@ -61,7 +61,7 @@
                         <hr />
 
                         <table class="table table-striped table-hover">
-                            <caption class="center"><h4><strong>按时间购买 </strong>{if $B_able_to_buy==0 }<small>(out of stock)</small>{/if}</h4></caption>
+                            <caption class="center"><h4><strong>按时间购买 </strong></h4></caption>
                             <thead>
                             <tr>
                                 <th>套餐名</th>
@@ -81,7 +81,7 @@
                                         <td>{$menu["time"]}</td>
                                         <td>免费节点+付费节点</td>
                                         <td>
-                                            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php">
+                                            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
                                                 <input type="hidden" name="uid" value="100001627">
                                                 <input type="hidden" name="payno" value="zhwalker20@gmail.com">
                                                 <input type="hidden" name="price" value="{$menu['price']}">

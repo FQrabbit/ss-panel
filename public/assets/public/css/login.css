@@ -57,10 +57,13 @@ a:hover{
 }
 .btn-primary{
   border:none;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
 }
-.btn-primary:hover {
-  background-color: rgba(0, 0, 0, 0.02);
+.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary:active:hover {
+  background-color: #009688;
+  border:none;
+  outline:none;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
