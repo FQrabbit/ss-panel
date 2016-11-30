@@ -9,22 +9,6 @@
     </section>
     <!-- Main content --><!-- Main content -->
     <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div id="msg-error" class="alert alert-danger alert-dismissable" style="display:none">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
-
-                    <p id="msg-error-p"></p>
-                </div>
-                <div id="msg-success" class="alert alert-success alert-dismissable" style="display:none">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-info"></i> 修改成功!</h4>
-
-                    <p id="msg-success-p"></p>
-                </div>
-            </div>
-        </div>
 
         <!-- first row -->
         <div class="row">
@@ -96,6 +80,22 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div id="config-msg-error" class="alert alert-danger alert-dismissable" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
+
+                                    <p id="config-msg-error-p"></p>
+                                </div>
+                                <div id="config-msg-success" class="alert alert-success alert-dismissable" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-info"></i> 修改成功!</h4>
+
+                                    <p id="config-msg-success-p"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-horizontal">
 
                             <div class="form-group">
@@ -198,6 +198,22 @@
                     <!-- /.box-header --><!-- form start -->
 
                     <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div id="psw-msg-error" class="alert alert-danger alert-dismissable" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
+
+                                    <p id="psw-msg-error-p"></p>
+                                </div>
+                                <div id="psw-msg-success" class="alert alert-success alert-dismissable" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-info"></i> 修改成功!</h4>
+
+                                    <p id="psw-msg-success-p"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-horizontal">
 
                             <div class="form-group">
@@ -242,6 +258,22 @@
                     <!-- /.box-header --><!-- form start -->
 
                     <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div id="email-msg-error" class="alert alert-danger alert-dismissable" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
+
+                                    <p id="email-msg-error-p"></p>
+                                </div>
+                                <div id="email-msg-success" class="alert alert-success alert-dismissable" style="display:none">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4><i class="icon fa fa-info"></i> 修改成功!</h4>
+
+                                    <p id="email-msg-success-p"></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-horizontal">
 
                             <div class="form-group">
@@ -299,15 +331,15 @@
                 },
                 success: function (data) {
                     if (data.ret) {
-                        $("#msg-success").show(500, function(){
+                        $("#psw-msg-success").show(500, function(){
                             window.setTimeout("location.reload()",5000);
                         });
-                        $("#msg-success-p").html(data.msg);
+                        $("#psw-msg-success-p").html(data.msg);
                     } else {
-                        $("#msg-error").show(500, function(){
+                        $("#psw-msg-error").show(500, function(){
                             $(this).delay(3000).hide(500);
                         });
-                        $("#msg-error-p").html(data.msg);
+                        $("#psw-msg-error-p").html(data.msg);
                     }
                 },
                 error: function (jqXHR) {
@@ -328,15 +360,15 @@
                 },
                 success: function (data) {
                     if (data.ret) {
-                        $("#msg-success").show(500, function(){
+                        $("#email-msg-success").show(500, function(){
                             $(this).delay(3000).hide(500);
                         });
-                        $("#msg-success-p").html(data.msg);
+                        $("#email-msg-success-p").html(data.msg);
                     } else {
-                        $("#msg-error").show(500, function(){
+                        $("#email-msg-error").show(500, function(){
                             $(this).delay(3000).hide(500);
                         });
-                        $("#msg-error-p").html(data.msg);
+                        $("#email-msg-error-p").html(data.msg);
                     }
                 },
                 error: function (jqXHR) {
@@ -351,10 +383,10 @@
             if (count > 3 || timer) return false;
 
             if (!email) {
-                $("#msg-error").show(500, function(){
+                $("#email-msg-error").show(500, function(){
                     $(this).delay(3000).hide(500);
                 });
-                $("#msg-error-p").html("请先填写邮箱!");
+                $("#email-msg-error-p").html("请先填写邮箱!");
                 return $("#email").focus();
             }
 
@@ -367,10 +399,10 @@
                 },
                 success: function (data) {
                     if (data.ret == 1) {
-                        $("#msg-success").show(500, function(){
+                        $("#email-msg-success").show(500, function(){
                             $(this).delay(3000).hide(500);
                         });
-                        $("#msg-success-p").html(data.msg);
+                        $("#email-msg-success-p").html(data.msg);
                         timer = setInterval(function () {
                             --countdown;
                             if (countdown) {
@@ -380,18 +412,18 @@
                             }
                         }, 1000);
                     } else {
-                        $("#msg-error").show(500, function(){
+                        $("#email-msg-error").show(500, function(){
                             $(this).delay(3000).hide(500);
                         });
-                        $("#msg-error-p").html(data.msg);
+                        $("#email-msg-error-p").html(data.msg);
                         clearTimer();
                     }
                 },
                 error: function (jqXHR) {
-                    $("#msg-error").show(500, function(){
+                    $("#email-msg-error").show(500, function(){
                         $(this).delay(3000).hide(500);
                     });
-                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                    $("#email-msg-error-p").html("发生错误：" + jqXHR.status);
                     clearTimer();
                 }
             });
@@ -422,15 +454,15 @@
                 },
                 success: function (data) {
                     if (data.ret) {
-                        $("#msg-success").show(500, function(){
+                        $("#config-msg-success").show(500, function(){
                             window.setTimeout("location.reload()",5000);
                         });
-                        $("#msg-success-p").html(data.msg);
+                        $("#config-msg-success-p").html(data.msg);
                     } else {
-                        $("#msg-error").show(500, function(){
+                        $("#config-msg-error").show(500, function(){
                             $(this).delay(3000).hide(500);
                         });
-                        $("#msg-error-p").html(data.msg);
+                        $("#config-msg-error-p").html(data.msg);
                     }
                 },
                 error: function (jqXHR) {
@@ -450,15 +482,15 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.ret) {
-                        $("#msg-success").show(500, function(){
+                        $("#config-msg-success").show(500, function(){
                             window.setTimeout("location.reload()",5000);
                         });
-                        $("#msg-success-p").html(data.msg);
+                        $("#config-msg-success-p").html(data.msg);
                     } else {
-                        $("#msg-error").show(500, function(){
+                        $("#config-msg-error").show(500, function(){
                             window.setTimeout("location.reload()",5000);
                         });
-                        $("#msg-error-p").html(data.msg);
+                        $("#config-msg-error-p").html(data.msg);
                     }
                 },
                 error: function (jqXHR) {
