@@ -46,6 +46,9 @@
                 <input name="port" type="number" value="{$q['port']}" placeholder="用户端口" class="form-control">
             </div>
             <div class="form-group">
+                <input name="trade_no" type="number" value="{$q['trade_no']}" placeholder="订单号" class="form-control">
+            </div>
+            <div class="form-group">
                 <select name="body" class="form-control">
                     <option value="">套餐</option>
                     <option value="试玩">试玩</option>
