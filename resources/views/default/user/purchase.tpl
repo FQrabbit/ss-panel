@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="center" style="width:200px;background-color:white">
-                                    <img src="/assets/public/images/ali-qr.png" alt="二维码" style="width:200px">
+                                    <img src="/assets/public/images/ali-qr.png" alt="二维码" style="width:200px;margin:0">
                                 </div>
                             </div>
                         </dov>

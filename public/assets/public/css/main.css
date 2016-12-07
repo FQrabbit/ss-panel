@@ -15,6 +15,10 @@
 b{
   color:#4db6ac !important;
 }
+html{
+  margin-right: -8px;
+  padding-right: 8px;
+}
 body{
   background: #50a3a2;
   background: -webkit-linear-gradient(top left, rgb(6, 31, 28) 0%, #128453 100%);
@@ -342,7 +346,7 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   transition-timing-function: linear;
 }
 .bg-bubbles li:nth-child(1) {
-  left: 10%;
+  left: 40%;
   border-radius: 50%;
 }
 .bg-bubbles li:nth-child(2) {
@@ -350,24 +354,24 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   width: 80px;
   height: 80px;
   -webkit-animation-delay: 4s;
-          animation-delay: 4s;
+          animation-delay: 24430.3125ms;
   -webkit-animation-duration: 17s;
-          animation-duration: 17s;
+          animation-duration: 17000ms;
 }
 .bg-bubbles li:nth-child(3) {
-  left: 25%;
+  left: 45%;
   border-radius: 50%;
   -webkit-animation-delay: 7s;
-          animation-delay: 7s;
+  animation-delay: 6130.625ms;
 }
 .bg-bubbles li:nth-child(4) {
   left: 40%;
   width: 60px;
   height: 60px;
   -webkit-animation-delay: 10s;
-          animation-delay: 10s;
+          animation-delay: 26518.125ms;
   -webkit-animation-duration: 22s;
-          animation-duration: 22s;
+          animation-duration: 22000ms;
   background-color: rgba(255, 255, 255, 0.25);
 }
 .bg-bubbles li:nth-child(5) {
@@ -379,7 +383,7 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   width: 120px;
   height: 120px;
   -webkit-animation-delay: 3s;
-          animation-delay: 3s;
+          animation-delay: 1261.25ms;
   background-color: rgba(255, 255, 255, 0.2);
 }
 .bg-bubbles li:nth-child(7) {
@@ -388,16 +392,16 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   height: 160px;
   border-radius: 50%;
   -webkit-animation-delay: 7s;
-          animation-delay: 7s;
+          animation-delay: 39384.21875ms;
 }
 .bg-bubbles li:nth-child(8) {
   left: 55%;
   width: 20px;
   height: 20px;
   -webkit-animation-delay: 15s;
-          animation-delay: 15s;
+          animation-delay: 14565.3125ms;
   -webkit-animation-duration: 40s;
-          animation-duration: 40s;
+          animation-duration: 40000ms;
 }
 .bg-bubbles li:nth-child(9) {
   left: 25%;
@@ -405,17 +409,17 @@ table>tbody>tr,td, table>tbody>tr,th, table>tfoot>tr,td, table>tfoot>tr,th, tabl
   height: 10px;
   border-radius: 50%;
   -webkit-animation-delay: 19s;
-          animation-delay: 19s;
+          animation-delay: 33127.34375ms;
   -webkit-animation-duration: 40s;
-          animation-duration: 40s;
+          animation-duration: 40000ms;
   background-color: rgba(255, 255, 255, 0.3);
 }
 .bg-bubbles li:nth-child(10) {
-  left: 90%;
+  left: 10%;
   width: 160px;
   height: 160px;
   -webkit-animation-delay: 11s;
-          animation-delay: 11s;
+  animation-delay: 3827.65625ms;
 }
 @-webkit-keyframes square {
   0% {
@@ -565,10 +569,25 @@ input:-webkit-autofill:active {
 #__lpform_oldpwd,#__lpform_pwd,#__lpform_repwd,#__lpform_sspwd{
   display: none;
 }
-/*::-webkit-scrollbar { 
-    width: 0px;
-    background: transparent;
-}*/
+
+::-webkit-scrollbar-track
+{
+  border-radius: 4px;
+  background: transparent;
+}
+
+::-webkit-scrollbar
+{
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 4px;
+  background-color: #242525;
+}
+
 @media (max-width: 767px){
   .sidebar-open .main-header {
       -webkit-transform: translate(230px, 0);
