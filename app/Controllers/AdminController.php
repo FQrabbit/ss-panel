@@ -92,10 +92,43 @@ class AdminController extends UserController
                 $path .= $k.'='.$v.'&';
             }
         }
+
+        $Y = date("Y");
+        $m = date("m");
+        $d = date("d");
+        $yearlyIncome = PurchaseLog::where('buy_date', '>' , $Y)->sum('price');
+        $dailyIncome = PurchaseLog::where('buy_date', '>' , $Y.'-'.$m.'-'.$d)->sum('price');
+        $income['yearly'] = $yearlyIncome;
+        $income['daily'] = $dailyIncome;
+        $income['all'] = PurchaseLog::sum('price');
+        $monthscope = array();
+        $monthdata = array();
+        for($i=1;$i<=$m;$i++){
+            if ($i<10) {
+                $tm = "0".$i;
+            }else {
+                $tm = $i;
+            }
+            $j = $i + 1;
+            if ($j<10) {
+                $nm = "0".$j;
+            }else {
+                $nm = $j;
+            }
+            $monthIncome = PurchaseLog::where('buy_date', '>' , $Y.'-'.$tm)->where('buy_date', '<' , $Y.'-'.$nm)->sum('price');
+            $income['month'][$i] = $monthIncome;
+            array_push($monthscope, $i.'月');
+            array_push($monthdata, $monthIncome);
+        }
+        $datasets = array(
+            'monthscope' => $monthscope,
+            'monthdata' => $monthdata
+        );
+        $datasets = json_encode($datasets);
         $path = substr($path,0,strlen($path)-1);
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
-        return $this->view()->assign('logs', $logs)->assign('q', $q)->display('admin/purchaselog.tpl');
+        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->display('admin/purchaselog.tpl');
     }
 
     public function addPurchase($request, $response, $args)

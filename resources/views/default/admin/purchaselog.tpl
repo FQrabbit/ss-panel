@@ -94,6 +94,18 @@
             </div>
         </fieldset>
 
+        <hr>
+        <p>本年收入：{$income["yearly"]}元</p>
+        <p>本日收入：{$income["daily"]}元</p>
+
+        <!-- chart -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <div style="height:300px" class="center">
+            <canvas id="myChart"></canvas>
+        </div>
+        <!-- chart -->
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -216,5 +228,43 @@
     $("#error-close").click(function () {
         $("#msg-error").hide(100);
     });
+</script>
+
+<script>
+var ctx = $("#myChart");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$datasets}.monthscope,
+        datasets: [
+            {
+                label: "月收入",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: {$datasets}.monthdata,
+                spanGaps: false,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
 </script>
 {include file='user/footer.tpl'}

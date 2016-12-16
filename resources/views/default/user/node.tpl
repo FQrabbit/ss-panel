@@ -45,6 +45,7 @@
 												<th id="t-info">说明</th>
 												<th id="t-uptime">负载</th>
 												<th id="t-ip">ip地址</th>
+												<th id="t-ip">ipv6地址</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -71,6 +72,7 @@
 													<td class="info">{$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}</td>
 													<td>{$node->getNodeUptime()}</td>
 													<td>Meow</td>
+													<td>Meow</td>
 												</tr>
 			{else}
 												<tr>
@@ -96,6 +98,7 @@
 													<td class="info">{$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}</td>
 													<td>{$node->getNodeUptime()}</td>
 													<td>{$node->ip}</td>
+													<td>{$node->ipv6}</td>
 												</tr>
 			{/if}
 		{/foreach}
