@@ -10,6 +10,7 @@ use App\Models\Node;
 use App\Models\TrafficLog;
 use App\Models\Vote;
 use App\Models\PurchaseLog;
+use App\Models\Music;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
@@ -45,7 +46,11 @@ class UserController extends BaseController
             $msg = "在后台修改用户中心公告...";
         }
         $title = $this->user->port."0";
-        return $this->view()->assign('msg', $msg)->assign('title', $title)->display('user/index.tpl');
+        $music = Music::orderByRaw("RAND()")->first();
+        $music->count += 1;
+        $mid = $music->mid;
+        $music->save();
+        return $this->view()->assign('msg', $msg)->assign('title', $title)->assign('mid', $mid)->display('user/index.tpl');
     }
 
     public function node($request, $response, $args)
@@ -509,7 +514,43 @@ class UserController extends BaseController
         }
         $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
         $traffic->setPath('/user/trafficlog');
-        return $this->view()->assign('logs', $traffic)->display('user/trafficlog.tpl');
+        $logs = TrafficLog::where('user_id', $this->user->id)->orderBy('id','ASC')->get();
+
+        // for chart start
+        $labels1 = array();
+        $labels2 = array();
+        $datas = array();
+        for($i=0;$i<=date("H");$i++){
+            if ($i%2==0) {
+                $ln = '';
+            }elseif ($i<12) {
+                $ln = $i.' a.m.';
+            }else {
+                $ln = $i.' p.m.';
+            }
+            array_push($labels1,$ln);
+        }
+        $labels2 = Node::orderBy('sort')->pluck("name")->toArray();
+        $labels = [$labels1,$labels2];
+        $labelsall = json_encode(array_merge($labels1, $labels2));
+        
+        foreach ($logs as $log) {
+            $datas[0][date('H',$log->log_time)] += round((($log->u+$log->d)/1048576),2);
+            $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u+$log->d)/1048576),2);
+        }
+        $d = array('0'=>array(),'1'=>array());
+        foreach ($datas[0] as $k=>$v) {
+            array_push($d[0], $v);
+        }
+        foreach ($datas[1] as $k=>$v) {
+            array_push($d[1], $v);
+        }
+        $labels = json_encode($labels);
+        // print_r($labels);
+        $datas = json_encode($d);
+        // for chart end
+        
+        return $this->view()->assign('logs', $traffic)->assign('datas', $datas)->assign('labels', $labels)->assign('labelsall', $labelsall)->display('user/trafficlog.tpl');
     }
 
     public function purchaseLog($request, $response, $args)

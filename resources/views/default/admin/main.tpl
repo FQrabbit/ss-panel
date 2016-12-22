@@ -161,6 +161,12 @@
                 </li>
 
                 <li>
+                    <a href="/admin/music">
+                        <i class="fa fa-music"></i> <span>曲库管理</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="/user">
                         <i class="fa fa-reply-all"></i> <span>用户中心</span>
                     </a>

@@ -20,6 +20,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- chart -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas id="chart" height="400"></canvas>
+        </div>
+        <!-- chart -->
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -54,4 +63,75 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+<script>
+var ctx = $("#chart");
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$labels}[0],
+        datasets: [
+            {
+                label: "#(MB) Traffic",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$datas}[0],
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                // Use the footer callback to display the sum of the items showing in the tooltip
+                footer: function(tooltipItems, data) {
+                    var sum = 0;
+                    data.datasets[0].data.forEach(function(v) {
+                        sum += v;
+                    });
+                    return 'Sum: ' + Math.round(sum);
+                },
+            },
+            footerFontStyle: 'bold'
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Time (Hour)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (MB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }]
+        }
+    }
+});
+</script>
 {include file='user/footer.tpl'}

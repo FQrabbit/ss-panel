@@ -138,11 +138,27 @@
                                 {/if}
 
                                 {if !$user->enable && $user->status == 0}
-									<dt>账号状态</dt>
+                                    <dt>账号状态</dt>
                                     <dd><span class="badge bg-red">禁用</span></dd>
                                 {/if}
                                 </dl>
 
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <i class="fa  fa-music"></i>
+
+                                <h3 class="box-title">不妨听首歌</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=86 src="//music.163.com/outchain/player?type=2&id={$mid}&auto=0&height=66"></iframe>
                             </div>
                             <!-- /.box-body -->
                         </div>

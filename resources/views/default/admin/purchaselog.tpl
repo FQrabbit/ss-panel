@@ -101,8 +101,8 @@
         <!-- chart -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-        <div style="height:300px" class="center">
-            <canvas id="myChart"></canvas>
+        <div  style="background-color:rgba(0, 0, 0, 0.6);padding:10px;" class="margin-bottom">
+            <canvas id="myChart" height="400"></canvas>
         </div>
         <!-- chart -->
 
@@ -220,6 +220,7 @@
     }
 
     $("#insert").click(function () {
+        $(this).attr("disabled", "disabled");
         insert();
     });
     $("#ok-close").click(function () {
@@ -238,32 +239,55 @@ var myChart = new Chart(ctx, {
         labels: {$datasets}.monthscope,
         datasets: [
             {
-                label: "月收入",
-                fill: false,
-                lineTension: 0.1,
+                label: "月收入（元）",
                 backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
                 data: {$datasets}.monthdata,
-                spanGaps: false,
             }
         ]
     },
     options: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 3000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Date (Month)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Income (CNY)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }]
+        }
     }
 });
 </script>

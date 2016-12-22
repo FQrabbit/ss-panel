@@ -9,6 +9,7 @@ use App\Models\InviteCode;
 use App\Models\TrafficLog;
 use App\Models\Ann;
 use App\Models\User;
+use App\Models\Music;
 use App\Services\Analytics;
 use App\Services\DbConfig;
 use App\Services\Mail;
@@ -160,6 +161,13 @@ class AdminController extends UserController
         $q['price'] = Tools::getPriceOfPlan($q['body']);
         $record = PurchaseLog::create($q);
         $user = User::find($q['uid']);
+        // 购买之前的用户状态
+        $pre_plan = $user->plan;
+        $pre_type = $user->type;
+        $pre_transfer_eanble_inGB = $user->enableTrafficInGB();
+        $pre_buy_date = $user->buy_date;
+        $pre_expire_date = $user->expire_date;
+
         $user->plan = 'B';
         $user->buy_date = $q['buy_date'];
         $user->type = $q['body'];
@@ -205,7 +213,7 @@ class AdminController extends UserController
             $to = 'zhwalker20@gmail.com';
             $title = 'Shadowsky - 用户购买通知';
             $tpl = 'news/general-report.tpl';
-            $content = $user->user_name . '（uid:' . $user->id . ', port:' . $user->port . '）已购买' . $user->type . '套餐。金额：' . $q['price'] . "元。";
+            $content = $user->user_name . '（uid:' . $user->id . ', port:' . $user->port . '）已购买' . $user->type . '套餐。金额：' . $q['price'] . '元。之前plan：' . $pre_plan . '。之前套餐：' . $pre_type . '。之前购买时间：' . $pre_buy_date . '。之前过期时间：' . $pre_expire_date . '。之前总流量：' . $pre_transfer_eanble_inGB.' G。';
             $arr2 = [
                 'content' => $content
             ];
@@ -253,6 +261,26 @@ class AdminController extends UserController
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         return $this->view()->assign('logs', $logs)->display('admin/donatelog.tpl');
+    }
+
+    public function music($request, $response, $args)
+    {
+        $q = $request->getQueryParams();
+        if (!isset($request->getQueryParams()['page'])) {
+            $q['page'] = 1;
+        }
+        $logs = Music::where('id', ">" , 0);
+        $path = '/admin/music?';
+        foreach ($q as $k => $v) {
+            if ($v != "" && $k != 'page') {
+                $logs = $logs->where($k, $v);
+                $path .= $k.'='.$v.'&';
+            }
+        }
+        $path = substr($path,0,strlen($path)-1);
+        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
+        return $this->view()->assign('music', $music)->display('admin/music.tpl');
     }
 
     public function trafficLog($request, $response, $args)

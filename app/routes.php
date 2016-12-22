@@ -118,6 +118,10 @@ $app->group('/admin', function () {
     $this->delete('/user/{id}', 'App\Controllers\Admin\UserController:delete');
     $this->get('/user/{id}/delete', 'App\Controllers\Admin\UserController:deleteGet');
 
+    // Music Manage
+    $this->get('/music', 'App\Controllers\Admin\AdminController:music');
+    $this->delete('/music', 'App\Controllers\Admin\AdminController:deleteMusic');
+    
     $this->post('/sendmail', 'App\Controllers\AdminController:sendMailPost');
     // Test
     $this->get('/test/sendmail', 'App\Controllers\Admin\TestController:sendMail');
