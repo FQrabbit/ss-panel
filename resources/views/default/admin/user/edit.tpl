@@ -225,13 +225,17 @@
                                                 <option value="auth_aes128_md5">auth_aes128_md5</option>
                                                 <option value="auth_aes128_sha1">auth_aes128_sha1</option>
                                                 <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议==</option>
-                                                <option value="verify_sha1_compatible">verify_sha1_compatible</option>
-                                                <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
                                                 <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                                <option value="auth_aes128_md5_compatible">auth_aes128_md5_compatible</option>
-                                                <option value="auth_aes128_sha1_compatible">auth_aes128_sha1_compatible</option>
                                                 <!-- <option value="verify_deflate">verify_deflate</option> -->
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">协议参数</label>
+
+                                        <div class="col-sm-9">
+                                            <input type="text" id="protocol_param" class="form-control" value="{$user->protocol_param}">
                                         </div>
                                     </div>
 
@@ -251,6 +255,14 @@
                                                 <option value="http_post_compatible">http_post_compatible</option>
                                                 <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">混淆参数</label>
+
+                                        <div class="col-sm-9">
+                                            <input type="text" id="obfs_param" class="form-control" value="{$user->obfs_param}">
                                         </div>
                                     </div>
                                 </fieldset>
@@ -333,6 +345,10 @@
                     transfer_enable: $("#transfer_enable").val(),
                     // invite_num: $("#invite_num").val(),
                     method: $("#method").val(),
+                    obfs: $("#obfs").val(),
+                    obfs_param: $("#obfs_param").val(),
+                    protocol: $("#protocol").val(),
+                    protocol_param: $("#protocol_param").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
                     money: $("#money").val(),

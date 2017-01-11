@@ -66,6 +66,10 @@ class UserController extends AdminController
         $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
         // $user->invite_num = $request->getParam('invite_num');
         $user->method = $request->getParam('method');
+        $user->protocol = $request->getParam('protocol');
+        $user->protocol_paramd = $request->getParam('protocol_param');
+        $user->obfs = $request->getParam('obfs');
+        $user->obfs_param = $request->getParam('obfs_param');
         $user->enable = $request->getParam('enable');
         $user->is_admin = $request->getParam('is_admin');
         $user->money = $request->getParam('money');

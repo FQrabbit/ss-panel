@@ -93,14 +93,25 @@ $app->group('/admin', function () {
     $this->get('/', 'App\Controllers\AdminController:index');
     $this->get('/trafficlog', 'App\Controllers\AdminController:trafficLog');
     $this->get('/checkinlog', 'App\Controllers\AdminController:checkinLog');
+
+    // purchaselog manage
     $this->get('/purchaselog', 'App\Controllers\AdminController:purchaseLog');
     $this->delete('/purchaselog/{id}', 'App\Controllers\AdminController:deletePurchaseLog');
     $this->post('/addpurchase', 'App\Controllers\AdminController:addPurchase');
+
+    // donatelog manage
     $this->get('/donatelog', 'App\Controllers\AdminController:donateLog');
+
+    // Music Manage
+    $this->get('/music', 'App\Controllers\AdminController:music');
+    $this->post('/music', 'App\Controllers\AdminController:addMusic');
+    $this->delete('/music', 'App\Controllers\AdminController:deleteMusic');
+
     // app config
     $this->get('/config', 'App\Controllers\AdminController:config');
     $this->put('/config', 'App\Controllers\AdminController:updateConfig');
     $this->put('/announcement', 'App\Controllers\AdminController:updateAnn');
+
     // Node Mange
     $this->get('/node', 'App\Controllers\Admin\NodeController:index');
     $this->get('/node/create', 'App\Controllers\Admin\NodeController:create');
@@ -118,10 +129,6 @@ $app->group('/admin', function () {
     $this->delete('/user/{id}', 'App\Controllers\Admin\UserController:delete');
     $this->get('/user/{id}/delete', 'App\Controllers\Admin\UserController:deleteGet');
 
-    // Music Manage
-    $this->get('/music', 'App\Controllers\Admin\AdminController:music');
-    $this->delete('/music', 'App\Controllers\Admin\AdminController:deleteMusic');
-    
     $this->post('/sendmail', 'App\Controllers\AdminController:sendMailPost');
     // Test
     $this->get('/test/sendmail', 'App\Controllers\Admin\TestController:sendMail');

@@ -141,14 +141,10 @@
                                         <option value="verify_sha1">verify_sha1</option>
                                         <option value="auth_sha1_v2">auth_sha1_v2</option>
                                         <option value="auth_sha1_v4">auth_sha1_v4</option>
-                                        <option value="auth_aes128_md5">auth_aes128_md5</option>
-                                        <option value="auth_aes128_sha1">auth_aes128_sha1</option>
-                                        <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议==</option>
-                                        <option value="verify_sha1_compatible">verify_sha1_compatible</option>
-                                        <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
+                                        <option value="auth_aes128_md5">auth_aes128_md5（推荐）</option>
+                                        <option value="auth_aes128_sha1">auth_aes128_sha1（推荐）</option>
+                                        <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
                                         <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                        <option value="auth_aes128_md5_compatible">auth_aes128_md5_compatible (推荐)</option>
-                                        <option value="auth_aes128_sha1_compatible">auth_aes128_sha1_compatible (推荐)</option>
                                         <!-- <option value="verify_deflate">verify_deflate</option> -->
                                     </select>
                                 </div>
@@ -163,7 +159,7 @@
                                         <option value="http_simple">http_simple</option>
                                         <option value="http_post">http_post</option>
                                         <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
-                                        <option value="tls1.2_ticket_auth_compatible" disabled="disabled">==以下兼容原协议==</option>
+                                        <option value="tls1.2_ticket_auth_compatible" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
                                         <option value="http_simple_compatible">http_simple_compatible</option>
                                         <option value="http_post_compatible">http_post_compatible</option>
                                         <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>

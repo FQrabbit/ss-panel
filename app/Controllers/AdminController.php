@@ -269,18 +269,28 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
-        $logs = Music::where('id', ">" , 0);
+        $music = Music::where('id', ">" , 0);
         $path = '/admin/music?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
-                $logs = $logs->where($k, $v);
+                $music = $music->where($k, 'like', '%'.$v.'%');
                 $path .= $k.'='.$v.'&';
             }
         }
         $path = substr($path,0,strlen($path)-1);
-        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
-        $logs->setPath($path);
+        $music = $music->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $music->setPath($path);
         return $this->view()->assign('music', $music)->display('admin/music.tpl');
+    }
+
+    public function addMusic($request, $response, $args)
+    {
+        $q = $request->getParsedBody();
+        $rs['ret'] = 1;
+        $rs['msg'] = '添加成功';
+        return $q;
+        Music::create($q);
+        return $response->getBody()->write(json_encode($rs));
     }
 
     public function trafficLog($request, $response, $args)
