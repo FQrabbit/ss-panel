@@ -46,12 +46,11 @@
                                             <td>{$menu["time"]}</td>
                                             <td>免费节点+付费节点</td>
                                             <td>
-                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
-                                                    <input type="hidden" name="uid" value="100001627">
-                                                    <input type="hidden" name="payno" value="zhwalker20@gmail.com">
-                                                    <input type="hidden" name="price" value="{$menu['price']}">
-                                                    <input type="hidden" name="title" value="{$menu['title']}">
-                                                    <input type="submit" value="购买" class="btn btn-default btn-flat" {if !$able}disabled{/if}>
+                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
+                                                    <input type="hidden" name="uid" value="{$user->id}">
+                                                    <input type="hidden" name="total" value="{$menu['price']}">
+                                                    <input type="hidden" name="type" value={$menu['title']}>
+                                                    <input type="submit" value="购买" class="btn btn-default btn-flat">
                                                 </form>
                                             </td>
                                         </tr>
@@ -84,12 +83,10 @@
                                             <td>{$menu["time"]}</td>
                                             <td>免费节点+付费节点</td>
                                             <td>
-                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
-                                                    <input type="hidden" name="uid" value="100001627">
-                                                    <input type="hidden" name="payno" value="zhwalker20@gmail.com">
-                                                    <input type="hidden" name="price" value="{$menu['price']}">
-                                                    <input type="hidden" name="title" value="{$menu['title']}">
-                                                    <input type="submit" value="购买" class="btn btn-default btn-flat" {if !$able}disabled{/if}>
+                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
+                                                    <input type="hidden" name="uid" value="{$user->id}">
+                                                    <input type="hidden" name="total" value="{$menu['price']}">
+                                                    <input type="submit" value="购买" class="btn btn-default btn-flat">
                                                 </form>
                                             </td>
                                         </tr>
