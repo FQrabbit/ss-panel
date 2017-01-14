@@ -53,7 +53,7 @@
                 <input type="text" id="author" placeholder="歌手" class="form-control">
             </div>
             <div class="form-group">
-                <button id="insert" class="form-control btn btn-default btn-flat">添加</button>
+                <button id="insert" class="form-control btn btn-default btn-flat" onclick="insert()">添加</button>
             </div>
         </fieldset>
         <div class="row">
@@ -145,12 +145,12 @@
             }
         });
     }
-    function confirm_delete(id) {
+    function confirm_delete(mid) {
         $.confirm({
             title: '确认操作',
             content: '你确定要删除这首歌?',
             confirm: function(){
-                deletemusic(id);
+                deletemusic(mid);
             },
             confirmButton: '是',
             cancelButton: '否',

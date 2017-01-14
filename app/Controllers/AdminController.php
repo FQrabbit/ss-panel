@@ -288,8 +288,21 @@ class AdminController extends UserController
         $q = $request->getParsedBody();
         $rs['ret'] = 1;
         $rs['msg'] = '添加成功';
-        return $q;
-        Music::create($q);
+        $music = new Music();
+        $music->mid = $q['mid'];
+        $music->name = $q['name'];
+        $music->author = $q['author'];
+        $music->save();
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function deleteMusic($request, $response, $args)
+    {
+        $mid = $args['mid'];
+        $m = Music::where('mid', $mid)->first();
+        $m->delete();
+        $rs['ret'] = 1;
+        $rs['msg'] = '删除成功';
         return $response->getBody()->write(json_encode($rs));
     }
 

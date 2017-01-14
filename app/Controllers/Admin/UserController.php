@@ -67,7 +67,7 @@ class UserController extends AdminController
         // $user->invite_num = $request->getParam('invite_num');
         $user->method = $request->getParam('method');
         $user->protocol = $request->getParam('protocol');
-        $user->protocol_paramd = $request->getParam('protocol_param');
+        $user->protocol_param = $request->getParam('protocol_param');
         $user->obfs = $request->getParam('obfs');
         $user->obfs_param = $request->getParam('obfs_param');
         $user->enable = $request->getParam('enable');

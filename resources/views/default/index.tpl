@@ -306,7 +306,7 @@
 	<!-- Footer Section -->
 	<footer id="footer-section">
 		<p class="copyright">
-			&copy; <a href="/">Shadowsky</a> 2015-2016, All Rights Reserved.
+			&copy; <a href="/">Shadowsky</a> 2015-{date("Y")}, All Rights Reserved.
 		</p>
 	</footer>
 	<!-- Footer Section End -->
@@ -322,6 +322,12 @@
 	<script type="text/javascript" src="assets/public/js/functions.js"></script>
 	<!-- Custom JavaScript Functions -->
 	<script type="text/javascript" src="assets/public/js/jquery.ajaxchimp.min.js"></script>
+
+	<script>
+		setTimeout(function(){
+			$("#preloader").fadeOut("slow");
+		},5000);
+	</script>
 
 </body>
 </html>

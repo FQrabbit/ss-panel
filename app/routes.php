@@ -43,6 +43,7 @@ $app->post('/debug', 'App\Controllers\HomeController:postDebug');
 $app->group('/user', function () {
     $this->get('', 'App\Controllers\UserController:index');
     $this->get('/', 'App\Controllers\UserController:index');
+    $this->post('/readann/{id}', 'App\Controllers\UserController:readAnn');
     $this->post('/checkin', 'App\Controllers\UserController:doCheckin');
     $this->post('/activate', 'App\Controllers\UserController:activate');
     $this->get('/node', 'App\Controllers\UserController:node');
@@ -105,7 +106,7 @@ $app->group('/admin', function () {
     // Music Manage
     $this->get('/music', 'App\Controllers\AdminController:music');
     $this->post('/music', 'App\Controllers\AdminController:addMusic');
-    $this->delete('/music', 'App\Controllers\AdminController:deleteMusic');
+    $this->delete('/music/{mid}', 'App\Controllers\AdminController:deleteMusic');
 
     // app config
     $this->get('/config', 'App\Controllers\AdminController:config');

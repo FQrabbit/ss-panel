@@ -55,25 +55,25 @@
 
                             <div class="form-group">
                                 <label>邀请页公告</label>
-                                <textarea class="form-control" id="home-code" rows="5"
+                                <textarea class="form-control" id="home-code" rows="8"
                                           placeholder="Enter ...">{$conf['home-code']}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>用户中心公告</label>
-                                <textarea class="form-control" id="user-index" rows="5"
+                                <textarea class="form-control" id="user-index" rows="8"
                                           placeholder="Enter ...">{$conf['user-index']}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>用户节点公告</label>
-                                <textarea class="form-control" id="user-node" rows="5"
+                                <textarea class="form-control" id="user-node" rows="10"
                                           placeholder="Enter ...">{$conf['user-node']}</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>用户购买页面公告</label>
-                                <textarea class="form-control" id="user-purchase" rows="5"
+                                <textarea class="form-control" id="user-purchase" rows="8"
                                           placeholder="Enter ...">{$conf['user-purchase']}</textarea>
                             </div>
 

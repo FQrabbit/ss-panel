@@ -63,6 +63,8 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='user/footer.tpl'}
+
 <script>
 var ctx = $("#chart");
 var chart = new Chart(ctx, {
@@ -134,4 +136,3 @@ var chart = new Chart(ctx, {
     }
 });
 </script>
-{include file='user/footer.tpl'}

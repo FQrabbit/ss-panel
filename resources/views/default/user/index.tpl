@@ -221,11 +221,24 @@
         </div>
     </div>
 </div>
-{if !$user->enable && $user->status == 1}
-<script>
-    $("#activate-modal").show();
-</script>
-{/if}
+<div id="new-ann-modal" class="w3-modal" style="z-index:999">
+    <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
+        <header class="w3-container w3-teal">
+            <span onclick=$("#new-ann-modal").hide() class="w3-closebtn">×</span>
+            <h3>{$new_ann->title}</h3>
+        </header>
+        <div class="w3-container">
+            <br>
+            <p>{$new_ann->content}</p>
+        </div>
+        <footer class="w3-container w3-teal w3-padding">
+            <button id="read" class="pull-right w3-btn w3-teal w3-border" onclick="read({$new_ann->id})">已读</button>
+        </footer>
+    </div>
+</div>
+
+{include file='user/footer.tpl'}
+
 <script>
     $(document).ready(function () {
         $("#checkin").click(function () {
@@ -260,7 +273,28 @@
                     }
                 })
         })
-    })
-</script>
 
-{include file='user/footer.tpl'}
+        {if !$user->enable && $user->status == 1}
+            $("#activate-modal").show();
+        {/if}
+
+        {if $new_ann && !$user->getReadStatusOfAnn($new_ann->id)}
+            $("#new-ann-modal").show();
+        {/if}
+    })
+
+    function read (id) {
+        $("#new-ann-modal").fadeOut("slow");
+        $.ajax({
+            type: "POST",
+            url: "/user/readann/" + id,
+            dataType: "json",
+            success: function (data) {
+                console.log("已阅读公告");
+            },
+            error: function (jqXHR) {
+                console.log("发生错误：" + jqXHR.status);
+            }
+        })
+    }
+</script>

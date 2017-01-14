@@ -12,6 +12,7 @@ use App\Utils\Tools;
 use App\Models\Node;
 use App\Models\CheckInLog;
 use App\Models\Vote;
+use App\Models\AnnLog;
 
 class User extends Model
 
@@ -308,5 +309,10 @@ class User extends Model
 
     public function getFormatedDateTime($datetime) {
         return strftime('%Y-%m-%dT%H:%M:%S', strtotime($datetime));
+    }
+
+    public function getReadStatusOfAnn($ann_id)
+    {
+        return AnnLog::where('user_id', $this->id)->where('ann_id', $ann_id)->first()->read_status;
     }
 }

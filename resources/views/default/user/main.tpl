@@ -18,14 +18,9 @@
 
     <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/>
-    <!-- jQuery 2.1.3 -->
-    <script src="/assets/public/js/jquery.min.js"></script>
-    <script src="/assets/public/js/main.js"></script>
-    {if isset($url) }
+    {if $url == '/user/sys' }
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/public/css/jquery.dataTables.min.css">
-    <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script>
     {/if}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

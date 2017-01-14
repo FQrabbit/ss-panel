@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\CheckInLog;
 use App\Models\InviteCode;
 use App\Models\User;
+use App\Models\Ann;
+use App\Models\AnnLog;
 use App\Models\DelUser;
 use App\Models\Node;
 use App\Models\TrafficLog;
@@ -36,7 +38,7 @@ class UserController extends BaseController
     public function view()
     {
         $userFooter = DbConfig::get('user-footer');
-        return parent::view()->assign('userFooter', $userFooter);
+        return parent::view()->assign('userFooter', $userFooter)->assign('url', $_SERVER['REQUEST_URI']);
     }
 
     public function index($request, $response, $args)
@@ -45,12 +47,30 @@ class UserController extends BaseController
         if ($msg == null) {
             $msg = "在后台修改用户中心公告...";
         }
+        $new_ann = Ann::orderBy('id', 'DESC')->first();
         $title = $this->user->port."0";
         $music = Music::orderByRaw("RAND()")->first();
         $music->count += 1;
         $mid = $music->mid;
         $music->save();
-        return $this->view()->assign('msg', $msg)->assign('title', $title)->assign('mid', $mid)->display('user/index.tpl');
+        return $this->view()->assign('msg', $msg)->assign('new_ann', $new_ann)->assign('title', $title)->assign('mid', $mid)->display('user/index.tpl');
+    }
+
+    public function readAnn($request, $response, $args)
+    {
+        $ann_id = $args['id'];
+        $log = AnnLog::where('user_id', $this->user->id)->where('ann_id', $ann_id)->first();
+        if (!$log) {
+            $log = new AnnLog();
+            $log->ann_id = $ann_id;
+            $log->user_id = $this->user->id;
+            $log->read_status = 1;
+            $log->save();
+        }else {
+            $log->read_status = 1;
+            $log->save();
+        }
+        return "Read";
     }
 
     public function node($request, $response, $args)
@@ -144,29 +164,31 @@ class UserController extends BaseController
 {
     "index" : 1,
     "random" : false,
-    "global" : false,
-    "enabled" : false,
+    "sysProxyMode" : 0,
     "shareOverLan" : false,
-    "isDefault" : false,
     "bypassWhiteList" : false,
     "localPort" : 1080,
-    "reconnectTimes" : 3,
+    "localAuthPassword" : "'.Tools::genRandomChar(26).'",
+    "dns_server" : "",
+    "reconnectTimes" : 4,
     "randomAlgorithm" : 0,
-    "TTL" : 0,
+    "TTL" : 60,
+    "connect_timeout" : 5,
+    "proxyRuleMode" : 1,
     "proxyEnable" : false,
     "pacDirectGoProxy" : false,
     "proxyType" : 0,
-    "proxyHost" : null,
+    "proxyHost" : "",
     "proxyPort" : 0,
-    "proxyAuthUser" : null,
-    "proxyAuthPass" : null,
-    "proxyUserAgent" : null,
-    "authUser" : null,
-    "authPass" : null,
+    "proxyAuthUser" : "",
+    "proxyAuthPass" : "",
+    "proxyUserAgent" : "",
+    "authUser" : "",
+    "authPass" : "",
     "autoBan" : false,
-    "sameHostForSameTarget" : false,
+    "sameHostForSameTarget" : true,
     "keepVisitTime" : 180,
-    "dns_server" : null,
+    "isHideTips" : true,
     "token" : {
 
     },
@@ -253,7 +275,7 @@ class UserController extends BaseController
         $checkinCount = User::where("last_check_in_time", ">", (time()-24*3600))->count();
         $donateUserCount = User::where("ref_by", "=", 3)->count();
         $ana = array('allUserCount' => $allUserCount, 'paidUserCount' => $paidUserCount, 'donateUserCount' => $donateUserCount, 'usedTransfer' => $usedTransfer, 'activeUserCount' => $activeUserCount, "checkinCount" => $checkinCount);
-        return $this->view()->assign('ana', $ana)->assign('url', $_SERVER['REQUEST_URI'])->assign('users', $users)->display('user/sys.tpl');
+        return $this->view()->assign('ana', $ana)->assign('users', $users)->display('user/sys.tpl');
     }
 
     public function purchase()

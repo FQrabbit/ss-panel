@@ -79,21 +79,20 @@
                 </div>
         </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
 {include file='user/footer.tpl'}
 
- <script>
-    $(document).ready( function () {
-        $('#donate_table').DataTable({
-        "scrollY": "390px",
-        "scrollX": false,
-        "order": [2, "desc"]
-        });
-        $('#paid_user_table').DataTable({
-        "scrollY": "390px",
-        "scrollX": false,
-        "order": [[ 2, "asc" ],[0,"asc"]]
-        });
-        $(".dataTables_scrollHeadInner").width("100%");
-        $("#row1").show();
-    } );
+<script>
+$('#donate_table').DataTable({
+"scrollY": "390px",
+"scrollX": false,
+"order": [2, "desc"]
+});
+$('#paid_user_table').DataTable({
+"scrollY": "390px",
+"scrollX": false,
+"order": [[ 2, "asc" ],[0,"asc"]]
+});
+$(".dataTables_scrollHeadInner").width("100%");
+$("#row1").show();
 </script>
