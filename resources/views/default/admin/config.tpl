@@ -162,6 +162,8 @@
                         </button>
                         <button id="send_ann" type="submit" name="send" value="send" class="btn btn-default flat">发送
                         </button>
+                        <button id="add_ann" type="submit" name="add" value="add" class="btn btn-default flat">添加
+                        </button>
                     </div>
                 </div>
             </div>
@@ -245,6 +247,37 @@
                     status: $("#status").val(),
                     enable: $("#enable").val(),
                     type: $("#type").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#msg-error").hide(100);
+                        $("#msg-success").show(100);
+                        $("#msg-success-p").html(data.msg);
+                    } else {
+                        $("#msg-error").hide(10);
+                        $("#msg-error").show(100);
+                        $("#msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    $("#msg-error").hide(10);
+                    $("#msg-error").show(100);
+                    $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+        $("#ok-close").click(function () {
+            $("#msg-success").hide(100);
+        });
+
+        $("#add_ann").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "announcement/create",
+                dataType: "json",
+                data: {
+                    ann_title: $("#ann_title").val(),
+                    ann_content: $("#ann_content").val()
                 },
                 success: function (data) {
                     if (data.ret) {

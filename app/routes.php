@@ -112,6 +112,7 @@ $app->group('/admin', function () {
     $this->get('/config', 'App\Controllers\AdminController:config');
     $this->put('/config', 'App\Controllers\AdminController:updateConfig');
     $this->put('/announcement', 'App\Controllers\AdminController:updateAnn');
+    $this->post('/announcement/create', 'App\Controllers\AdminController:createAnn');
 
     // Node Mange
     $this->get('/node', 'App\Controllers\Admin\NodeController:index');

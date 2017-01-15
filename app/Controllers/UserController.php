@@ -287,17 +287,15 @@ class UserController extends BaseController
         $B_able_to_buy = (($nodes_count*13)>$B_count) ? 1 : 0;
         $user = Auth::getUser();
         $menu1 = array(
-            ["name"=>"1元1G试玩套餐","transfer"=>"1G","price"=>1,"title"=>$this->user->port."1","time"=>"3天"],
-            ["name"=>"5元10G基础套餐","transfer"=>"10G","price"=>5,"title"=>$this->user->port."2","time"=>"永久"]
+            ["name"=>"1元1G试玩套餐","transfer"=>"1G","price"=>1,"title"=>"1".$this->user->port,"time"=>"3天"],
+            ["name"=>"5元10G基础套餐","transfer"=>"10G","price"=>5,"title"=>"2".$this->user->port,"time"=>"永久"]
         );
         $menu2 = array(
-            ["name"=>"10元包月无限流量套餐","price"=>10,"title"=>$this->user->port."3","time"=>"一月"],
-            ["name"=>"25元包季无限流量套餐","price"=>25,"title"=>$this->user->port."4","time"=>"一季"],
-            ["name"=>"80元包年无限流量套餐","price"=>80,"title"=>$this->user->port."5","time"=>"一年"]
+            ["name"=>"10元包月无限流量套餐","price"=>10,"title"=>"3".$this->user->port,"time"=>"一月"],
+            ["name"=>"25元包季无限流量套餐","price"=>25,"title"=>"4".$this->user->port,"time"=>"一季"],
+            ["name"=>"80元包年无限流量套餐","price"=>80,"title"=>"5".$this->user->port,"time"=>"一年"]
         );
-        $able = file_get_contents("http://www.senlinpay.com/zt.php?uid=100001627&email=zhwalker20@gmail.com") == "yes" ? 1 : 0;
-        // $able = 0;
-        return $this->view()->assign('able', $able)->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
+        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
     }
 
     public function qna()

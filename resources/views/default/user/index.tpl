@@ -26,12 +26,12 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
-      	                        <div class="w3-btn-group" style="margin-top:10px">
-        		                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
-        		                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
-      	                        </div>
-      							<button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
-      	                    </div><!-- /.box-body -->
+                                <div class="w3-btn-group" style="margin-top:10px">
+                                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
+                                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
+                                </div>
+                                <button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
+                            </div><!-- /.box-body -->
                         </div>
                         <!-- /.box -->
                     </div>
@@ -180,24 +180,22 @@
             <h3>捐助Shadowsky</h3>
         </header>
         <div class="w3-container">
-            <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
+            <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
                 <div class="w3-row">
                         <lable class="w3-label">请输入捐助金额：</label>
-                        <input class="w3-input" name="price" type="number" value=2 style="width:20%;display:inline">
-                        <input type="hidden" name="uid" value="100001627">
-                        <input type="hidden" name="payno" value="zhwalker20@gmail.com">
-                        <input type="hidden" name="title" value="{$title}">
+                        <input type="hidden" name="uid" value="{$user->id}">
+                        <input type="hidden" name="type" value="0{$user->port}">
+                        <input class="w3-input" name="total" type="number" value=2 style="width:20%;display:inline">
                         <button class="w3-btn w3-teal" type="submit">确认</button>
                 </div>
             </form>
             <div class="w3-row w3-margin-top">
                 {foreach [2,5,10,20] as $a}
                 <div class="w3-quarter">
-                    <form name="alipaypay" method="post" accept-charset="utf-8" action="http://senlinpay.com/api.php" target="_blank">
-                        <input type="hidden" name="uid" value="100001627">
-                        <input type="hidden" name="payno" value="zhwalker20@gmail.com">
-                        <input type="hidden" name="title" value="{$title}">
-                        <input type="submit" name="price" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
+                    <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
+                        <input type="hidden" name="uid" value="{$user->id}">
+                        <input type="hidden" name="type" value="0{$user->port}">
+                        <input type="submit" name="total" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
                     </form>
                 </div>
                 {/foreach}
