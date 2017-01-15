@@ -86,6 +86,7 @@
                                                 <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
                                                     <input type="hidden" name="uid" value="{$user->id}">
                                                     <input type="hidden" name="total" value="{$menu['price']}">
+                                                    <input type="hidden" name="type" value={$menu['title']}>
                                                     <input type="submit" value="购买" class="btn btn-default btn-flat">
                                                 </form>
                                             </td>

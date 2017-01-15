@@ -373,6 +373,19 @@ class AdminController extends UserController
         return $response->getBody()->write(json_encode($res));
     }
 
+    public function createAnn($request, $response, $args)
+    {
+        $ann_title = $request->getParam('ann_title');
+        $ann_content = $request->getParam('ann_content');
+        $ann = new Ann();
+        $ann->title = $ann_title;
+        $ann->content = $ann_content;
+        $ann->save();
+        $res['ret'] = 1;
+        $res['msg'] = "公告添加成功";
+        return $response->getBody()->write(json_encode($res));
+    }
+
     public function sendMailPost($request, $response, $args)
     {
         $q = $request->getParsedBody();

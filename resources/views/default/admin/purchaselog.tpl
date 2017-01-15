@@ -118,7 +118,6 @@
                                 <th>套餐</th>
                                 <th>价格</th>
                                 <th>购买日期</th>
-                                <th>订单号</th>
                                 <th>交易号</th>
                                 <th>操作</th>
                             </tr>
@@ -129,7 +128,6 @@
                                     <td>{$log->body}</td>
                                     <td>{$log->price}</td>
                                     <td>{$log->buy_date}</td>
-                                    <td>{$log->trade_no}</td>
                                     <td>{$log->out_trade_no}</td>
                                     <td>
                                         <a class="btn btn-default btn-sm" id="delete" href="javascript:void(0);" onclick="confirm_delete({$log->id});">删除</a>
@@ -145,6 +143,8 @@
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+
+{include file='user/footer.tpl'}
 
 <script src="/assets/public/js/jquery-confirm.js"></script>
 <script>
@@ -181,10 +181,10 @@
         });
     }
 
-    function deleterecord(id) {
+    function deleterecord(item) {
         $.ajax({
             type: "DELETE",
-            url: "/admin/purchaselog/" + id,
+            url: "/admin/purchaselog/" + item,
             dataType:"json",
             success: function (data) {
                 if (data.ret) {
@@ -206,12 +206,12 @@
         });
     };
 
-    function confirm_delete(id) {
+    function confirm_delete(item) {
         $.confirm({
             title: '确认操作',
             content: '你确定要删除这条记录?',
             confirm: function(){
-                deleterecord(id);
+                deleterecord(item);
             },
             confirmButton: '是',
             cancelButton: '否',
@@ -291,4 +291,3 @@ var myChart = new Chart(ctx, {
     }
 });
 </script>
-{include file='user/footer.tpl'}

@@ -295,9 +295,7 @@ class UserController extends BaseController
             ["name"=>"25元包季无限流量套餐","price"=>25,"title"=>"4".$this->user->port,"time"=>"一季"],
             ["name"=>"80元包年无限流量套餐","price"=>80,"title"=>"5".$this->user->port,"time"=>"一年"]
         );
-        $able = file_get_contents("http://www.senlinpay.com/zt.php?uid=100001627&email=zhwalker20@gmail.com") == "yes" ? 1 : 0;
-        // $able = 0;
-        return $this->view()->assign('able', $able)->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
+        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
     }
 
     public function qna()
