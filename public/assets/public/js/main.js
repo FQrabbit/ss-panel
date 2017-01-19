@@ -9,6 +9,13 @@ $("#msg-success").hide();
 $("#msg-error").hide();
 
 // Node Page
+
+function urlChange(id) {
+    var site = './node/'+id;
+        document.getElementById('infoifram').src = site;
+    $("#nodeinfo").modal();
+}
+
 (function(){
 
 $(".poll-btn").click(function(){
@@ -33,12 +40,6 @@ $(".poll-btn").click(function(){
 $(".close").click(function(){
     $("#nodeinfo").modal("hide");
 })
-
-function urlChange(id) {
-    var site = './node/'+id;
-		document.getElementById('infoifram').src = site;
-	$("#nodeinfo").modal();
-}
 
 $(".vote-btn").click(function(){
 	var v = $(this).children().first().text();
