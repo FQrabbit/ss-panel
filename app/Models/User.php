@@ -13,6 +13,7 @@ use App\Models\Node;
 use App\Models\CheckInLog;
 use App\Models\Vote;
 use App\Models\AnnLog;
+use App\Models\Shop;
 
 class User extends Model
 
@@ -179,6 +180,12 @@ class User extends Model
         return Tools::flowAutoShow($total);
     }
 
+    public function usedTrafficInGB()
+    {
+        $total = $this->attributes['u'] + $this->attributes['d'];
+        return Tools::flowToGB($total);
+    }
+
     public function unusedTraffic()
     {
         $total = $this->attributes['u'] + $this->attributes['d'];
@@ -251,52 +258,23 @@ class User extends Model
         return $this->attributes['expire_date'];
     }
 
-    public function updateExpireDate($time){
+    public function  isExpire(){
         $expiredate = $this->get_expire_date();
         $expiretime = strtotime($expiredate);
-        if($expiretime<time()){
-            switch ($time) {
-                case 'A':
-                    $expiretime = strtotime("+1 Month",time());
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                case 'B':
-                    $expiretime = strtotime("+3 Months",time());
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                case 'C':
-                    $expiretime = strtotime("+1 Year",time());
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                case 'D':
-                    $expiretime = strtotime("+3 Days",time());
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                default:
-                    break;
-            }          
+        return $expiretime<time();
+    }
+
+    public function updateExpireDate($product_name){
+        $expiredate = $this->get_expire_date();
+        $expiretime = strtotime($expiredate);
+        $product = Shop::where('name', $product_name)->first();
+        $plus_period = $product->plus_period;
+        if($this->isExpire()){
+            $expiretime = strtotime($plus_period,time());
         }else{
-            switch ($time) {
-                case 'A':
-                    $expiretime = strtotime("+1 Month",$expiretime);
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                case 'B':
-                    $expiretime = strtotime("+3 Months",$expiretime);
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                case 'C':
-                    $expiretime = strtotime("+1 Year",$expiretime);
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                case 'D':
-                    $expiretime = strtotime("+3 Days",$expiretime);
-                    $expiredate = date("Y-m-d H:i:s",$expiretime);
-                    break;
-                default:
-                    break;
-            }
+            $expiretime = strtotime($plus_period,$expiretime);
         }
+        $expiredate = Tools::toDateTime($expiretime);
         $this->expire_date = $expiredate;
         $this->save();
     }
@@ -305,6 +283,13 @@ class User extends Model
     {
         $this->expire_date = "0000-00-00 00:00:00";
         $this->save();
+    }
+
+    public function resetTraffic()
+    {
+        $this->transfer_enable = 104857600;
+        $this->u = 0;
+        $this->d = 0;
     }
 
     public function getFormatedDateTime($datetime) {

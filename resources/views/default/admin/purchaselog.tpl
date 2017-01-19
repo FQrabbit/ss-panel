@@ -84,10 +84,7 @@
                 <input id="buy_date" type="text" placeholder="购买时间(默认为此时)" class="form-control" onfocus="(this.type='datetime-local')">
             </div>
             <div class="form-group">
-                <input id="trade_no" type="number" placeholder="订单号(若无请留空)" class="form-control">
-            </div>
-            <div class="form-group">
-                <input id="out_trade_no" type="number" placeholder="交易号(若无请留空)" class="form-control">
+                <input id="out_trade_no" type="number" placeholder="订单号(若无请留空)" class="form-control">
             </div>
             <div class="form-group">
                 <button id="insert" class="btn btn-default form-control">插入</button>
@@ -158,7 +155,6 @@
                 port: $("#port").val(),
                 body: $("#body").val(),
                 buy_date: $("#buy_date").val(),
-                trade_no: $("#trade_no").val(),
                 out_trade_no: $("#out_trade_no").val()
             },
             success: function (data) {

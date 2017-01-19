@@ -90,16 +90,16 @@ class Tools
 
     /**
      * Unix time to Date Time
-     * @param $time
+     * @param $timestamp
      * @return mixed
      */
-    public static function toDateTime($time)
-    {
-        if ($time=='') {
-            $time = time();
+        public static function toDateTime($timestamp)
+        {
+            if (empty($timestamp)) {
+                $timestamp = time();
+            }
+            return date('Y-m-d H:i:s', $timestamp);
         }
-        return date('Y-m-d H:i:s', $time);
-    }
 
     /**
      * @param $seconds

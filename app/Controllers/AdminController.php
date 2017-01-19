@@ -10,6 +10,7 @@ use App\Models\TrafficLog;
 use App\Models\Ann;
 use App\Models\User;
 use App\Models\Music;
+use App\Models\Shop;
 use App\Services\Analytics;
 use App\Services\DbConfig;
 use App\Services\Mail;
@@ -77,13 +78,22 @@ class AdminController extends UserController
     public function purchaseLog($request, $response, $args)
     {
         $q = $request->getQueryParams();
-        if (!isset($request->getQueryParams()['page'])) {
+        if (!isset($q['page'])) {
             $q['page'] = 1;
         }
-        if ($q["port"]!="") {
-            $user = User::where("port", $q["port"])->first();
-            $q["uid"] = $user->id;
-            $q["port"] = "";
+        if (!isset($q['uid'])) {
+            $q['uid'] = '';
+        }
+        if (!isset($q['port'])) {
+            $q['port'] = '';
+        }
+        if (!isset($q['trade_no'])) {
+            $q['trade_no'] = '';
+        }
+        if ($q['port']!='') {
+            $user = User::where('port', $q['port'])->first();
+            $q['uid'] = $user->id;
+            $q['port'] = '';
         }
         $logs = PurchaseLog::where('id', ">" , 0);
         $path = '/admin/purchaselog?';
@@ -94,9 +104,9 @@ class AdminController extends UserController
             }
         }
 
-        $Y = date("Y");
-        $m = date("m");
-        $d = date("d");
+        $Y = date('Y');
+        $m = date('m');
+        $d = date('d');
         $yearlyIncome = PurchaseLog::where('buy_date', '>' , $Y)->sum('price');
         $dailyIncome = PurchaseLog::where('buy_date', '>' , $Y.'-'.$m.'-'.$d)->sum('price');
         $income['yearly'] = $yearlyIncome;
@@ -106,13 +116,13 @@ class AdminController extends UserController
         $monthdata = array();
         for($i=1;$i<=$m;$i++){
             if ($i<10) {
-                $tm = "0".$i;
+                $tm = '0'.$i;
             }else {
                 $tm = $i;
             }
             $j = $i + 1;
             if ($j<10) {
-                $nm = "0".$j;
+                $nm = '0'.$j;
             }else {
                 $nm = $j;
             }
@@ -135,72 +145,69 @@ class AdminController extends UserController
     public function addPurchase($request, $response, $args)
     {
         $q = $request->getParsedBody();
+        $rs['ret'] = 0;
         if ($q['uid']=='' && $q['port']=='') {
             $rs['ret'] = 0;
-            $rs['msg'] = "未找到该用户。";
+            $rs['msg'] = '请输入用户id或port。';
             return $response->getBody()->write(json_encode($rs));
         }
         if ($q['body']=='') {
             $rs['ret'] = 0;
-            $rs['msg'] = "请选择套餐。";
+            $rs['msg'] = '请选择套餐。';
             return $response->getBody()->write(json_encode($rs));
         }
-        if ($q["port"]!="") {
-            $user = User::where("port", $q["port"])->first();
+        if ($q['port']!='') {
+            $user = User::where('port', $q['port'])->first();
             if (!$user) {
                 $rs['ret'] = 0;
-                $rs['msg'] = "未找到该用户。";
+                $rs['msg'] = '未找到该用户。';
                 return $response->getBody()->write(json_encode($rs));
             }
-            $q["uid"] = $user->id;
-            unset($q["port"]);
+            $q['uid'] = $user->id;
         }
-        if ($q['buy_date']=='') {
-            $q['buy_date'] = Tools::toDateTime();
+        if ($q['uid']!='') {
+            $user = User::where('id', $q['uid'])->first();
+            if (!$user) {
+                $rs['ret'] = 0;
+                $rs['msg'] = '未找到该用户。';
+                return $response->getBody()->write(json_encode($rs));
+            }
+        }
+        if (empty($q['buy_date'])) {
+            $q['buy_date'] = Tools::toDateTime(time());
         }
         $q['price'] = Tools::getPriceOfPlan($q['body']);
+        unset($q['port']);
         $record = PurchaseLog::create($q);
-        $user = User::find($q['uid']);
+
         // 购买之前的用户状态
         $pre_plan = $user->plan;
         $pre_type = $user->type;
-        $pre_transfer_eanble_inGB = $user->enableTrafficInGB();
+        $pre_transfer_eanble_in_GB = $user->enableTrafficInGB();
+        $pre_used_traffic_in_GB = $user->usedTrafficInGB();
         $pre_buy_date = $user->buy_date;
         $pre_expire_date = $user->expire_date;
 
         $user->plan = 'B';
-        $user->buy_date = $q['buy_date'];
         $user->type = $q['body'];
+        $user->buy_date = $q['buy_date'];
         $user->user_type = $q['price'];
 
-        switch ($q['body']) {
-            case '试玩':
-                $user->addTraffic(1);
-                $user->updateExpireDate('D');
-                break;
-            case '基础':
-                $user->addTraffic(10);
-                $user->resetExpireDate();
-                break;
-            case '包月':
-                $user->updateEnableTransfer(999);
-                $user->updateExpireDate("A");
-                break;
-            case '包季':
-                $user->updateEnableTransfer(999);
-                $user->updateExpireDate("B");
-                break;
-            case '包年':
-                $user->updateEnableTransfer(999);
-                $user->updateExpireDate("C");
-                break;
-            
-            default:
-                // code...
-                break;
+        $product = Shop::where('name', $q['body'])->first();
+        $product_type = $product->type;
+        $transfer_to_add = $product->transfer;
+        if ($product->isByTime()) {
+            $user->updateEnableTransfer($transfer_to_add);
+            $user->updateExpireDate($q['body']);
+        }elseif ($product->isByMete()) {
+            $user->updateEnableTransfer($pre_used_traffic_in_GB + $transfer_to_add);
+            $user->resetExpireDate();
+        }else { //试用套餐
+            $user->addTraffic($transfer_to_add);
+            $user->updateExpireDate($q['body']);
         }
 
-        $rs['msg'] .= "添加购买成功。";
+        $rs['msg'] .= '添加购买成功。';
 
 
         try {
@@ -208,19 +215,19 @@ class AdminController extends UserController
                 'user_name' => $user->user_name,
                 'type' => $user->type
             ];
-            Mail::send($user->email, "Shadowsky", "news/purchase-report.tpl", $arr1, []);
+            Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
 
             $to = 'zhwalker20@gmail.com';
             $title = 'Shadowsky - 用户购买通知';
             $tpl = 'news/general-report.tpl';
-            $content = $user->user_name . '（uid:' . $user->id . ', port:' . $user->port . '）已购买' . $user->type . '套餐。金额：' . $q['price'] . '元。之前plan：' . $pre_plan . '。之前套餐：' . $pre_type . '。之前购买时间：' . $pre_buy_date . '。之前过期时间：' . $pre_expire_date . '。之前总流量：' . $pre_transfer_eanble_inGB.' G。';
+            $content = $user->user_name . '（uid:' . $user->id . ', port:' . $user->port . '）已购买' . $user->type . '套餐。金额：' . $q['price'] . '元。之前plan：' . $pre_plan . '。之前套餐：' . $pre_type . '。之前购买时间：' . $pre_buy_date . '。之前过期时间：' . $pre_expire_date . '。之前流量：' . $pre_used_traffic_in_GB . ' G / ' . $pre_transfer_eanble_in_GB.' G。';
             $arr2 = [
                 'content' => $content
             ];
             Mail::send($to, $title, $tpl, $arr2, []);
 
             $rs['ret'] = 1;
-            $rs['msg'] .= "发送邮箱通知成功。";
+            $rs['msg'] .= '发送邮箱通知成功。';
         } catch (\Exception $e) {
             $rs['ret'] = 0;
             $rs['msg'] = $e->getMessage();
