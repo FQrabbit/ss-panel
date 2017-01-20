@@ -13,6 +13,7 @@ use App\Models\TrafficLog;
 use App\Models\Vote;
 use App\Models\PurchaseLog;
 use App\Models\Music;
+use App\Models\Shop;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
@@ -286,16 +287,8 @@ class UserController extends BaseController
         $nodes_count = Node::all()->count();
         $B_able_to_buy = (($nodes_count*13)>$B_count) ? 1 : 0;
         $user = Auth::getUser();
-        $menu1 = array(
-            ["name"=>"1元1G试玩套餐","transfer"=>"1G","price"=>1,"title"=>"1".$this->user->port,"time"=>"3天"],
-            ["name"=>"5元10G基础套餐","transfer"=>"10G","price"=>5,"title"=>"2".$this->user->port,"time"=>"永久"]
-        );
-        $menu2 = array(
-            ["name"=>"10元包月无限流量套餐","price"=>10,"title"=>"3".$this->user->port,"time"=>"一月"],
-            ["name"=>"25元包季无限流量套餐","price"=>25,"title"=>"4".$this->user->port,"time"=>"一季"],
-            ["name"=>"80元包年无限流量套餐","price"=>80,"title"=>"5".$this->user->port,"time"=>"一年"]
-        );
-        return $this->view()->assign('menu1', $menu1)->assign('menu2', $menu2)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
+        $products = Shop::where('status', 1)->get();
+        return $this->view()->assign('products', $products)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
     }
 
     public function qna()

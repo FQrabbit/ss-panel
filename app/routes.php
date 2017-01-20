@@ -39,6 +39,11 @@ $app->get('/clients', 'App\Controllers\HomeController:clients');
 $app->get('/debug', 'App\Controllers\HomeController:debug');
 $app->post('/debug', 'App\Controllers\HomeController:postDebug');
 
+// Payment
+$app->get('/dopay', 'App\Controllers\PaymentController:doReturn');
+$app->post('/dopay', 'App\Controllers\PaymentController:doReturn');
+$app->post('/prepay', 'App\Controllers\PaymentController:prepay');
+
 // User Center
 $app->group('/user', function () {
     $this->get('', 'App\Controllers\UserController:index');

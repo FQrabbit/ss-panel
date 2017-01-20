@@ -38,24 +38,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {foreach $menu1 as $menu}
+                                {foreach $products as $product}
+                                    {if $product->type != 'A'}
                                         <tr>
-                                            <td>{$menu["name"]}</td>
-                                            <td>{$menu["transfer"]}</td>
-                                            <td>￥{$menu["price"]}</td>
-                                            <td>{$menu["time"]}</td>
+                                            <td>{$product->description}</td>
+                                            <td>{$product->transfer}G</td>
+                                            <td>￥{$product->price}</td>
+                                            <td>{$product->period_for_show}</td>
                                             <td>免费节点+付费节点</td>
                                             <td>
-                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
-                                                    <input type="hidden" name="uid" value="{$user->id}">
-                                                    <input type="hidden" name="total" value="{$menu['price']}">
-                                                    <input type="hidden" name="type" value={$menu['title']}>
+                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
+                                                    <input type="hidden" name="uid" value={$user->id}>
+                                                    <input type="hidden" name="total" value={$product->price}>
+                                                    <input type="hidden" name="product_id" value={$product->id}>
                                                     <input type="submit" value="购买" class="btn btn-default btn-flat">
                                                 </form>
                                             </td>
                                         </tr>
-                                    {/foreach}
-                                </tbody>
+                                    {/if}
+                                {/foreach}
+                            </tbody>
                             </table>
                         </div>
 
@@ -69,29 +71,29 @@
                                     <th>套餐名</th>
                                     <th>每月流量</th>
                                     <th>价格</th>
-                                    <th>期限</th>
                                     <th>节点</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {foreach $menu2 as $menu}
+                                {foreach $products as $product}
+                                    {if $product->type == 'A'}
                                         <tr>
-                                            <td>{$menu["name"]}</td>
-                                            <td>无限</td>
-                                            <td>￥{$menu["price"]}</td>
-                                            <td>{$menu["time"]}</td>
+                                            <td>{$product->description}</td>
+                                            <td>{$product->transfer}G</td>
+                                            <td>￥{$product->price}</td>
                                             <td>免费节点+付费节点</td>
                                             <td>
-                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
-                                                    <input type="hidden" name="uid" value="{$user->id}">
-                                                    <input type="hidden" name="total" value="{$menu['price']}">
-                                                    <input type="hidden" name="type" value={$menu['title']}>
+                                                <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
+                                                    <input type="hidden" name="uid" value={$user->id}>
+                                                    <input type="hidden" name="total" value={$product->price}>
+                                                    <input type="hidden" name="product_id" value={$product->id}>
                                                     <input type="submit" value="购买" class="btn btn-default btn-flat">
                                                 </form>
                                             </td>
                                         </tr>
-                                    {/foreach}
+                                    {/if}
+                                {/foreach}
                                 </tbody>
                             </table>
                         </div>

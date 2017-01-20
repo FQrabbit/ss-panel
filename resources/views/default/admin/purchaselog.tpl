@@ -46,16 +46,14 @@
                 <input name="port" type="number" value="{$q['port']}" placeholder="用户端口" class="form-control">
             </div>
             <div class="form-group">
-                <input name="trade_no" type="number" value="{$q['trade_no']}" placeholder="订单号" class="form-control">
+                <input name="trade_no" type="number" value="{$q['out_trade_no']}" placeholder="交易号" class="form-control">
             </div>
             <div class="form-group">
                 <select name="body" class="form-control">
                     <option value="">套餐</option>
-                    <option value="试玩">试玩</option>
-                    <option value="基础">基础</option>
-                    <option value="包月">包月</option>
-                    <option value="包季">包季</option>
-                    <option value="包年">包年</option>
+                {foreach $products as $product}
+                    <option value="{$product->name}">{$product->name}</option>
+                {/foreach}
                 </select>
             </div>
             <div class="form-group">
@@ -73,11 +71,9 @@
             <div class="form-group">
                 <select id="body" class="form-control">
                     <option value="">套餐</option>
-                    <option value="试玩">试玩</option>
-                    <option value="基础">基础</option>
-                    <option value="包月">包月</option>
-                    <option value="包季">包季</option>
-                    <option value="包年">包年</option>
+                {foreach $products as $product}
+                    <option value="{$product->id}">{$product->name}</option>
+                {/foreach}
                 </select>
             </div>
             <div class="form-group">
