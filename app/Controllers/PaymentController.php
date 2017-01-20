@@ -91,7 +91,7 @@ class PaymentController extends BaseController
         	'price' => $product->price,
         	'out_trade_no' => $alino
         	);
-        $this::addPurchaseLog($purchase_log_arr);
+        $this->addPurchaseLog($purchase_log_arr);
 
         // 购买之前的用户状态
         $pre['plan'] = $user->plan;
@@ -160,11 +160,11 @@ class PaymentController extends BaseController
 		$uid = $q['uid'];
 		$price = $q['total'];
 		$apikey = $q['apikey'];
-        if(!$this::verify($apikey, $alino)) {
+        if(!$this->verify($apikey, $alino)) {
         	return $response->withStatus(302)->withHeader('Location', 'user');
         }
 		$product_id = substr($alino, 9, 1);
-        $this::doPay($uid, $product_id, $alino);
+        $this->doPay($uid, $product_id, $alino);
 
         return '购买成功';
     }
