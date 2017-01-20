@@ -125,7 +125,7 @@ class PaymentController extends BaseController
                 'user_name' => $user->user_name,
                 'type' => $user->type
             ];
-/*            Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
+            Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
 
             $to = 'zhwalker20@gmail.com';
             $title = 'Shadowsky - 用户购买通知';
@@ -134,7 +134,7 @@ class PaymentController extends BaseController
             $arr2 = [
                 'content' => $content
             ];
-            Mail::send($to, $title, $tpl, $arr2, []);*/
+            Mail::send($to, $title, $tpl, $arr2, []);
 
             $rs['ret'] = 1;
             $rs['msg'] = '发送邮箱通知成功。';
