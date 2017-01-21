@@ -67,12 +67,9 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="method">
-                                                <option value="aes-256-cfb" selected="selected">AES-256-CFB</option>
-                                                <option value="aes-256-ctr">AES-256-CTR</option>
-                                                <option value="camellia-256-cfb">CAMELLIA-256-CFB</option>
-                                                <option value="salsa20">SALSA20</option>
-                                                <option value="chacha20">CHACHA20</option>
-                                                <option value="chacha20-ietf">CHACHA20-IETF</option>
+                                                {foreach $methods as $method}
+                                                <option value="{$method}">{$method}</option>
+                                                {/foreach}
                                             </select>
                                         </div>
                                     </div>
@@ -82,18 +79,17 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="protocol">
-                                                <option value="verify_deflate">verify_deflate</option>
-                                                <option value="verify_sha1">verify_sha1</option>
-                                                <option value="auth_sha1_v2">auth_sha1_v2</option>
-                                                <option value="auth_sha1_v4">auth_sha1_v4</option>
-                                                <option value="auth_aes128_md5">auth_aes128_md5</option>
-                                                <option value="auth_aes128_sha1">auth_aes128_sha1</option>
+                                                {foreach $protocols as $protocol}
+                                                {if strpos($protocol, 'compatible') === false}
+                                                <option value="{$protocol}">{$protocol}</option>
+                                                {/if}
+                                                {/foreach}
                                                 <option disabled="disabled">==以下兼容原协议==</option>
-                                                <option value="verify_sha1_compatible">verify_sha1_compatible</option>
-                                                <option value="auth_sha1_v2_compatible">auth_sha1_v2_compatible</option>
-                                                <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                                <option value="auth_aes128_md5_compatible">auth_aes128_md5_compatible</option>
-                                                <option value="auth_aes128_sha1_compatible">auth_aes128_sha1_compatible</option>
+                                                {foreach $protocols as $protocol}
+                                                {if strpos($protocol, 'compatible') !== false}
+                                                <option value="{$protocol}">{$protocol}</option>
+                                                {/if}
+                                                {/foreach}
                                             </select>
                                         </div>
                                     </div>
@@ -103,13 +99,17 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="obfs">
-                                                <option value="http_simple">http_simple</option>
-                                                <option value="http_post">http_post</option>
-                                                <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
-                                                <option value="tls1.2_ticket_auth_compatible" disabled="disabled">==以下兼容原协议==</option>
-                                                <option value="http_simple_compatible">http_simple_compatible</option>
-                                                <option value="http_post_compatible">http_post_compatible</option>
-                                                <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                                {foreach $obfses as $obfs}
+                                                {if strpos($obfs, 'compatible') === false}
+                                                <option value="{$obfs}">{$obfs}</option>
+                                                {/if}
+                                                {/foreach}
+                                                <option disabled="disabled">==以下兼容原协议==</option>
+                                                {foreach $obfses as $obfs}
+                                                {if strpos($obfs, 'compatible') !== false}
+                                                <option value="{$obfs}">{$obfs}</option>
+                                                {/if}
+                                                {/foreach}
                                             </select>
                                         </div>
                                     </div>
@@ -271,6 +271,8 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script>
     $(document).ready(function () {
         function submit() {
@@ -336,6 +338,3 @@
         });
     })
 </script>
-
-
-{include file='admin/footer.tpl'}

@@ -112,8 +112,16 @@ class PaymentController extends BaseController
             $user->updateEnableTransfer($transfer_to_add);
             $user->updateExpireDate($product->name);
         }elseif ($product->isByMete()) { // 流量套餐
-            $user->updateEnableTransfer($pre['used_traffic_in_GB'] + $transfer_to_add);
-            $user->resetExpireDate();
+            if ($user->isExpire()) {
+                $user->addTraffic($transfer_to_add);
+            }else {
+                if ($pre['type']=='试玩') {
+                    $user->addTraffic($transfer_to_add);
+                }else {
+                    $user->updateEnableTransfer($pre['used_traffic_in_GB'] + $transfer_to_add);
+                }
+                $user->resetExpireDate();
+            }
         }else { //试用套餐
             $user->addTraffic($transfer_to_add);
             $user->updateExpireDate($product->name);

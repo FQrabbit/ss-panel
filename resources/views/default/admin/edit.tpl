@@ -102,6 +102,8 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='user/footer.tpl'}
+
 <script>
     $("#msg-success").hide();
     $("#msg-error").hide();
@@ -165,5 +167,3 @@
         })
     })
 </script>
-
-{include file='user/footer.tpl'}

@@ -122,12 +122,9 @@
                                     <select id="method" class="form-control">
                                         <option value="{$user->method}" style="background-color:#009688;" selected="selected">{$user->method} (当前)</option>
                                         <option value="{$user->method}" disabled="disabled">======</option>
-                                        <option value="aes-256-cfb">aes-256-cfb</option>
-                                        <option value="aes-256-ctr">aes-256-ctr</option>
-                                        <option value="camellia-256-cfb">camellia-256-cfb</option>
-                                        <option value="salsa20">salsa20</option>
-                                        <option value="chacha20">chacha20</option>
-                                        <option value="chacha20-ietf">chacha20-ietf</option>
+                                        {foreach $methods as $method}
+                                        <option value="{$method}">{$method}</option>
+                                        {/foreach}
                                     </select>
                                 </div>
                             </div>
@@ -137,15 +134,17 @@
                                     <select class="form-control" id="protocol">
                                         <option value="{$user->protocol}" style="background-color:#009688;" selected="selected">{$user->protocol} (当前)</option>
                                         <option value="{$user->protocol}" disabled="disabled">======</option>
-                                        <option value="verify_deflate">verify_deflate</option>
-                                        <option value="verify_sha1">verify_sha1</option>
-                                        <option value="auth_sha1_v2">auth_sha1_v2</option>
-                                        <option value="auth_sha1_v4">auth_sha1_v4</option>
-                                        <option value="auth_aes128_md5">auth_aes128_md5（推荐）</option>
-                                        <option value="auth_aes128_sha1">auth_aes128_sha1（推荐）</option>
+                                        {foreach $protocols as $protocol}
+                                        {if strpos($protocol, 'compatible') === false}
+                                        <option value="{$protocol}">{$protocol}</option>
+                                        {/if}
+                                        {/foreach}
                                         <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
-                                        <option value="auth_sha1_v4_compatible">auth_sha1_v4_compatible</option>
-                                        <!-- <option value="verify_deflate">verify_deflate</option> -->
+                                        {foreach $protocols as $protocol}
+                                        {if strpos($protocol, 'compatible') !== false}
+                                        <option value="{$protocol}">{$protocol}</option>
+                                        {/if}
+                                        {/foreach}
                                     </select>
                                 </div>
                             </div>
@@ -154,15 +153,18 @@
                                 <div class="col-sm-9">
                                     <select class="form-control" id="obfs">
                                         <option value="{$user->obfs}" style="background-color:#009688;" selected="selected">{$user->obfs} (当前)</option>
-
                                         <option value="{$user->obfs}" disabled="disabled">======</option>
-                                        <option value="http_simple">http_simple</option>
-                                        <option value="http_post">http_post</option>
-                                        <option value="tls1.2_ticket_auth">tls1.2_ticket_auth</option>
-                                        <option value="tls1.2_ticket_auth_compatible" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
-                                        <option value="http_simple_compatible">http_simple_compatible</option>
-                                        <option value="http_post_compatible">http_post_compatible</option>
-                                        <option value="tls1.2_ticket_auth_compatible">tls1.2_ticket_auth_compatible</option>
+                                        {foreach $obfses as $obfs}
+                                        {if strpos($obfs, 'compatible') === false}
+                                        <option value="{$obfs}">{$obfs}</option>
+                                        {/if}
+                                        {/foreach}
+                                        <option value="{$user->obfs}" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
+                                        {foreach $obfses as $obfs}
+                                        {if strpos($obfs, 'compatible') !== false}
+                                        <option value="{$obfs}">{$obfs}</option>
+                                        {/if}
+                                        {/foreach}
                                     </select>
                                 </div>
                             </div>

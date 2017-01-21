@@ -8,14 +8,23 @@
 </div><!-- ./wrapper -->
 
 
+<!-- jQuery 2.1.3 -->
+<script src="/assets/public/js/jquery.min.js"></script>
+<!-- jquery-confirm -->
+<script src="/assets/public/js/jquery-confirm.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
 <script src="/assets/public/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- datetimepicker -->
+<script src="/assets/public/js/bootstrap-datetimepicker.min.js"></script>
 <!-- SlimScroll -->
 <script src="/assets/public/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <!-- FastClick -->
 <script src='/assets/public/plugins/fastclick/fastclick.min.js'></script>
 <!-- AdminLTE App -->
 <script src="/assets/public/js/app.min.js" type="text/javascript"></script>
+{if $url == '/admin/purchaselog' }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+{/if}
 <div style="display:none;">
     {$analyticsCode}
 </div>

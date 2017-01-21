@@ -22,15 +22,12 @@
     <style>
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
         padding: 5px;
+        white-space: nowrap;
     }
     .jconfirm .jconfirm-box div.content-pane .content{
         min-height: auto;
     }
     </style>
-    <!-- jQuery 2.1.3 -->
-    <script src="/assets/public/js/jquery.min.js"></script>
-    <script src="/assets/public/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/assets/public/js/jquery-confirm.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

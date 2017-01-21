@@ -1,13 +1,4 @@
 {include file='admin/main.tpl'}
-<link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
-<style>
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 5px;
-}
-.jconfirm .jconfirm-box div.content-pane .content{
-    min-height: auto;
-}
-</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -46,7 +37,7 @@
                 <input name="port" type="number" value="{$q['port']}" placeholder="用户端口" class="form-control">
             </div>
             <div class="form-group">
-                <input name="trade_no" type="number" value="{$q['out_trade_no']}" placeholder="交易号" class="form-control">
+                <input name="out_trade_no" type="text" value="{$q['out_trade_no']}" placeholder="交易号" class="form-control">
             </div>
             <div class="form-group">
                 <select name="body" class="form-control">
@@ -92,8 +83,6 @@
         <p>本日收入：{$income["daily"]}元</p>
 
         <!-- chart -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <div  style="background-color:rgba(0, 0, 0, 0.6);padding:10px;" class="margin-bottom">
             <canvas id="myChart" height="400"></canvas>
         </div>
@@ -107,7 +96,9 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
-                                <th>用户</th>
+                                <th>用户ID</th>
+                                <th>用户名</th>
+                                <th>用户端口</th>
                                 <th>套餐</th>
                                 <th>价格</th>
                                 <th>购买日期</th>
@@ -116,8 +107,10 @@
                             </tr>
                             {foreach $logs as $log}
                                 <tr>
-                                    <td>#{$log->id}</td>
+                                    <td><a href="/admin/user/{$log->user()->id}/edit">#{$log->id}</a></td>
                                     <td>{$log->uid}</td>
+                                    <td>{$log->user()->user_name}</td>
+                                    <td>{$log->user()->port}</td>
                                     <td>{$log->body}</td>
                                     <td>{$log->price}</td>
                                     <td>{$log->buy_date}</td>
@@ -137,9 +130,8 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-{include file='user/footer.tpl'}
+{include file='admin/footer.tpl'}
 
-<script src="/assets/public/js/jquery-confirm.js"></script>
 <script>
     function insert() {
         $.ajax({
@@ -183,7 +175,7 @@
                     $("#msg-error").hide(100);
                     $("#msg-success").show(100);
                     $("#msg-success-p").html(data.msg);
-                    window.setTimeout("location.reload()", 2000);
+                    // window.setTimeout("location.reload()", 2000);
                 } else {
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);

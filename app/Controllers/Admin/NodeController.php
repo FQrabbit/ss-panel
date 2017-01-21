@@ -17,7 +17,10 @@ class NodeController extends AdminController
 
     public function create($request, $response, $args)
     {
-        return $this->view()->display('admin/node/create.tpl');
+        $methods = Node::getAllMethod();
+        $obfses = Node::getAllObfs();
+        $protocols = Node::getAllProtocol();
+        return $this->view()->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('admin/node/create.tpl');
     }
 
     public function add($request, $response, $args)
@@ -44,7 +47,10 @@ class NodeController extends AdminController
         if ($node == null) {
 
         }
-        return $this->view()->assign('node', $node)->display('admin/node/edit.tpl');
+        $methods = Node::getAllMethod();
+        $obfses = Node::getAllObfs();
+        $protocols = Node::getAllProtocol();
+        return $this->view()->assign('node', $node)->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('admin/node/edit.tpl');
     }
 
     public function update($request, $response, $args)

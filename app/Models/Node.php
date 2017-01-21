@@ -13,6 +13,59 @@ class Node extends Model
 {
     protected $table = "ss_node";
 
+    public static function getAllMethod()
+    {
+        return [
+            'aes-128-cfb',
+            'aes-192-cfb',
+            'aes-256-cfb',
+            'aes-128-ctr',
+            'aes-192-ctr',
+            'aes-256-ctr',
+            'bf-cfb',
+            'camellia-128-cfb',
+            'camellia-192-cfb',
+            'camellia-256-cfb',
+            'rc4-md5',
+            'rc4-md5-6',
+            'aes-128-cfb8',
+            'aes-192-cfb8',
+            'aes-256-cfb8',
+            'salsa20',
+            'chacha20',
+            'chacha20-ietf'
+        ];
+    }
+
+    public static function getAllObfs()
+    {
+        return [
+            'http_simple',
+            'http_simple_compatible',
+            'http_post',
+            'http_post_compatible',
+            'random_head',
+            'random_head_compatible',
+            'tls1.2_ticket_auth',
+            'tls1.2_ticket_auth_compatible'
+        ];
+    }
+
+    public static function getAllProtocol()
+    {
+        return [
+            'verify_simple',
+            'verify_deflate',
+            'verify_sha1',
+            'verify_sha1_compatible',
+            'auth_sha1_v2',
+            'auth_sha1_v2_compatible',
+            'auth_sha1_v4',
+            'auth_sha1_v4_compatible',
+            'auth_aes128_md5',
+            'auth_aes128_sha1'
+        ];
+    }
 
     public function getLastNodeInfoLog()
     {

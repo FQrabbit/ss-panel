@@ -21,9 +21,6 @@
             </div>
         </div>
 
-        <!-- chart -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
             <canvas id="chart" height="400"></canvas>
         </div>

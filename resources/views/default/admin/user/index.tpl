@@ -129,6 +129,8 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script type="text/javascript"> 
     function deleteuser(uid){
         $.ajax({
@@ -180,5 +182,3 @@
         });
     })
 </script>
-
-{include file='admin/footer.tpl'}

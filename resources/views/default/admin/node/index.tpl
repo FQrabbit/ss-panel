@@ -65,6 +65,8 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script>
     function deleteNode(id){
         $.ajax({
@@ -109,5 +111,3 @@
         $("#msg-error").hide(100);
     });
 </script>
-
-{include file='admin/footer.tpl'}

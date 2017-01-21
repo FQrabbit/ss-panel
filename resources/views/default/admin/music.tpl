@@ -90,6 +90,8 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script type="text/javascript">
     function insert() {
         $.ajax({
@@ -171,5 +173,3 @@
         });
     })
 </script>
-
-{include file='admin/footer.tpl'}

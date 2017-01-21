@@ -39,7 +39,7 @@ class UserController extends BaseController
     public function view()
     {
         $userFooter = DbConfig::get('user-footer');
-        return parent::view()->assign('userFooter', $userFooter)->assign('url', $_SERVER['REQUEST_URI']);
+        return parent::view()->assign('userFooter', $userFooter)->assign('url', strtok($_SERVER["REQUEST_URI"],'?'));
     }
 
     public function index($request, $response, $args)
@@ -163,39 +163,7 @@ class UserController extends BaseController
         }
         $string='
 {
-    "index" : 1,
-    "random" : false,
-    "sysProxyMode" : 0,
-    "shareOverLan" : false,
-    "bypassWhiteList" : false,
-    "localPort" : 1080,
-    "localAuthPassword" : "'.Tools::genRandomChar(26).'",
-    "dns_server" : "",
-    "reconnectTimes" : 4,
-    "randomAlgorithm" : 0,
-    "TTL" : 60,
-    "connect_timeout" : 5,
-    "proxyRuleMode" : 1,
-    "proxyEnable" : false,
-    "pacDirectGoProxy" : false,
-    "proxyType" : 0,
-    "proxyHost" : "",
-    "proxyPort" : 0,
-    "proxyAuthUser" : "",
-    "proxyAuthPass" : "",
-    "proxyUserAgent" : "",
-    "authUser" : "",
-    "authPass" : "",
-    "autoBan" : false,
-    "sameHostForSameTarget" : true,
-    "keepVisitTime" : 180,
-    "isHideTips" : true,
-    "token" : {
-
-    },
-    "portMap" : {
-
-    }
+    "index" : 1
 }
         ';
         
@@ -229,7 +197,10 @@ class UserController extends BaseController
 
     public function profile($request, $response, $args)
     {
-        return $this->view()->display('user/profile.tpl');
+        $methods = Node::getAllMethod();
+        $obfses = Node::getAllObfs();
+        $protocols = Node::getAllProtocol();
+        return $this->view()->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('user/profile.tpl');
     }
 
     public function edit($request, $response, $args)

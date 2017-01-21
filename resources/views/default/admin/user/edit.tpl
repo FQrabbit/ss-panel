@@ -330,6 +330,8 @@
 </div>
 <!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script>
     $(document).ready(function () {
         function submit() {
@@ -417,5 +419,3 @@
     //     todayHighlight: true
     // });
 </script>
-
-{include file='admin/footer.tpl'}

@@ -174,6 +174,8 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script>
     $(document).ready(function () {
         $("#update").click(function () {
@@ -302,5 +304,3 @@
         });
     })
 </script>
-
-{include file='admin/footer.tpl'}

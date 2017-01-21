@@ -40,6 +40,10 @@
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script>
 {/if}
+{if $url == '/user/trafficlog'}
+<!-- chart -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+{/if}
 <div style="display:none;">
     {$analyticsCode}
 </div>

@@ -11,4 +11,8 @@ class Model extends BaseModel
 {
     public $timestamps = false;
 
+    public function user()
+    {
+    	return User::find($this->uid);
+    }
 }

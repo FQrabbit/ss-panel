@@ -16,8 +16,8 @@
     <!-- Theme style -->
     <link href="/assets/public/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
 
-    <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     {if $url == '/user/sys' }
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/public/css/jquery.dataTables.min.css">

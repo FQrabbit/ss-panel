@@ -30,15 +30,19 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
-                                <th>用户</th>
+                                <th>用户ID</th>
+                                <th>用户名</th>
+                                <th>用户端口</th>
                                 <th>金额</th>
                                 <th>捐助日期</th>
                                 <th>交易号</th>
                             </tr>
                             {foreach $logs as $log}
                                 <tr>
-                                    <td>#{$log->id}</td>
+                                    <td><a href="/admin/user/{$log->user()->id}/edit">#{$log->id}</a></td>
                                     <td>{$log->uid}</td>
+                                    <td>{$log->user()->user_name}</td>
+                                    <td>{$log->user()->port}</td>
                                     <td>{$log->money}</td>
                                     <td>{$log->datetime}</td>
                                     <td>{$log->trade_no}</td>

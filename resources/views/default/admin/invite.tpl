@@ -87,6 +87,8 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+{include file='admin/footer.tpl'}
+
 <script>
     $(document).ready(function () {
         $("#invite").click(function () {
@@ -114,5 +116,3 @@
         })
     })
 </script>
-
-{include file='admin/footer.tpl'}
