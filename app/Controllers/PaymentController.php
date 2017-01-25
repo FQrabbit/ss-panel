@@ -120,8 +120,8 @@ class PaymentController extends BaseController
                 }else {
                     $user->updateEnableTransfer($pre['used_traffic_in_GB'] + $transfer_to_add);
                 }
-                $user->resetExpireDate();
             }
+            $user->resetExpireDate();
         }else { //试用套餐
             $user->addTraffic($transfer_to_add);
             $user->updateExpireDate($product->name);
