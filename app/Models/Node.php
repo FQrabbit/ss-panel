@@ -44,8 +44,6 @@ class Node extends Model
             'http_simple_compatible',
             'http_post',
             'http_post_compatible',
-            'random_head',
-            'random_head_compatible',
             'tls1.2_ticket_auth',
             'tls1.2_ticket_auth_compatible'
         ];
@@ -54,12 +52,6 @@ class Node extends Model
     public static function getAllProtocol()
     {
         return [
-            'verify_simple',
-            'verify_deflate',
-            'verify_sha1',
-            'verify_sha1_compatible',
-            'auth_sha1_v2',
-            'auth_sha1_v2_compatible',
             'auth_sha1_v4',
             'auth_sha1_v4_compatible',
             'auth_aes128_md5',

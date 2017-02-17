@@ -174,6 +174,7 @@
                                     <input id="obfs_param" class="form-control" type="text" value="{$user->obfs_param}" placeholder="输入混淆参数，如'cloudflare.com'，请勿乱填。">
                                 </div>
                             </div>
+                            <p class="center"><a href="https://github.com/breakwa11/shadowsocks-rss/blob/master/ssr.md">==>>>协议插件文档<<<===</a></p>
                         </div>
                     </div>
                     <!-- /.box-body -->
