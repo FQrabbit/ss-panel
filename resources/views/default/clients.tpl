@@ -27,9 +27,9 @@
 			</div>
 			<div class="page-columns">
 				<div id="markdown" class="sixteen columns bottom">
-					<p>Github下载慢可用BitTorrent Sync下载</p>
+<!-- 					<p>Github下载慢可用BitTorrent Sync下载</p>
 					<p>BitTorrent Sync：<a href="https://link.getsync.com/#f=shadowsocks&sz=23E6&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CCMJCUFHLJ2X4JFCGJBXTFI4DADHWJ3FQ&v=2.3">BIKEZT3XG6KCGWAHGO7G3DTSAA5G3WRB2</a></p>
-					<div id="download" class="container">
+ -->					<div id="download" class="container">
 						<div class="sixteen columns"><br></div>
 						<div class="one-third column">
 						<h3><i class="fa fa-windows fa-3x"></i> &nbsp; Windows</h3>
@@ -45,7 +45,7 @@
 
 									<li>shadowsocksR(增强版，支持混淆插件)
 										<ul>
-											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a>(此处已不再更新，请用上面的BT Sync链接下载最新版)</li>
+											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li>
 										</ul>
 									</li>
 								</ul>
@@ -56,9 +56,9 @@
 							<h3><i class="fa fa-apple fa-3x"></i> &nbsp; Mac OS X</h3>
 							<p><strong>GUI Client</strong></p>
 							<ul>
-								<li>ShadowsocksX:
+								<li>ShadowsocksX-NG:
 									<ul>
-										<li><a href="https://github.com/shadowsocks/shadowsocks-iOS/releases">Github</a></li>
+										<li><a href="https://github.com/shadowsocksr/ShadowsocksX-NG/releases">Github</a></li>
 									</ul>
 								</li>
 								<li>GoAgentX:
@@ -91,7 +91,7 @@
 								</li>
 								<li>ssr-android:
 									<ul>
-										<li><a href="https://link.getsync.com/#f=shadowsocks&sz=23E6&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CCMJCUFHLJ2X4JFCGJBXTFI4DADHWJ3FQ&v=2.3">BT Sync</a></li>
+										<li><a href="https://github.com/shadowsocksr/shadowsocksr-android/releases">Github</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -105,6 +105,7 @@
 										<li><a href="https://itunes.apple.com/app/apple-store/id1070901416?mt=8">Potatso</a></li>
 										<li><a href="https://itunes.apple.com/us/app/shadowrocket/id932747118?mt=8">Shadowrocket</a></li>
 										<li><a href="https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8">Surge</a></li>
+										<li><a href="https://itunes.apple.com/cn/app/id1178584911">Wingy</a></li>
 									</ul>
 								<li>Big Boss:
 									<ul>
