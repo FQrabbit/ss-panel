@@ -268,7 +268,8 @@ var myChart = new Chart(ctx, {
                     fontColor: "#bbb"
                 },
                 ticks: {
-                    fontColor: "#bbb"
+                    fontColor: "#bbb",
+                    beginAtZero: true
                 }
             }]
         }
