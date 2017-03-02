@@ -139,7 +139,7 @@
                                         <option value="{$protocol}">{$protocol}</option>
                                         {/if}
                                         {/foreach}
-                                        <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
+                                        <option value="{$user->protocol}" disabled="disabled">==以下兼容原协议（如要使用原版客户端或不支持设置协议的客户端请选择以下中的一个）==</option>
                                         {foreach $protocols as $protocol}
                                         {if strpos($protocol, 'compatible') !== false}
                                         <option value="{$protocol}">{$protocol}</option>
@@ -159,7 +159,7 @@
                                         <option value="{$obfs}">{$obfs}</option>
                                         {/if}
                                         {/foreach}
-                                        <option value="{$user->obfs}" disabled="disabled">==以下兼容原协议（如要使用原版客户端请选择以下中的一个）==</option>
+                                        <option value="{$user->obfs}" disabled="disabled">==以下兼容原协议（如要使用原版客户端或不支持设置混淆的客户端请选择以下中的一个）==</option>
                                         {foreach $obfses as $obfs}
                                         {if strpos($obfs, 'compatible') !== false}
                                         <option value="{$obfs}">{$obfs}</option>
