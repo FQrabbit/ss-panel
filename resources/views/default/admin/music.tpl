@@ -75,7 +75,7 @@
                                     <a class="btn btn-danger btn-sm" id="delete" value="{$m->mid}" href="javascript:void(0);" onclick="confirm_delete({$m->mid});">删除</a>
                                 </td>
                                 <td>#{$m->id}</td>
-                                <td>{$m->mid}</td>
+                                <td><a href="http://music.163.com/#/song?id={$m->mid}" target="_blank">{$m->mid}</a></td>
                                 <td>{$m->name}</td>
                                 <td>{$m->author}</td>
                             </tr>

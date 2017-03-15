@@ -81,6 +81,20 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-sm-3 control-label">滥用</label>
+
+                                        <div class="col-sm-9"><select class="form-control" id="status">
+                                                <option value="1" {if $user->status==1}selected="selected"{/if}>
+                                                    否
+                                                </option>
+                                                <option value="0" {if $user->status==0}selected="selected"{/if}>
+                                                    是
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-12"><hr></div>
                                     <div class="form-group col-sm-6">
                                         <label class="col-sm-3 control-label">是否捐助</label>
@@ -352,6 +366,7 @@
                     protocol: $("#protocol").val(),
                     protocol_param: $("#protocol_param").val(),
                     enable: $("#enable").val(),
+                    status: $("#status").val(),
                     is_admin: $("#is_admin").val(),
                     money: $("#money").val(),
                     user_type: $("#user_type").val(),
