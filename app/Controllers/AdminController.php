@@ -8,6 +8,8 @@ use App\Models\DonateLog;
 use App\Models\InviteCode;
 use App\Models\TrafficLog;
 use App\Models\Ann;
+use App\Models\AnnLog;
+use App\Models\Vote;
 use App\Models\User;
 use App\Models\Music;
 use App\Models\Shop;
@@ -380,5 +382,21 @@ class AdminController extends UserController
         }
         $res['total'] = count($users);
         return $response->getBody()->write(json_encode($res));
+    }
+
+    public function deleteUserPolls($uid)
+    {
+        Vote::where('uid', $uid)->delete();
+    }
+
+    public function deleteUserAnnLogs($uid)
+    {
+        AnnLog::where('user_id', $uid)->delete();
+    }
+
+    public function clearUserLogs($uid)
+    {
+        self::deleteUserPolls($uid);
+        self::deleteUserAnnLogs($uid);
     }
 }

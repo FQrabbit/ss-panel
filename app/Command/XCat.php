@@ -47,12 +47,12 @@ class XCat
                 return Job::updateNodeUsage();
             case("getNoTransferUser"):
                 return Job::getNoTransferUser();
+            case("delNoTransferUser"):
+                return Job::delNoTransferUser();
             case("getUncheckinUser"):
                 return Job::getUncheckinUser();
             case("delUncheckinUser"):
                 return Job::delUncheckinUser();
-            case("delNoTransferUser"):
-                return Job::delNoTransferUser();
             case("clearLog"):
                 return Job::clearLog();
             case("freezeuser"):

@@ -71,6 +71,7 @@ class UserController extends AdminController
         $user->obfs = $request->getParam('obfs');
         $user->obfs_param = $request->getParam('obfs_param');
         $user->enable = $request->getParam('enable');
+        $user->status = $request->getParam('status');
         $user->is_admin = $request->getParam('is_admin');
         $user->money = $request->getParam('money');
         $user->user_type = $request->getParam('user_type');
@@ -92,6 +93,7 @@ class UserController extends AdminController
     public function delete($request, $response, $args)
     {
         $id = $args['id'];
+        AdminController::clearUserLogs($id);
         $user = User::find($id);
         if (!$user->delete()) {
             $rs['ret'] = 0;

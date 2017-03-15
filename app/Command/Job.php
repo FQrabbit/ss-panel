@@ -11,6 +11,7 @@ use App\Models\NodeOnlineLog;
 use App\Models\CheckInLog;
 use App\Models\EmailVerify;
 use App\Models\PasswordReset;
+use App\Controllers\AdminController;
 use App\Services\Config;
 use App\Services\Mail;
 
@@ -49,6 +50,7 @@ class Job
                 echo "已更新用户".$user->user_name."(id:".$user->id.")的plan为A</br>";
             }
         }
+        echo "</br>";
     }
 
     public static function getNoTransferUser()
@@ -128,7 +130,7 @@ class Job
 
                 echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->plan."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
             }
-            echo "</tbody></table></br>";
+            echo "</tbody></table></br></br>";
         }
     }
 
@@ -150,11 +152,16 @@ class Job
                 "user_type",
                 "transfer_enable"
             );
+            // 备份用户
             $u = new DelUser;
             foreach ($fields as $field) {
                 $u->$field = $user->$field;
             }
             $u->save();
+
+            // 删除用户相关记录
+            AdminController::clearUserLogs($user->id);
+
             $user->delete();
         }
     }
