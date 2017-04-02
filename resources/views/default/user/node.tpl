@@ -57,8 +57,13 @@
 														<button class="fa fa-thumbs-down vote-btn dislike-btn"><span>{$node->getPollCount(-1)}</span><span class="sr-only">{$node->id}</span></button>
 													</td>
 													<td>{$node->name}</td>
-													<td><span class="label label-success">{$node->status}</span></td>
+												{if $node->getOnlineUserCount()!='暂无数据'}
+													<td><span class="label" style="background-color:#00a65a">{$node->status}</span></td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
+												{else}
+													<td><span class="label" style="background-color:#444">维护中</span></td>
+													<td><span class="badge" style="background-color:#444">{$node->getOnlineUserCount()}</span></td>
+												{/if}
 													<td>
 														<div class="progress">
 														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
@@ -83,8 +88,13 @@
 													
 													</td>
 													<td class="node-name" onclick="urlChange('{$node->id}')">{$node->name}</td>
-													<td><span class="label label-success">{$node->status}</span></td>
+												{if $node->getOnlineUserCount()!='暂无数据'}
+													<td><span class="label" style="background-color:#00a65a">{$node->status}</span></td>
 													<td><span class="badge bg-dark-teal">{$node->getOnlineUserCount()}</span></td>
+												{else}
+													<td><span class="label" style="background-color:#444">维护中</span></td>
+													<td><span class="badge" style="background-color:#444">{$node->getOnlineUserCount()}</span></td>
+												{/if}
 													<td>
 														<div class="progress">
 														    <div class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" aria-valuenow="{$node->node_usage}" aria-valuemin="0" aria-valuemax="100" style="width:{$node->node_usage}%">
@@ -117,7 +127,7 @@
 
 <div aria-hidden="true" class="modal fade" id="nodeinfo" role="dialog" tabindex="-1">
 	<div class="modal-dialog modal-full">
-		<div class="modal-content">
+		<div class="modal-content" style="overflow:hidden">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			    <span aria-hidden="true">&times;</span>
 			</button>

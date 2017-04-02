@@ -130,5 +130,5 @@ class Node extends Model
         $c = Vote::where('nodeid', $id)->where('poll', $p)->count();
         return $c;
     }
-
+    
 }

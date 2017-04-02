@@ -4,6 +4,11 @@
         window.location.href = "/user/node";
     </script>
 {/if}
+<style>
+html{
+    margin-right: 0;
+}
+</style>
 <div class="content-wrapper" style="margin:0">
     <section class="content-header">
         <h1>
