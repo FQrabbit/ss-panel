@@ -114,7 +114,11 @@ var chart1 = new Chart(ctx, {
                     data.datasets[0].data.forEach(function(v) {
                         sum += v;
                     });
-                    return 'Sum: ' + Math.round(sum);
+                    if (sum>1024) {
+                        return 'Sum: ' + Math.round(sum/1024*100)/100 + " GB";
+                    }else{
+                        return 'Sum: ' + Math.round(sum) + " MB";
+                    }
                 },
             },
             footerFontStyle: 'bold'
@@ -184,7 +188,11 @@ var chart2 = new Chart(ctx, {
                     data.datasets[0].data.forEach(function(v) {
                         sum += v;
                     });
-                    return 'Sum: ' + Math.round(sum);
+                    if (sum>1024) {
+                        return 'Sum: ' + Math.round(sum/1024*100)/100 + " GB";
+                    }else{
+                        return 'Sum: ' + Math.round(sum) + " MB";
+                    }
                 },
             },
             footerFontStyle: 'bold'
@@ -230,7 +238,7 @@ var chart3 = new Chart(ctx, {
         labels: {$users_transfer_array_for_chart}.labels,
         datasets: [
             {
-                label: "#(MB) Traffic by user",
+                label: "#(GB) Traffic by user",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$users_transfer_array_for_chart}.datas,
             }
@@ -254,7 +262,7 @@ var chart3 = new Chart(ctx, {
                     data.datasets[0].data.forEach(function(v) {
                         sum += v;
                     });
-                    return 'Sum: ' + Math.round(sum);
+                    return 'Sum: ' + Math.round(sum*100)/100 + "GB";
                 },
             },
             footerFontStyle: 'bold'

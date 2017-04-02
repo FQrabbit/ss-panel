@@ -98,7 +98,11 @@ var chart1 = new Chart(ctx, {
                     data.datasets[0].data.forEach(function(v) {
                         sum += v;
                     });
-                    return 'Sum: ' + Math.round(sum);
+                    if (sum>1024) {
+                        return 'Sum: ' + Math.round(sum/1024*100)/100 + " GB";
+                    }else{
+                        return 'Sum: ' + Math.round(sum) + " MB";
+                    }
                 },
             },
             footerFontStyle: 'bold'
@@ -168,7 +172,11 @@ var chart2 = new Chart(ctx, {
                     data.datasets[0].data.forEach(function(v) {
                         sum += v;
                     });
-                    return 'Sum: ' + Math.round(sum);
+                    if (sum>1024) {
+                        return 'Sum: ' + Math.round(sum/1024*100)/100 + " GB";
+                    }else{
+                        return 'Sum: ' + Math.round(sum) + " MB";
+                    }
                 },
             },
             footerFontStyle: 'bold'
