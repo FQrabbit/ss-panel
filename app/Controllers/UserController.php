@@ -490,6 +490,51 @@ class UserController extends BaseController
         return $this->echoJson($response, $res);
     }
 
+    public static function getTrafficInfoArrayForChart($uid)
+    {
+        $logs = TrafficLog::where('user_id', $uid)->orderBy('id','ASC')->get();
+        $labels_hour = array(); // time odd hour
+        $labels_node = array(); // node name
+        $datas = array();
+        for($i=0;$i<=date("H");$i++){
+            if ($i%2==0) {
+                $label_name = '';
+            }elseif ($i<12) {
+                $label_name = $i.' a.m.';
+            }else {
+                $label_name = $i.' p.m.';
+            }
+            array_push($labels_hour,$label_name);
+        }
+        
+        foreach ($logs as $log) {
+            $datas[0][date('H',$log->log_time)] += round((($log->u+$log->d)/1048576),2);
+            $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u+$log->d)/1048576),2);
+        }
+        $d = array('0'=>array(),'1'=>array());
+        for ($i = 0; $i < date('H',$log->log_time); $i++) {
+            if ($i<10) {
+                $n = "0".$i;
+            }else {
+                $n = $i;
+            }
+            if (!isset($datas[0][$n])) {
+                array_push($d[0], 0);
+            }else {
+                array_push($d[0], $datas[0][$n]);
+            }
+        }
+        foreach ($datas[1] as $k=>$v) {
+            array_push($d[1], $v);
+            array_push($labels_node,$k);
+        }
+        $labels = [$labels_hour,$labels_node];
+        $datas = $d;
+        $array_for_chart = [$labels, $datas];
+
+        return $array_for_chart;
+    }
+
     public function trafficLog($request, $response, $args)
     {
         $pageNum = 1;
@@ -500,41 +545,10 @@ class UserController extends BaseController
         $traffic->setPath('/user/trafficlog');
         $logs = TrafficLog::where('user_id', $this->user->id)->orderBy('id','ASC')->get();
 
-        // for chart start
-        $labels1 = array();
-        $labels2 = array();
-        $datas = array();
-        for($i=0;$i<=date("H");$i++){
-            if ($i%2==0) {
-                $ln = '';
-            }elseif ($i<12) {
-                $ln = $i.' a.m.';
-            }else {
-                $ln = $i.' p.m.';
-            }
-            array_push($labels1,$ln);
-        }
-        $labels2 = Node::orderBy('sort')->pluck("name")->toArray();
-        $labels = [$labels1,$labels2];
-        $labelsall = json_encode(array_merge($labels1, $labels2));
+        $array_for_chart = UserController::getTrafficInfoArrayForChart($this->user->id);
+        $array_for_chart = json_encode($array_for_chart);
         
-        foreach ($logs as $log) {
-            $datas[0][date('H',$log->log_time)] += round((($log->u+$log->d)/1048576),2);
-            $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u+$log->d)/1048576),2);
-        }
-        $d = array('0'=>array(),'1'=>array());
-        foreach ($datas[0] as $k=>$v) {
-            array_push($d[0], $v);
-        }
-        foreach ($datas[1] as $k=>$v) {
-            array_push($d[1], $v);
-        }
-        $labels = json_encode($labels);
-        // print_r($labels);
-        $datas = json_encode($d);
-        // for chart end
-        
-        return $this->view()->assign('logs', $traffic)->assign('datas', $datas)->assign('labels', $labels)->assign('labelsall', $labelsall)->display('user/trafficlog.tpl');
+        return $this->view()->assign('logs', $traffic)->assign('array_for_chart', $array_for_chart)->display('user/trafficlog.tpl');
     }
 
     public function purchaseLog($request, $response, $args)

@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Music;
 use App\Models\Shop;
 use App\Controllers\PaymentController;
+use App\Controllers\UserController;
 use App\Services\Analytics;
 use App\Services\DbConfig;
 use App\Services\Mail;
@@ -270,7 +271,7 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
-        $logs = TrafficLog::where('id', ">" , 0);
+        $logs = TrafficLog::where('id', ">" , 0)->orderBy('id', 'desc');
         $path = '/admin/trafficlog?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
@@ -278,10 +279,30 @@ class AdminController extends UserController
                 $path .= $k.'='.$v.'&';
             }
         }
+
+
+        $users_transfer_array = array();
+        foreach (TrafficLog::all() as $log) {
+            $users_transfer_array[$log->user_id] += ($log->d + $log->u);
+        }
+        arsort($users_transfer_array);
+        $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
+        $labels = array();
+        $datas = array();
+        foreach ($users_transfer_array as $k=>$v) {
+            array_push($labels,$k);
+            array_push($datas,round($v/1073741824, 2));
+        }
+        $users_transfer_array_for_chart = json_encode(array("labels"=>$labels,"datas"=>$datas));
+
+        $array_for_chart = UserController::getTrafficInfoArrayForChart($q['user_id']);
+        $array_for_chart = json_encode($array_for_chart);
+        // return json_encode($array_for_chart);
+
         $path = substr($path,0,strlen($path)-1);
         $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
-        return $this->view()->assign('logs', $logs)->display('admin/trafficlog.tpl');
+        return $this->view()->assign('logs', $logs)->assign('array_for_chart', $array_for_chart)->assign('users_transfer_array_for_chart', $users_transfer_array_for_chart)->display('admin/trafficlog.tpl');
     }
 
     public function config($request, $response, $args)

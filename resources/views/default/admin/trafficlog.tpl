@@ -31,6 +31,18 @@
                 <button type="submit" class="form-control btn btn-default btn-flat">查询</button>
             </div>
         </form>
+
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas id="chart3" height="400"></canvas>
+        </div>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas id="chart2" height="400"></canvas>
+        </div>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas id="chart1" height="400"></canvas>
+        </div>
+        <!-- chart -->
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -68,3 +80,217 @@
 </div><!-- /.content-wrapper -->
 
 {include file='user/footer.tpl'}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+var ctx = $("#chart1");
+var chart1 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$array_for_chart}[0][0],
+        datasets: [
+            {
+                label: "#(MB) Traffic by hour",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$array_for_chart}[1][0],
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                // Use the footer callback to display the sum of the items showing in the tooltip
+                footer: function(tooltipItems, data) {
+                    var sum = 0;
+                    data.datasets[0].data.forEach(function(v) {
+                        sum += v;
+                    });
+                    return 'Sum: ' + Math.round(sum);
+                },
+            },
+            footerFontStyle: 'bold'
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Time (Hour)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (MB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+var ctx = $("#chart2");
+var chart2 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$array_for_chart}[0][1],
+        datasets: [
+            {
+                label: "#(MB) Traffic by node",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$array_for_chart}[1][1],
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                // Use the footer callback to display the sum of the items showing in the tooltip
+                footer: function(tooltipItems, data) {
+                    var sum = 0;
+                    data.datasets[0].data.forEach(function(v) {
+                        sum += v;
+                    });
+                    return 'Sum: ' + Math.round(sum);
+                },
+            },
+            footerFontStyle: 'bold'
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Node name',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (MB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+var ctx = $("#chart3");
+var chart3 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$users_transfer_array_for_chart}.labels,
+        datasets: [
+            {
+                label: "#(MB) Traffic by user",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$users_transfer_array_for_chart}.datas,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                // Use the footer callback to display the sum of the items showing in the tooltip
+                footer: function(tooltipItems, data) {
+                    var sum = 0;
+                    data.datasets[0].data.forEach(function(v) {
+                        sum += v;
+                    });
+                    return 'Sum: ' + Math.round(sum);
+                },
+            },
+            footerFontStyle: 'bold'
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'User ID',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (GB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
