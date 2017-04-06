@@ -57,6 +57,24 @@ class User extends Model
         return $this->attributes['ref_by'] == 3;
     }
 
+    public function becomeDonator()
+    {
+        $this->ref_by = 3;
+        $this->save();
+    }
+
+    public function addMoney($money)
+    {
+        $original_money = $this->attributes['money'];
+        $this->money = $original_money + $money;
+    }
+
+    public function activate()
+    {
+        $this->enable = 1;
+        $this->save();
+    }
+
     public function lastSsTime()
     {
         if ($this->attributes['t'] == 0) {

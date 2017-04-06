@@ -2,10 +2,9 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\User;
-use App\Models\Vote;
 use App\Controllers\AdminController;
 use App\Models\Node;
+use App\Models\Vote;
 
 class NodeController extends AdminController
 {
@@ -17,8 +16,8 @@ class NodeController extends AdminController
 
     public function create($request, $response, $args)
     {
-        $methods = Node::getAllMethod();
-        $obfses = Node::getAllObfs();
+        $methods   = Node::getAllMethod();
+        $obfses    = Node::getAllObfs();
         $protocols = Node::getAllProtocol();
         return $this->view()->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('admin/node/create.tpl');
     }
@@ -26,7 +25,7 @@ class NodeController extends AdminController
     public function add($request, $response, $args)
     {
         $node = new Node();
-        $q = $request->getParsedBody();
+        $q    = $request->getParsedBody();
         foreach ($q as $k => $v) {
             $node->$k = $v;
         }
@@ -42,22 +41,22 @@ class NodeController extends AdminController
 
     public function edit($request, $response, $args)
     {
-        $id = $args['id'];
+        $id   = $args['id'];
         $node = Node::find($id);
         if ($node == null) {
 
         }
-        $methods = Node::getAllMethod();
-        $obfses = Node::getAllObfs();
+        $methods   = Node::getAllMethod();
+        $obfses    = Node::getAllObfs();
         $protocols = Node::getAllProtocol();
         return $this->view()->assign('node', $node)->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('admin/node/edit.tpl');
     }
 
     public function update($request, $response, $args)
     {
-        $id = $args['id'];
+        $id   = $args['id'];
         $node = Node::find($id);
-        $q = $request->getParsedBody();
+        $q    = $request->getParsedBody();
         foreach ($q as $k => $v) {
             $node->$k = $v;
         }
@@ -71,16 +70,16 @@ class NodeController extends AdminController
         return $response->getBody()->write(json_encode($rs));
     }
 
-
     public function delete($request, $response, $args)
     {
-        $id = $args['id'];
-        $node = Node::find($id);
-        $polls = Vote::where('nodeid', $id)->get();
+        $id        = $args['id'];
+        $node      = Node::find($id);
+        $polls     = Vote::where('nodeid', $id)->get();
+        $rs['msg'] = '';
         if (!$polls->isEmpty()) {
             $polls = Vote::where('nodeid', $id)->delete();
             $rs['msg'] .= "已清空投票。";
-        }else {
+        } else {
             $rs['msg'] .= "无投票。";
         }
         if (!$node->delete()) {
@@ -95,7 +94,7 @@ class NodeController extends AdminController
 
     public function deleteGet($request, $response, $args)
     {
-        $id = $args['id'];
+        $id   = $args['id'];
         $node = Node::find($id);
         $node->delete();
         return $this->redirect($response, '/admin/node');

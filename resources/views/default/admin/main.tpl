@@ -6,7 +6,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
     <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/public/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+    <!-- <link href="/assets/public/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/> -->
     <!-- Font Awesome Icons -->
     <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Ionicons -->
@@ -18,7 +18,9 @@
     <link href="/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     <!-- <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/> -->
+    {if $requireJQueryConfirm}
     <link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
+    {/if}
     <style>
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
         padding: 5px;

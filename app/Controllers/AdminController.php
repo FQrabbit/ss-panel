@@ -2,19 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Models\CheckInLog;
-use App\Models\PurchaseLog;
-use App\Models\DonateLog;
-use App\Models\InviteCode;
-use App\Models\TrafficLog;
-use App\Models\Ann;
-use App\Models\AnnLog;
-use App\Models\Vote;
-use App\Models\User;
-use App\Models\Music;
-use App\Models\Shop;
 use App\Controllers\PaymentController;
 use App\Controllers\UserController;
+use App\Models\Ann;
+use App\Models\AnnLog;
+use App\Models\CheckInLog;
+use App\Models\DonateLog;
+use App\Models\InviteCode;
+use App\Models\Music;
+use App\Models\PurchaseLog;
+use App\Models\Shop;
+use App\Models\TrafficLog;
+use App\Models\User;
+use App\Models\Vote;
 use App\Services\Analytics;
 use App\Services\DbConfig;
 use App\Services\Mail;
@@ -40,17 +40,17 @@ class AdminController extends UserController
 
     public function addInvite($request, $response, $args)
     {
-        $n = $request->getParam('num');
+        $n      = $request->getParam('num');
         $prefix = $request->getParam('prefix');
-        $uid = $request->getParam('uid');
+        $uid    = $request->getParam('uid');
         if ($n < 1) {
             $res['ret'] = 0;
             return $response->getBody()->write(json_encode($res));
         }
         for ($i = 0; $i < $n; $i++) {
-            $char = Tools::genRandomChar(32);
-            $code = new InviteCode();
-            $code->code = $prefix . $char;
+            $char          = Tools::genRandomChar(32);
+            $code          = new InviteCode();
+            $code->code    = $prefix . $char;
             $code->user_id = $uid;
             $code->save();
         }
@@ -65,15 +65,15 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
-        $logs = CheckInLog::where('id', ">" , 0);
+        $logs = CheckInLog::where('id', ">", 0);
         $path = '/admin/checkinlog?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
-                $path .= $k.'='.$v.'&';
+                $path .= $k . '=' . $v . '&';
             }
         }
-        $path = substr($path,0,strlen($path)-1);
+        $path = substr($path, 0, strlen($path) - 1);
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         return $this->view()->assign('logs', $logs)->display('admin/checkinlog.tpl');
@@ -94,54 +94,54 @@ class AdminController extends UserController
         if (!isset($q['out_trade_no'])) {
             $q['out_trade_no'] = '';
         }
-        if ($q['port']!='') {
-            $user = User::where('port', $q['port'])->first();
-            $q['uid'] = $user->id;
+        if ($q['port'] != '') {
+            $user      = User::where('port', $q['port'])->first();
+            $q['uid']  = $user->id;
             $q['port'] = '';
         }
-        $logs = PurchaseLog::where('id', ">" , 0);
+        $logs = PurchaseLog::where('id', ">", 0);
         $path = '/admin/purchaselog?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
-                $path .= $k.'='.$v.'&';
+                $path .= $k . '=' . $v . '&';
             }
         }
 
-        $Y = date('Y');
-        $m = date('m');
-        $d = date('d');
-        $yearlyIncome = PurchaseLog::where('buy_date', '>' , $Y)->sum('price');
-        $dailyIncome = PurchaseLog::where('buy_date', '>' , $Y.'-'.$m.'-'.$d)->sum('price');
+        $Y                = date('Y');
+        $m                = date('m');
+        $d                = date('d');
+        $yearlyIncome     = PurchaseLog::where('buy_date', '>', $Y)->sum('price');
+        $dailyIncome      = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('price');
         $income['yearly'] = $yearlyIncome;
-        $income['daily'] = $dailyIncome;
-        $income['all'] = PurchaseLog::sum('price');
-        $monthscope = array();
-        $monthdata = array();
-        for($i=1;$i<=$m;$i++){
-            if ($i<10) {
-                $tm = '0'.$i;
-            }else {
+        $income['daily']  = $dailyIncome;
+        $income['all']    = PurchaseLog::sum('price');
+        $monthscope       = array();
+        $monthdata        = array();
+        for ($i = 1; $i <= $m; $i++) {
+            if ($i < 10) {
+                $tm = '0' . $i;
+            } else {
                 $tm = $i;
             }
             $j = $i + 1;
-            if ($j<10) {
-                $nm = '0'.$j;
-            }else {
+            if ($j < 10) {
+                $nm = '0' . $j;
+            } else {
                 $nm = $j;
             }
-            $monthIncome = PurchaseLog::where('buy_date', '>' , $Y.'-'.$tm)->where('buy_date', '<' , $Y.'-'.$nm)->sum('price');
+            $monthIncome         = PurchaseLog::where('buy_date', '>', $Y . '-' . $tm)->where('buy_date', '<', $Y . '-' . $nm)->sum('price');
             $income['month'][$i] = $monthIncome;
-            array_push($monthscope, $i.'月');
+            array_push($monthscope, $i . '月');
             array_push($monthdata, $monthIncome);
         }
         $datasets = array(
             'monthscope' => $monthscope,
-            'monthdata' => $monthdata
+            'monthdata'  => $monthdata,
         );
         $datasets = json_encode($datasets);
-        $path = substr($path,0,strlen($path)-1);
-        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $path     = substr($path, 0, strlen($path) - 1);
+        $logs     = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         $products = Shop::where('status', 1)->get();
         return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->assign('products', $products)->display('admin/purchaselog.tpl');
@@ -149,19 +149,19 @@ class AdminController extends UserController
 
     public function addPurchase($request, $response, $args)
     {
-        $q = $request->getParsedBody();
+        $q         = $request->getParsedBody();
         $rs['ret'] = 0;
-        if ($q['uid']=='' && $q['port']=='') {
+        if ($q['uid'] == '' && $q['port'] == '') {
             $rs['ret'] = 0;
             $rs['msg'] = '请输入用户id或port。';
             return $response->getBody()->write(json_encode($rs));
         }
-        if ($q['body']=='') {
+        if ($q['body'] == '') {
             $rs['ret'] = 0;
             $rs['msg'] = '请选择套餐。';
             return $response->getBody()->write(json_encode($rs));
         }
-        if ($q['port']!='') {
+        if ($q['port'] != '') {
             $user = User::where('port', $q['port'])->first();
             if (!$user) {
                 $rs['ret'] = 0;
@@ -170,7 +170,7 @@ class AdminController extends UserController
             }
             $q['uid'] = $user->id;
         }
-        if ($q['uid']!='') {
+        if ($q['uid'] != '') {
             $user = User::where('id', $q['uid'])->first();
             if (!$user) {
                 $rs['ret'] = 0;
@@ -183,14 +183,14 @@ class AdminController extends UserController
         }
 
         $product_id = $q['body'];
-        $pay = new PaymentController();
-        $rs = $pay->doPay($q['uid'], $product_id, time());
+        $pay        = new PaymentController();
+        $rs         = $pay->doPay($q['uid'], $product_id, time());
         return $response->getBody()->write(json_encode($rs));
     }
 
     public function deletePurchaseLog($request, $response, $args)
     {
-        $id = $args["id"];
+        $id     = $args["id"];
         $record = PurchaseLog::find($id);
         if (!$record->delete()) {
             $rs['ret'] = 0;
@@ -208,18 +208,69 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
-        $logs = DonateLog::where('id', ">" , 0);
+        $logs = DonateLog::where('id', ">", 0);
         $path = '/admin/donatelog?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
-                $path .= $k.'='.$v.'&';
+                $path .= $k . '=' . $v . '&';
             }
         }
-        $path = substr($path,0,strlen($path)-1);
+        $path = substr($path, 0, strlen($path) - 1);
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         return $this->view()->assign('logs', $logs)->display('admin/donatelog.tpl');
+    }
+
+    public function addDonate($request, $response, $args)
+    {
+        $q         = $request->getParsedBody();
+        $rs['ret'] = 0;
+        if ($q['uid'] == '' && $q['port'] == '') {
+            $rs['ret'] = 0;
+            $rs['msg'] = '请输入用户id或port。';
+            return $response->getBody()->write(json_encode($rs));
+        }
+        if ($q['money'] == '') {
+            $rs['ret'] = 0;
+            $rs['msg'] = '请输入金额。';
+            return $response->getBody()->write(json_encode($rs));
+        }
+        if ($q['port'] != '') {
+            $user = User::where('port', $q['port'])->first();
+            if (!$user) {
+                $rs['ret'] = 0;
+                $rs['msg'] = '未找到该用户。';
+                return $response->getBody()->write(json_encode($rs));
+            }
+            $q['uid'] = $user->id;
+        }
+        if ($q['uid'] != '') {
+            $user = User::where('id', $q['uid'])->first();
+            if (!$user) {
+                $rs['ret'] = 0;
+                $rs['msg'] = '未找到该用户。';
+                return $response->getBody()->write(json_encode($rs));
+            }
+        }
+
+        $pay = new PaymentController();
+        $rs  = $pay->doDonate($q['uid'], $q['money'], time());
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function deleteDonateLog($request, $response, $args)
+    {
+        $id     = $args["id"];
+        $record = DonateLog::find($id);
+        if (!$record->delete()) {
+            $rs['ret'] = 0;
+            $rs['msg'] = "删除失败";
+            return $response->getBody()->write(json_encode($rs));
+        }
+        $rs['ret'] = 1;
+        $rs['msg'] = "删除成功";
+        return $response->getBody()->write(json_encode($rs));
     }
 
     public function music($request, $response, $args)
@@ -228,15 +279,15 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
-        $music = Music::where('id', ">" , 0);
-        $path = '/admin/music?';
+        $music = Music::where('id', ">", 0);
+        $path  = '/admin/music?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
-                $music = $music->where($k, 'like', '%'.$v.'%');
-                $path .= $k.'='.$v.'&';
+                $music = $music->where($k, 'like', '%' . $v . '%');
+                $path .= $k . '=' . $v . '&';
             }
         }
-        $path = substr($path,0,strlen($path)-1);
+        $path  = substr($path, 0, strlen($path) - 1);
         $music = $music->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $music->setPath($path);
         return $this->view()->assign('music', $music)->display('admin/music.tpl');
@@ -244,12 +295,12 @@ class AdminController extends UserController
 
     public function addMusic($request, $response, $args)
     {
-        $q = $request->getParsedBody();
-        $rs['ret'] = 1;
-        $rs['msg'] = '添加成功';
-        $music = new Music();
-        $music->mid = $q['mid'];
-        $music->name = $q['name'];
+        $q             = $request->getParsedBody();
+        $rs['ret']     = 1;
+        $rs['msg']     = '添加成功';
+        $music         = new Music();
+        $music->mid    = $q['mid'];
+        $music->name   = $q['name'];
         $music->author = $q['author'];
         $music->save();
         return $response->getBody()->write(json_encode($rs));
@@ -258,7 +309,7 @@ class AdminController extends UserController
     public function deleteMusic($request, $response, $args)
     {
         $mid = $args['mid'];
-        $m = Music::where('mid', $mid)->first();
+        $m   = Music::where('mid', $mid)->first();
         $m->delete();
         $rs['ret'] = 1;
         $rs['msg'] = '删除成功';
@@ -271,15 +322,14 @@ class AdminController extends UserController
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
         }
-        $logs = TrafficLog::where('id', ">" , 0)->orderBy('id', 'desc');
+        $logs = TrafficLog::where('id', ">", 0)->orderBy('id', 'desc');
         $path = '/admin/trafficlog?';
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
                 $logs = $logs->where($k, $v);
-                $path .= $k.'='.$v.'&';
+                $path .= $k . '=' . $v . '&';
             }
         }
-
 
         $users_transfer_array = array();
         foreach (TrafficLog::all() as $log) {
@@ -289,7 +339,6 @@ class AdminController extends UserController
                 $users_transfer_array[$log->user_id] = ($log->d + $log->u);
             }
         }
-        echo count($users_transfer_array);
         arsort($users_transfer_array);
         $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
         reset($users_transfer_array);
@@ -301,18 +350,18 @@ class AdminController extends UserController
             $q['node_id'] = '';
         }
         $labels = array();
-        $datas = array();
-        foreach ($users_transfer_array as $k=>$v) {
-            array_push($labels,$k);
-            array_push($datas,round($v/1073741824, 2));
+        $datas  = array();
+        foreach ($users_transfer_array as $k => $v) {
+            array_push($labels, $k);
+            array_push($datas, round($v / 1073741824, 2));
         }
-        $users_transfer_array_for_chart = json_encode(array("labels"=>$labels,"datas"=>$datas));
+        $users_transfer_array_for_chart = json_encode(array("labels" => $labels, "datas" => $datas));
 
         $array_for_chart = UserController::getTrafficInfoArrayForChart($q['user_id']);
         $array_for_chart = json_encode($array_for_chart);
         // return json_encode($array_for_chart);
 
-        $path = substr($path,0,strlen($path)-1);
+        $path = substr($path, 0, strlen($path) - 1);
         $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('array_for_chart', $array_for_chart)->assign('users_transfer_array_for_chart', $users_transfer_array_for_chart)->display('admin/trafficlog.tpl');
@@ -321,13 +370,13 @@ class AdminController extends UserController
     public function config($request, $response, $args)
     {
         $conf = [
-            "app-name" => DbConfig::get('app-name'),
-            "home-code" => DbConfig::get('home-code'),
-            "home-purchase" => DbConfig::get('home-purchase'),
+            "app-name"       => DbConfig::get('app-name'),
+            "home-code"      => DbConfig::get('home-code'),
+            "home-purchase"  => DbConfig::get('home-purchase'),
             "analytics-code" => DbConfig::get('analytics-code'),
-            "user-index" => DbConfig::get('user-index'),
-            "user-node" => DbConfig::get('user-node'),
-            "user-purchase" => DbConfig::get('user-purchase'),
+            "user-index"     => DbConfig::get('user-index'),
+            "user-node"      => DbConfig::get('user-node'),
+            "user-purchase"  => DbConfig::get('user-purchase'),
         ];
         $ann = Ann::orderBy("id", "desc")->get()->first();
         return $this->view()->assign('conf', $conf)->assign('ann', $ann)->display('admin/config.tpl');
@@ -337,12 +386,12 @@ class AdminController extends UserController
     {
         $config = [
             "analytics-code" => $request->getParam('analyticsCode'),
-            "home-code" => $request->getParam('homeCode'),
-            "home-purchase" => $request->getParam('homePurchase'),
-            "app-name" => $request->getParam('appName'),
-            "user-index" => $request->getParam('userIndex'),
-            "user-node" => $request->getParam('userNode'),
-            "user-purchase" => $request->getParam('userPurchase'),
+            "home-code"      => $request->getParam('homeCode'),
+            "home-purchase"  => $request->getParam('homePurchase'),
+            "app-name"       => $request->getParam('appName'),
+            "user-index"     => $request->getParam('userIndex'),
+            "user-node"      => $request->getParam('userNode'),
+            "user-purchase"  => $request->getParam('userPurchase'),
         ];
         foreach ($config as $key => $value) {
             DbConfig::set($key, $value);
@@ -354,10 +403,10 @@ class AdminController extends UserController
 
     public function updateAnn($request, $response, $args)
     {
-        $ann_title = $request->getParam('ann_title');
-        $ann_content = $request->getParam('ann_content');
-        $ann = Ann::orderBy("id", "desc")->get()->first();
-        $ann->title = $ann_title;
+        $ann_title    = $request->getParam('ann_title');
+        $ann_content  = $request->getParam('ann_content');
+        $ann          = Ann::orderBy("id", "desc")->get()->first();
+        $ann->title   = $ann_title;
         $ann->content = $ann_content;
         $ann->save();
         $res['ret'] = 1;
@@ -367,10 +416,10 @@ class AdminController extends UserController
 
     public function createAnn($request, $response, $args)
     {
-        $ann_title = $request->getParam('ann_title');
-        $ann_content = $request->getParam('ann_content');
-        $ann = new Ann();
-        $ann->title = $ann_title;
+        $ann_title    = $request->getParam('ann_title');
+        $ann_content  = $request->getParam('ann_content');
+        $ann          = new Ann();
+        $ann->title   = $ann_title;
         $ann->content = $ann_content;
         $ann->save();
         $res['ret'] = 1;
@@ -380,7 +429,7 @@ class AdminController extends UserController
 
     public function sendMailPost($request, $response, $args)
     {
-        $q = $request->getParsedBody();
+        $q     = $request->getParsedBody();
         $users = User::where('id', '>', 0);
         foreach ($q as $k => $v) {
             if ($v != "") {
@@ -391,13 +440,13 @@ class AdminController extends UserController
 
         $ann = Ann::orderBy("id", "desc")->get()->first();
         $arr = [
-            "title" => $ann->title,
-            "content" => $ann->content,
-            "user_name" => ""
+            "title"     => $ann->title,
+            "content"   => $ann->content,
+            "user_name" => "",
         ];
 
         $res['names'] = [];
-        $i = 0;
+        $i            = 0;
         if ($users && $ann->title && $ann->content) {
             foreach ($users as $user) {
                 $arr["user_name"] = $user->user_name;
@@ -410,7 +459,7 @@ class AdminController extends UserController
                     $res['msg'] = $e->getMessage();
                 }
             }
-        }else{
+        } else {
             $res['ret'] = 0;
             $res['msg'] = "无符合条件的用户或无公告";
         }

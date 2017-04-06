@@ -27,6 +27,10 @@
 
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>
+{if $requireJQueryConfirm}
+<!-- jquery-confirm -->
+<script src="/assets/public/js/jquery-confirm.js"></script>
+{/if}
 <!-- Bootstrap 3.3.2 JS -->
 <script src="/assets/public/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- SlimScroll -->
@@ -36,11 +40,11 @@
 <!-- AdminLTE App -->
 <script src="/assets/public/js/app.min.js" type="text/javascript"></script>
 <script src="/assets/public/js/main.js"></script>
-{if $url == '/user/sys' }
+{if $requireJQueryDatatable}
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script>
 {/if}
-{if $url == '/user/trafficlog'}
+{if $requireChartjs}
 <!-- chart -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 {/if}

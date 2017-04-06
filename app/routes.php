@@ -1,6 +1,5 @@
 <?php
 
-use App\Controllers;
 use App\Middleware\Admin;
 use App\Middleware\Api;
 use App\Middleware\Auth;
@@ -23,12 +22,11 @@ if (defined("DEBUG")) {
 // $app = new App($c)
 $app = new App([
     'settings' => [
-        'debug' => $debug,
-        'whoops.editor' => 'sublime'
-    ]
+        'debug'         => $debug,
+        'whoops.editor' => 'sublime',
+    ],
 ]);
 $app->add(new WhoopsMiddleware);
-
 
 // Home
 $app->get('/', 'App\Controllers\HomeController:index');
@@ -107,6 +105,8 @@ $app->group('/admin', function () {
 
     // donatelog manage
     $this->get('/donatelog', 'App\Controllers\AdminController:donateLog');
+    $this->post('/adddonate', 'App\Controllers\AdminController:addDonate');
+    $this->delete('/donatelog/{id}', 'App\Controllers\AdminController:deleteDonateLog');
 
     // Music Manage
     $this->get('/music', 'App\Controllers\AdminController:music');
@@ -179,5 +179,3 @@ $app->group('/res', function () {
 });
 
 return $app;
-
-

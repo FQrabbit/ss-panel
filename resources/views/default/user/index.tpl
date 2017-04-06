@@ -106,7 +106,7 @@
                             <div class="box-header">
                                 <i class="fa  fa-paper-plane"></i>
 
-                                <h3 class="box-title">连接信息</h3>
+                                <h3 class="box-title">账号信息</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -180,11 +180,11 @@
             <h3>捐助Shadowsky</h3>
         </header>
         <div class="w3-container">
-            <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
+            <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
                 <div class="w3-row">
                         <lable class="w3-label">请输入捐助金额：</label>
                         <input type="hidden" name="uid" value="{$user->id}">
-                        <input type="hidden" name="type" value="0{$user->port}">
+                        <input type="hidden" name="product_id" value="0">
                         <input class="w3-input" name="total" type="number" value=2 style="width:20%;display:inline">
                         <button class="w3-btn w3-teal" type="submit">确认</button>
                 </div>
@@ -192,9 +192,9 @@
             <div class="w3-row w3-margin-top">
                 {foreach [2,5,10,20] as $a}
                 <div class="w3-quarter">
-                    <form name="alipaypay" method="post" accept-charset="utf-8" action="/pay/alipay.php" target="_blank">
+                    <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
                         <input type="hidden" name="uid" value="{$user->id}">
-                        <input type="hidden" name="type" value="0{$user->port}">
+                        <input type="hidden" name="product_id" value="0">
                         <input type="submit" name="total" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
                     </form>
                 </div>

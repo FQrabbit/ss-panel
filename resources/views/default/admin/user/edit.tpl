@@ -181,7 +181,7 @@
 
                                         <div class="col-sm-9">
                                             <div class="input-group">
-                                                <input class="form-control" id="buy_date" value="{$user->getFormatedDateTime($user->buy_date)}" type="text" onfocus="(this.type='datetime-local')">
+                                                <input class="form-control date" id="buy_date" value="{$user->getFormatedDateTime($user->buy_date)}" type="text" onfocus="(this.type='datetime-local')">
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-default btn-flat timeReseter">此时</button>
                                                     <button type="button" class="btn btn-default btn-flat tozero">归零</button>

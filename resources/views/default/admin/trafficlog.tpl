@@ -61,8 +61,8 @@
                             {foreach $logs as $log}
                                 <tr>
                                     <td><a href="https://www.shadowsky.website/admin/user/{$log->user_id}/edit">#{$log->id}</a></td>
-                                    <td>{$log->user_id}</td>
-                                    <td>{$log->node()->name}</td>
+                                    <td><a href="/admin/trafficlog?user_id={$log->user_id}">{$log->user_id}</a></td>
+                                    <td><a href="/admin/trafficlog?node_id={$log->node_id}">{$log->node()->name}</a></td>
                                     <td>{$log->rate}</td>
                                     <td>{$log->totalUsed()}</td>
                                     <td>{$log->traffic}</td>
@@ -79,9 +79,8 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-{include file='user/footer.tpl'}
+{include file='admin/footer.tpl'}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
 var ctx = $("#chart1");
 var chart1 = new Chart(ctx, {
