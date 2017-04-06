@@ -184,7 +184,7 @@ class AdminController extends UserController
 
         $product_id = $q['body'];
         $pay = new PaymentController();
-        $rs = $pay->doPay($q['uid'], $product_id, '0000');
+        $rs = $pay->doPay($q['uid'], $product_id, time());
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -283,14 +283,22 @@ class AdminController extends UserController
 
         $users_transfer_array = array();
         foreach (TrafficLog::all() as $log) {
-            $users_transfer_array[$log->user_id] += ($log->d + $log->u);
+            if (isset($users_transfer_array[$log->user_id])) {
+                $users_transfer_array[$log->user_id] += ($log->d + $log->u);
+            } else {
+                $users_transfer_array[$log->user_id] = ($log->d + $log->u);
+            }
         }
+        echo count($users_transfer_array);
         arsort($users_transfer_array);
         $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
         reset($users_transfer_array);
         $first_user_id = key($users_transfer_array);
         if (!isset($q['user_id'])) {
             $q['user_id'] = $first_user_id;
+        }
+        if (!isset($q['node_id'])) {
+            $q['node_id'] = '';
         }
         $labels = array();
         $datas = array();

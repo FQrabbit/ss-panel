@@ -508,8 +508,16 @@ class UserController extends BaseController
         }
         
         foreach ($logs as $log) {
-            $datas[0][date('H',$log->log_time)] += round((($log->u+$log->d)/1048576),2);
-            $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u+$log->d)/1048576),2);
+            if (isset($datas[0][date('H',$log->log_time)])) {
+                $datas[0][date('H',$log->log_time)] += round((($log->u+$log->d)/1048576),2);
+            } else {
+                $datas[0][date('H',$log->log_time)] = round((($log->u+$log->d)/1048576),2);
+            }
+            if (isset($datas[1][Node::where('id', $log->node_id)->get()->first()->name])) {
+                $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u+$log->d)/1048576),2);
+            } else {
+                $datas[1][Node::where('id', $log->node_id)->get()->first()->name] = round((($log->u+$log->d)/1048576),2);
+            }
         }
         $d = array('0'=>array(),'1'=>array());
         for ($i = 0; $i <= date('H',$log->log_time); $i++) {
