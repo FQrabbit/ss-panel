@@ -287,6 +287,11 @@ class AdminController extends UserController
         }
         arsort($users_transfer_array);
         $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
+        reset($users_transfer_array);
+        $first_user_id = key($users_transfer_array);
+        if (!isset($q['user_id'])) {
+            $q['user_id'] = $first_user_id;
+        }
         $labels = array();
         $datas = array();
         foreach ($users_transfer_array as $k=>$v) {
@@ -302,7 +307,7 @@ class AdminController extends UserController
         $path = substr($path,0,strlen($path)-1);
         $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
-        return $this->view()->assign('logs', $logs)->assign('array_for_chart', $array_for_chart)->assign('users_transfer_array_for_chart', $users_transfer_array_for_chart)->display('admin/trafficlog.tpl');
+        return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('array_for_chart', $array_for_chart)->assign('users_transfer_array_for_chart', $users_transfer_array_for_chart)->display('admin/trafficlog.tpl');
     }
 
     public function config($request, $response, $args)

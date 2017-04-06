@@ -22,10 +22,10 @@
         </div>
         <form action="" method="GET" class="form-inline margin-bottom">
             <div class="form-group">
-                <input name="user_id" type="number" placeholder="输入用户id" class="form-control">
+                <input name="user_id" type="number" placeholder="输入用户id" class="form-control" value="{$q['user_id']}">
             </div>
             <div class="form-group">
-                <input name="node_id" type="number" placeholder="输入节点id" class="form-control">
+                <input name="node_id" type="number" placeholder="输入节点id" class="form-control" value="{$q['node_id']}">
             </div>
             <div class="form-group">
                 <button type="submit" class="form-control btn btn-default btn-flat">查询</button>
@@ -60,7 +60,7 @@
                             </tr>
                             {foreach $logs as $log}
                                 <tr>
-                                    <td>#{$log->id}</td>
+                                    <td><a href="https://www.shadowsky.website/admin/user/{$log->user_id}/edit">#{$log->id}</a></td>
                                     <td>{$log->user_id}</td>
                                     <td>{$log->node()->name}</td>
                                     <td>{$log->rate}</td>

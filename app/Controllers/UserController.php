@@ -497,7 +497,7 @@ class UserController extends BaseController
         $labels_node = array(); // node name
         $datas = array();
         for($i=0;$i<=date("H");$i++){
-            if ($i%2==0) {
+            if ($i%2!=0) {
                 $label_name = '';
             }elseif ($i<12) {
                 $label_name = $i.' a.m.';
@@ -512,7 +512,7 @@ class UserController extends BaseController
             $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u+$log->d)/1048576),2);
         }
         $d = array('0'=>array(),'1'=>array());
-        for ($i = 0; $i < date('H',$log->log_time); $i++) {
+        for ($i = 0; $i <= date('H',$log->log_time); $i++) {
             if ($i<10) {
                 $n = "0".$i;
             }else {
