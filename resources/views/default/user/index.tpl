@@ -119,18 +119,15 @@
                                     <dd>{$user->lastSsTime()}</dd>
                                     <dt>用户类型</dt>
                                     <dd>
-                                        <span class="badge bg-green">{$user->getUserClassName()}</span>
-                                {if $user->isDonator()}
-                                        <span class="badge bg-green">捐助用户</span>
-                                {/if}
+                                        <span class="badge bg-green">
+                                            {$user->getUserClassName()} {if $user->type==1}{else}| {$user->type}{/if}
+                                        </span>
+                                        {if $user->isDonator()}
+                                        <span class="badge bg-green">
+                                            捐助用户 | ￥{$user->money}
+                                        </span>
+                                        {/if}
                                     </dd>
-
-                                {if $user->type != 1}
-                                    <dt>当前套餐</dt>
-                                    <dd>
-                                        <span class="badge bg-green">{$user->type}套餐</span>
-                                    </dd>
-                                {/if}
 
                                 {if $user->expire_date != 0}
                                     <dt>到期时间</dt>
