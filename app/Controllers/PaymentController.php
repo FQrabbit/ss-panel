@@ -45,6 +45,62 @@ class PaymentController extends BaseController
     }
 
     /**
+     * get notify 同步、异步通知
+     * @return string 返回提示
+     */
+    public function doReturn($request, $response, $args)
+    {
+        $q      = $this->getRequestBodyArray($request);
+
+        $alino  = $q['addnum'];
+        $uid    = $q['uid'];
+        $price  = $q['total'];
+        $apikey = $q['apikey'];
+
+        if (!$this->verify($apikey, $alino)) {
+            return $response->withStatus(302)->withHeader('Location', 'user');
+        }
+
+        /**
+         * 商品id, 捐助 id 为 0
+         * @var int
+         */
+        $product_id = substr($alino, 9, 1);
+
+        if ($product_id == 0) {
+            if (DonateLog::hasTransaction($alino)) {
+                return $response->withStatus(302)->withHeader('Location', 'user');
+            } else {
+                $this->doDonate($uid, $price, $alino);
+            }
+        } else {
+            if (PurchaseLog::hasTransaction($alino)) {
+                return $response->withStatus(302)->withHeader('Location', 'user');
+            } else {
+                $this->doPay($uid, $product_id, $alino);
+            }
+        }
+
+        return '购买成功';
+    }
+
+    /**
+     * Get Request Body Array. GET and POST
+     * @param  $request
+     * @return array
+     */
+    public function getRequestBodyArray($request)
+    {
+        if ($request->isGet()) {
+            $q = $request->getQueryParams();
+        }
+        if ($request->isPost()) {
+            $q = $request->getParsedBody();
+        }
+        return $q;
+    }
+
+    /**
      * Add purchase log
      *
      * $array=array(['uid'=>//必须
@@ -197,61 +253,6 @@ class PaymentController extends BaseController
             $rs['msg'] = $e->getMessage();
         }
         return $rs;
-    }
-
-    /**
-     * Get Request Body Array. GET and POST
-     * @param  $request
-     * @return array
-     */
-    public function getRequestBodyArray($request)
-    {
-        if ($request->isGet()) {
-            $q = $request->getQueryParams();
-        }
-        if ($request->isPost()) {
-            $q = $request->getParsedBody();
-        }
-        return $q;
-    }
-
-    /**
-     * get notify
-     * @return string 返回提示
-     */
-    public function doReturn($request, $response, $args)
-    {
-        $q      = $this->getRequestBodyArray($request);
-        $alino  = $q['addnum'];
-        $uid    = $q['uid'];
-        $price  = $q['total'];
-        $apikey = $q['apikey'];
-
-        if (!$this->verify($apikey, $alino)) {
-            return $response->withStatus(302)->withHeader('Location', 'user');
-        }
-
-        /**
-         * 商品id, 捐助 id 为 0
-         * @var int
-         */
-        $product_id = substr($alino, 9, 1);
-
-        if ($product_id == 0) {
-            if (DonateLog::hasTransaction($alino)) {
-                return $response->withStatus(302)->withHeader('Location', 'user');
-            } else {
-                $this->doDonate($uid, $price, $alino);
-            }
-        } else {
-            if (PurchaseLog::hasTransaction($alino)) {
-                return $response->withStatus(302)->withHeader('Location', 'user');
-            } else {
-                $this->doPay($uid, $product_id, $alino);
-            }
-        }
-
-        return '购买成功';
     }
 
     public function prepay($request, $response, $args)

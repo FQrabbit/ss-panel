@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\AdminController;
 use App\Models\Node;
 use App\Models\Vote;
+use App\Models\TrafficLog;
 
 class NodeController extends AdminController
 {
@@ -72,21 +73,34 @@ class NodeController extends AdminController
 
     public function delete($request, $response, $args)
     {
-        $id        = $args['id'];
-        $node      = Node::find($id);
-        $polls     = Vote::where('nodeid', $id)->get();
-        $rs['msg'] = '';
-        if (!$polls->isEmpty()) {
-            $polls = Vote::where('nodeid', $id)->delete();
+        $id   = $args['id'];
+        $node = Node::find($id);
+
+        /**
+         * 返回信息
+         */
+        $rs['msg']   = '';
+
+        /**
+         * clean logs related to this node
+         */
+        if (Vote::where('nodeid', $id)->delete()) {
             $rs['msg'] .= "已清空投票。";
         } else {
-            $rs['msg'] .= "无投票。";
+            $rs['msg'] .= "可能无投票。";
         }
+        if (TrafficLog::where('node_id', $id)->delete()) {
+            $rs['msg'] .= "已清空流量记录。";
+        } else {
+            $rs['msg'] .= "可能无流量记录。";
+        }
+
         if (!$node->delete()) {
             $rs['ret'] = 0;
             $rs['msg'] .= "节点删除失败。";
             return $response->getBody()->write(json_encode($rs));
         }
+
         $rs['ret'] = 1;
         $rs['msg'] .= "节点删除成功。";
         return $response->getBody()->write(json_encode($rs));

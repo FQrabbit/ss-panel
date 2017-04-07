@@ -113,11 +113,22 @@ class AdminController extends UserController
         $d                = date('d');
         $yearlyIncome     = PurchaseLog::where('buy_date', '>', $Y)->sum('price');
         $dailyIncome      = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('price');
+
         $income['yearly'] = $yearlyIncome;
         $income['daily']  = $dailyIncome;
         $income['all']    = PurchaseLog::sum('price');
+
+        /**
+         * x轴坐标标签数组,从一月到本月。
+         * @var array
+         */
         $monthscope       = array();
+        /**
+         * 各月数值数组。
+         * @var array
+         */
         $monthdata        = array();
+
         for ($i = 1; $i <= $m; $i++) {
             if ($i < 10) {
                 $tm = '0' . $i;
@@ -332,13 +343,11 @@ class AdminController extends UserController
         }
 
         $users_transfer_array = array();
-        foreach (TrafficLog::all() as $log) {
-            if (isset($users_transfer_array[$log->user_id])) {
-                $users_transfer_array[$log->user_id] += ($log->d + $log->u);
-            } else {
-                $users_transfer_array[$log->user_id] = ($log->d + $log->u);
-            }
+        $users_id_array = TrafficLog::select('user_id')->groupBy('user_id')->get();
+        foreach ($users_id_array as $user) {
+            $users_transfer_array[$user->user_id] = TrafficLog::where('user_id', $user->user_id)->sum('d') + TrafficLog::where('user_id', $user->user_id)->sum('u');
         }
+        print_r(json_encode($users_transfer_array));
         arsort($users_transfer_array);
         $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
         reset($users_transfer_array);
@@ -353,7 +362,7 @@ class AdminController extends UserController
         $datas  = array();
         foreach ($users_transfer_array as $k => $v) {
             array_push($labels, $k);
-            array_push($datas, round($v / 1073741824, 2));
+            array_push($datas, round(Tools::flowToGB($v), 2));
         }
         $users_transfer_array_for_chart = json_encode(array("labels" => $labels, "datas" => $datas));
 
