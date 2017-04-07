@@ -342,12 +342,13 @@ class AdminController extends UserController
             }
         }
 
-        $users_transfer_array = array();
-        $users_id_array = TrafficLog::select('user_id')->groupBy('user_id')->get();
-        foreach ($users_id_array as $user) {
-            $users_transfer_array[$user->user_id] = TrafficLog::where('user_id', $user->user_id)->sum('d') + TrafficLog::where('user_id', $user->user_id)->sum('u');
+        foreach (TrafficLog::select('user_id', 'd', 'u')->get() as $log) {
+            if (isset($users_transfer_array[$log->user_id])) {
+                $users_transfer_array[$log->user_id] += ($log->d + $log->u);
+            } else {
+                $users_transfer_array[$log->user_id] = ($log->d + $log->u);
+            }
         }
-        print_r(json_encode($users_transfer_array));
         arsort($users_transfer_array);
         $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
         reset($users_transfer_array);
