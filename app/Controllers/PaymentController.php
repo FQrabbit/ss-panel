@@ -228,7 +228,6 @@ class PaymentController extends BaseController
             $user->addTraffic($transfer_to_add);
             $user->updateExpireDate($product->name);
         }
-        // return json_encode($pre);
 
         try {
             $arr1 = [
@@ -239,11 +238,12 @@ class PaymentController extends BaseController
 
             $to      = 'zhwalker20@gmail.com';
             $title   = 'Shadowsky - 用户购买通知';
-            $tpl     = 'news/general-report.tpl';
-            $content = $user->user_name . '（uid:' . $user->id . ', port:' . $user->port . '）已购买' . $user->type . '套餐。金额：' . $product->price . '元。之前plan：' . $pre['plan'] . '。之前套餐：' . $pre['type'] . '。之前购买时间：' . $pre['buy_date'] . '。之前过期时间：' . $pre['expire_date'] . '。之前流量：' . $pre['used_traffic_in_GB'] . ' G / ' . $pre['transfer_eanble_in_GB'] . ' G。';
+            $tpl     = 'news/new-purchase.tpl';
             $arr2    = [
-                'content' => $content,
+                'user' => $user,
+                'pre' => $pre
             ];
+            // return $user;
             Mail::send($to, $title, $tpl, $arr2, []);
 
             $rs['ret'] = 1;

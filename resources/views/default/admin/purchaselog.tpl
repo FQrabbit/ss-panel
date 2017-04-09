@@ -230,6 +230,7 @@
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
                     $("#msg-error-p").html(data.msg);
+                    $("#insert").removeAttr("disabled");
                 }
             },
             error: function (jqXHR) {
