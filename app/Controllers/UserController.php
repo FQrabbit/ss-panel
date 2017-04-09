@@ -499,9 +499,7 @@ class UserController extends BaseController
         $labels_node = array(); // node name
         $datas       = array();
         for ($i = 0; $i <= date("H"); $i++) {
-            if ($i % 2 != 0) {
-                $label_name = '';
-            } elseif ($i < 12) {
+            if ($i < 12) {
                 $label_name = $i . ' a.m.';
             } else {
                 $label_name = $i . ' p.m.';
@@ -569,7 +567,6 @@ class UserController extends BaseController
         }
         $traffic = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
         $traffic->setPath('/user/trafficlog');
-        $logs = TrafficLog::where('user_id', $this->user->id)->orderBy('id', 'ASC')->get();
 
         $array_for_chart = UserController::getTrafficInfoArrayForChart($this->user->id);
         $array_for_chart = json_encode($array_for_chart);

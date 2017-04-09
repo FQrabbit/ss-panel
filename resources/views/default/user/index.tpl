@@ -26,11 +26,11 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
-                                <div class="w3-btn-group" style="margin-top:10px">
-                                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
-                                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
+                                <div class="w3-bar" style="margin-top:10px">
+                                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-bar-item w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
+                                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-bar-item w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
                                 </div>
-                                <button class="w3-btn w3-teal w3-btn-block" onclick=$("#donateModal").show() style="margin-top:5px">捐助</button>
+                                <button class="w3-btn w3-teal w3-block" style="margin-top:10px" onclick=$("#donateModal").show()>捐助</button>
                             </div><!-- /.box-body -->
                         </div>
                         <!-- /.box -->
@@ -146,22 +146,18 @@
                         <!-- /.box -->
                     </div>
 
-                    <div class="col-md-12">
+<!--                     <div class="col-md-12">
                         <div class="box box-primary">
                             <div class="box-header">
                                 <i class="fa  fa-music"></i>
 
                                 <h3 class="box-title">不妨听首歌</h3>
                             </div>
-                            <!-- /.box-header -->
                             <div class="box-body">
                                 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=86 src="//music.163.com/outchain/player?type=2&id={$mid}&auto=0&height=66"></iframe>
                             </div>
-                            <!-- /.box-body -->
                         </div>
-                        <!-- /.box -->
-                    </div>
-                    <!-- /.col (right) -->
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -170,10 +166,10 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<div id="donateModal" class="w3-modal" style="z-index:999">
+<div id="donateModal" class="w3-modal" style="z-index:999999">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container w3-teal">
-            <span onclick=$("#donateModal").hide() class="w3-closebtn">×</span>
+            <span onclick=$("#donateModal").hide() class="w3-btn w3-large w3-display-topright">×</span>
             <h3>捐助Shadowsky</h3>
         </header>
         <div class="w3-container">
