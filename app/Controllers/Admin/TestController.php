@@ -37,13 +37,23 @@ class TestController extends AdminController
         return $this->echoJson($response, $res);
     }
 
-    public function do()
+    public function doSomeJobs()
     {
-        $purchase_logs = PurchaseLog::where('out_trade_no','=','')->get();
-        foreach ($purchase_logs as $log) {
-            $log->out_trade_no = $log->uid.strtotime($log->buy_date);
-            $log->save();
-        }
-        return 'finished';
+        // $purchase_logs = PurchaseLog::all();
+        // foreach ($purchase_logs as $log) {
+        //     if (PurchaseLog::where('out_trade_no', $log->out_trade_no)->count()>1) {
+        //         $log->delete();
+        //         echo $log->out_trade_no."重复，已删除此条记录。<br>";
+        //     }
+        // }
+        
+        // $purchase_logs = PurchaseLog::where('out_trade_no','=','0000')->get();
+        // foreach ($purchase_logs as $log) {
+        //     $new_out_trade_no = strtotime($log->buy_date).$log->uid;
+        //     $log->out_trade_no = $new_out_trade_no;
+        //     $log->save();
+        //     echo "更新".$log->uid."<br>";
+        // }
+        // return 'finished';
     }
 }

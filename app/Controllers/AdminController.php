@@ -195,7 +195,7 @@ class AdminController extends UserController
 
         $product_id = $q['body'];
         $pay        = new PaymentController();
-        $rs         = $pay->doPay($q['uid'], $product_id, time());
+        $rs         = $pay->doPay($q['uid'], $product_id, time().$q['uid']);
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -203,6 +203,11 @@ class AdminController extends UserController
     {
         $id     = $args["id"];
         $record = PurchaseLog::find($id);
+        if (!$record) {
+            $rs['ret'] = 0;
+            $rs['msg'] = "没找到此条记录";
+            return $response->getBody()->write(json_encode($rs));
+        }
         if (!$record->delete()) {
             $rs['ret'] = 0;
             $rs['msg'] = "删除失败";
