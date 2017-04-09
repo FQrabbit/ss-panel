@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\AdminController;
 use App\Services\Mail;
 use App\Utils\Tools;
+use App\Models\PurchaseLog;
 
 class TestController extends AdminController
 {
@@ -34,5 +35,15 @@ class TestController extends AdminController
             ];
         }
         return $this->echoJson($response, $res);
+    }
+
+    public function do()
+    {
+        $purchase_logs = PurchaseLog::where('out_trade_no','=','')->get();
+        foreach ($purchase_logs as $log) {
+            $log->out_trade_no = $log->uid.strtotime($log->buy_date);
+            $log->save();
+        }
+        return 'finished';
     }
 }

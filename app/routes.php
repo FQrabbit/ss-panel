@@ -140,6 +140,7 @@ $app->group('/admin', function () {
     // Test
     $this->get('/test/sendmail', 'App\Controllers\Admin\TestController:sendMail');
     $this->post('/test/sendmail', 'App\Controllers\Admin\TestController:sendMailPost');
+    $this->get('/test/do', 'App\Controllers\Admin\TestController:do');
 
     $this->get('/profile', 'App\Controllers\AdminController:profile');
     $this->get('/invite', 'App\Controllers\AdminController:invite');
