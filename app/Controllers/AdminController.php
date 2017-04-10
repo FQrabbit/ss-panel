@@ -119,10 +119,9 @@ class AdminController extends UserController
          * 使用支付接口的手续费
          * @var float
          */
-        $feeRate = 0.03;
-        $yearlyFee = PurchaseLog::where('buy_date', '>', $Y)->where('out_trade_no', 'like', '%alip%')->sum('price')*$feeRate;
-        $monthlyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->where('out_trade_no', 'like', '%alip%')->sum('price')*$feeRate;
-        $dailyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->where('out_trade_no', 'like', '%alip%')->sum('price')*$feeRate;
+        $yearlyFee = PurchaseLog::where('buy_date', '>', $Y)->sum('fee');
+        $monthlyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('fee');
+        $dailyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('fee');
 
         $income['yearly'] = $yearlyIncome;
         $income['monthly']  = $monthlyIncome;

@@ -152,6 +152,9 @@
                                             价格
                                         </th>
                                         <th>
+                                            手续费
+                                        </th>
+                                        <th>
                                             购买日期
                                         </th>
                                         <th>
@@ -184,6 +187,9 @@
                                         </td>
                                         <td>
                                             {$log->price}
+                                        </td>
+                                        <td>
+                                            {$log->fee}
                                         </td>
                                         <td>
                                             {$log->buy_date}

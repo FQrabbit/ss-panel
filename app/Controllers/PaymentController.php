@@ -112,6 +112,7 @@ class PaymentController extends BaseController
      */
     public function addPurchaseLog($array)
     {
+        $feeRate = 0.03;
         if (!isset($array['buy_date'])) {
             $array['buy_date'] = Tools::toDateTime(time());
         }
@@ -124,6 +125,7 @@ class PaymentController extends BaseController
         $log->price        = $array['price'];
         $log->buy_date     = $array['buy_date'];
         $log->out_trade_no = $array['out_trade_no'];
+        $log->fee = $array['price']*$feeRate;
         $log->save();
     }
 

@@ -13,13 +13,13 @@
                         </h4>
                         {$msg}
                         <div class="w3-bar">
-                            <a class="w3-btn w3-teal w3-small w3-round w3-ripple w3-margin" href="{$android_add}" id="btn1">
+                            <a class="w3-btn w3-teal w3-small w3-round w3-margin" href="{$android_add}" id="btn1">
                                 手机原版客户端导入所有节点
                             </a>
-                            <a class="w3-btn w3-teal w3-small w3-round w3-ripple w3-margin" href="{$android_add_new}" id="btn1">
+                            <a class="w3-btn w3-teal w3-small w3-round w3-margin" href="{$android_add_new}" id="btn1">
                                 手机SSR客户端导入所有节点
                             </a>
-                            <a class="w3-btn w3-teal w3-small w3-round w3-ripple w3-margin" href="./getconf" id="btn3">
+                            <a class="w3-btn w3-teal w3-small w3-round w3-margin" href="./getconf" id="btn3">
                                 下载pc配置文件
                             </a>
                         </div>

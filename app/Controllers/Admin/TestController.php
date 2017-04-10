@@ -39,6 +39,9 @@ class TestController extends AdminController
 
     public function doSomeJobs()
     {
+    	/**
+    	 * 清除重复交易记录
+    	 */
         // $purchase_logs = PurchaseLog::all();
         // foreach ($purchase_logs as $log) {
         //     if (PurchaseLog::where('out_trade_no', $log->out_trade_no)->count()>1) {
@@ -55,5 +58,18 @@ class TestController extends AdminController
         //     echo "更新".$log->uid."<br>";
         // }
         // return 'finished';
+        // 
+        /**
+         * [$feeRate description]
+         * @var float
+         */
+        // $feeRate = 0.03;
+        // $purchase_logs = PurchaseLog::where('out_trade_no', 'not like', '%alip%')->get();
+        // foreach ($purchase_logs as $log) {
+        // 	$log->fee = $log->price * $feeRate;
+        // 	$log->save();
+        // }
+        // echo count($purchase_logs);
+        echo "Hello";
     }
 }
