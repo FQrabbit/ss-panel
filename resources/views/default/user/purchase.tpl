@@ -79,17 +79,10 @@
                                         </td>
                                         <td>
                                             <form accept-charset="utf-8" action="/prepay" method="post" name="alipaypay" target="_blank">
-                                                <input name="uid" type="hidden" value="{$user-">
-                                                    id}>
-                                                    <input name="total" type="hidden" value="{$product-">
-                                                        price}>
-                                                        <input name="product_id" type="hidden" value="{$product-">
-                                                            id}>
-                                                            <input class="btn btn-default btn-flat" type="submit" value="购买">
-                                                            </input>
-                                                        </input>
-                                                    </input>
-                                                </input>
+                                                <input name="uid" type="hidden" value="{$user->id}">
+                                                <input name="total" type="hidden" value="{$product->price}">
+                                                <input name="product_id" type="hidden" value="{$product->id}">
+                                                <input class="btn btn-default btn-flat" type="submit" value="购买">
                                             </form>
                                         </td>
                                     </tr>
@@ -144,17 +137,10 @@
                                         </td>
                                         <td>
                                             <form accept-charset="utf-8" action="/prepay" method="post" name="alipaypay" target="_blank">
-                                                <input name="uid" type="hidden" value="{$user-">
-                                                    id}>
-                                                    <input name="total" type="hidden" value="{$product-">
-                                                        price}>
-                                                        <input name="product_id" type="hidden" value="{$product-">
-                                                            id}>
-                                                            <input class="btn btn-default btn-flat" type="submit" value="购买">
-                                                            </input>
-                                                        </input>
-                                                    </input>
-                                                </input>
+                                                <input name="uid" type="hidden" value="{$user->id}">
+                                                <input name="total" type="hidden" value="{$product->price}">
+                                                <input name="product_id" type="hidden" value="{$product->id}">
+                                                <input class="btn btn-default btn-flat" type="submit" value="购买">
                                             </form>
                                         </td>
                                     </tr>
