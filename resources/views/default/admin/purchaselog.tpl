@@ -146,6 +146,9 @@
                                             用户端口
                                         </th>
                                         <th>
+                                            购买次数
+                                        </th>
+                                        <th>
                                             套餐
                                         </th>
                                         <th>
@@ -181,6 +184,9 @@
                                         </td>
                                         <td>
                                             {$log->user()->port}
+                                        </td>
+                                        <td>
+                                            {$log->transactionCount()}
                                         </td>
                                         <td>
                                             {$log->body}

@@ -15,4 +15,9 @@ class PurchaseLog extends Model
             return false;
         }
     }
+
+    public function transactionCount()
+    {
+        return self::where('uid', $this->uid)->count();
+    }
 }
