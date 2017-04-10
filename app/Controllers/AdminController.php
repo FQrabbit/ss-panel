@@ -112,10 +112,24 @@ class AdminController extends UserController
         $m                = date('m');
         $d                = date('d');
         $yearlyIncome     = PurchaseLog::where('buy_date', '>', $Y)->sum('price');
+        $monthlyIncome      = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('price');
         $dailyIncome      = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('price');
 
+        /**
+         * 使用支付接口的手续费
+         * @var float
+         */
+        $feeRate = 0.03;
+        $yearlyFee = PurchaseLog::where('buy_date', '>', $Y)->where('out_trade_no', 'like', '%alip%')->sum('price')*$feeRate;
+        $monthlyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->where('out_trade_no', 'like', '%alip%')->sum('price')*$feeRate;
+        $dailyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->where('out_trade_no', 'like', '%alip%')->sum('price')*$feeRate;
+
         $income['yearly'] = $yearlyIncome;
+        $income['monthly']  = $monthlyIncome;
         $income['daily']  = $dailyIncome;
+        $income['yearlyFee'] = $yearlyFee;
+        $income['monthlyFee']  = $monthlyFee;
+        $income['dailyFee']  = $dailyFee;
         $income['all']    = PurchaseLog::sum('price');
 
         /**

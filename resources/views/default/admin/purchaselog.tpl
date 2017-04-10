@@ -109,10 +109,16 @@
             </fieldset>
             <hr>
                 <p>
-                    本年收入：{$income["yearly"]}元
+                    建站以来收入：{$income["all"]} 元
                 </p>
                 <p>
-                    本日收入：{$income["daily"]}元
+                    本年收入：{$income["yearly"]} 元 （其中支出手续费 {$income["yearlyFee"]} 元）
+                </p>
+                <p>
+                    本月收入：{$income["monthly"]} 元 （其中支出手续费 {$income["monthlyFee"]} 元）
+                </p>
+                <p>
+                    本日收入：{$income["daily"]} 元 （其中支出手续费 {$income["dailyFee"]} 元）
                 </p>
                 <!-- chart -->
                 <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
