@@ -47,7 +47,7 @@ html{
                     <div class="box-header">
                         <i class="fa fa-code"></i>
 
-                        <h3 class="box-title">配置地址</h3>
+                        <h3 class="box-title">ss配置地址</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -56,14 +56,27 @@ html{
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-code"></i>
+
+                        <h3 class="box-title">ssr配置地址</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <input id="ss-qr-text" class="form-control" value="{$ssqr_new}">
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
             </div>
             <!-- /.col (right) -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="box box-solid">
                     <div class="box-header">
                         <i class="fa fa-qrcode"></i>
 
-                        <h3 class="box-title">原版配置二维码</h3>
+                        <h3 class="box-title">原版SS配置二维码</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -77,36 +90,17 @@ html{
             </div>
             <!-- /.col (right) -->
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="box box-solid">
                     <div class="box-header">
                         <i class="fa fa-qrcode"></i>
 
-                        <h3 class="box-title">SSR 旧版(3.8.3之前)配置二维码</h3>
+                        <h3 class="box-title">SSR配置二维码</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="text-center">
-                            <a href="{$ssqr_s}"><div id="ss-qr" class="qr-background"></div></a>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col (right) -->
-
-            <div class="col-md-4">
-                <div class="box box-solid">
-                    <div class="box-header">
-                        <i class="fa fa-qrcode"></i>
-
-                        <h3 class="box-title">SSR 新版(3.8.3之后)配置二维码</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="text-center">
-                            <a href="{$ssqr_s_new}"><div id="ss-qr-n" class="qr-background"></div></a>
+                            <a href="{$ssqr_new}"><div id="ss-qr-n" class="qr-background"></div></a>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -175,13 +169,8 @@ html{
     jQuery('#ss-qr-y').qrcode({
         "text": text_qrcode1
     });
-
-    var text_qrcode = '{$ssqr_s}';
-    jQuery('#ss-qr').qrcode({
-        "text": text_qrcode
-    });
     
-    var text_qrcode2 = '{$ssqr_s_new}';
+    var text_qrcode2 = '{$ssqr_new}';
     jQuery('#ss-qr-n').qrcode({
         "text": text_qrcode2
     });

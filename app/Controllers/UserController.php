@@ -93,7 +93,7 @@ class UserController extends BaseController
         $ssqrs_new       = array();
         $allnodes        = Node::where('type', '>=', 0)->orderBy('sort')->get();
         $free_nodes      = Node::where('type', 0)->orderBy('sort')->get();
-        if ($user->plan == "A") {
+        if ($user->isFreeUser()) {
             $nodes_available = $free_nodes;
         } else {
             $nodes_available = $allnodes;
@@ -103,31 +103,24 @@ class UserController extends BaseController
             $ary['server_port'] = $user->port;
             $ary['password']    = $user->passwd;
             $ary['method']      = ($node->custom_method == 1 ? $user->method : $node->method);
-            $ary['obfs']        = str_replace("_compatible", "", ($node->custom_rss == 1 ? $this->user->obfs : $node->obfs));
-            $ary['obfs_param']  = str_replace("_compatible", "", (($node->custom_rss == 1 && $this->user->obfs_param != null) ? $this->user->obfs_param : $node->obfs_param));
-            $ary['protocol']    = str_replace("_compatible", "", ($node->custom_rss == 1 ? $this->user->protocol : $node->protocol));
+            $ary['obfs']        = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->obfs : $node->obfs));
+            $ary['obfs_param']  = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
+            $ary['protocol']    = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
 
-            $ssurl = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
-            $ssqr  = "ss://" . base64_encode($ssurl); //原版
+            $ssqr  = $node->getSSUrl($ary); //原版
             $android_add .= $ssqr . "|";
-            $ssqrs[$node->name] = $ssqr;
 
-            $ssurl  = $ary['obfs'] . ":" . $ary['protocol'] . ":" . $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'] . "/" . base64_encode($ary['obfs_param']);
-            $ssqr_s = "ss://" . base64_encode($ssurl); //SSR (3.8.3之前)
-
-            $ssurl      = $ary['server'] . ":" . $ary['server_port'] . ":" . $ary['protocol'] . ":" . $ary['method'] . ":" . $ary['obfs'] . ":" . Tools::base64_url_encode($ary['password']) . "/?obfsparam=" . Tools::base64_url_encode($ary['obfs_param']) . "&remarks=" . Tools::base64_url_encode($node->name) . "&group=" . Tools::base64_url_encode("shadowsky");
-            $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl); //SSR 新版(3.8.3之后)
-            $android_add_new .= $ssqr_s_new . "|";
-            $ssqrs_new[$node->name] = $ssqr_s_new;
+            $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
+            $android_add_new .= $ssqr_new . "|";
         }
-        return $this->view()->assign('nodes', $allnodes)->assign('user', $user)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_add_new', $android_add_new)->assign('ssqrs', $ssqrs)->assign('ssqrs_new', $ssqrs_new)->assign('nodes_available', $nodes_available)->display('user/node.tpl');
+        return $this->view()->assign('nodes', $allnodes)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_add_new', $android_add_new)->assign('nodes_available', $nodes_available)->display('user/node.tpl');
     }
 
     public function nodeInfo($request, $response, $args)
     {
         $user = Auth::getUser();
-        $id   = $args['id'];
-        $node = Node::find($id);
+        $node_id   = $args['id'];
+        $node = Node::find($node_id);
 
         if ($node == null) {
             return 'access to node that doesn\'t exist';
@@ -145,18 +138,14 @@ class UserController extends BaseController
         $json      = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
 
-        $ssurl      = $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'];
-        $ssqr       = "ss://" . base64_encode($ssurl); //原版
-        $ssurl      = $ary['obfs'] . ":" . $ary['protocol'] . ":" . $ary['method'] . ":" . $ary['password'] . "@" . $ary['server'] . ":" . $ary['server_port'] . "/" . base64_encode($node->obfs_param);
-        $ssqr_s     = "ss://" . base64_encode($ssurl); //SSR (3.8.3之前)
-        $ssurl      = $ary['server'] . ":" . $ary['server_port'] . ":" . $ary['protocol'] . ":" . $ary['method'] . ":" . $ary['obfs'] . ":" . Tools::base64_url_encode($ary['password']) . "/?obfsparam=" . Tools::base64_url_encode($node->obfs_param) . "&remarks=" . Tools::base64_url_encode($node->name) . "&group=" . Tools::base64_url_encode("shadowsky");
-        $ssqr_s_new = "ssr://" . Tools::base64_url_encode($ssurl); //SSR 新版(3.8.3之后)
+        $ssqr       = $node->getSSUrl($ary); //原版
+        $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
 
         $surge_base  = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
-        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('ssqr_s', $ssqr_s)->assign('ssqr_s_new', $ssqr_s_new)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
+        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('ssqr_new', $ssqr_new)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
     }
 
     public function getconf($request, $response, $args)
@@ -262,7 +251,7 @@ class UserController extends BaseController
         $B_able_to_buy = (($nodes_count * 13) > $B_count) ? 1 : 0;
         $user          = Auth::getUser();
         $products      = Shop::where('status', 1)->get();
-        return $this->view()->assign('products', $products)->assign('user', $user)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
+        return $this->view()->assign('products', $products)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
     }
 
     public function qna()
@@ -431,9 +420,16 @@ class UserController extends BaseController
 
     public function vote($request, $response, $args)
     {
+        $user = $this->user;
         $uid    = $this->user->id;
         $nodeid = $request->getParam('nodeid');
+        $node = Node::find($nodeid);
         $poll   = $request->getParam('poll');
+        if (!$user->isAbleToVote($node)) {
+            $res['ret'] = 0;
+            $res['msg'] = 'You can\'t vote this node.' ;
+            return $this->echoJson($response, $res);
+        }
         $f      = Vote::where("uid", $uid)->where("nodeid", $nodeid)->first();
         if ($f) {
             $f->poll = $poll;
@@ -446,6 +442,21 @@ class UserController extends BaseController
             $v->save();
         }
         $res['ret'] = 1;
+        switch ($poll) {
+            case '1':
+                $res['msg'] = "give $node->name a thumbs up";
+                break;
+            case '-1':
+                $res['msg'] = "give $node->name a thumbs down";
+                break;
+            case '0':
+                $res['msg'] = "delete vote of $node->name";
+                break;
+            
+            default:
+                # code...
+                break;
+        }
         return $this->echoJson($response, $res);
     }
 

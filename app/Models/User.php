@@ -57,6 +57,25 @@ class User extends Model
         return $this->attributes['ref_by'] == 3;
     }
 
+    public function isFreeUser()
+    {
+        return $this->attributes['plan'] == 'A';
+    }
+
+    public function isPaidUser()
+    {
+        return $this->attributes['plan'] != 'A';
+    }
+
+    public function isAbleToVote($node)
+    {
+        if ($this->isFreeUser() && $node->isPaidNode()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public function becomeDonator()
     {
         $this->ref_by = 3;

@@ -131,4 +131,25 @@ class Node extends Model
         return $c;
     }
     
+    public function getSSUrl($arr)
+    {
+        $ssurl = $arr['method'] . ":" . $arr['password'] . "@" . $arr['server'] . ":" . $arr['server_port'];
+        return "ss://" . base64_encode($ssurl);
+    }
+    
+    public function getSSRUrl($arr)
+    {
+        $ssurl = $arr['server'] . ":" . $arr['server_port'] . ":" . $arr['protocol'] . ":" . $arr['method'] . ":" . $arr['obfs'] . ":" . Tools::base64_url_encode($arr['password']) . "/?obfsparam=" . Tools::base64_url_encode($arr['obfs_param']) . "&remarks=" . Tools::base64_url_encode($this->attributes['name']) . "&group=" . Tools::base64_url_encode("shadowsky");
+        return "ssr://" . Tools::base64_url_encode($ssurl);
+    }
+
+    public function isFreeNode()
+    {
+        return $this->attributes['type'] == 0;
+    }
+
+    public function isPaidNode()
+    {
+        return $this->attributes['type'] == 1;
+    }
 }
