@@ -1,4 +1,5 @@
 .idea
 .env
+.phpintel/
 vendor/
 composer.phar

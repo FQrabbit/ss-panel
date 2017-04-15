@@ -263,15 +263,15 @@ class Tools
         return (int)Rand(0,65535);
     }
     
-    public function base64_url_encode($input) {
+    public static function base64_url_encode($input) {
         return strtr(base64_encode($input), '+/', '-_');
     }
 
-    public function base64_url_decode($input) {
+    public static function base64_url_decode($input) {
         return base64_decode(strtr($input, '-_', '+/'));
     }
 
-    public function getPriceOfPlan($plan)
+    public static function getPriceOfPlan($plan)
     {
         return Shop::where('name', $plan)->first()->price;
     }
