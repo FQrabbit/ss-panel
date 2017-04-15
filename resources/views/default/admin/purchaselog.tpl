@@ -89,12 +89,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <input class="form-control" id="buy_date" onfocus="(this.type='datetime-local')" placeholder="购买时间(默认为此时)" type="text"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" id="out_trade_no" placeholder="订单号(若无请留空)" type="number"/>
-            </div>
-            <div class="form-group">
                 <button class="btn btn-default form-control" id="insert">
                     插入
                 </button>
@@ -225,9 +219,7 @@
             data: {
                 uid: $("#uid").val(),
                 port: $("#port").val(),
-                body: $("#body").val(),
-                buy_date: $("#buy_date").val(),
-                out_trade_no: $("#out_trade_no").val()
+                body: $("#body").val()
             },
             success: function (data) {
                 if (data.ret) {
@@ -246,6 +238,7 @@
                 $("#msg-error").hide(10);
                 $("#msg-error").show(100);
                 $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                $("#insert").removeAttr("disabled");
             }
         });
     }

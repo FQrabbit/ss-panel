@@ -16,7 +16,7 @@ use App\Utils\Tools;
  */
 class PaymentController extends BaseController
 {
-    private $key, $apiid;
+    private $key, $apiid, $feeRate = 0.3;
 
     public function __construct()
     {
@@ -71,13 +71,13 @@ class PaymentController extends BaseController
             if (DonateLog::hasTransaction($alino)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
-                $this->doDonate($uid, $price, $alino);
+                $this->doDonate($uid, $price, $alino, $this->feeRate);
             }
         } else {
             if (PurchaseLog::hasTransaction($alino)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
-                $this->doPay($uid, $product_id, $alino);
+                $this->doPay($uid, $product_id, $alino, $this->feeRate);
             }
         }
 
@@ -100,29 +100,13 @@ class PaymentController extends BaseController
         return $q;
     }
 
-    /**
-     * Add purchase log
-     *
-     * $array=array(['uid'=>//必须
-     *                  'body'=>必须
-     *                  'price'=>必须
-     *                  'buy_date'=>
-     *                  'out_trade_no'=>
-     * ])
-     */
     public function addPurchaseLog($array)
     {
-        if (!isset($array['buy_date'])) {
-            $array['buy_date'] = Tools::toDateTime(time());
-        }
-        if (!isset($array['out_trade_no'])) {
-            $array['out_trade_no'] = time();
-        }
         $log               = new PurchaseLog();
         $log->uid          = $array['uid'];
         $log->body         = $array['body'];
         $log->price        = $array['price'];
-        $log->buy_date     = $array['buy_date'];
+        $log->buy_date     = Tools::toDateTime(time());
         $log->out_trade_no = $array['out_trade_no'];
         $log->fee          = $array['fee'];
         $log->save();
@@ -130,18 +114,16 @@ class PaymentController extends BaseController
 
     public function addDonateLog($array)
     {
-        if (!isset($array['trade_no'])) {
-            $array['trade_no'] = time();
-        }
         $log           = new DonateLog();
         $log->uid      = $array['uid'];
         $log->money    = $array['money'];
         $log->datetime = Tools::toDateTime(time());
         $log->trade_no = $array['trade_no'];
+        $log->fee      = $array['fee'];
         $log->save();
     }
 
-    public function doDonate($uid, $money, $alino)
+    public function doDonate($uid, $money, $alino, $feeRate)
     {
         $user = User::find($uid);
         // 添加购买记录
@@ -149,6 +131,7 @@ class PaymentController extends BaseController
             'uid'      => $uid,
             'money'    => $money,
             'trade_no' => $alino,
+            'fee'      => $money * $feeRate,
         );
         $this->addDonateLog($donate_log_arr);
         $user->becomeDonator();
@@ -180,7 +163,7 @@ class PaymentController extends BaseController
      *
      * param: $uid, $product_id, $alino
      */
-    public function doPay($uid, $product_id, $alino, $feeRate = 0.3)
+    public function doPay($uid, $product_id, $alino, $feeRate)
     {
         $user    = User::find($uid);
         $product = Shop::find($product_id);
