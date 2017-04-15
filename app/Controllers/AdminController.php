@@ -99,48 +99,52 @@ class AdminController extends UserController
             $q['uid']  = $user->id;
             $q['port'] = '';
         }
-        $logs = PurchaseLog::where('id', ">", 0);
+        $logs = PurchaseLog::where('id', '>', 0);
         $path = '/admin/purchaselog?';
         foreach ($q as $k => $v) {
-            if ($v != "" && $k != 'page') {
-                $logs = $logs->where($k, $v);
+            if ($v != '' && $k != 'page') {
+                if ($k == 'out_trade_no') {
+                    $logs = $logs->where('out_trade_no', 'like', "%$v%");
+                } else {
+                    $logs = $logs->where($k, $v);
+                }
                 $path .= $k . '=' . $v . '&';
             }
         }
 
-        $Y                = date('Y');
-        $m                = date('m');
-        $d                = date('d');
-        $yearlyIncome     = PurchaseLog::where('buy_date', '>', $Y)->sum('price');
-        $monthlyIncome      = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('price');
-        $dailyIncome      = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('price');
+        $Y             = date('Y');
+        $m             = date('m');
+        $d             = date('d');
+        $yearlyIncome  = PurchaseLog::where('buy_date', '>', $Y)->sum('price');
+        $monthlyIncome = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('price');
+        $dailyIncome   = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('price');
 
         /**
          * 使用支付接口的手续费
          * @var float
          */
-        $yearlyFee = PurchaseLog::where('buy_date', '>', $Y)->sum('fee');
+        $yearlyFee  = PurchaseLog::where('buy_date', '>', $Y)->sum('fee');
         $monthlyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('fee');
-        $dailyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('fee');
+        $dailyFee   = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('fee');
 
-        $income['yearly'] = $yearlyIncome;
-        $income['monthly']  = $monthlyIncome;
-        $income['daily']  = $dailyIncome;
-        $income['yearlyFee'] = $yearlyFee;
-        $income['monthlyFee']  = $monthlyFee;
-        $income['dailyFee']  = $dailyFee;
-        $income['all']    = PurchaseLog::sum('price');
+        $income['yearly']     = $yearlyIncome;
+        $income['monthly']    = $monthlyIncome;
+        $income['daily']      = $dailyIncome;
+        $income['yearlyFee']  = $yearlyFee;
+        $income['monthlyFee'] = $monthlyFee;
+        $income['dailyFee']   = $dailyFee;
+        $income['all']        = PurchaseLog::sum('price');
 
         /**
          * x轴坐标标签数组,从一月到本月。
          * @var array
          */
-        $monthscope       = array();
+        $monthscope = array();
         /**
          * 各月数值数组。
          * @var array
          */
-        $monthdata        = array();
+        $monthdata = array();
 
         for ($i = 1; $i <= $m; $i++) {
             if ($i < 10) {
@@ -208,7 +212,7 @@ class AdminController extends UserController
 
         $product_id = $q['body'];
         $pay        = new PaymentController();
-        $rs         = $pay->doPay($q['uid'], $product_id, time().$q['uid']);
+        $rs         = $pay->doPay($q['uid'], $product_id, time() . $q['uid'], 0);
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -284,7 +288,7 @@ class AdminController extends UserController
         }
 
         $pay = new PaymentController();
-        $rs  = $pay->doDonate($q['uid'], $q['money'], time());
+        $rs  = $pay->doDonate($q['uid'], $q['money'], time() . $q['uid'], 0);
         return $response->getBody()->write(json_encode($rs));
     }
 

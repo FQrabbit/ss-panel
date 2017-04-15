@@ -67,6 +67,7 @@
                                 <th>用户名</th>
                                 <th>用户端口</th>
                                 <th>金额</th>
+                                <th>手续费</th>
                                 <th>捐助日期</th>
                                 <th>交易号</th>
                                 <th>操作</th>
@@ -78,6 +79,7 @@
                                     <td>{$log->user()->user_name}</td>
                                     <td>{$log->user()->port}</td>
                                     <td>{$log->money}</td>
+                                    <td>{$log->fee}</td>
                                     <td>{$log->datetime}</td>
                                     <td>{$log->trade_no}</td>
                                     <td>
@@ -118,12 +120,14 @@
                     $("#msg-error").hide(10);
                     $("#msg-error").show(100);
                     $("#msg-error-p").html(data.msg);
+                    $("#insert").removeAttr("disabled");
                 }
             },
             error: function (jqXHR) {
                 $("#msg-error").hide(10);
                 $("#msg-error").show(100);
                 $("#msg-error-p").html("发生错误：" + jqXHR.status);
+                $("#insert").removeAttr("disabled");
             }
         });
     }

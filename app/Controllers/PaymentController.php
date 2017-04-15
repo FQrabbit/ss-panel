@@ -16,7 +16,7 @@ use App\Utils\Tools;
  */
 class PaymentController extends BaseController
 {
-    private $key, $apiid;
+    private $key, $apiid, $feeRate = 0.3;
 
     public function __construct()
     {
@@ -50,7 +50,7 @@ class PaymentController extends BaseController
      */
     public function doReturn($request, $response, $args)
     {
-        $q      = $this->getRequestBodyArray($request);
+        $q = $this->getRequestBodyArray($request);
 
         $alino  = $q['addnum'];
         $uid    = $q['uid'];
@@ -71,13 +71,13 @@ class PaymentController extends BaseController
             if (DonateLog::hasTransaction($alino)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
-                $this->doDonate($uid, $price, $alino);
+                $this->doDonate($uid, $price, $alino, $this->feeRate);
             }
         } else {
             if (PurchaseLog::hasTransaction($alino)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
-                $this->doPay($uid, $product_id, $alino);
+                $this->doPay($uid, $product_id, $alino, $this->feeRate);
             }
         }
 
@@ -100,49 +100,30 @@ class PaymentController extends BaseController
         return $q;
     }
 
-    /**
-     * Add purchase log
-     *
-     * $array=array(['uid'=>//必须
-     *                  'body'=>必须
-     *                  'price'=>必须
-     *                  'buy_date'=>
-     *                  'out_trade_no'=>
-     * ])
-     */
     public function addPurchaseLog($array)
     {
-        $feeRate = 0.03;
-        if (!isset($array['buy_date'])) {
-            $array['buy_date'] = Tools::toDateTime(time());
-        }
-        if (!isset($array['out_trade_no'])) {
-            $array['out_trade_no'] = time();
-        }
         $log               = new PurchaseLog();
         $log->uid          = $array['uid'];
         $log->body         = $array['body'];
         $log->price        = $array['price'];
-        $log->buy_date     = $array['buy_date'];
+        $log->buy_date     = Tools::toDateTime(time());
         $log->out_trade_no = $array['out_trade_no'];
-        $log->fee = $array['price']*$feeRate;
+        $log->fee          = $array['fee'];
         $log->save();
     }
 
     public function addDonateLog($array)
     {
-        if (!isset($array['trade_no'])) {
-            $array['trade_no'] = time();
-        }
         $log           = new DonateLog();
         $log->uid      = $array['uid'];
         $log->money    = $array['money'];
         $log->datetime = Tools::toDateTime(time());
         $log->trade_no = $array['trade_no'];
+        $log->fee      = $array['fee'];
         $log->save();
     }
 
-    public function doDonate($uid, $money, $alino)
+    public function doDonate($uid, $money, $alino, $feeRate)
     {
         $user = User::find($uid);
         // 添加购买记录
@@ -150,6 +131,7 @@ class PaymentController extends BaseController
             'uid'      => $uid,
             'money'    => $money,
             'trade_no' => $alino,
+            'fee'      => $money * $feeRate,
         );
         $this->addDonateLog($donate_log_arr);
         $user->becomeDonator();
@@ -181,7 +163,7 @@ class PaymentController extends BaseController
      *
      * param: $uid, $product_id, $alino
      */
-    public function doPay($uid, $product_id, $alino)
+    public function doPay($uid, $product_id, $alino, $feeRate)
     {
         $user    = User::find($uid);
         $product = Shop::find($product_id);
@@ -191,6 +173,7 @@ class PaymentController extends BaseController
             'body'         => $product->name,
             'price'        => $product->price,
             'out_trade_no' => $alino,
+            'fee'          => $feeRate * $product->price,
         );
         $this->addPurchaseLog($purchase_log_arr);
 
@@ -238,12 +221,12 @@ class PaymentController extends BaseController
             ];
             Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
 
-            $to      = 'zhwalker20@gmail.com';
-            $title   = 'Shadowsky - 用户购买通知';
-            $tpl     = 'news/new-purchase.tpl';
-            $arr2    = [
+            $to    = 'zhwalker20@gmail.com';
+            $title = 'Shadowsky - 用户购买通知';
+            $tpl   = 'news/new-purchase.tpl';
+            $arr2  = [
                 'user' => $user,
-                'pre' => $pre
+                'pre'  => $pre,
             ];
             // return $user;
             Mail::send($to, $title, $tpl, $arr2, []);
@@ -269,7 +252,7 @@ class PaymentController extends BaseController
         if ($q['total'] <= '0') {
             return '输入的金额小于等于0！';
         }
-        if ($q['product_id']!=0) {
+        if ($q['product_id'] != 0) {
             if ($q['total'] != Shop::find($q['product_id'])->price) {
                 return '商品价格不符';
             }
