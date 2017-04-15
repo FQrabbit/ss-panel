@@ -252,7 +252,25 @@ class AdminController extends UserController
         $path = substr($path, 0, strlen($path) - 1);
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
-        return $this->view()->assign('logs', $logs)->display('admin/donatelog.tpl');
+
+        $Y             = date('Y');
+        $m             = date('m');
+        $yearlyIncome  = DonateLog::where('datetime', '>', $Y)->sum('money');
+        $monthlyIncome = DonateLog::where('datetime', '>', $Y . '-' . $m)->sum('money');
+
+        /**
+         * 使用支付接口的手续费
+         * @var float
+         */
+        $yearlyFee  = DonateLog::where('datetime', '>', $Y)->sum('fee');
+        $monthlyFee = DonateLog::where('datetime', '>', $Y . '-' . $m)->sum('fee');
+
+        $income['yearly']     = $yearlyIncome;
+        $income['monthly']    = $monthlyIncome;
+        $income['yearlyFee']  = $yearlyFee;
+        $income['monthlyFee'] = $monthlyFee;
+        $income['all']        = DonateLog::sum('money');
+        return $this->view()->assign('logs', $logs)->assign('income', $income)->display('admin/donatelog.tpl');
     }
 
     public function addDonate($request, $response, $args)

@@ -55,6 +55,16 @@
                 <button id="insert" class="btn btn-default form-control">插入</button>
             </div>
         </fieldset>
+        <hr/>
+        <p>
+            建站以来捐助额：{$income["all"]} 元
+        </p>
+        <p>
+            本年捐助额：{$income["yearly"]} 元 （其中支出手续费 {$income["yearlyFee"]} 元）
+        </p>
+        <p>
+            本月捐助额：{$income["monthly"]} 元 （其中支出手续费 {$income["monthlyFee"]} 元）
+        </p>
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
