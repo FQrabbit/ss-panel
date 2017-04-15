@@ -208,7 +208,7 @@ class AdminController extends UserController
 
         $product_id = $q['body'];
         $pay        = new PaymentController();
-        $rs         = $pay->doPay($q['uid'], $product_id, time().$q['uid']);
+        $rs         = $pay->doPay($q['uid'], $product_id, time().$q['uid'], 0);
         return $response->getBody()->write(json_encode($rs));
     }
 
