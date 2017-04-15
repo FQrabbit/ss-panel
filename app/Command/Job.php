@@ -20,57 +20,55 @@ class Job
 
     public static function resetUserPlan()
     {
-        $users = User::where("expire_date", ">", "0000-00-00 00:00:00")->where("plan", "B")->get();
-        foreach ($users as $user) {
-            if ($user->expire_date < date('Y-m-d H:i:s')) {  //如果已过期则执行
+        $users = User::where('expire_date', '>', '0000-00-00 00:00:00')->where('expire_date', '<', date('Y-m-d H:i:s'))->where('plan', 'B')->get();
+        if ($users) {
+	        foreach ($users as $user) {
+	                $to = $user->email;
+	                $subject = Config::get('appName') . '-会员到期提醒';
 
-                $to = $user->email;
-                $subject = Config::get('appName') . "-会员到期提醒";
+	                //发送邮件
+	                try {
+	                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', [
+	                        'user' => $user
+	                    ], [
+	                    ]);
+	                } catch (Exception $e) {
+	                    echo $e->getMessage();
+	                }
 
-                //发送邮件
-                try {
-                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', [
-                        "user" => $user
-                    ], [
-                    ]);
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
+	                $user->plan = 'A';
+	                if (in_array($user->type, ['包月','包季','包年'])) {
+	                    $user->transfer_enable = 104857600;
+	                    $user->u = 0;
+	                    $user->d = 0;
+	                }
+	                $user->type = 1;
+	                $user->save();
 
-                $user->plan = "A";
-                if (in_array($user->type, ['包月','包季','包年'])) {
-                    $user->transfer_enable = 104857600;
-                    $user->u = 0;
-                    $user->d = 0;
-                }
-                $user->type = 1;
-                $user->save();
-
-                echo date("Y-m-d H:i:s")."\n";
-                echo "已更新用户".$user->user_name."(id:".$user->id.")的plan为A</br>";
-            }
+	                echo date('Y-m-d H:i:s')."\n";
+	                echo '已更新用户'.$user->user_name.'(id:'.$user->id.')的plan为A</br>';
+	        }
         }
-        echo "</br>";
     }
 
     public static function getNoTransferUser()
     {
         $day = 24*3600;
-        $period = date("Y-m-d H:i:s",(time() - 30*$day));
-        $users = User::where("plan", "A")
-                        ->where("ref_by", "!=", 3)
-                        ->where("reg_date", "<", $period)
-                        ->where("t", "<", (time() - 60*$day))
-                        ->orderBy("t")
+        $period = date('Y-m-d H:i:s',(time() - 30*$day));
+        $users = User::where('plan', 'A')
+                        ->where('ref_by', '!=', 3)
+                        ->where('reg_date', '<', $period)
+                        ->where('t', '<', (time() - 60*$day))
+                        ->orderBy('t')
                         ->get();
         if (!$users->isEmpty()) {
-            echo date("Y-m-d H:i:s",time())." 删除以下长时间未使用用户：</br>";
-            echo "sum:".count($users)."\n";
+            echo date('Y-m-d H:i:s',time()).' 删除以下长时间未使用用户：</br>';
+            echo 'sum:'.count($users)."\n";
             echo "<table><thead><tr><th>uid</th><th>用户名</th><th>plan</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {
-                echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->plan."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
+                echo '<tr><td>'.$user->id.'</td><td>'.$user->user_name.'</td><td>'.$user->plan.'</td><td>'.$user->reg_date.'</td><td>'.date('Y-m-d H:i:s', $user->last_check_in_time).'</td><td>'.date('Y-m-d H:i:s', $user->t).'</td><td>'.$user->usedTraffic().'/'.$user->enableTraffic()."</td></tr>\n";
             }
-            echo "</tbody></table></br>";
+            echo '</tbody></table></br>';
         }
         return $users;
     }
@@ -78,21 +76,21 @@ class Job
     public static function getUncheckinUser()
     {
         $day = 24*3600;
-        $last_three_week_date = date("Y-m-d H:i:s",(time() - 21*$day));
-        $users = User::where("last_check_in_time", "<", (time()-21*$day))
-                    ->where("plan", "A")
-                    ->where("ref_by", "!=", 3)
-                    ->where("buy_date", "0000-00-00 00:00:00")
-                    ->where("reg_date", "<", $last_three_week_date)
+        $last_three_week_date = date('Y-m-d H:i:s',(time() - 21*$day));
+        $users = User::where('last_check_in_time', '<', (time()-21*$day))
+                    ->where('plan', 'A')
+                    ->where('ref_by', '!=', 3)
+                    ->where('buy_date', '0000-00-00 00:00:00')
+                    ->where('reg_date', '<', $last_three_week_date)
                     ->get();
         if (!$users->isEmpty()) {
-            echo date("Y-m-d H:i:s",time())." 删除以下长时间未签到用户：</br>";
-            echo "sum:".count($users)."\n";
+            echo date('Y-m-d H:i:s',time()).' 删除以下长时间未签到用户：</br>';
+            echo 'sum:'.count($users)."\n";
             echo "<table><thead><tr><th>uid</th><th>用户名</th><th>plan</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {
-                echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->plan."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
+                echo '<tr><td>'.$user->id.'</td><td>'.$user->user_name.'</td><td>'.$user->plan.'</td><td>'.$user->reg_date.'</td><td>'.date('Y-m-d H:i:s', $user->last_check_in_time).'</td><td>'.date('Y-m-d H:i:s', $user->t).'</td><td>'.$user->usedTraffic().'/'.$user->enableTraffic()."</td></tr>\n";
             }
-            echo "</tbody></table></br>";
+            echo '</tbody></table></br>';
         }
         return $users;
     }
@@ -101,36 +99,36 @@ class Job
     {
         $day = 24*3600;
         $t = time() - 30*$day;
-        $period = date("Y-m-d H:i:s",$t);
-        $users = User::where("t", "<", $t)
-                        ->where("reg_date", "<", $period)
-                        ->where("plan", "!=", "C")
-                        ->where("enable", 1)
-                        ->orderBy("t")
+        $period = date('Y-m-d H:i:s',$t);
+        $users = User::where('t', '<', $t)
+                        ->where('reg_date', '<', $period)
+                        ->where('plan', '!=', 'C')
+                        ->where('enable', 1)
+                        ->orderBy('t')
                         ->get();
         // $users = User::find(1);
         if (!$users->isEmpty()) {
-            User::where("t", "<", $t)
-                ->where("reg_date", "<", $period)
-                ->where("plan", "!=", "C")
-                ->where("enable", 1)
-                ->orderBy("t")
+            User::where('t', '<', $t)
+                ->where('reg_date', '<', $period)
+                ->where('plan', '!=', 'C')
+                ->where('enable', 1)
+                ->orderBy('t')
                 ->update(['enable' => 0]);
-            echo date("Y-m-d H:i:s",time())." 冻结以下用户：</br>";
-            echo "sum:".count($users)."\n";
+            echo date('Y-m-d H:i:s',time()).' 冻结以下用户：</br>';
+            echo 'sum:'.count($users)."\n";
             echo "<table><thead><tr><th>uid</th><th>用户名</th><th>plan</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
             foreach ($users as $user) {
 
-                $arr["user_name"] = $user->user_name;
+                $arr['user_name'] = $user->user_name;
                 try {
-                    Mail::send($user->email, "账号冻结提醒 - Shadowsky", 'news/freeze-report.tpl', $arr, []);
+                    Mail::send($user->email, '账号冻结提醒 - Shadowsky', 'news/freeze-report.tpl', $arr, []);
                 } catch (\Exception $e) {
                     echo $e->getMessage()."\n";
                 }
 
-                echo "<tr><td>".$user->id."</td><td>".$user->user_name."</td><td>".$user->plan."</td><td>".$user->reg_date."</td><td>".date("Y-m-d H:i:s", $user->last_check_in_time)."</td><td>".date("Y-m-d H:i:s", $user->t)."</td><td>".$user->usedTraffic()."/".$user->enableTraffic()."</td></tr>\n";
+                echo '<tr><td>'.$user->id.'</td><td>'.$user->user_name.'</td><td>'.$user->plan.'</td><td>'.$user->reg_date.'</td><td>'.date('Y-m-d H:i:s', $user->last_check_in_time).'</td><td>'.date('Y-m-d H:i:s', $user->t).'</td><td>'.$user->usedTraffic().'/'.$user->enableTraffic()."</td></tr>\n";
             }
-            echo "</tbody></table></br></br>";
+            echo '</tbody></table></br></br>';
         }
     }
 
@@ -138,19 +136,19 @@ class Job
     {
         foreach ($users as $user) {
             $fields = array(
-                "id",
-                "user_name",
-                "plan",
-                "port",
-                "last_check_in_time",
-                "reg_date",
-                "email",
-                "pass",
-                "passwd",
-                "u",
-                "d",
-                "user_type",
-                "transfer_enable"
+                'id',
+                'user_name',
+                'plan',
+                'port',
+                'last_check_in_time',
+                'reg_date',
+                'email',
+                'pass',
+                'passwd',
+                'u',
+                'd',
+                'user_type',
+                'transfer_enable'
             );
             // 备份用户
             $u = new DelUser;
@@ -209,12 +207,12 @@ class Job
                 echo $e->getMessage()."\n";
             }
         }
-	echo date("Y-m-d H:i:s",time())."\n\n";
+	echo date('Y-m-d H:i:s',time())."\n\n";
     }
 
     public static function clearLog()
     {
-        echo date("Y-m-d H:i:s",time())."\n";
+        echo date('Y-m-d H:i:s',time())."\n";
 
         TrafficLog::truncate();
         echo "clear TrafficLog\n";
@@ -222,16 +220,16 @@ class Job
         EmailVerify::truncate();
         echo "clear EmailVerifyLog\n";
 
-        NodeInfoLog::where("log_time", "<", (time()-120))->delete();
+        NodeInfoLog::where('log_time', '<', (time()-120))->delete();
         echo "clear NodeInfoLog\n";
 
-        CheckInLog::where("checkin_at", "<", (time()-30*12*3600))->delete();
+        CheckInLog::where('checkin_at', '<', (time()-30*12*3600))->delete();
         echo "clear CheckinLog\n";
 
         PasswordReset::truncate();
         echo "clear PasswordResetLog\n";
         
-        NodeOnlineLog::where("log_time", "<", (time()-120))->delete();
+        NodeOnlineLog::where('log_time', '<', (time()-120))->delete();
         echo "clear NodeOnlineLog\n\n";
     }
 

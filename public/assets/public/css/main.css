@@ -580,6 +580,7 @@ table>tbody>tr, td, table>tbody>tr, th, table>tfoot>tr, td, table>tfoot>tr, th, 
 .vote-btn, .vote-btn span {
     padding: 3px;
     color: rgba(255, 255, 255, 0.69) !important;
+    white-space: nowrap;
 }
 
 .vote-btn span {
