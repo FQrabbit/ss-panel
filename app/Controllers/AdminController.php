@@ -451,6 +451,94 @@ class AdminController extends UserController
         return $response->getBody()->write(json_encode($res));
     }
 
+    public function email($request, $response, $args)
+    {
+        return $this->view()->display('admin/email.tpl');
+    }
+
+    public function sendEmail($request, $response, $args)
+    {
+        $q = $request->getParsedBody();
+        if ($q['id'] != '') {
+            $user = User::find($q['id']);
+        }
+        if ($q['port'] != '') {
+            $user = User::where('port', $q['port'])->first();
+        }
+        if ($q['email'] != '') {
+            $user = User::where('email', $q['email'])->first();
+        }
+        if (!$user) {
+            $res['ret'] = 0;
+            $res['msg'] = '未找到该用户。';
+            return $response->getBody()->write(json_encode($res));
+        }
+        if ($q['title'] == '') {
+            $res['ret'] = 0;
+            $res['msg'] = '请输入标题。';
+            return $response->getBody()->write(json_encode($res));
+        }
+        if ($q['content'] == '') {
+            $res['ret'] = 0;
+            $res['msg'] = '请输入内容。';
+            return $response->getBody()->write(json_encode($res));
+        }
+        try {
+            Mail::send($user->email, $q['title'], 'news/announcement.tpl', ['content' => $q['content'], 'user_name' => $user->user_name], []);
+            $res['ret'] = 1;
+            $res['msg'] = "发送邮箱公告成功";
+        } catch (\Exception $e) {
+            $res['ret'] = 0;
+            $res['msg'] = $e->getMessage();
+        }
+        return $response->getBody()->write(json_encode($res));
+    }
+
+    public function sendEmails($request, $response, $args)
+    {
+        $q      = $request->getParsedBody();
+        $users  = User::where('id', '>', 0);
+        $search = ['plan', 'enable', 'status', 'type'];
+        foreach ($q as $k => $v) {
+            if (in_array($k, $search) && $v != '') {
+                $users = $users->where($k, $v);
+            }
+        }
+        $users = $users->get();
+        if (!$users) {
+            $res['ret'] = 0;
+            $res['msg'] = '未找到任何用户。';
+            return $response->getBody()->write(json_encode($res));
+        }
+        if ($q['title'] == '') {
+            $res['ret'] = 0;
+            $res['msg'] = '请输入标题。';
+            return $response->getBody()->write(json_encode($res));
+        }
+        if ($q['content'] == '') {
+            $res['ret'] = 0;
+            $res['msg'] = '请输入内容。';
+            return $response->getBody()->write(json_encode($res));
+        }
+        $res['ret']   = 1;
+        $res['msg']   = "发送邮箱公告成功";
+        $res['count'] = count($users);
+        $res['users'] = array();
+        foreach ($users as $user) {
+            $res['users'][$user->id]              = array();
+            $res['users'][$user->id]['email']     = $user->email;
+            $res['users'][$user->id]['user_name'] = $user->user_name;
+            // $res['users'][$user->id]['time'] = Tools::toDateTime($user->t);
+            try {
+                Mail::send($user->email, $q['title'], 'news/announcement.tpl', ['content' => $q['content'], 'user_name' => $user->user_name], []);
+            } catch (\Exception $e) {
+                $res['ret'] = 0;
+                $res['msg'] = $e->getMessage();
+            }
+        }
+        return $response->getBody()->write(json_encode($res));
+    }
+
     public function updateAnn($request, $response, $args)
     {
         $ann_title    = $request->getParam('ann_title');
@@ -477,33 +565,41 @@ class AdminController extends UserController
         return $response->getBody()->write(json_encode($res));
     }
 
-    public function sendMailPost($request, $response, $args)
+    public function sendAnnounEmail($request, $response, $args)
     {
         $q     = $request->getParsedBody();
-        $users = User::where('id', '>', 0);
-        foreach ($q as $k => $v) {
-            if ($v != "") {
-                $users = $users->where($k, $v);
-            }
-        }
-        $users = $users->get();
+        $users = User::all();
+        $ann   = Ann::orderBy("id", "desc")->get()->first();
 
-        $ann = Ann::orderBy("id", "desc")->get()->first();
+        /**
+         * 传递到邮件模板中的数据
+         * @var array
+         */
         $arr = [
-            "title"     => $ann->title,
             "content"   => $ann->content,
             "user_name" => "",
         ];
 
-        $res['names'] = [];
-        $i            = 0;
+        /**
+         * 构造回应数据
+         */
+        $res['ret']   = 1;
+        $res['msg']   = "发送邮箱公告成功";
+        $res['users'] = array();
+        $res['total'] = count($users);
+
         if ($users && $ann->title && $ann->content) {
             foreach ($users as $user) {
+                $res['users'][$user->id]          = array();
+                $res['users'][$user->id]['email'] = $user->email;
+                $res['users'][$user->id]['name']  = $user->user_name;
+
+                /**
+                 * 发送邮件
+                 */
                 $arr["user_name"] = $user->user_name;
                 try {
                     Mail::send($user->email, $ann->title, 'news/announcement.tpl', $arr, []);
-                    $res['ret'] = 1;
-                    $res['msg'] = "发送邮箱公告成功";
                 } catch (\Exception $e) {
                     $res['ret'] = 0;
                     $res['msg'] = $e->getMessage();
@@ -513,7 +609,6 @@ class AdminController extends UserController
             $res['ret'] = 0;
             $res['msg'] = "无符合条件的用户或无公告";
         }
-        $res['total'] = count($users);
         return $response->getBody()->write(json_encode($res));
     }
 

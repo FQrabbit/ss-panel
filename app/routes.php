@@ -118,6 +118,7 @@ $app->group('/admin', function () {
     $this->put('/config', 'App\Controllers\AdminController:updateConfig');
     $this->put('/announcement', 'App\Controllers\AdminController:updateAnn');
     $this->post('/announcement/create', 'App\Controllers\AdminController:createAnn');
+    $this->post('/sendannounemail', 'App\Controllers\AdminController:sendannounemail');
 
     // Node Mange
     $this->get('/node', 'App\Controllers\Admin\NodeController:index');
@@ -136,11 +137,15 @@ $app->group('/admin', function () {
     $this->delete('/user/{id}', 'App\Controllers\Admin\UserController:delete');
     $this->get('/user/{id}/delete', 'App\Controllers\Admin\UserController:deleteGet');
 
-    $this->post('/sendmail', 'App\Controllers\AdminController:sendMailPost');
     // Test
     $this->get('/test/sendmail', 'App\Controllers\Admin\TestController:sendMail');
     $this->post('/test/sendmail', 'App\Controllers\Admin\TestController:sendMailPost');
     $this->get('/test/do', 'App\Controllers\Admin\TestController:doSomeJobs');
+
+    // Email Manage
+    $this->get('/email', 'App\Controllers\AdminController:email');
+    $this->post('/sendemail', 'App\Controllers\AdminController:sendEmail');
+    $this->post('/sendemails', 'App\Controllers\AdminController:sendEmails');
 
     $this->get('/profile', 'App\Controllers\AdminController:profile');
     $this->get('/invite', 'App\Controllers\AdminController:invite');

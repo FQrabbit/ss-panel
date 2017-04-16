@@ -166,6 +166,12 @@
                 </li>
 
                 <li>
+                    <a href="/admin/email">
+                        <i class="fa fa-envelope"></i> <span>邮件中心</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="/user">
                         <i class="fa fa-reply-all"></i> <span>用户中心</span>
                     </a>

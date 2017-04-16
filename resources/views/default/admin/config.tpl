@@ -91,7 +91,7 @@
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">邮件公告</h3>
+                        <h3 class="box-title">用户中心Modal公告</h3>
                     </div>
 
                     <div class="box-body">
@@ -107,63 +107,13 @@
                                 <textarea class="form-control" id="ann_content" rows="8"
                                           placeholder="Enter ...">{$ann->content}</textarea>
                             </div>
-
-                            <div class="form-group">
-                                <input id="id" type="number" placeholder="用户id" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <input id="email" type="email" placeholder="用户邮箱" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <input id="port" type="number" placeholder="用户端口" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <select id="plan" class="form-control">
-                                    <option value="">用户类型</option>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select id="enable" class="form-control">
-                                    <option value="">用户状态</option>
-                                    <option value="1">可用</option>
-                                    <option value="0">禁用</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select id="status" class="form-control">
-                                    <option value="">用户行为</option>
-                                    <option value="1">正常</option>
-                                    <option value="0">滥用</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select id="type" class="form-control">
-                                    <option value="">套餐</option>
-                                    <option value="试玩">试玩</option>
-                                    <option value="基础">基础</option>
-                                    <option value="包月">包月</option>
-                                    <option value="包季">包季</option>
-                                    <option value="包年">包年</option>
-                                </select>
-                            </div>
                         </form>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button id="update_ann" type="submit" name="update" value="update" class="btn btn-default flat">更新配置
-                        </button>
-                        <button id="send_ann" type="submit" name="send" value="send" class="btn btn-default flat">发送
-                        </button>
-                        <button id="add_ann" type="submit" name="add" value="add" class="btn btn-default flat">添加
-                        </button>
+                        <button id="update_ann" type="submit" class="btn btn-default flat">更新公告</button>
+                        <button id="add_ann" type="submit" class="btn btn-default flat">添加公告</button>
+                        <button id="send_ann" type="submit" class="btn btn-default flat">发送</button>
                     </div>
                 </div>
             </div>
@@ -239,17 +189,8 @@
         $("#send_ann").click(function () {
             $.ajax({
                 type: "POST",
-                url: "/admin/sendmail",
+                url: "/admin/sendannounemail",
                 dataType: "json",
-                data: {
-                    id: $("#id").val(),
-                    email: $("#email").val(),
-                    port: $("#port").val(),
-                    plan: $("#plan").val(),
-                    status: $("#status").val(),
-                    enable: $("#enable").val(),
-                    type: $("#type").val()
-                },
                 success: function (data) {
                     if (data.ret) {
                         $("#msg-error").hide(100);
