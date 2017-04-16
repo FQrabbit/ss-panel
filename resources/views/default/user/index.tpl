@@ -134,9 +134,9 @@
                                     <dd><span class="badge w3-teal">{$user->expire_date}</span></dd>
                                 {/if}
 
-                                {if !$user->enable && $user->status == 0}
+                                {if !$user->enable}
                                     <dt>账号状态</dt>
-                                    <dd><span class="badge bg-red">禁用</span></dd>
+                                    <dd><span class="badge bg-red">禁用{if $user->status == 0} | 滥用{/if}</span></dd>
                                 {/if}
                                 </dl>
 
