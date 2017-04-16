@@ -16,7 +16,7 @@ use App\Utils\Tools;
  */
 class PaymentController extends BaseController
 {
-    private $key, $apiid, $feeRate = 0.3;
+    private $key, $apiid, $feeRate = 0.03;
 
     public function __construct()
     {
