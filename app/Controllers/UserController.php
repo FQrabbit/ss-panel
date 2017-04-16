@@ -88,6 +88,7 @@ class UserController extends BaseController
         $msg             = DbConfig::get('user-node');
         $user            = Auth::getUser();
         $android_add     = "";
+        $android_n_add     = "";
         $android_add_new = "";
         $ssqrs           = array();
         $ssqrs_new       = array();
@@ -103,17 +104,21 @@ class UserController extends BaseController
             $ary['server_port'] = $user->port;
             $ary['password']    = $user->passwd;
             $ary['method']      = ($node->custom_method == 1 ? $user->method : $node->method);
+
             $ary['obfs']        = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->obfs : $node->obfs));
             $ary['obfs_param']  = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
             $ary['protocol']    = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
 
-            $ssqr  = $node->getSSUrl($ary); //原版
+            $ssqr  = $node->getSSUrl($ary); //原版SS
             $android_add .= $ssqr . "|";
+
+            $ssnqr  = $node->getNewSSUrl($ary); //最新原版SS
+            echo $android_n_add .= $ssnqr . "|";
 
             $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
             $android_add_new .= $ssqr_new . "|";
         }
-        return $this->view()->assign('nodes', $allnodes)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_add_new', $android_add_new)->assign('nodes_available', $nodes_available)->display('user/node.tpl');
+        return $this->view()->assign('nodes', $allnodes)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_n_add', $android_n_add)->assign('android_add_new', $android_add_new)->assign('nodes_available', $nodes_available)->display('user/node.tpl');
     }
 
     public function nodeInfo($request, $response, $args)

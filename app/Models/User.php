@@ -335,6 +335,11 @@ class User extends Model
 
     public function getReadStatusOfAnn($ann_id)
     {
-        return AnnLog::where('user_id', $this->id)->where('ann_id', $ann_id)->first()->read_status;
+        $log = AnnLog::where('user_id', $this->id)->where('ann_id', $ann_id)->first();
+        if ($log) {
+            return $log->read_status;
+        } else {
+            return 0;
+        }
     }
 }

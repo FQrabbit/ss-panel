@@ -137,6 +137,12 @@ class Node extends Model
         return "ss://" . base64_encode($ssurl);
     }
     
+    public function getNewSSUrl($arr)
+    {
+        $ssurl = base64_encode($arr['method'] . ":" . $arr['password']) . "@" . $arr['server'] . ":" . $arr['server_port'];
+        return "ss://" . $ssurl;
+    }
+    
     public function getSSRUrl($arr)
     {
         $ssurl = $arr['server'] . ":" . $arr['server_port'] . ":" . $arr['protocol'] . ":" . $arr['method'] . ":" . $arr['obfs'] . ":" . Tools::base64_url_encode($arr['password']) . "/?obfsparam=" . Tools::base64_url_encode($arr['obfs_param']) . "&remarks=" . Tools::base64_url_encode($this->attributes['name']) . "&group=" . Tools::base64_url_encode("shadowsky");
