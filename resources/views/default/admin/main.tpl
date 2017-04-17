@@ -99,9 +99,9 @@
                 <div class="pull-left info">
                     <p>{$user->user_name}</p>
                 {if $user->isOnline()}
-                    <i class="fa fa-circle" style="color:#00a65a !important;"></i> <span>Online</span>
+                    <i class="fa fa-circle" style="color:#00a65a !important;"></i> <small>Online</small>
                 {else}
-                    <i class="fa fa-circle" style="color:#444 !important;"></i> <span>Offline</span>
+                    <i class="fa fa-circle" style="color:#444 !important;"></i> <small>Offline</small>
                 {/if}
                 </div>
             </div>
