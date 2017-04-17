@@ -27,7 +27,7 @@
             <div class="col l3 m6 s12">
                 <h5 class="text-lighten-4">联系</h5>
                 <ul>
-                	<li>邮箱: <a href="mailto:zhwalker20@gmail.com">zhwalker20#gmail.com</a></li>
+                	<li>邮箱: <a href="mailto:shadowskyinfo@gmail.com">shadowskyinfo@gmail.com</a></li>
 			<li>Telegram: <a href="https://telegram.me/joinchat/BdFlBwGgEH9rdgp5JSaxGA">shadowsky</a></li>
                 </ul>
             </div>

@@ -283,7 +283,7 @@
 					</span><!-- /.social-btn-box -->
 
 					<span class="social-btn-box">
-						<a target="_blank" href="mailto:zhwalker20@gmail.com" class="email-btn"><i class="fa fa-envelope"></i></a>
+						<a target="_blank" href="mailto:shadowskyinfo@gmail.com" class="email-btn"><i class="fa fa-envelope"></i></a>
 					</span><!-- /.social-btn-box -->
 
 					<span class="social-btn-box">
