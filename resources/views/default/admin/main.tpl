@@ -98,8 +98,11 @@
                 </div>
                 <div class="pull-left info">
                     <p>{$user->user_name}</p>
-
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                {if $user->isOnline()}
+                    <i class="fa fa-circle" style="color:#00a65a !important;"></i> <span>Online</span>
+                {else}
+                    <i class="fa fa-circle" style="color:#444 !important;"></i> <span>Offline</span>
+                {/if}
                 </div>
             </div>
 

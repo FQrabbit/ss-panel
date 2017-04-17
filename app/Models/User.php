@@ -6,17 +6,15 @@ namespace App\Models;
  * User Model
  */
 
+use App\Models\AnnLog;
+use App\Models\CheckInLog;
+use App\Models\Shop;
+use App\Models\Vote;
 use App\Services\Config;
 use App\Utils\Hash;
 use App\Utils\Tools;
-use App\Models\Node;
-use App\Models\CheckInLog;
-use App\Models\Vote;
-use App\Models\AnnLog;
-use App\Models\Shop;
 
 class User extends Model
-
 {
     protected $table = "user";
 
@@ -25,13 +23,13 @@ class User extends Model
     public $isAdmin;
 
     protected $casts = [
-        "t" => 'int',
-        "u" => 'int',
-        "d" => 'int',
-        "port" => 'int',
+        "t"               => 'int',
+        "u"               => 'int',
+        "d"               => 'int',
+        "port"            => 'int',
         "transfer_enable" => 'float',
-        "enable" => 'int',
-        'is_admin' => 'boolean',
+        "enable"          => 'int',
+        'is_admin'        => 'boolean',
     ];
 
     /**
@@ -85,7 +83,7 @@ class User extends Model
     public function addMoney($money)
     {
         $original_money = $this->attributes['money'];
-        $this->money = $original_money + $money;
+        $this->money    = $original_money + $money;
     }
 
     public function activate()
@@ -102,6 +100,14 @@ class User extends Model
         return Tools::toDateTime($this->attributes['t']);
     }
 
+    public function isOnline()
+    {
+        /**
+         * 5分钟之内使用过
+         */
+        return $this->attributes['t'] > (time() - 300);
+    }
+
     public function lastCheckInTime()
     {
         if ($this->attributes['last_check_in_time'] == 0) {
@@ -113,13 +119,13 @@ class User extends Model
     // 本月签到次数
     public function checkInTimes()
     {
-        $m = date("m");
-        $d = date("d");
-        $Y = date("Y");
+        $m              = date("m");
+        $d              = date("d");
+        $Y              = date("Y");
         $monthBeginTime = mktime(0, 0, 0, $m, 1, $Y);
-        $num = CheckInLog::where("user_id", $this->attributes['id'])
-                            ->where("checkin_at", ">", $monthBeginTime)
-                            ->count();
+        $num            = CheckInLog::where("user_id", $this->attributes['id'])
+            ->where("checkin_at", ">", $monthBeginTime)
+            ->count();
         return $num;
     }
 
@@ -172,8 +178,8 @@ class User extends Model
 
     public function addInviteCode()
     {
-        $uid = $this->attributes['id'];
-        $code = new InviteCode();
+        $uid        = $this->attributes['id'];
+        $code       = new InviteCode();
         $code->code = Tools::genRandomChar(32);
         $code->user = $uid;
         $code->save();
@@ -188,7 +194,7 @@ class User extends Model
 
     public function trafficUsagePercent()
     {
-        $total = $this->attributes['u'] + $this->attributes['d'];
+        $total          = $this->attributes['u'] + $this->attributes['d'];
         $transferEnable = $this->attributes['transfer_enable'];
         if ($transferEnable == 0) {
             return 0;
@@ -225,14 +231,14 @@ class User extends Model
 
     public function unusedTraffic()
     {
-        $total = $this->attributes['u'] + $this->attributes['d'];
+        $total           = $this->attributes['u'] + $this->attributes['d'];
         $transfer_enable = $this->attributes['transfer_enable'];
         return Tools::flowAutoShow($transfer_enable - $total);
     }
 
     public function unusedTrafficInB()
     {
-        $total = $this->attributes['u'] + $this->attributes['d'];
+        $total           = $this->attributes['u'] + $this->attributes['d'];
         $transfer_enable = $this->attributes['transfer_enable'];
         return ($transfer_enable - $total);
     }
@@ -261,57 +267,60 @@ class User extends Model
         $uid = $this->attributes['id'];
         return InviteCode::where('user_id', $uid)->get();
     }
-    
+
     public function getUserClassName()
     {
         $userplan = $this->attributes['plan'];
         switch ($userplan) {
-                case 'B':
-                    $class = "付费用户";
-                    break;
+            case 'B':
+                $class = "付费用户";
+                break;
 
-                case 'C':
-                    $class = "特殊用户";
-                    break;
+            case 'C':
+                $class = "特殊用户";
+                break;
 
-                default:
-                    $class = "免费用户";
-                    break;
-            }
-            return $class;
+            default:
+                $class = "免费用户";
+                break;
+        }
+        return $class;
     }
 
     public function getPollOfNode($nodeid)
     {
         $uid = $this->attributes['id'];
-        $v = Vote::where('uid', $uid)->where('nodeid', $nodeid)->first();
+        $v   = Vote::where('uid', $uid)->where('nodeid', $nodeid)->first();
         if ($v) {
             return $v->poll;
         }
         return 0;
     }
 
-    public function  get_expire_date(){
+    public function get_expire_date()
+    {
         return $this->attributes['expire_date'];
     }
 
-    public function  isExpire(){
+    public function isExpire()
+    {
         $expiredate = $this->get_expire_date();
         $expiretime = strtotime($expiredate);
-        return $expiretime<time();
+        return $expiretime < time();
     }
 
-    public function updateExpireDate($product_name){
-        $expiredate = $this->get_expire_date();
-        $expiretime = strtotime($expiredate);
-        $product = Shop::where('name', $product_name)->first();
+    public function updateExpireDate($product_name)
+    {
+        $expiredate  = $this->get_expire_date();
+        $expiretime  = strtotime($expiredate);
+        $product     = Shop::where('name', $product_name)->first();
         $plus_period = $product->plus_period;
-        if($this->isExpire()){
-            $expiretime = strtotime($plus_period,time());
-        }else{
-            $expiretime = strtotime($plus_period,$expiretime);
+        if ($this->isExpire()) {
+            $expiretime = strtotime($plus_period, time());
+        } else {
+            $expiretime = strtotime($plus_period, $expiretime);
         }
-        $expiredate = Tools::toDateTime($expiretime);
+        $expiredate        = Tools::toDateTime($expiretime);
         $this->expire_date = $expiredate;
         $this->save();
     }
@@ -325,11 +334,12 @@ class User extends Model
     public function resetTraffic()
     {
         $this->transfer_enable = 104857600;
-        $this->u = 0;
-        $this->d = 0;
+        $this->u               = 0;
+        $this->d               = 0;
     }
 
-    public function getFormatedDateTime($datetime) {
+    public function getFormatedDateTime($datetime)
+    {
         return strftime('%Y-%m-%dT%H:%M:%S', strtotime($datetime));
     }
 

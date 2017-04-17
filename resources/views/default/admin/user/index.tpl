@@ -37,7 +37,10 @@
                 <input name="id" type="number" placeholder="用户id" class="form-control">
             </div>
             <div class="form-group">
-                <input name="email" type="email" placeholder="用户邮箱" class="form-control">
+                <input name="user_name" type="text" placeholder="用户名" class="form-control">
+            </div>
+            <div class="form-group">
+                <input name="email" type="text" placeholder="用户邮箱" class="form-control">
             </div>
             <div class="form-group">
                 <input name="port" type="number" placeholder="用户端口" class="form-control">
@@ -79,6 +82,7 @@
                             <tr>
                                 <th>操作</th>
                                 <th>ID</th>
+                                <th>用户名</th>
                                 <th>邮箱</th>
                                 <th>端口</th>
                                 <th>是否捐助</th>
@@ -102,6 +106,7 @@
                                     <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="javascript:void(0);" onclick="confirm_delete({$user->id});">删除</a>
                                 </td>
                                 <td>#{$user->id}</td>
+                                <td>#{$user->user_name}</td>
                                 <td>{$user->email}</td>
                                 <td>{$user->port}</td>
                                 <td>{if $user->ref_by==3}&check;{else}X{/if}</td>
