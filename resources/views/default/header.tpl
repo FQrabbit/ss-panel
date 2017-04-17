@@ -32,7 +32,7 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="/purchase">购买</a></li>
+            <li><a href="/user/purchase">购买</a></li>
             <!-- <li><a href="/code">邀请码</a></li> -->
             {if $user->isLogin}
                 <li><a href="/user">用户中心</a></li>
@@ -46,7 +46,7 @@
 
         <ul id="nav-mobile" class="side-nav">
             <li><a href="/">首页</a></li>
-            <li><a href="/clients">客户端下载</a></li>
+            <li><a href="/user/clients">客户端下载</a></li>
             <li><a href="/purchase">购买</a></li>
             <!-- <li><a href="/code">邀请码</a></li> -->
             {if $user->isLogin}
