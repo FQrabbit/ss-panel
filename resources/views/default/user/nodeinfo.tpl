@@ -76,7 +76,7 @@ html{
                     <div class="box-header">
                         <i class="fa fa-qrcode"></i>
 
-                        <h3 class="box-title">原版SS配置二维码</h3>
+                        <h3 class="box-title">原版SS配置二维码(手机端点击二维码导入此节点)</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -95,7 +95,7 @@ html{
                     <div class="box-header">
                         <i class="fa fa-qrcode"></i>
 
-                        <h3 class="box-title">SSR配置二维码</h3>
+                        <h3 class="box-title">SSR配置二维码(手机端点击二维码导入此节点)</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">

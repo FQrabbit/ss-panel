@@ -113,7 +113,9 @@ class UserController extends BaseController
             $android_add .= $ssqr . "|";
 
             $ssnqr  = $node->getNewSSUrl($ary); //最新原版SS
-            echo $android_n_add .= $ssnqr . "|";
+            $android_n_add .= $ssnqr . '\n';
+            // $android_n_add .= $ssnqr . "%0A";
+            // $android_n_add = rawurldecode($android_n_add);
 
             $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
             $android_add_new .= $ssqr_new . "|";

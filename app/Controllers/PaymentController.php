@@ -264,7 +264,7 @@ class PaymentController extends BaseController
         $showurl = Config::getPublicConfig()['baseUrl'] . '/dopay';
         $addnum  = 'alip' . $apiid . $q['product_id'] . User::find($uid)->port . time();
         return "
-        <form name='form1' action='http://api.web567.net/plugin.php?id=add:alipay' method='POST'>
+        <form name='form1' action='https://api.jsjapp.com/plugin.php?id=add:alipay' method='POST'>
             <input type='hidden' name='uid' value='" . $uid . "'>
             <input type='hidden' name='total' value='" . $total . "'>
             <input type='hidden' name='apiid' value='" . $apiid . "'>

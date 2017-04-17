@@ -14,10 +14,10 @@
                         {$msg}
                         <div class="w3-bar">
                             <a class="w3-btn w3-teal w3-small w3-round w3-margin" href="{$android_add}" id="btn1">
-                                手机旧原版客户端导入所有节点
+                                手机旧版SS导入所有节点
                             </a>
                             <a class="w3-btn w3-teal w3-small w3-round w3-margin" href="{$android_n_add}" id="btn1">
-                                手机新原版客户端导入所有节点
+                                手机新版SS导入所有节点(复制地址然后在客户端从剪切板导入)
                             </a>
                             <a class="w3-btn w3-teal w3-small w3-round w3-margin" href="{$android_add_new}" id="btn1">
                                 手机SSR客户端导入所有节点
