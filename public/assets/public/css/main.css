@@ -65,11 +65,21 @@ body {
     transition: transform .5s cubic-bezier(0.2, 0, 0.36, 1);
 }
 
-.skin-blue .sidebar-menu>li>a:hover, .skin-blue .sidebar-menu>li.active>a {
+.skin-blue .sidebar-menu>li a:hover, .skin-blue .sidebar-menu>li.active>a {
     background: rgba(0, 150, 136, 0.5) !important;
     border-left-color: #009688 !important;
 }
-
+.skin-blue .sidebar-menu>li a {
+    border-left: 3px solid transparent;
+    margin-right: 1px;
+}
+.sidebar-menu .treeview-menu {
+    padding-left:0;
+    background: rgba(0,0,0,0.2) !important;
+}
+.nav>li>a:focus {
+    background: none;
+}
 .main-header .logo {
     background-color: rgba(0, 0, 0, 0) !important;
     font-family: 'Pacifico', 'Microsoft Yahei';

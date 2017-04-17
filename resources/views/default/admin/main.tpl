@@ -8,7 +8,7 @@
     <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- <link href="/assets/public/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/> -->
     <!-- Font Awesome Icons -->
-    <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Ionicons -->
     <link href="//cdn.bootcss.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css">
     <!-- Theme style -->
@@ -107,7 +107,7 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="/admin">
-                        <i class="fa fa-dashboard"></i> <span>管理中心</span>
+                        <i class="fa fa-dashboard"></i> <span>信息概览</span>
                     </a>
                 </li>
 
@@ -116,53 +116,62 @@
                         <i class="fa fa-cubes"></i> <span>站点配置</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="javascript:void(0)"><i class="fa fa-dashboard"></i> 管理中心 <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                    <ul class="nav treeview-menu">
+                        <li>
+                            <a href="/admin/node">
+                                <i class="fa fa-sitemap"></i> <span>节点管理</span>
+                            </a>
+                        </li>
 
-                <li>
-                    <a href="/admin/node">
-                        <i class="fa fa-sitemap"></i> <span>节点管理</span>
-                    </a>
+                        <li>
+                            <a href="/admin/user">
+                                <i class="fa fa-users"></i> <span>用户管理</span>
+                            </a>
+                        </li>
+
+                        <!-- <li>
+                            <a href="/admin/invite">
+                                <i class="fa fa-users"></i> <span>邀请管理</span>
+                            </a>
+                        </li> -->
+                        
+                        <li>
+                            <a href="/admin/music">
+                                <i class="fa fa-music"></i> <span>曲库管理</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li>
-                    <a href="/admin/user">
-                        <i class="fa fa-user"></i> <span>用户管理</span>
-                    </a>
-                </li>
+                <li class="treeview active">
+                    <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i> 记录日志 <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                    <ul class="nav treeview-menu menu-open">
+                        <li>
+                            <a href="/admin/trafficlog">
+                                <i class="fa fa-history"></i> <span>流量记录</span>
+                            </a>
+                        </li>
 
-                <li>
-                    <a href="/admin/invite">
-                        <i class="fa fa-users"></i> <span>邀请管理</span>
-                    </a>
-                </li>
+                        <li>
+                            <a href="/admin/checkinlog">
+                                <i class="fa  fa-check-square"></i> <span>签到日志</span>
+                            </a>
+                        </li>
 
-                <li>
-                    <a href="/admin/trafficlog">
-                        <i class="fa fa-history"></i> <span>流量记录</span>
-                    </a>
-                </li>
+                        <li>
+                            <a href="/admin/purchaselog">
+                                <i class="fa fa-shopping-cart"></i> <span>购买日志</span>
+                            </a>
+                        </li>
 
-                <li>
-                    <a href="/admin/checkinlog">
-                        <i class="fa  fa-check-square"></i> <span>签到日志</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/admin/purchaselog">
-                        <i class="fa fa-shopping-cart"></i> <span>购买日志</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/admin/donatelog">
-                        <i class="fa fa-users"></i> <span>捐助日志</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/admin/music">
-                        <i class="fa fa-music"></i> <span>曲库管理</span>
-                    </a>
+                        <li>
+                            <a href="/admin/donatelog">
+                                <i class="fa fa-users"></i> <span>捐助日志</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
