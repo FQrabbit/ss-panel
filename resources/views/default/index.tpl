@@ -11,7 +11,7 @@
 	<link href="assets/public/css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- icon fonts font Awesome -->
-	<link rel="stylesheet" href="assets/public/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- Custom Styles -->
 	<link href="assets/public/css/style.css" rel="stylesheet">
@@ -287,7 +287,7 @@
 					</span><!-- /.social-btn-box -->
 
 					<span class="social-btn-box">
-						<a target="_blank" href="https://telegram.me/shadowsky" class="telegram-btn"><i class="fa fa-paper-plane"></i></a>
+						<a target="_blank" href="https://telegram.me/shadowsky" class="telegram-btn"><i class="fa fa-telegram"></i></a>
 					</span><!-- /.social-btn-box -->
 
 
