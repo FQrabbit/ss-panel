@@ -10,6 +10,7 @@ use App\Models\CheckInLog;
 use App\Models\DonateLog;
 use App\Models\InviteCode;
 use App\Models\Music;
+use App\Models\Node;
 use App\Models\PurchaseLog;
 use App\Models\Shop;
 use App\Models\TrafficLog;
@@ -381,8 +382,16 @@ class AdminController extends UserController
                 $path .= $k . '=' . $v . '&';
             }
         }
+        $path = substr($path, 0, strlen($path) - 1);
+        $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
 
-        foreach (TrafficLog::select('user_id', 'd', 'u')->get() as $log) {
+        $logs_for_chart = TrafficLog::where('id', '>', 0);
+        if (isset($q['node_id']) && $q['node_id'] != '') {
+            $logs_for_chart = $logs_for_chart->where('node_id', $q['node_id']);
+        }
+        $logs_for_chart = $logs_for_chart->get();
+        foreach ($logs_for_chart as $log) {
             if (isset($users_transfer_array[$log->user_id])) {
                 $users_transfer_array[$log->user_id] += ($log->d + $log->u);
             } else {
@@ -392,12 +401,18 @@ class AdminController extends UserController
         arsort($users_transfer_array);
         $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
         reset($users_transfer_array);
-        $first_user_id = key($users_transfer_array);
-        if (!isset($q['user_id'])) {
-            $q['user_id'] = $first_user_id;
+        $most_traffic_user_id = key($users_transfer_array);
+        if (!isset($q['user_id']) || $q['user_id'] == '') {
+            $q['user_id'] = $most_traffic_user_id;
         }
-        if (!isset($q['node_id'])) {
+        if (!isset($q['node_id']) || $q['node_id'] == '') {
             $q['node_id'] = '';
+        }
+        $q['user_name'] = User::find($q['user_id'])->user_name;
+        if ($q['node_id'] == '') {
+            $q['node_name'] = 'All';
+        } else {
+            $q['node_name'] = Node::find($q['node_id'])->name;
         }
         $labels = array();
         $datas  = array();
@@ -411,9 +426,6 @@ class AdminController extends UserController
         $array_for_chart = json_encode($array_for_chart);
         // return json_encode($array_for_chart);
 
-        $path = substr($path, 0, strlen($path) - 1);
-        $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
-        $logs->setPath($path);
         return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('array_for_chart', $array_for_chart)->assign('users_transfer_array_for_chart', $users_transfer_array_for_chart)->display('admin/trafficlog.tpl');
     }
 

@@ -88,7 +88,7 @@ class UserController extends BaseController
         $msg             = DbConfig::get('user-node');
         $user            = Auth::getUser();
         $android_add     = "";
-        $android_n_add     = "";
+        $android_n_add   = "";
         $android_add_new = "";
         $ssqrs           = array();
         $ssqrs_new       = array();
@@ -105,14 +105,14 @@ class UserController extends BaseController
             $ary['password']    = $user->passwd;
             $ary['method']      = ($node->custom_method == 1 ? $user->method : $node->method);
 
-            $ary['obfs']        = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->obfs : $node->obfs));
-            $ary['obfs_param']  = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
-            $ary['protocol']    = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
+            $ary['obfs']       = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->obfs : $node->obfs));
+            $ary['obfs_param'] = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
+            $ary['protocol']   = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
 
-            $ssqr  = $node->getSSUrl($ary); //原版SS
+            $ssqr = $node->getSSUrl($ary); //原版SS
             $android_add .= $ssqr . "|";
 
-            $ssnqr  = $node->getNewSSUrl($ary); //最新原版SS
+            $ssnqr = $node->getNewSSUrl($ary); //最新原版SS
             $android_n_add .= $ssnqr . '\n';
             // $android_n_add .= $ssnqr . "%0A";
             // $android_n_add = rawurldecode($android_n_add);
@@ -125,9 +125,9 @@ class UserController extends BaseController
 
     public function nodeInfo($request, $response, $args)
     {
-        $user = Auth::getUser();
-        $node_id   = $args['id'];
-        $node = Node::find($node_id);
+        $user    = Auth::getUser();
+        $node_id = $args['id'];
+        $node    = Node::find($node_id);
 
         if ($node == null) {
             return 'access to node that doesn\'t exist';
@@ -145,7 +145,7 @@ class UserController extends BaseController
         $json      = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
 
-        $ssqr       = $node->getSSUrl($ary); //原版
+        $ssqr     = $node->getSSUrl($ary); //原版
         $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
 
         $surge_base  = Config::get('baseUrl') . "/downloads/ProxyBase.conf";
@@ -427,17 +427,17 @@ class UserController extends BaseController
 
     public function vote($request, $response, $args)
     {
-        $user = $this->user;
+        $user   = $this->user;
         $uid    = $this->user->id;
         $nodeid = $request->getParam('nodeid');
-        $node = Node::find($nodeid);
+        $node   = Node::find($nodeid);
         $poll   = $request->getParam('poll');
         if (!$user->isAbleToVote($node)) {
             $res['ret'] = 0;
-            $res['msg'] = 'You can\'t vote this node.' ;
+            $res['msg'] = 'You can\'t vote this node.';
             return $this->echoJson($response, $res);
         }
-        $f      = Vote::where("uid", $uid)->where("nodeid", $nodeid)->first();
+        $f = Vote::where("uid", $uid)->where("nodeid", $nodeid)->first();
         if ($f) {
             $f->poll = $poll;
             $f->save();
@@ -459,7 +459,7 @@ class UserController extends BaseController
             case '0':
                 $res['msg'] = "delete vote of $node->name";
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -534,7 +534,9 @@ class UserController extends BaseController
             } else {
                 $datas[0][date('H', $log->log_time)] = round((($log->u + $log->d) / 1048576), 2);
             }
-
+            foreach ($datas[0] as $k => $v) {
+                $datas[0][$k] = round($datas[0][$k], 2);
+            }
             /**
              * 用户每个节点使用的流量 $datas[1][{节点名}]
              */
@@ -542,6 +544,9 @@ class UserController extends BaseController
                 $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u + $log->d) / 1048576), 2);
             } else {
                 $datas[1][Node::where('id', $log->node_id)->get()->first()->name] = round((($log->u + $log->d) / 1048576), 2);
+            }
+            foreach ($datas[1] as $k => $v) {
+                $datas[1][$k] = round($datas[1][$k], 2);
             }
         }
 

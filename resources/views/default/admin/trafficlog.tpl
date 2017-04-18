@@ -89,7 +89,7 @@ var chart1 = new Chart(ctx, {
         labels: {$array_for_chart}[0][0],
         datasets: [
             {
-                label: "#(MB) Traffic by hour",
+                label: "#(MB) Traffic (User: {$q['user_name']})",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$array_for_chart}[1][0],
             }
@@ -163,7 +163,7 @@ var chart2 = new Chart(ctx, {
         labels: {$array_for_chart}[0][1],
         datasets: [
             {
-                label: "#(MB) Traffic by node",
+                label: "#(MB) Traffic (User: {$q['user_name']})",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$array_for_chart}[1][1],
             }
@@ -237,7 +237,7 @@ var chart3 = new Chart(ctx, {
         labels: {$users_transfer_array_for_chart}.labels,
         datasets: [
             {
-                label: "#(GB) Traffic by user",
+                label: "#(GB) Traffic (Node: {$q['node_name']})",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$users_transfer_array_for_chart}.datas,
             }

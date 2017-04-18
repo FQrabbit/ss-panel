@@ -106,7 +106,7 @@
                                     <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="javascript:void(0);" onclick="confirm_delete({$user->id});">删除</a>
                                 </td>
                                 <td>#{$user->id}</td>
-                                <td>#{$user->user_name}</td>
+                                <td>{$user->user_name}</td>
                                 <td>{$user->email}</td>
                                 <td>{$user->port}</td>
                                 <td>{if $user->ref_by==3}&check;{else}X{/if}</td>

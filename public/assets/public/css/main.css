@@ -72,10 +72,15 @@ body {
 .skin-blue .sidebar-menu>li a {
     border-left: 3px solid transparent;
     margin-right: 1px;
+    padding: 10px 15px;
 }
 .sidebar-menu .treeview-menu {
-    padding-left:0;
+    padding:0;
     background: rgba(0,0,0,0.2) !important;
+    margin-left: 0 !important;
+}
+.treeview-menu>li>a {
+    padding-left: 30px !important;
 }
 .nav>li>a:focus {
     background: none;
