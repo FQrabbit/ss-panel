@@ -261,7 +261,7 @@ class PaymentController extends BaseController
         $uid     = $q['uid'];
         $apiid   = $this->apiid;
         $apikey  = md5($this->key);
-        $showurl = Config::getPublicConfig()['baseUrl'] . '/dopay';
+        $showurl = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
         $addnum  = 'alip' . $apiid . $q['product_id'] . User::find($uid)->port . time();
         return "
         <form name='form1' action='https://api.jsjapp.com/plugin.php?id=add:alipay' method='POST'>
