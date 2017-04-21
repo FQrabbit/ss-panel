@@ -16,12 +16,14 @@ use App\Utils\Tools;
  */
 class PaymentController extends BaseController
 {
-    private $key, $apiid, $feeRate = 0.03;
+    private $key, $apiid;
+    public $adminEmail, $feeRate = 0.03;
 
     public function __construct()
     {
-        $this->key   = DbConfig::get('apikey');
-        $this->apiid = DbConfig::get('apiid');
+        $this->key        = DbConfig::get('apikey');
+        $this->apiid      = DbConfig::get('apiid');
+        $this->adminEmail = Config::get('adminEmail');
     }
 
     /**
@@ -147,7 +149,7 @@ class PaymentController extends BaseController
             Mail::send($user->email, 'Shadowsky', 'news/donate-report.tpl', $arr1, []);
 
             $content = "{$user->user_name}(uid: {$uid})捐助Shadowsky{$money}元。总捐助额：{$user->money}。";
-            Mail::send('zhwalker20@gmail.com', 'Shadowsky - 用户捐助通知', 'news/general-report.tpl', ['content' => $content], []);
+            Mail::send($this->adminEmail, 'Shadowsky - 用户捐助通知', 'news/general-report.tpl', ['content' => $content], []);
 
             $rs['ret'] = 1;
             $rs['msg'] = '发送邮箱通知成功。';
@@ -221,7 +223,6 @@ class PaymentController extends BaseController
             ];
             Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
 
-            $to    = 'zhwalker20@gmail.com';
             $title = 'Shadowsky - 用户购买通知';
             $tpl   = 'news/new-purchase.tpl';
             $arr2  = [
@@ -229,7 +230,7 @@ class PaymentController extends BaseController
                 'pre'  => $pre,
             ];
             // return $user;
-            Mail::send($to, $title, $tpl, $arr2, []);
+            Mail::send($this->adminEmail, $title, $tpl, $arr2, []);
 
             $rs['ret'] = 1;
             $rs['msg'] = '发送邮箱通知成功。';
@@ -257,6 +258,7 @@ class PaymentController extends BaseController
                 return '商品价格不符';
             }
         }
+        return $this->adminEmail;
         $total   = $q['total'];
         $uid     = $q['uid'];
         $apiid   = $this->apiid;

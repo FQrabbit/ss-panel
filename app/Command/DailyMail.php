@@ -10,6 +10,12 @@ use App\Services\Mail;
 
 class DailyMail
 {
+    public $adminEmail;
+
+    function __construct()
+    {
+        $this->adminEmail = Config::get('adminEmail');
+    }
 
     public static function sendDailyMail()
     {
@@ -35,7 +41,7 @@ class DailyMail
     public static function sendDbMail()
     {
         try {
-            $to = "zhwalker20@gmail.com";
+            $to = $this->adminEmail;
             $subject = "备份数据库";
             $file = ["/root/backup/database.sql"];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
@@ -49,7 +55,7 @@ class DailyMail
     public static function sendSiteMail()
     {
         try {
-            $to = "zhwalker20@gmail.com";
+            $to = $this->adminEmail;
             $subject = "备份网站";
             $file = ["/root/backup/site.tgz"];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
