@@ -40,7 +40,6 @@
 	</div><!-- /#preloader -->
 	<!-- Preloader End-->
 
-
 	<!-- Main Menu -->
 	<div id="main-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
 
@@ -68,30 +67,32 @@
 
 	<!-- Page Top Section -->
 	<section id="page-top" class="section-style" data-background-image="assets/public/images/background/page-top.jpg">
-		<div class="pattern height-resize">
-			<div class="container">
+		<div class="pattern"></div>
+		<div class="container">
+			<div class="contain-wrap">
 				<h1 class="site-title">
 					Shadowsky
 				</h1><!-- /.site-title -->
 				<h3 class="section-title">
 					穿越雲層 飛向自由
 				</h3><!-- /.Section-title  -->
-                <a href="/user" class="login-btn"><span>進入用戶中心 </span></a>
-                <a href="/auth/register" class="login-btn"><span>立即注冊 </span></a>
-				<div class="next-section">
-					<a class="go-to-about"><span></span></a>
-				</div><!-- /.next-section -->
-				
-			</div><!-- /.container -->
-		</div><!-- /.pattern -->		
+				<a href="/user" class="login-btn"><span>進入用戶中心 </span></a>
+				<a href="/auth/register" class="login-btn"><span>立即注冊 </span></a>
+			</div>
+			<div class="placeholder"></div>
+			<div class="next-section">
+				<a class="go-to-about"><span></span></a>
+			</div><!-- /.next-section -->
+		</div><!-- /.container -->
 	</section><!-- /#page-top -->
 	<!-- Page Top Section  End -->
 
 
 	<!-- About Us Section -->
 	<section id="about" class="section-style" data-background-image="assets/public/images/background/about-us.jpg">
-		<div class="pattern height-resize"> 
-			<div class="container">
+		<div class="pattern"></div>
+		<div class="container">
+			<div class="contain-wrap">
 				<h3 class="section-name">
 					<span>
 						Plan
@@ -106,103 +107,69 @@
 				<hr>
 				<div class="plan-container">
 					<h3>按時間</h3>
-					<div class="row">
-						<div class="col-xs-6 col-sm-4">
-							<div class="plan">
-								<div class="plan-name">包月</div>
-								<div class="plan-content">
-									<p>無限流量</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥10</h3>
-								</div>
+					<div class="time-plan">
+						<div class="plan">
+							<div class="plan-name">包月</div>
+							<div class="plan-content">
+								<p>無限流量</p>
+								<p>免費節點+付費節點</p>
+								<h3>￥10</h3>
 							</div>
 						</div>
-						<div class="col-xs-6 col-sm-4">
-							<div class="plan">
-								<div class="plan-name">包季</div>
-								<div class="plan-content">
-									<p>無限流量</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥25</h3>
-								</div>
+						<div class="plan">
+							<div class="plan-name">包季</div>
+							<div class="plan-content">
+								<p>無限流量</p>
+								<p>免費節點+付費節點</p>
+								<h3>￥25</h3>
 							</div>
 						</div>
-						<div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-0">
-							<div class="plan">
-								<div class="plan-name">包年</div>
-								<div class="plan-content">
-									<p>無限流量</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥80</h3>
-								</div>
+						<div class="plan">
+							<div class="plan-name">包年</div>
+							<div class="plan-content">
+								<p>無限流量</p>
+								<p>免費節點+付費節點</p>
+								<h3>￥80</h3>
 							</div>
 						</div>
 					</div>
 					<br>
 					<hr>
 					<h3>按流量</h3>
-					<div class="row center">
-						<div class="col-xs-6 col-sm-6 col-md-6">
-							<div class="plan">
-								<div class="plan-name">試用</div>
-								<div class="plan-content">
-									<p>1G流量</p>
-									<p>3天</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥1</h3>
-								</div>
+					<div class="traffic-plan">
+						<div class="plan">
+							<div class="plan-name">試用</div>
+							<div class="plan-content">
+								<p>1G流量</p>
+								<p>3天</p>
+								<p>免費節點+付費節點</p>
+								<h3>￥1</h3>
 							</div>
 						</div>
-						<div class="col-xs-6 col-sm-6 col-md-6">
-							<div class="plan">
-								<div class="plan-name">基礎</div>
-								<div class="plan-content">
-									<p>10G流量</p>
-									<p>無時限</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥5</h3>
-								</div>
+						<div class="plan">
+							<div class="plan-name">基礎</div>
+							<div class="plan-content">
+								<p>10G流量</p>
+								<p>無時限</p>
+								<p>免費節點+付費節點</p>
+								<h3>￥5</h3>
 							</div>
 						</div>
-						<!-- <div class="col-xs-6 col-sm-6 col-md-3">
-							<div class="plan">
-								<div class="plan-name">標準</div>
-								<div class="plan-content">
-									<p>25G流量</p>
-									<p>無時限</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥10</h3>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-6 col-sm-6 col-md-3">
-							<div class="plan">
-								<div class="plan-name">高級</div>
-								<div class="plan-content">
-									<p>55G流量</p>
-									<p>無時限</p>
-									<p>免費節點+付費節點</p>
-									<h3>￥20</h3>
-								</div>
-							</div>
-						</div> -->
 					</div>
 				</div>
-				
-				<div class="next-section">
-					<a class="go-to-subscribe"><span></span></a>
-				</div><!-- /.next-section -->
-
-			</div><!-- /.container -->
-		</div><!-- /.pattern -->
-		
-		
+			</div>
+<!-- 			<div class="next-section">
+				<a class="go-to-subscribe"><span></span></a>
+			</div>
+			<div class="placeholder"></div> -->
+		</div><!-- /.container -->
 	</section><!-- /#plan -->
 
 	<!-- Contact Section -->
 	<section id="subscribe" class="section-style" data-background-image="assets/public/images/background/contact.jpg">
-		<div class="pattern height-resize">
-			<div class="container">
+		<div class="pattern"></div>
+		<div class="container">
+			<div class="contain-wrap">
 				<h3 class="section-name">
 					<span>
 						Client
@@ -249,22 +216,22 @@
 					</div>
 				</div>
 				<br>
-                <a href="/clients" class="login-btn" target="_blank"><span>前往下載 </span></a>
+				<a href="/clients" class="login-btn" target="_blank"><span>前往下載 </span></a>
+			</div>
 
-				<div class="next-section">
-					<a class="go-to-contact"><span></span></a>
-				</div><!-- /.next-section -->
-
-			</div><!-- /.container -->
-		</div><!-- /.pattern -->
-
+<!-- 			<div class="next-section">
+				<a class="go-to-contact"><span></span></a>
+			</div>
+			<div class="placeholder"></div> -->
+		</div><!-- /.container -->
 	</section><!-- /#contact -->
 	<!-- Contact Section End -->
 
 	<!-- Contact Section -->
 	<section id="contact" class="section-style" data-background-image="assets/public/images/background/newsletter.jpg">
-		<div class="pattern height-resize">
-			<div class="container">
+		<div class="pattern"></div>
+		<div class="container">
+			<div class="contain-wrap">
 				<h3 class="section-name">
 					<span>
 						Contact
@@ -289,27 +256,26 @@
 					<span class="social-btn-box">
 						<a target="_blank" href="https://telegram.me/shadowsky" class="telegram-btn"><i class="fa fa-telegram"></i></a>
 					</span><!-- /.social-btn-box -->
-
-
 				</div><!-- /.social-btn-container -->
+			</div>
 
-				<div class="next-section">
+			<div class="placeholder"></div>
+			<div class="next-section">
 				<a class="go-to-page-top"><span></span></a>
-				</div><!-- /.next-section -->
-			</div><!-- /.container -->
-		</div><!-- /.pattern -->
+			</div><!-- /.next-section -->
+		</div><!-- /.container -->
+		<!-- Footer Section -->
+		<footer id="footer-section">
+			<p class="copyright">
+				&copy; <a href="/">Shadowsky</a> 2015-{date("Y")}, All Rights Reserved.
+			</p>
+		</footer>
+		<!-- Footer Section End -->
 	</section><!-- /#contact -->
 	<!-- Contact Section End -->
 
 
 
-	<!-- Footer Section -->
-	<footer id="footer-section">
-		<p class="copyright">
-			&copy; <a href="/">Shadowsky</a> 2015-{date("Y")}, All Rights Reserved.
-		</p>
-	</footer>
-	<!-- Footer Section End -->
 
 
 	<!-- jQuery Library -->

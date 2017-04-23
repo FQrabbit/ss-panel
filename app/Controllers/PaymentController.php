@@ -258,7 +258,6 @@ class PaymentController extends BaseController
                 return '商品价格不符';
             }
         }
-        return $this->adminEmail;
         $total   = $q['total'];
         $uid     = $q['uid'];
         $apiid   = $this->apiid;
