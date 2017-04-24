@@ -55,6 +55,7 @@ $("a").on('click', function(event) {
     if (this.hash !== "") {
       // Prevent default anchor click behavior
       event.preventDefault();
+      $('html, body').stop();
       // Store hash
       var hash = this.hash;
       document.querySelector(hash).scrollIntoView({behavior:'smooth'});
