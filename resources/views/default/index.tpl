@@ -56,8 +56,8 @@
 			<!-- Main navigation -->
 			<ul id="headernavigation" class="nav navbar-nav">
 				<li class="active"><a href="#page-top">Home</a></li>
-				<li><a href="#about">Plan</a></li>
-				<li><a href="#subscribe">Client</a></li>
+				<li><a href="#plan">Plan</a></li>
+				<li><a href="#clients">Client</a></li>
 				<li><a href="#contact">Contact</a></li>
 			</ul> <!-- /.nav .navbar-nav -->
 		</nav> <!-- /.navbar-collapse  -->
@@ -81,15 +81,15 @@
 			</div>
 			<div class="placeholder"></div>
 			<div class="next-section">
-				<a class="go-to-about"><span></span></a>
+				<a class="go-to-plan" href="#plan"><span></span></a>
 			</div><!-- /.next-section -->
 		</div><!-- /.container -->
 	</section><!-- /#page-top -->
 	<!-- Page Top Section  End -->
 
 
-	<!-- About Us Section -->
-	<section id="about" class="section-style" data-background-image="assets/public/images/background/about-us.jpg">
+	<!-- Plan Us Section -->
+	<section id="plan" class="section-style" data-background-image="assets/public/images/background/about-us.jpg">
 		<div class="pattern"></div>
 		<div class="container">
 			<div class="contain-wrap">
@@ -159,14 +159,14 @@
 				</div>
 			</div>
 <!-- 			<div class="next-section">
-				<a class="go-to-subscribe"><span></span></a>
+				<a class="go-to-clients"><span></span></a>
 			</div>
 			<div class="placeholder"></div> -->
 		</div><!-- /.container -->
 	</section><!-- /#plan -->
 
 	<!-- Contact Section -->
-	<section id="subscribe" class="section-style" data-background-image="assets/public/images/background/contact.jpg">
+	<section id="clients" class="section-style" data-background-image="assets/public/images/background/contact.jpg">
 		<div class="pattern"></div>
 		<div class="container">
 			<div class="contain-wrap">
@@ -261,7 +261,7 @@
 
 			<div class="placeholder"></div>
 			<div class="next-section">
-				<a class="go-to-page-top"><span></span></a>
+				<a class="go-to-page-top" href="#page-top"><span></span></a>
 			</div><!-- /.next-section -->
 		</div><!-- /.container -->
 		<!-- Footer Section -->
@@ -288,12 +288,6 @@
 	<script type="text/javascript" src="assets/public/js/functions.js"></script>
 	<!-- Custom JavaScript Functions -->
 	<script type="text/javascript" src="assets/public/js/jquery.ajaxchimp.min.js"></script>
-
-	<script>
-		setTimeout(function(){
-			$("#preloader").fadeOut("slow");
-		},5000);
-	</script>
-
+	<script type="text/javascript" src="assets/public/js/smoothscroll.js"></script>
 </body>
 </html>
