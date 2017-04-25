@@ -113,7 +113,11 @@
             </canvas>
         </div>
         <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="300" id="myChart">
+            <canvas height="300" id="weeklyIncomeChart">
+            </canvas>
+        </div>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas height="300" id="monthlyIncomeChart">
             </canvas>
         </div>
         <!-- chart -->
@@ -297,73 +301,16 @@
     });
 </script>
 <script>
-    var ctx = $("#myChart");
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {$datasets}.monthscope,
-            datasets: [
-            {
-                label: "月收入（元）",
-                backgroundColor: "rgba(75,192,192,0.4)",
-                data: {$datasets}.monthdata,
-            }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                labels: {
-                    fontColor: "#bbb"
-                }
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false
-            },
-            hover: {
-                mode: 'index',
-                intersect: false
-            },
-            animation: {
-                duration: 3000
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Date (Month)',
-                        fontColor: "#bbb"
-                    },
-                    ticks: {
-                        fontColor: "#bbb"
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Income (CNY)',
-                        fontColor: "#bbb"
-                    },
-                    ticks: {
-                        fontColor: "#bbb",
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
     var ctx = $("#dailyIncomeChart");
     var dailyIncomeChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: {$eachHour_income_for_chart}.labels,
             datasets: [
             {
                 label: "日收入（元）",
+                fill: false,
+                borderColor: "rgba(75,192,192,0.4)",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$eachHour_income_for_chart}.datas,
             }
@@ -397,7 +344,7 @@
                 intersect: false
             },
             animation: {
-                duration: 3000
+                duration: 1500
             },
             scales: {
                 xAxes: [{
@@ -405,6 +352,139 @@
                     scaleLabel: {
                         display: true,
                         labelString: 'Time (Each Hour)',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Income (CNY)',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb",
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var ctx = $("#weeklyIncomeChart");
+    var weeklyIncomeChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {$weekly_income_for_chart}.labels,
+            datasets: [
+            {
+                label: "周收入（元）",
+                fill: false,
+                borderColor: "rgba(75,192,192,0.4)",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$weekly_income_for_chart}.datas,
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                    fontColor: "#bbb"
+                }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    // Use the footer callback to display the sum of the items showing in the tooltip
+                    footer: function(tooltipItems, data) {
+                        // var sum = 0;
+                        // data.datasets[0].data.forEach(function(v) {
+                        //     sum += v;
+                        // });
+                        return 'Sum: ' + {$weekly_income_for_chart}.total + " 元";
+                    },
+            },
+            footerFontStyle: 'bold'
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
+            },
+            animation: {
+                duration: 1500
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date (Each Day)',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Income (CNY)',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb",
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var ctx = $("#monthlyIncomeChart");
+    var monthlyIncomeChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {$datasets}.monthscope,
+            datasets: [
+            {
+                label: "月收入（元）",
+                fill: false,
+                borderColor: "rgba(75,192,192,0.4)",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$datasets}.monthdata,
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                    fontColor: "#bbb"
+                }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
+            },
+            animation: {
+                duration: 1500
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date (Month)',
                         fontColor: "#bbb"
                     },
                     ticks: {

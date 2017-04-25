@@ -159,6 +159,29 @@ class AdminController extends UserController
         );
         $datasets = json_encode($datasets);
 
+        /**
+         * 一周收入 chart
+         */
+        $someDay = date('Y-m-d', strtotime("last week"));
+        $last_week_income_logs = PurchaseLog::where('buy_date', '>', date('Y-m-d', strtotime("last week")))->get();
+        while ( $someDay<= date('Y-m-d')) {
+            $weekly_income[$someDay] = 0;
+            $someDay = date('Y-m-d', strtotime($someDay.' +1 day'));
+        }
+        foreach ($last_week_income_logs as $log) {
+            $weekly_income[date('Y-m-d', strtotime($log->buy_date))] += $log->price;
+        }
+        foreach ($weekly_income as $k => $v) {
+            $weekly_income_for_chart['labels'][] = $k;
+            $weekly_income_for_chart['datas'][] = $v;
+        }
+        $weekly_income_for_chart['total'] = array_sum($weekly_income_for_chart['datas']);
+        $weekly_income_for_chart = json_encode($weekly_income_for_chart);
+
+        /**
+         * 当日收入 chart
+         * @var [type]
+         */
         $daily_income_logs = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->get();
         for ($i = 0; $i <= (int) date('H'); $i++) {
             $eachHour_income[date('H a', strtotime("$i:00"))] = 0;
@@ -177,7 +200,7 @@ class AdminController extends UserController
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         $products = Shop::where('status', 1)->get();
-        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->assign('products', $products)->assign('eachHour_income_for_chart', $eachHour_income_for_chart)->display('admin/purchaselog.tpl');
+        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->assign('products', $products)->assign('eachHour_income_for_chart', $eachHour_income_for_chart)->assign('weekly_income_for_chart', $weekly_income_for_chart)->display('admin/purchaselog.tpl');
     }
 
     public function addPurchase($request, $response, $args)
