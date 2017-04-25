@@ -370,6 +370,13 @@ class AdminController extends UserController
 
     public function trafficLog($request, $response, $args)
     {
+        $users_traffic              = [];
+        $eachHour_traffic           = [];
+        $nodes_traffic              = [];
+        $users_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
+        $nodes_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
+        $eachHour_traffic_for_chart = ['labels' => array(), 'datas' => array(), 'total' => 0];
+
         $q = $request->getQueryParams();
         if (!isset($request->getQueryParams()['page'])) {
             $q['page'] = 1;
@@ -382,51 +389,98 @@ class AdminController extends UserController
                 $path .= $k . '=' . $v . '&';
             }
         }
+        if (isset($q['user_id']) && $q['user_id'] != '') {
+            $user_id = $q['user_id'];
+        } else {
+            $user_id      = '';
+            $q['user_id'] = '';
+        }
+        if (isset($q['node_id']) && $q['node_id'] != '') {
+            $node_id = $q['node_id'];
+        } else {
+            $node_id      = '';
+            $q['node_id'] = '';
+        }
         $path = substr($path, 0, strlen($path) - 1);
         $logs = $logs->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
 
-        $logs_for_chart = TrafficLog::where('id', '>', 0);
-        if (isset($q['node_id']) && $q['node_id'] != '') {
-            $logs_for_chart = $logs_for_chart->where('node_id', $q['node_id']);
+        /**
+         * 用户本日流量使用(某个节点或所有节点)降序排名 chart 1
+         */
+        if ($node_id) {
+            $logs_for_users_traffic_ranking_chart = TrafficLog::where('node_id', $node_id)->get();
+        } else {
+            $logs_for_users_traffic_ranking_chart = TrafficLog::all();
         }
-        $logs_for_chart = $logs_for_chart->get();
-        foreach ($logs_for_chart as $log) {
-            if (isset($users_transfer_array[$log->user_id])) {
-                $users_transfer_array[$log->user_id] += ($log->d + $log->u);
+        $aDayAgo = time() - 86400;
+        $users   = User::where('enable', '1')->where('t', '>', $aDayAgo)->select(['id'])->get();
+        foreach ($users as $user) {
+            $users_traffic[$user->id] = 0;
+        }
+        foreach ($logs_for_users_traffic_ranking_chart as $log) {
+            $users_traffic[$log->user_id] += ($log->d + $log->u);
+        }
+        arsort($users_traffic);
+        $most_users_traffic = array_slice($users_traffic, 0, 15, true);
+        reset($most_users_traffic);
+        $most_traffic_user_id = key($most_users_traffic);
+        foreach ($most_users_traffic as $k => $v) {
+            array_push($users_traffic_for_chart['labels'], $k);
+            array_push($users_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
+        }
+        $users_traffic_for_chart['total'] = round(Tools::flowToGB(array_sum($users_traffic)), 2);
+        $users_traffic_for_chart          = json_encode($users_traffic_for_chart);
+
+        /**
+         * 各节点流量、各小时（某个用户或所有用户）使用情况 chart 2, 3
+         */
+        if ($user_id) {
+            $logs_for_nodes_traffic_chart    = TrafficLog::where('user_id', $user_id)->get();
+            $logs_for_eachHour_traffic_chart = $logs_for_nodes_traffic_chart;
+        } else {
+            $logs_for_nodes_traffic_chart = TrafficLog::all();
+            if ($node_id) {
+                $logs_for_eachHour_traffic_chart = TrafficLog::where('node_id', $node_id)->get();
             } else {
-                $users_transfer_array[$log->user_id] = ($log->d + $log->u);
+                $logs_for_eachHour_traffic_chart = $logs_for_nodes_traffic_chart;
             }
         }
-        arsort($users_transfer_array);
-        $users_transfer_array = array_slice($users_transfer_array, 0, 15, true);
-        reset($users_transfer_array);
-        $most_traffic_user_id = key($users_transfer_array);
-        if (!isset($q['user_id']) || $q['user_id'] == '') {
-            $q['user_id'] = $most_traffic_user_id;
-        }
-        if (!isset($q['node_id']) || $q['node_id'] == '') {
-            $q['node_id'] = '';
-        }
-        $q['user_name'] = User::find($q['user_id'])->user_name;
-        if ($q['node_id'] == '') {
-            $q['node_name'] = 'All';
-        } else {
-            $q['node_name'] = Node::find($q['node_id'])->name;
-        }
-        $labels = array();
-        $datas  = array();
-        foreach ($users_transfer_array as $k => $v) {
-            array_push($labels, $k);
-            array_push($datas, round(Tools::flowToGB($v), 2));
-        }
-        $users_transfer_array_for_chart = json_encode(array("labels" => $labels, "datas" => $datas));
 
-        $array_for_chart = UserController::getTrafficInfoArrayForChart($q['user_id']);
-        $array_for_chart = json_encode($array_for_chart);
-        // return json_encode($array_for_chart);
+        for ($i = 0; $i <= (int) date('H'); $i++) {
+            $eachHour_traffic[date('h a', strtotime("$i:00:00"))] = 0;
+        }
+        $nodes = Node::select(['id'])->get();
+        foreach ($nodes as $node) {
+            $nodes_traffic[$node->id] = 0;
+        }
 
-        return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('array_for_chart', $array_for_chart)->assign('users_transfer_array_for_chart', $users_transfer_array_for_chart)->display('admin/trafficlog.tpl');
+        foreach ($logs_for_nodes_traffic_chart as $log) {
+            $nodes_traffic[$log->node_id] += ($log->d + $log->u);
+        }
+        foreach ($logs_for_eachHour_traffic_chart as $log) {
+            $eachHour_traffic[date('h a', $log->log_time)] += ($log->d + $log->u);
+        }
+        /**
+         * 去掉值为0的元素
+         * @var array
+         */
+        $nodes_traffic = array_filter($nodes_traffic);
+        // $eachHour_traffic = array_filter($eachHour_traffic);
+        foreach ($nodes_traffic as $k => $v) {
+            array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name);
+            array_push($nodes_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
+        }
+        foreach ($eachHour_traffic as $k => $v) {
+            array_push($eachHour_traffic_for_chart['labels'], $k);
+            array_push($eachHour_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
+        }
+        $nodes_traffic_for_chart['total']    = round(array_sum($nodes_traffic_for_chart['datas']), 2);
+        $eachHour_traffic_for_chart['total'] = round(array_sum($eachHour_traffic_for_chart['datas']), 2);
+        $nodes_traffic_for_chart             = json_encode($nodes_traffic_for_chart);
+        $eachHour_traffic_for_chart          = json_encode($eachHour_traffic_for_chart);
+
+        return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('users_traffic_for_chart', $users_traffic_for_chart)->assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->assign('eachHour_traffic_for_chart', $eachHour_traffic_for_chart)->display('admin/trafficlog.tpl');
     }
 
     public function config($request, $response, $args)

@@ -111,17 +111,22 @@ class Node extends Model
             return "暂无数据";
         }
         return $log->online_user;
-        $id = $this->attributes['id'];
     }
 
     function getTrafficFromLogs()
     {
-        $id = $this->attributes['id'];
-        $traffic = TrafficLog::where('node_id', $id)->sum('u') + TrafficLog::where('node_id', $id)->sum('d');
+        $traffic = $this->getTotalTraffic();
         if ($traffic == 0) {
             return "暂无数据";
         }
         return Tools::flowAutoShow($traffic);
+    }
+
+    public function getTotalTraffic()
+    {
+        $id = $this->attributes['id'];
+        $traffic = TrafficLog::where('node_id', $id)->sum('u') + TrafficLog::where('node_id', $id)->sum('d');
+        return $traffic;
     }
 
     function getPollCount($p)

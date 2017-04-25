@@ -64,6 +64,16 @@ class Tools
     }
 
     /**
+     * @param $traffic
+     * @return float
+     */
+    public static function flowToMB($traffic)
+    {
+        $mb = 1048576;
+        return $traffic / $mb;
+    }
+
+    /**
      * generate random string
      * @param int $length
      * @return string
