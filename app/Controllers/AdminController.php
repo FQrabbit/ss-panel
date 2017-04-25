@@ -413,7 +413,8 @@ class AdminController extends UserController
         } else {
             $logs_for_users_traffic_ranking_chart = TrafficLog::all();
         }
-        $aDayAgo = time() - 86400;
+        // $aDayAgo = time() - 86400;
+        $aDayAgo = time() - 86400*50;
         $users   = User::where('enable', '1')->where('t', '>', $aDayAgo)->select(['id'])->get();
         foreach ($users as $user) {
             $users_traffic[$user->id] = 0;
@@ -426,7 +427,7 @@ class AdminController extends UserController
         reset($most_users_traffic);
         $most_traffic_user_id = key($most_users_traffic);
         foreach ($most_users_traffic as $k => $v) {
-            array_push($users_traffic_for_chart['labels'], $k);
+            array_push($users_traffic_for_chart['labels'], User::find($k)->user_name." (id: $k)");
             array_push($users_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
         }
         $users_traffic_for_chart['total'] = round(Tools::flowToGB(array_sum($users_traffic)), 2);
@@ -447,7 +448,8 @@ class AdminController extends UserController
             }
         }
 
-        for ($i = 0; $i <= (int) date('H'); $i++) {
+        for ($i = 0; $i <= 24; $i++) {
+        // for ($i = 0; $i <= (int) date('H'); $i++) {
             $eachHour_traffic[date('h a', strtotime("$i:00:00"))] = 0;
         }
         $nodes = Node::select(['id'])->get();
@@ -468,7 +470,7 @@ class AdminController extends UserController
         $nodes_traffic = array_filter($nodes_traffic);
         // $eachHour_traffic = array_filter($eachHour_traffic);
         foreach ($nodes_traffic as $k => $v) {
-            array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name);
+            array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name." (id: $k)");
             array_push($nodes_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
         }
         foreach ($eachHour_traffic as $k => $v) {

@@ -109,10 +109,10 @@ var users_traffic = new Chart(ctx, {
             callbacks: {
                 // Use the footer callback to display the sum of the items showing in the tooltip
                 footer: function(tooltipItems, data) {
-                    var sum = 0;
-                    data.datasets[0].data.forEach(function(v) {
-                        sum += v;
-                    });
+                    // var sum = 0;
+                    // data.datasets[0].data.forEach(function(v) {
+                    //     sum += v;
+                    // });
                     return 'Sum: ' + {$users_traffic_for_chart}.total + " GB";
                 },
             },
@@ -181,10 +181,10 @@ var nodes_traffic = new Chart(ctx, {
             callbacks: {
                 // Use the footer callback to display the sum of the items showing in the tooltip
                 footer: function(tooltipItems, data) {
-                    var sum = 0;
-                    data.datasets[0].data.forEach(function(v) {
-                        sum += v;
-                    });
+                    // var sum = 0;
+                    // data.datasets[0].data.forEach(function(v) {
+                    //     sum += v;
+                    // });
                     return 'Sum: ' + {$nodes_traffic_for_chart}.total + " GB";
                 },
             },
@@ -253,10 +253,10 @@ var eachHour_traffic = new Chart(ctx, {
             callbacks: {
                 // Use the footer callback to display the sum of the items showing in the tooltip
                 footer: function(tooltipItems, data) {
-                    var sum = 0;
-                    data.datasets[0].data.forEach(function(v) {
-                        sum += v;
-                    });
+                    // var sum = 0;
+                    // data.datasets[0].data.forEach(function(v) {
+                    //     sum += v;
+                    // });
                     return 'Sum: ' + {$eachHour_traffic_for_chart}.total + " GB";
                 },
             },
