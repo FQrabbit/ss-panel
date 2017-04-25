@@ -413,8 +413,8 @@ class AdminController extends UserController
         } else {
             $logs_for_users_traffic_ranking_chart = TrafficLog::all();
         }
-        // $aDayAgo = time() - 86400;
-        $aDayAgo = time() - 86400*50;
+        $aDayAgo = time() - 86400;
+        // $aDayAgo = time() - 86400*50;
         $users   = User::where('enable', '1')->where('t', '>', $aDayAgo)->select(['id'])->get();
         foreach ($users as $user) {
             $users_traffic[$user->id] = 0;
@@ -448,9 +448,9 @@ class AdminController extends UserController
             }
         }
 
-        for ($i = 0; $i <= 24; $i++) {
-        // for ($i = 0; $i <= (int) date('H'); $i++) {
-            $eachHour_traffic[date('h a', strtotime("$i:00:00"))] = 0;
+        // for ($i = 0; $i <= 24; $i++) {
+        for ($i = 0; $i <= (int) date('H'); $i++) {
+            $eachHour_traffic[date('H a', strtotime("$i:00:00"))] = 0;
         }
         $nodes = Node::select(['id'])->get();
         foreach ($nodes as $node) {
@@ -461,14 +461,14 @@ class AdminController extends UserController
             $nodes_traffic[$log->node_id] += ($log->d + $log->u);
         }
         foreach ($logs_for_eachHour_traffic_chart as $log) {
-            $eachHour_traffic[date('h a', $log->log_time)] += ($log->d + $log->u);
+            $eachHour_traffic[date('H a', $log->log_time)] += ($log->d + $log->u);
         }
         /**
          * 去掉值为0的元素
          * @var array
          */
-        $nodes_traffic = array_filter($nodes_traffic);
-        // $eachHour_traffic = array_filter($eachHour_traffic);
+        // $nodes_traffic = array_filter($nodes_traffic);
+        $eachHour_traffic = array_filter($eachHour_traffic);
         foreach ($nodes_traffic as $k => $v) {
             array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name." (id: $k)");
             array_push($nodes_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
