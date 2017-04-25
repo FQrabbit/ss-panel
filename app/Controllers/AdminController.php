@@ -113,28 +113,26 @@ class AdminController extends UserController
             }
         }
 
-        $Y             = date('Y');
-        $m             = date('m');
-        $d             = date('d');
-        $yearlyIncome  = PurchaseLog::where('buy_date', '>', $Y)->sum('price');
-        $monthlyIncome = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('price');
-        $dailyIncome   = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('price');
+        $yearlyIncome  = PurchaseLog::where('buy_date', '>', date('Y'))->sum('price');
+        $monthlyIncome = PurchaseLog::where('buy_date', '>', date('Y-m'))->sum('price');
+        $dailyIncome   = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->sum('price');
 
         /**
          * 使用支付接口的手续费
          * @var float
          */
-        $yearlyFee  = PurchaseLog::where('buy_date', '>', $Y)->sum('fee');
-        $monthlyFee = PurchaseLog::where('buy_date', '>', $Y . '-' . $m)->sum('fee');
-        $dailyFee   = PurchaseLog::where('buy_date', '>', $Y . '-' . $m . '-' . $d)->sum('fee');
+        $yearlyFee  = PurchaseLog::where('buy_date', '>', date('Y'))->sum('fee');
+        $monthlyFee = PurchaseLog::where('buy_date', '>', date('Y-m'))->sum('fee');
+        $dailyFee   = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->sum('fee');
 
+        $income['all']        = PurchaseLog::sum('price');
         $income['yearly']     = $yearlyIncome;
         $income['monthly']    = $monthlyIncome;
         $income['daily']      = $dailyIncome;
+        
         $income['yearlyFee']  = $yearlyFee;
         $income['monthlyFee'] = $monthlyFee;
         $income['dailyFee']   = $dailyFee;
-        $income['all']        = PurchaseLog::sum('price');
 
         /**
          * x轴坐标标签数组,从一月到本月。
@@ -146,20 +144,11 @@ class AdminController extends UserController
          * @var array
          */
         $monthdata = array();
-
-        for ($i = 1; $i <= $m; $i++) {
-            if ($i < 10) {
-                $tm = '0' . $i;
-            } else {
-                $tm = $i;
-            }
+        for ($i = 1; $i <= (int) date('m'); $i++) {
+            $tm = date('Y-m-d', strtotime(date('Y')."-$i"));
             $j = $i + 1;
-            if ($j < 10) {
-                $nm = '0' . $j;
-            } else {
-                $nm = $j;
-            }
-            $monthIncome         = PurchaseLog::where('buy_date', '>', $Y . '-' . $tm)->where('buy_date', '<', $Y . '-' . $nm)->sum('price');
+            $nm = date('Y-m-d', strtotime(date('Y')."-$j"));
+            $monthIncome         = PurchaseLog::whereBetween('buy_date', [$tm,$nm])->sum('price');
             $income['month'][$i] = $monthIncome;
             array_push($monthscope, $i . '月');
             array_push($monthdata, $monthIncome);
