@@ -109,7 +109,11 @@
         </p>
         <!-- chart -->
         <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="400" id="myChart">
+            <canvas height="300" id="dailyIncomeChart">
+            </canvas>
+        </div>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas height="300" id="myChart">
             </canvas>
         </div>
         <!-- chart -->
@@ -316,7 +320,7 @@
             },
             tooltips: {
                 mode: 'index',
-                intersect: false,
+                intersect: false
             },
             hover: {
                 mode: 'index',
@@ -331,6 +335,76 @@
                     scaleLabel: {
                         display: true,
                         labelString: 'Date (Month)',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Income (CNY)',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb",
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var ctx = $("#dailyIncomeChart");
+    var dailyIncomeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {$eachHour_income_for_chart}.labels,
+            datasets: [
+            {
+                label: "日收入（元）",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$eachHour_income_for_chart}.datas,
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                    fontColor: "#bbb"
+                }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    // Use the footer callback to display the sum of the items showing in the tooltip
+                    footer: function(tooltipItems, data) {
+                        // var sum = 0;
+                        // data.datasets[0].data.forEach(function(v) {
+                        //     sum += v;
+                        // });
+                        return 'Sum: ' + {$eachHour_income_for_chart}.total + " 元";
+                    },
+            },
+            footerFontStyle: 'bold'
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
+            },
+            animation: {
+                duration: 3000
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time (Each Hour)',
                         fontColor: "#bbb"
                     },
                     ticks: {

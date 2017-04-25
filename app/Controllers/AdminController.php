@@ -169,11 +169,26 @@ class AdminController extends UserController
             'monthdata'  => $monthdata,
         );
         $datasets = json_encode($datasets);
-        $path     = substr($path, 0, strlen($path) - 1);
-        $logs     = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+
+        $daily_income_logs = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->get();
+        for ($i = 0; $i <= (int) date('H'); $i++) {
+            $eachHour_income[date('H a', strtotime("$i:00"))] = 0;
+        }
+        foreach ($daily_income_logs as $log) {
+            $eachHour_income[date('H a', strtotime($log->buy_date))] += $log->price;
+        }
+        foreach ($eachHour_income as $k => $v) {
+            $eachHour_income_for_chart['labels'][] = $k;
+            $eachHour_income_for_chart['datas'][]  = $v;
+        }
+        $eachHour_income_for_chart['total'] = array_sum($eachHour_income_for_chart['datas']);
+        $eachHour_income_for_chart = json_encode($eachHour_income_for_chart);
+
+        $path = substr($path, 0, strlen($path) - 1);
+        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         $products = Shop::where('status', 1)->get();
-        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->assign('products', $products)->display('admin/purchaselog.tpl');
+        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->assign('products', $products)->assign('eachHour_income_for_chart', $eachHour_income_for_chart)->display('admin/purchaselog.tpl');
     }
 
     public function addPurchase($request, $response, $args)
@@ -415,7 +430,7 @@ class AdminController extends UserController
         }
         $aDayAgo = time() - 86400;
         // $aDayAgo = time() - 86400*50;
-        $users   = User::where('enable', '1')->where('t', '>', $aDayAgo)->select(['id'])->get();
+        $users = User::where('enable', '1')->where('t', '>', $aDayAgo)->select(['id'])->get();
         foreach ($users as $user) {
             $users_traffic[$user->id] = 0;
         }
@@ -427,7 +442,7 @@ class AdminController extends UserController
         reset($most_users_traffic);
         $most_traffic_user_id = key($most_users_traffic);
         foreach ($most_users_traffic as $k => $v) {
-            array_push($users_traffic_for_chart['labels'], User::find($k)->user_name." (id: $k)");
+            array_push($users_traffic_for_chart['labels'], User::find($k)->user_name . " (id: $k)");
             array_push($users_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
         }
         $users_traffic_for_chart['total'] = round(Tools::flowToGB(array_sum($users_traffic)), 2);
@@ -470,7 +485,7 @@ class AdminController extends UserController
         // $nodes_traffic = array_filter($nodes_traffic);
         $eachHour_traffic = array_filter($eachHour_traffic);
         foreach ($nodes_traffic as $k => $v) {
-            array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name." (id: $k)");
+            array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name . " (id: $k)");
             array_push($nodes_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
         }
         foreach ($eachHour_traffic as $k => $v) {
