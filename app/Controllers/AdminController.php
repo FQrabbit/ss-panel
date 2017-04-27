@@ -134,30 +134,16 @@ class AdminController extends UserController
         $income['monthlyFee'] = $monthlyFee;
         $income['dailyFee']   = $dailyFee;
 
-        /**
-         * x轴坐标标签数组,从一月到本月。
-         * @var array
-         */
-        $monthscope = array();
-        /**
-         * 各月数值数组。
-         * @var array
-         */
-        $monthdata = array();
-        for ($i = 1; $i <= (int) date('m'); $i++) {
-            $tm = date('Y-m-d', strtotime(date('Y')."-$i"));
-            $j = $i + 1;
-            $nm = date('Y-m-d', strtotime(date('Y')."-$j"));
-            $monthIncome         = PurchaseLog::whereBetween('buy_date', [$tm,$nm])->sum('price');
-            $income['month'][$i] = $monthIncome;
-            array_push($monthscope, $i . '月');
-            array_push($monthdata, $monthIncome);
+        $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m').'-01 -6 months'));
+        $someMonth = $half_year_ago_date;
+        while ($someMonth <= date('Y-m-d')) {
+            $nextMonth = date('Y-m-d', strtotime($someMonth.' +1 month'));
+            $monthIncome = PurchaseLog::whereBetween('buy_date', [$someMonth,$nextMonth])->sum('price');
+            $monthly_income_for_chart['labels'][] = date('Y-m', strtotime($someMonth));
+            $monthly_income_for_chart['datas'][] = $monthIncome;
+            $someMonth = $nextMonth;
         }
-        $datasets = array(
-            'monthscope' => $monthscope,
-            'monthdata'  => $monthdata,
-        );
-        $datasets = json_encode($datasets);
+        $monthly_income_for_chart = json_encode($monthly_income_for_chart);
 
         /**
          * 一周收入 chart
@@ -165,11 +151,11 @@ class AdminController extends UserController
         $someDay = date('Y-m-d', strtotime("-6 days"));
         $last_week_income_logs = PurchaseLog::where('buy_date', '>', $someDay)->get();
         while ( $someDay<= date('Y-m-d')) {
-            $weekly_income[$someDay] = 0;
+            $weekly_income[date('m-d', strtotime($someDay))] = 0;
             $someDay = date('Y-m-d', strtotime($someDay.' +1 day'));
         }
         foreach ($last_week_income_logs as $log) {
-            $weekly_income[date('Y-m-d', strtotime($log->buy_date))] += $log->price;
+            $weekly_income[date('m-d', strtotime($log->buy_date))] += $log->price;
         }
         foreach ($weekly_income as $k => $v) {
             $weekly_income_for_chart['labels'][] = $k;
@@ -200,7 +186,7 @@ class AdminController extends UserController
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         $products = Shop::where('status', 1)->get();
-        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('datasets', $datasets)->assign('products', $products)->assign('eachHour_income_for_chart', $eachHour_income_for_chart)->assign('weekly_income_for_chart', $weekly_income_for_chart)->display('admin/purchaselog.tpl');
+        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('products', $products)->assign('eachHour_income_for_chart', $eachHour_income_for_chart)->assign('weekly_income_for_chart', $weekly_income_for_chart)->assign('monthly_income_for_chart', $monthly_income_for_chart)->display('admin/purchaselog.tpl');
     }
 
     public function addPurchase($request, $response, $args)

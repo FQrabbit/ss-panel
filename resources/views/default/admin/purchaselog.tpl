@@ -449,14 +449,14 @@
     var monthlyIncomeChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: {$datasets}.monthscope,
+            labels: {$monthly_income_for_chart}.labels,
             datasets: [
             {
                 label: "月收入（元）",
                 fill: false,
                 borderColor: "rgba(75,192,192,0.4)",
                 backgroundColor: "rgba(75,192,192,0.4)",
-                data: {$datasets}.monthdata,
+                data: {$monthly_income_for_chart}.datas,
             }
             ]
         },
