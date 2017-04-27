@@ -162,7 +162,7 @@ class AdminController extends UserController
         /**
          * 一周收入 chart
          */
-        $someDay = date('Y-m-d', strtotime("last week"));
+        $someDay = date('Y-m-d', strtotime("-6 days"));
         $last_week_income_logs = PurchaseLog::where('buy_date', '>', date('Y-m-d', strtotime("last week")))->get();
         while ( $someDay<= date('Y-m-d')) {
             $weekly_income[$someDay] = 0;
@@ -450,7 +450,7 @@ class AdminController extends UserController
             $users_traffic[$log->user_id] += ($log->d + $log->u);
         }
         arsort($users_traffic);
-        $most_users_traffic = array_slice($users_traffic, 0, 15, true);
+        $most_users_traffic = array_slice($users_traffic, 0, 10, true);
         reset($most_users_traffic);
         $most_traffic_user_id = key($most_users_traffic);
         foreach ($most_users_traffic as $k => $v) {
@@ -487,6 +487,11 @@ class AdminController extends UserController
         foreach ($logs_for_nodes_traffic_chart as $log) {
             $nodes_traffic[$log->node_id] += ($log->d + $log->u);
         }
+        /**
+         * 取产生流量最多的7个节点
+         */
+        arsort($nodes_traffic);
+        $nodes_traffic = array_slice($nodes_traffic, 0, 10, true);
         foreach ($logs_for_eachHour_traffic_chart as $log) {
             $eachHour_traffic[date('H a', $log->log_time)] += ($log->d + $log->u);
         }
