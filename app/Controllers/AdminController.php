@@ -440,7 +440,7 @@ class AdminController extends UserController
         reset($most_users_traffic);
         $most_traffic_user_id = key($most_users_traffic);
         foreach ($most_users_traffic as $k => $v) {
-            array_push($users_traffic_for_chart['labels'], User::find($k)->user_name . " (id: $k)");
+            array_push($users_traffic_for_chart['labels'], $k);
             array_push($users_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
         }
         $users_traffic_for_chart['total'] = round(Tools::flowToGB(array_sum($users_traffic)), 2);
