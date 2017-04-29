@@ -100,7 +100,7 @@
                                                 <td>
                                                     {$node->name}
                                                 </td>
-	                                {if $node->getOnlineUserCount()!='暂无数据'}
+	                                {if is_numeric($node->getOnlineUserCount())}
                                                 <td>
                                                     <span class="label" style="background-color:#00a65a">
                                                         {$node->status}
@@ -170,7 +170,7 @@
                                                 <td class="node-name" onclick="urlChange('{$node->id}')">
                                                     {$node->name}
                                                 </td>
-		                            {if $node->getOnlineUserCount()!='暂无数据'}
+		                            {if is_numeric($node->getOnlineUserCount())}
                                                 <td>
                                                     <span class="label" style="background-color:#00a65a">
                                                         {$node->status}
