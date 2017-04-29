@@ -81,26 +81,25 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-		                    {foreach $nodes as $node}
-								{if $user->isFreeUser() and $node->isPaidNode()}
+                                    {foreach $nodes as $node}
                                             <tr>
                                                 <td>
-                                                    <button class="fa fa-thumbs-up vote-btn like-btn" data-node-id="{$node->id}" disabled>
+                                                    <button class="fa fa-thumbs-up vote-btn like-btn{if $user->getPollOfNode($node->id) == 1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
                                                         <span>
                                                             {$node->getPollCount(1)}
                                                         </span>
                                                     </button>
                                                     <br>
-                                                    <button class="fa fa-thumbs-down vote-btn dislike-btn" data-node-id="{$node->id}" disabled>
+                                                    <button class="fa fa-thumbs-down vote-btn dislike-btn{if $user->getPollOfNode($node->id) == -1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
                                                         <span>
                                                             {$node->getPollCount(-1)}
                                                         </span>
                                                     </button>
                                                 </td>
-                                                <td>
+                                                <td{if $user->isFreeUser() and $node->isPaidNode()}{else} class="node-name" onclick="urlChange('{$node->id}')"{/if}>
                                                     {$node->name}
                                                 </td>
-	                                {if is_numeric($node->getOnlineUserCount())}
+                                            {if is_numeric($node->getOnlineUserCount())}
                                                 <td>
                                                     <span class="label" style="background-color:#00a65a">
                                                         {$node->status}
@@ -111,7 +110,7 @@
                                                         {$node->getOnlineUserCount()}
                                                     </span>
                                                 </td>
-	                                {else}
+                                            {else}
                                                 <td>
                                                     <span class="label" style="background-color:#444">
                                                         维护中
@@ -121,8 +120,8 @@
                                                     <span class="badge" style="background-color:#444">
                                                         {$node->getOnlineUserCount()}
                                                     </span>
-				                                </td>
-		                            {/if}
+                                                </td>
+                                            {/if}
                                                 <td>
                                                     <div class="progress">
                                                         <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->node_usage}" class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->node_usage}%">
@@ -146,84 +145,13 @@
                                                     {$node->getNodeUptime()}
                                                 </td>
                                                 <td>
-                                                    Meow
+                                                    {if $user->isFreeUser() and $node->isPaidNode()}Meow{else}{$node->ip}{/if}
                                                 </td>
                                                 <td>
-                                                    Meow
+                                                    {if $user->isFreeUser() and $node->isPaidNode()}Meow{else}{$node->ipv6}{/if}
                                                 </td>
                                             </tr>
-	                            {else}
-                                            <tr>
-                                                <td>
-                                                    <button class="fa fa-thumbs-up vote-btn like-btn {if $user->getPollOfNode($node->id) == 1}vote-btn-clicked{/if}" data-node-id="{$node->id}">
-                                                        <span>
-                                                            {$node->getPollCount(1)}
-                                                        </span>
-                                                    </button>
-                                                    <br>
-                                                    <button class="fa fa-thumbs-down vote-btn dislike-btn {if $user->getPollOfNode($node->id) == -1}vote-btn-clicked{/if}" data-node-id="{$node->id}">
-                                                        <span>
-                                                            {$node->getPollCount(-1)}
-                                                        </span>
-                                                    </button>
-                                                </td>
-                                                <td class="node-name" onclick="urlChange('{$node->id}')">
-                                                    {$node->name}
-                                                </td>
-		                            {if is_numeric($node->getOnlineUserCount())}
-                                                <td>
-                                                    <span class="label" style="background-color:#00a65a">
-                                                        {$node->status}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-dark-teal">
-                                                        {$node->getOnlineUserCount()}
-                                                    </span>
-                                                </td>
-		                            {else}
-                                                <td>
-                                                    <span class="label" style="background-color:#444">
-                                                        维护中
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge" style="background-color:#444">
-                                                        {$node->getOnlineUserCount()}
-                                                    </span>
-                                                </td>
-		                            {/if}
-                                                <td>
-                                                    <div class="progress">
-                                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->node_usage}" class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->node_usage}%">
-                                                            {$node->node_usage}%
-                                                            <span class="sr-only">
-                                                                {$node->node_usage}% Complete
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {$node->getTrafficFromLogs()}
-                                                </td>
-                                                <td>
-                                                    {$node->transfer_reset_day}
-                                                </td>
-                                                <td class="info">
-                                                    {$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}
-                                                </td>
-                                                <td>
-                                                    {$node->getNodeUptime()}
-                                                </td>
-                                                <td>
-                                                    {$node->ip}
-                                                </td>
-                                                <td>
-                                                    {$node->ipv6}
-                                                </td>
-                                            </tr>
-                                {/if}
-							{/foreach}
+                                    {/foreach}
                                         </tbody>
                                     </table>
                                 </div>
