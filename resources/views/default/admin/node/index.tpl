@@ -29,6 +29,10 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
+                <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+                    <canvas height="300" id="Vote">
+                    </canvas>
+                </div>
                 <p> <a class="btn btn-success btn-sm" href="/admin/node/create">添加</a> </p>
                 <div class="box">
                     <div class="box-body table-responsive no-padding">
@@ -109,5 +113,75 @@
     });
     $("#error-close").click(function(){
         $("#msg-error").hide(100);
+    });
+
+
+    var ctx = $("#Vote");
+    var Vote = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {$nodes_polls}.labels,
+            datasets: [
+            {
+                label: "like",
+                fill: false,
+                borderColor: "rgb(32, 90, 87)",
+                backgroundColor: "rgb(32, 90, 87)",
+                data: {$nodes_polls}.datas[1],
+            },
+            {
+                label: "dislike",
+                fill: false,
+                borderColor: "rgb(169, 68, 66)",
+                backgroundColor: "rgb(169, 68, 66)",
+                data: {$nodes_polls}.datas[0],
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                    fontColor: "#bbb"
+                }
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
+            },
+            animation: {
+                duration: 1500
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '节点',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'The number of votes',
+                        fontColor: "#bbb"
+                    },
+                    ticks: {
+                        fontColor: "#bbb",
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
     });
 </script>

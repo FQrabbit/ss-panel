@@ -40,7 +40,7 @@ class UserController extends BaseController
         $userFooter = DbConfig::get('user-footer');
         $uri        = strtok($_SERVER["REQUEST_URI"], '?');
 
-        $pagesThatRequireChartjs         = ['/user/trafficlog', '/admin/trafficlog', '/admin/purchaselog'];
+        $pagesThatRequireChartjs         = ['/user/trafficlog', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
         $pagesThatRequireJQueryConfirm   = ['/admin/user', '/admin/node', '/admin/purchaselog', '/admin/donatelog'];
 

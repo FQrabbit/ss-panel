@@ -12,7 +12,13 @@ class NodeController extends AdminController
     public function index($request, $response, $args)
     {
         $nodes = Node::orderBy("sort")->get();
-        return $this->view()->assign('nodes', $nodes)->display('admin/node/index.tpl');
+        foreach ($nodes as $node) {
+            $nodes_polls['labels'][] = $node->name;
+            $nodes_polls['datas'][0][] = $node->getPollCount(-1);
+            $nodes_polls['datas'][1][] = $node->getPollCount(1);
+        }
+        $nodes_polls = json_encode($nodes_polls);
+        return $this->view()->assign('nodes', $nodes)->assign('nodes_polls', $nodes_polls)->display('admin/node/index.tpl');
     }
 
     public function create($request, $response, $args)
