@@ -348,6 +348,11 @@ class UserController extends BaseController
         $obfs = strtolower($obfs);
 
         $obfs_param = $request->getParam('obfs_param');
+        if (strpos($obfs_param, '@') !== false ) {
+            $res['ret'] = 0;
+            $res['msg'] = "混淆参数无效。";
+            return $this->echoJson($response, $res);
+        }
         $obfs_param = strtolower($obfs_param);
 
         $user->passwd     = $request->getParam('sspwd');
