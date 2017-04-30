@@ -473,11 +473,12 @@ class AdminController extends UserController
         foreach ($logs_for_nodes_traffic_chart as $log) {
             $nodes_traffic[$log->node_id] += ($log->d + $log->u);
         }
+        arsort($nodes_traffic);
         /**
          * 取产生流量最多的7个节点
          */
-        arsort($nodes_traffic);
-        $nodes_traffic = array_slice($nodes_traffic, 0, 10, true);
+        // $nodes_traffic = array_slice($nodes_traffic, 0, 10, true);
+        
         foreach ($logs_for_eachHour_traffic_chart as $log) {
             $eachHour_traffic[date('H a', $log->log_time)] += ($log->d + $log->u);
         }
