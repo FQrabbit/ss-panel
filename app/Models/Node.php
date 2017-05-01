@@ -172,7 +172,7 @@ class Node extends Model
         if ($transfer==0) {
             return 0;
         }
-        if ($this->attributes['api']) {
+        if ($this->attributes['node_usage']) {
             return $this->attributes['node_usage'];
         }
         $reset_day = $this->attributes['transfer_reset_day'];
