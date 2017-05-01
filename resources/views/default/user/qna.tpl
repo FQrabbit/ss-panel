@@ -17,6 +17,10 @@
 		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 		var disqus_shortname = 'shadowsky'; // required: replace example with your forum shortname
 
+		var disqus_config = function () {
+		this.page.url = "https://www.shdowsky.info/user/qna";  // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = "/user/qna"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
 		/* * * DON'T EDIT BELOW THIS LINE * * */
 		(function() {
 		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
