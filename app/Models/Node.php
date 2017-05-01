@@ -175,16 +175,72 @@ class Node extends Model
         if ($this->attributes['node_usage']) {
             return $this->attributes['node_usage'];
         }
-        $reset_day = $this->attributes['transfer_reset_day'];
-        $reset_day = date('Y-m-d', strtotime(date('Y-m')."-$reset_day"));
-        if ($reset_day <= date('Y-m-d')) {
-            $trafficFrom = $reset_day;
-        } else {
-            $trafficFrom = date('Y-m-d', strtotime($reset_day . ' -1 month'));
-        }
-        $logs = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $trafficFrom)->get();
+        $last_reset_date = $this->lastResetDate();
+        $logs = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $last_reset_date)->get();
         $traffic = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');
         $traffic_in_GB = Tools::flowToGB($traffic);
         return round($traffic_in_GB/$transfer, 4) * 100;
+    }
+
+    public function lastResetDate()
+    {
+        $id = $this->attributes['id'];
+        $reset_day = $this->attributes['transfer_reset_day'];
+        $reset_day = date('Y-m-d', strtotime(date('Y-m')."-$reset_day"));
+        if ($reset_day <= date('Y-m-d')) {
+            $last_reset_day = date('Y-m-d', strtotime($reset_day . ' -1 month'));
+        } else {
+            $last_reset_day = $reset_day;
+        }
+        return $last_reset_day;
+    }
+
+    public function nextResetDate()
+    {
+        $id = $this->attributes['id'];
+        $reset_day = $this->attributes['transfer_reset_day'];
+        $reset_day = date('Y-m-d', strtotime(date('Y-m')."-$reset_day"));
+        if ($reset_day <= date('Y-m-d')) {
+            $next_reset_day = date('Y-m-d', strtotime($reset_day . ' +1 month'));
+        } else {
+            $next_reset_day = $reset_day;
+        }
+        return $next_reset_day;
+    }
+
+    /**
+     * 距离下次重置日天数
+     */
+    public function daysUntilNextResetDate()
+    {
+        $secInADay = 24 * 3600;
+        $next_reset_day = $this->nextResetDate();
+        $remain_days = floor((strtotime($next_reset_day)-time()) / $secInADay);
+        if ($remain_days==0) {
+            $remain_days = 30;
+        }
+        return $remain_days;
+    }
+
+    /**
+     * 获取剩余流量(GB)
+     */
+    public function transferLeft()
+    {
+        $total_transfer = $this->attributes['transfer'];
+        return $total_transfer * ((100 - $this->getTrafficUsage())/100);
+    }
+
+    /**
+     * 平均每日可用流量
+     */
+    public function averageTrafficAvailableEveryDay()
+    {
+        $traffic = round($this->transferLeft() / $this->daysUntilNextResetDate(), 2);
+        if ($traffic) {
+            return $traffic.'GB';
+        } else {
+            return 'Unlimited';
+        }
     }
 }

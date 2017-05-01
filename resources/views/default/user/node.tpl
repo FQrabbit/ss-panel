@@ -63,6 +63,9 @@
                                                 <th id="t-traffic">
                                                     本日产生流量
                                                 </th>
+                                                <th>
+                                                    平均每日还可使用
+                                                </th>
                                                 <th id="t-traffic-reset-day">
                                                     流量重置日
                                                 </th>
@@ -134,6 +137,9 @@
                                                 </td>
                                                 <td>
                                                     {$node->getTrafficFromLogs()}
+                                                </td>
+                                                <td>
+                                                    {$node->averageTrafficAvailableEveryDay()}
                                                 </td>
                                                 <td>
                                                     {$node->transfer_reset_day}
