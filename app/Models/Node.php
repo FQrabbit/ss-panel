@@ -7,6 +7,7 @@ namespace App\Models;
  */
 
 use App\Utils\Tools;
+use App\Models\NodeDailyTrafficLog;
 
 class Node extends Model
 
@@ -162,5 +163,28 @@ class Node extends Model
     public function isPaidNode()
     {
         return $this->attributes['type'] == 1;
+    }
+
+    public function getTrafficUsage()
+    {
+        $id = $this->attributes['id'];
+        $transfer = $this->attributes['transfer'];
+        if ($transfer==0) {
+            return 0;
+        }
+        if ($this->attributes['api']) {
+            return $this->attributes['node_usage'];
+        }
+        $reset_day = $this->attributes['transfer_reset_day'];
+        $reset_day = date('Y-m-d', strtotime(date('Y-m')."-$reset_day"));
+        if ($reset_day <= date('Y-m-d')) {
+            $trafficFrom = $reset_day;
+        } else {
+            $trafficFrom = date('Y-m-d', strtotime($reset_day . ' -1 month'));
+        }
+        $logs = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $trafficFrom)->get();
+        $traffic = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');
+        $traffic_in_GB = Tools::flowToGB($traffic);
+        return round($traffic_in_GB/$transfer, 4) * 100;
     }
 }

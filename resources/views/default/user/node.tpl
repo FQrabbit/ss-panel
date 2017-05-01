@@ -124,10 +124,10 @@
                                             {/if}
                                                 <td>
                                                     <div class="progress">
-                                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->node_usage}" class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->node_usage}%">
-                                                            {$node->node_usage}%
+                                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->getTrafficUsage()}" class="progress-bar progress-bar-{if $node->getTrafficUsage() < 40}success{elseif $node->getTrafficUsage() < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->getTrafficUsage()}%">
+                                                            {$node->getTrafficUsage()}%
                                                             <span class="sr-only">
-                                                                {$node->node_usage}% Complete
+                                                                {$node->getTrafficUsage()}% Complete
                                                             </span>
                                                         </div>
                                                     </div>
