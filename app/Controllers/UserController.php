@@ -40,7 +40,7 @@ class UserController extends BaseController
         $userFooter = DbConfig::get('user-footer');
         $uri        = strtok($_SERVER["REQUEST_URI"], '?');
 
-        $pagesThatRequireChartjs         = ['/user/trafficlog', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
+        $pagesThatRequireChartjs         = ['/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
         $pagesThatRequireJQueryConfirm   = ['/admin/user', '/admin/node', '/admin/purchaselog', '/admin/donatelog'];
 
@@ -120,7 +120,22 @@ class UserController extends BaseController
             $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
             $android_add_new .= $ssqr_new . "|";
         }
-        return $this->view()->assign('nodes', $allnodes)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_n_add', $android_n_add)->assign('android_add_new', $android_add_new)->assign('nodes_available', $nodes_available)->display('user/node.tpl');
+
+        foreach ($allnodes as $node) {
+            $nodes_traffic[$node->id] = 0;
+        }
+        $logs_for_nodes_traffic_chart = TrafficLog::all();
+        foreach ($logs_for_nodes_traffic_chart as $log) {
+            $nodes_traffic[$log->node_id] += ($log->d + $log->u);
+        }
+        arsort($nodes_traffic);
+        foreach ($nodes_traffic as $k => $v) {
+            $nodes_traffic_for_chart['labels'][] = Node::find($k)->name;
+            $nodes_traffic_for_chart['datas'][]  = round(Tools::flowToGB($v), 2);
+        }
+        $nodes_traffic_for_chart['total'] = round(array_sum($nodes_traffic_for_chart['datas']), 2);
+        $nodes_traffic_for_chart          = json_encode($nodes_traffic_for_chart);
+        return $this->view()->assign('nodes', $allnodes)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_n_add', $android_n_add)->assign('android_add_new', $android_add_new)->assign('nodes_available', $nodes_available)->assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->display('user/node.tpl');
     }
 
     public function nodeInfo($request, $response, $args)
@@ -348,7 +363,7 @@ class UserController extends BaseController
         $obfs = strtolower($obfs);
 
         $obfs_param = $request->getParam('obfs_param');
-        if (strpos($obfs_param, '@') !== false ) {
+        if (strpos($obfs_param, '@') !== false) {
             $res['ret'] = 0;
             $res['msg'] = "混淆参数无效。";
             return $this->echoJson($response, $res);

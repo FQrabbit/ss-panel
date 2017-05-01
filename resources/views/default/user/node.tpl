@@ -159,6 +159,9 @@
                         </div>
                     </div>
                 </div>
+                <div style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+                    <canvas id="nodes_traffic" height="400"></canvas>
+                </div>
             </div>
         </div>
     </section>
@@ -231,4 +234,73 @@ $(".vote-btn").click(function(){
 
     $(this).toggleClass("vote-btn-clicked");
 })
+
+var ctx = $("#nodes_traffic");
+var nodes_traffic = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$nodes_traffic_for_chart}.labels,
+        datasets: [
+            {
+                label: "#(GB) Nodes Traffic",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$nodes_traffic_for_chart}.datas,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                // Use the footer callback to display the sum of the items showing in the tooltip
+                footer: function(tooltipItems, data) {
+                    return 'Sum: ' + {$nodes_traffic_for_chart}.total + " GB";
+                },
+            },
+            footerFontStyle: 'bold'
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Node name',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    autoSkip: true,
+                    autoSkipPadding: 2
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (GB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 </script>
