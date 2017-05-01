@@ -381,6 +381,18 @@ class AdminController extends UserController
         return $response->getBody()->write(json_encode($rs));
     }
 
+    public static function mergeUsersTrafficLogs($logs)
+    {
+        foreach ($logs as $log) {
+            if (isset($users_traffic[$log->user_id])) {
+                $users_traffic[$log->user_id] += ($log->d + $log->u);
+            } else {
+                $users_traffic[$log->user_id] = 0;
+            }
+        }
+        return $users_traffic;
+    }
+
     public function trafficLog($request, $response, $args)
     {
         $users_traffic              = [];
@@ -426,15 +438,7 @@ class AdminController extends UserController
         } else {
             $logs_for_users_traffic_ranking_chart = TrafficLog::all();
         }
-        $aDayAgo = time() - 86400;
-        // $aDayAgo = time() - 86400*50;
-        $users = User::where('enable', '1')->where('t', '>', $aDayAgo)->select(['id'])->get();
-        foreach ($users as $user) {
-            $users_traffic[$user->id] = 0;
-        }
-        foreach ($logs_for_users_traffic_ranking_chart as $log) {
-            $users_traffic[$log->user_id] += ($log->d + $log->u);
-        }
+        $users_traffic = self::mergeUsersTrafficLogs($logs_for_users_traffic_ranking_chart);
         arsort($users_traffic);
         $most_users_traffic = array_slice($users_traffic, 0, 10, true);
         reset($most_users_traffic);

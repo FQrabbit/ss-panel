@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\DelUser;
 use App\Models\Node;
 use App\Models\TrafficLog;
+use App\Models\DailyTrafficLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\CheckInLog;
@@ -214,6 +215,16 @@ class Job
     {
         echo date('Y-m-d H:i:s',time())."\n";
 
+        $traffic_logs = TrafficLog::all();
+        $merged_users_traffic_logs = AdminController::mergeUsersTrafficLogs($traffic_logs);
+        $date = date('Y-m-d', strtotime('-1 day'));
+        foreach ($merged_users_traffic_logs as $uid=>$traffic) {
+            // echo "$uid\t$traffic\n";
+            DailyTrafficLog::create(['uid'=>$uid,'traffic'=>$traffic,'date'=>$date]);
+        }
+        
+        DailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-6 days')))->delete();
+        echo "clear old DailyTrafficLog\n";
         TrafficLog::truncate();
         echo "clear TrafficLog\n";
 
