@@ -178,6 +178,7 @@ class Node extends Model
         $last_reset_date = $this->lastResetDate();
         $logs = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $last_reset_date)->get();
         $traffic = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');
+        $traffic += $this->getTotalTraffic();
         $traffic_in_GB = Tools::flowToGB($traffic);
         return round($traffic_in_GB/$transfer, 4) * 100;
     }
