@@ -430,6 +430,8 @@ class UserController extends BaseController
             $this->user->transfer_enable    = $this->user->transfer_enable + $trafficToAdd;
             $this->user->last_check_in_time = time();
             $this->user->save();
+            $res['msg'] = sprintf("获得了 %d MB流量.", $traffic);
+            $res['ret'] = 1;
             // checkin log
             try {
                 $log             = new CheckInLog();
@@ -438,9 +440,9 @@ class UserController extends BaseController
                 $log->checkin_at = time();
                 $log->save();
             } catch (\Exception $e) {
+                $res['msg'] = $e;
+                $res['ret'] = 0;
             }
-            $res['msg'] = sprintf("获得了 %u MB流量.", $traffic);
-            $res['ret'] = 1;
             return $this->echoJson($response, $res);
         }
     }
