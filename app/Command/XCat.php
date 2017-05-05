@@ -25,37 +25,37 @@ class XCat
     public function boot()
     {
         switch ($this->argv[1]) {
-            case("install"):
+            case ("install"):
                 return $this->install();
-            case("createAdmin"):
+            case ("createAdmin"):
                 return $this->createAdmin();
-            case("resetTraffic"):
+            case ("resetTraffic"):
                 return $this->resetTraffic();
-            case("sendDiaryMail"):
+            case ("sendDiaryMail"):
                 return DailyMail::sendDailyMail();
-            case("sendAnnMail"):
+            case ("sendAnnMail"):
                 return DailyMail::sendAnnMail();
-            case("sendGeneralEmail"):
+            case ("sendGeneralEmail"):
                 return DailyMail::sendGeneralEmail();
-            case("sendDbMail"):
+            case ("sendDbMail"):
                 return DailyMail::sendDbMail();
-            case("sendSiteMail"):
+            case ("sendSiteMail"):
                 return DailyMail::sendSiteMail();
-            case("resetUserPlan"):
+            case ("resetUserPlan"):
                 return Job::resetUserPlan();
-            case("updateNodeUsage"):
+            case ("updateNodeUsage"):
                 return Job::updateNodeUsage();
-            case("getNoTransferUser"):
+            case ("getNoTransferUser"):
                 return Job::getNoTransferUser();
-            case("delNoTransferUser"):
+            case ("delNoTransferUser"):
                 return Job::delNoTransferUser();
-            case("getUncheckinUser"):
+            case ("getUncheckinUser"):
                 return Job::getUncheckinUser();
-            case("delUncheckinUser"):
+            case ("delUncheckinUser"):
                 return Job::delUncheckinUser();
-            case("clearLog"):
+            case ("clearLog"):
                 return Job::clearLog();
-            case("freezeuser"):
+            case ("freezeuser"):
                 return Job::freezeuser();
             default:
                 return $this->defaultAction();
@@ -88,19 +88,19 @@ class XCat
             echo "start create admin account";
             // create admin user
             // do reg user
-            $user = new User();
-            $user->user_name = "admin";
-            $user->email = $email;
-            $user->pass = Hash::passwordHash($passwd);
-            $user->passwd = Tools::genRandomChar(6);
-            $user->port = Tools::getLastPort() + 1;
-            $user->t = 0;
-            $user->u = 0;
-            $user->d = 0;
+            $user                  = new User();
+            $user->user_name       = "admin";
+            $user->email           = $email;
+            $user->pass            = Hash::passwordHash($passwd);
+            $user->passwd          = Tools::genRandomChar(6);
+            $user->port            = Tools::getLastPort() + 1;
+            $user->t               = 0;
+            $user->u               = 0;
+            $user->d               = 0;
             $user->transfer_enable = Tools::toGB(Config::get('defaultTraffic'));
-            $user->invite_num = Config::get('inviteNum');
-            $user->ref_by = 0;
-            $user->is_admin = 1;
+            $user->invite_num      = Config::get('inviteNum');
+            $user->ref_by          = 0;
+            $user->is_admin        = 1;
             if ($user->save()) {
                 echo "Successful/添加成功!";
                 return true;
@@ -114,23 +114,30 @@ class XCat
 
     public function resetTraffic()
     {
-        if (date('d')==1) {
+        if (date('d') == 1) {
             $users = User::all();
-            // $users = User::where("id", 2)->get();
+            // $users = User::where("id", 1)->get();
             foreach ($users as $user) {
-                if (in_array($user->type, ['包月','包季','包年']) && $user->plan == "B" || $user->plan == "C") {
-                    $transfer = 999*1024*1024*1024;
+                if ($user->plan == 'C') {
+                    $transfer              = Tools::toGB(999);
                     $user->transfer_enable = $transfer;
-                }else {
+                } elseif ($user->plan == 'B') {
+                    if ($user->product_id && $user->getProduct()->isByTime()) {
+                        $transfer              = Tools::toGB($user->getProduct()->transfer);
+                        $user->transfer_enable = $transfer;
+                    } else {
+                        $user->transfer_enable = $user->unusedTrafficInB();
+                    }
+                } else {
                     $user->transfer_enable = $user->unusedTrafficInB();
                 }
                 $user->u = 0;
                 $user->d = 0;
                 $user->save();
             }
-            echo date("Y-m-d H:i:s",time())."\n";
+            echo date('Y-m-d H:i:s') . "\n";
             echo "reset traffic successful\n\n";
-        }else {
+        } else {
             echo "今天不是重置日。\n";
         }
     }

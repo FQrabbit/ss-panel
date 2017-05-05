@@ -120,7 +120,7 @@
                                     <dt>用户类型</dt>
                                     <dd>
                                         <span class="badge bg-green">
-                                            {$user->getUserClassName()} {if $user->type==1}{else}| {$user->type}{/if}
+                                            {$user->getUserClassName()} {if $user->product_id}| {$user->getProduct()->name}{/if}
                                         </span>
                                         {if $user->isDonator()}
                                         <span class="badge bg-green">

@@ -53,13 +53,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <select name="type" class="form-control">
+                <select name="product_id" class="form-control">
                     <option value="">套餐</option>
-                    <option value="试玩">试玩</option>
-                    <option value="基础">基础</option>
-                    <option value="包月">包月</option>
-                    <option value="包季">包季</option>
-                    <option value="包年">包年</option>
+                {foreach $products as $product}
+                    <option value="{$product->id}">{$product->name}</option>
+                {/foreach}
                 </select>
             </div>
             <div class="form-group">
@@ -109,9 +107,9 @@
                                 <td>{$user->user_name}</td>
                                 <td>{$user->email}</td>
                                 <td>{$user->port}</td>
-                                <td>{if $user->ref_by==3}&check;{else}X{/if}</td>
+                                <td>{if $user->isDonator()}&check;{else}X{/if}</td>
                                 <td>{$user->plan}</td>
-                                <td>{$user->type}</td>
+                                <td>{if $user->product_id}{$user->getProduct()->name}{else}无{/if}</td>
                                 <td>{if $user->enable==1}&check;{else}X{/if}</td>
                                 <!-- <td>{$user->method}</td> -->
                                 <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>

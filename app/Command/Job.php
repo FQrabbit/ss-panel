@@ -16,12 +16,14 @@ use App\Models\User;
 use App\Models\UserDailyTrafficLog;
 use App\Services\Config;
 use App\Services\Mail;
+use App\Utils\Tools;
 
 class Job
 {
 
     public static function resetUserPlan()
     {
+        // $users = User::where('id', 1)->get();
         $users = User::where('expire_date', '>', '0000-00-00 00:00:00')->where('expire_date', '<', date('Y-m-d H:i:s'))->where('plan', 'B')->get();
         if ($users) {
             foreach ($users as $user) {
@@ -30,25 +32,27 @@ class Job
 
                 //发送邮件
                 try {
-                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', [
-                        'user' => $user,
-                    ], [
-                    ]);
+                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', ['user' => $user,], []);
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
-
-                $user->plan = 'A';
-                if (in_array($user->type, ['包月', '包季', '包年'])) {
-                    $user->transfer_enable = 104857600;
+                if ($user->product_id && $user->getProduct()->isByTime()) {
+                    $user->transfer_enable = Tools::toMB(100);
                     $user->u               = 0;
                     $user->d               = 0;
                 }
+                if (in_array($user->type, ['包月', '包季', '包年'])) {
+                    $user->transfer_enable = Tools::toMB(100);
+                    $user->u               = 0;
+                    $user->d               = 0;
+                }
+                $user->plan = 'A';
+                $user->product_id = 0;
                 $user->type = 1;
                 $user->save();
 
                 echo date('Y-m-d H:i:s') . "\n";
-                echo '已更新用户' . $user->user_name . '(id:' . $user->id . ')的plan为A</br>';
+                echo $user->user_name . '(id:' . $user->id . ')的会员已到期</br>';
             }
         }
     }
@@ -240,12 +244,14 @@ class Job
         $merged_users_traffic_logs = AdminController::mergeUsersTrafficLogs($traffic_logs);
         foreach ($merged_users_traffic_logs as $uid => $traffic) {
             // echo "$uid\t$traffic\n";
-            UserDailyTrafficLog::create(['uid' => $uid, 'traffic' => $traffic, 'date' => $date]);
+            if ($traffic > 0) {
+                UserDailyTrafficLog::create(['uid' => $uid, 'traffic' => $traffic, 'date' => $date]);
+            }
         }
 
-        UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-6 days')))->delete();
+        UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-1 month')))->delete();
         echo "clear old UserDailyTrafficLog\n";
-        
+
         TrafficLog::truncate();
         echo "clear TrafficLog\n";
 

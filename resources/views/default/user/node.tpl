@@ -248,7 +248,7 @@ var nodes_traffic = new Chart(ctx, {
         labels: {$nodes_traffic_for_chart}.labels,
         datasets: [
             {
-                label: "#(GB) Nodes Traffic",
+                label: "#(GB) 今日流量使用情况",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$nodes_traffic_for_chart}.datas,
             }
@@ -285,7 +285,7 @@ var nodes_traffic = new Chart(ctx, {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Node name',
+                    labelString: '节点',
                     fontColor: "#bbb"
                 },
                 ticks: {

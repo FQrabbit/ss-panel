@@ -14,7 +14,7 @@
     <section class="content">
         <div class="row">
             <div class="col-sm-12">
-                <div id="msg-error" class="alert alert-warning alert-dismissable" style="display:none">
+                <div id="msg-error" class="alert alert-danger alert-dismissable" style="display:none">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
 

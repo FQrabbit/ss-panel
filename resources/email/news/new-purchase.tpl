@@ -22,5 +22,6 @@
   <p>原过期时间: {$pre['expire_date']}.</p>
   <p>现过期时间: {$user->expire_date}.</p>
   <p>原流量: {$pre['used_traffic_in_GB']} G / {$pre['transfer_eanble_in_GB']} G.</p>
+  <p>现流量: {round($user->usedTrafficInGB(), 3)} G / {round($user->enableTrafficInGB(), 3)} G.</p>
 </body>
 </html>

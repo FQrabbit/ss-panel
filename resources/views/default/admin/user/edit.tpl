@@ -20,7 +20,7 @@
 
                     <p id="msg-success-p"></p>
                 </div>
-                <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
+                <div id="msg-error" class="alert alert-danger alert-dismissable" style="display: none;">
                     <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
                     <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
 
@@ -131,15 +131,15 @@
                                         <label class="col-sm-3 control-label">套餐</label>
 
                                         <div class="col-sm-9">
-                                            <select class="form-control" id="type">
-                                                <option value=1 {if $user->type==1}selected="selected"{/if}>
+                                            <select class="form-control" id="product">
+                                                <option value='0' {if $user->product_id==0}selected="selected"{/if}>
                                                     无
                                                 </option>
-                                                {foreach ["试玩","基础","标准","高级","包月","包季","包年"] as $a}
-                                                    <option value={$a} {if $user->type=={$a}}selected="selected"{/if}>
-                                                        {$a}
-                                                    </option>
-                                                {/foreach}
+                                            {foreach $products as $product}
+                                                <option value='{$product->id}' {if $user->product_id && $user->getProduct()->name=={$product->name}}selected="selected"{/if}>
+                                                    {$product->name}
+                                                </option>
+                                            {/foreach}
                                             </select>
                                         </div>
                                     </div>
@@ -370,7 +370,7 @@
                     is_admin: $("#is_admin").val(),
                     money: $("#money").val(),
                     user_type: $("#user_type").val(),
-                    type: $("#type").val(),
+                    product_id: $("#product").val(),
                     plan: $("#plan").val(),
                     ref_by: $("#ref_by").val(),
                     expire_date: $("#expire_date").val(),

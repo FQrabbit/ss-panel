@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
+use App\Models\Shop;
 use App\Models\User;
 use App\Utils\Hash;
 use App\Utils\Tools;
@@ -19,7 +20,7 @@ class UserController extends AdminController
         $users = User::where('id', ">", 0);
         foreach ($q as $k => $v) {
             if ($v != "" && $k != 'page') {
-                if (in_array($k, ['email','user_name'])) {
+                if (in_array($k, ['email', 'user_name'])) {
                     $users = $users->where($k, 'like', "%$v%");
                 } else {
                     $users = $users->where($k, $v);
@@ -27,10 +28,12 @@ class UserController extends AdminController
                 $path .= $k . '=' . $v . '&';
             }
         }
+        // 去掉$path最后的‘&’
         $path  = substr($path, 0, strlen($path) - 1);
         $users = $users->paginate(15, ['*'], 'page', $q['page']);
         $users->setPath($path);
-        return $this->view()->assign('users', $users)->assign('q', $q)->display('admin/user/index.tpl');
+        $products = Shop::all();
+        return $this->view()->assign('users', $users)->assign('products', $products)->assign('q', $q)->display('admin/user/index.tpl');
     }
 
     public function edit($request, $response, $args)
@@ -45,7 +48,8 @@ class UserController extends AdminController
         if ($user == null) {
             return "空";
         }
-        return $this->view()->assign('user', $user)->display('admin/user/edit.tpl');
+        $products = Shop::all();
+        return $this->view()->assign('user', $user)->assign('products', $products)->display('admin/user/edit.tpl');
     }
 
     /**
@@ -79,7 +83,7 @@ class UserController extends AdminController
         $user->is_admin       = $request->getParam('is_admin');
         $user->money          = $request->getParam('money');
         $user->user_type      = $request->getParam('user_type');
-        $user->type           = $request->getParam('type');
+        $user->product_id     = $request->getParam('product_id');
         $user->plan           = $request->getParam('plan');
         $user->ref_by         = $request->getParam('ref_by');
         $user->expire_date    = $request->getParam('expire_date');

@@ -21,7 +21,7 @@
 
                     <p id="msg-success-p"></p>
                 </div>
-                <div id="msg-error" class="alert alert-warning alert-dismissable" style="display: none;">
+                <div id="msg-error" class="alert alert-danger alert-dismissable" style="display: none;">
                     <button type="button" class="close" id="error-close" aria-hidden="true">&times;</button>
                     <h4><i class="icon fa fa-warning"></i> 出错了!</h4>
 

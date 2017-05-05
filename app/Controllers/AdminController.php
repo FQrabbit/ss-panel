@@ -198,7 +198,7 @@ class AdminController extends UserController
             $rs['msg'] = '请输入用户id或port。';
             return $response->getBody()->write(json_encode($rs));
         }
-        if ($q['body'] == '') {
+        if ($q['product_id'] == '') {
             $rs['ret'] = 0;
             $rs['msg'] = '请选择套餐。';
             return $response->getBody()->write(json_encode($rs));
@@ -224,7 +224,7 @@ class AdminController extends UserController
             $q['buy_date'] = Tools::toDateTime(time());
         }
 
-        $product_id = $q['body'];
+        $product_id = $q['product_id'];
         $pay        = new PaymentController();
         $rs         = $pay->doPay($q['uid'], $product_id, time() . $q['uid'], 0);
         return $response->getBody()->write(json_encode($rs));

@@ -170,7 +170,7 @@ class User extends Model
     public function updateBuyDate($buy_date)
     {
         if (!$buy_date) {
-            $buy_date = Tools::toDateTime();
+            $buy_date = Tools::toDateTime(time());
         }
         $this->buy_date = $buy_date;
         $this->save();
@@ -309,11 +309,11 @@ class User extends Model
         return $expiretime < time();
     }
 
-    public function updateExpireDate($product_name)
+    public function updateExpireDate($product_id)
     {
         $expiredate  = $this->get_expire_date();
         $expiretime  = strtotime($expiredate);
-        $product     = Shop::where('name', $product_name)->first();
+        $product     = Shop::find($product_id);
         $plus_period = $product->plus_period;
         if ($this->isExpire()) {
             $expiretime = strtotime($plus_period, time());
@@ -351,5 +351,14 @@ class User extends Model
         } else {
             return 0;
         }
+    }
+
+    public function getProduct()
+    {
+        $product_id = $this->attributes['product_id'];
+        if ($product_id) {
+            return Shop::find($product_id);
+        }
+        return null;
     }
 }

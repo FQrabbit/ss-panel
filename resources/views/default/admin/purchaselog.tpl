@@ -26,7 +26,7 @@
                     <p id="msg-success-p">
                     </p>
                 </div>
-                <div class="alert alert-warning alert-dismissable" id="msg-error" style="display: none;">
+                <div class="alert alert-danger alert-dismissable" id="msg-error" style="display: none;">
                     <button aria-hidden="true" class="close" id="error-close" type="button">
                         ×
                     </button>
@@ -77,7 +77,7 @@
                 <input class="form-control" id="port" placeholder="用户端口" type="number"/>
             </div>
             <div class="form-group">
-                <select class="form-control" id="body">
+                <select class="form-control" id="product_id">
                     <option value="">
                         套餐
                     </option>
@@ -227,7 +227,7 @@
             data: {
                 uid: $("#uid").val(),
                 port: $("#port").val(),
-                body: $("#body").val()
+                product_id: $("#product_id").val()
             },
             success: function (data) {
                 if (data.ret) {

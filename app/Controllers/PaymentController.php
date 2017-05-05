@@ -182,28 +182,26 @@ class PaymentController extends BaseController
         // 购买之前的用户状态
         $pre['plan']                  = $user->plan;
         $pre['type']                  = $user->type;
+        $pre['product_id']            = $user->product_id;
         $pre['transfer_eanble_in_GB'] = round($user->enableTrafficInGB(), 3);
         $pre['used_traffic_in_GB']    = round($user->usedTrafficInGB(), 3);
         $pre['buy_date']              = $user->buy_date;
         $pre['expire_date']           = $user->expire_date;
 
-        // 更新用户信息
-        $user->plan      = 'B';
-        $user->type      = $product->name;
-        $user->buy_date  = Tools::toDateTime(time());
-        $user->user_type = $product->price;
-
+        /**
+         * 处理流量和过期日期
+         */
         $transfer_to_add = $product->transfer;
         if ($product->isByTime()) {
             // 时间套餐
-            $user->updateEnableTransfer($transfer_to_add);
-            $user->updateExpireDate($product->name);
+            $user->addTraffic($transfer_to_add);
+            $user->updateExpireDate($product->id);
         } elseif ($product->isByMete()) {
             // 流量套餐
             if ($user->isExpire()) {
                 $user->addTraffic($transfer_to_add);
             } else {
-                if ($pre['type'] == '试玩') {
+                if ($user->product_id && $user->getProduct()->name == '试玩') {
                     $user->addTraffic($transfer_to_add);
                 } else {
                     $user->updateEnableTransfer($pre['used_traffic_in_GB'] + $transfer_to_add);
@@ -213,13 +211,21 @@ class PaymentController extends BaseController
         } else {
             //试用套餐
             $user->addTraffic($transfer_to_add);
-            $user->updateExpireDate($product->name);
+            $user->updateExpireDate($product->id);
         }
 
+        // 更新用户信息
+        $user->plan       = 'B';
+        $user->product_id = $product->id;
+        $user->type       = $product->name;
+        $user->buy_date   = Tools::toDateTime(time());
+        $user->user_type  = $product->price;
+        $user->save();
+        
         try {
             $arr1 = [
-                'user_name' => $user->user_name,
-                'type'      => $user->type,
+                'user'    => $user,
+                'product' => $product
             ];
             Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
 
@@ -254,8 +260,13 @@ class PaymentController extends BaseController
             return '输入的金额小于等于0！';
         }
         if ($q['product_id'] != 0) {
-            if ($q['total'] != Shop::find($q['product_id'])->price) {
-                return '商品价格不符';
+            $product = Shop::find($q['product_id']);
+            if ($product) {
+                if ($q['total'] != $product->price) {
+                    return '商品价格不符';
+                }
+            } else {
+                return '商品不存在';
             }
         }
         $total   = $q['total'];
