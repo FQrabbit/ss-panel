@@ -125,44 +125,44 @@ class AdminController extends UserController
         $monthlyFee = PurchaseLog::where('buy_date', '>', date('Y-m'))->sum('fee');
         $dailyFee   = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->sum('fee');
 
-        $income['all']        = PurchaseLog::sum('price');
-        $income['yearly']     = $yearlyIncome;
-        $income['monthly']    = $monthlyIncome;
-        $income['daily']      = $dailyIncome;
-        
+        $income['all']     = PurchaseLog::sum('price');
+        $income['yearly']  = $yearlyIncome;
+        $income['monthly'] = $monthlyIncome;
+        $income['daily']   = $dailyIncome;
+
         $income['yearlyFee']  = $yearlyFee;
         $income['monthlyFee'] = $monthlyFee;
         $income['dailyFee']   = $dailyFee;
 
-        $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m').'-01 -6 months'));
-        $someMonth = $half_year_ago_date;
+        $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m') . '-01 -6 months'));
+        $someMonth          = $half_year_ago_date;
         while ($someMonth <= date('Y-m-d')) {
-            $nextMonth = date('Y-m-d', strtotime($someMonth.' +1 month'));
-            $monthIncome = PurchaseLog::whereBetween('buy_date', [$someMonth,$nextMonth])->sum('price');
+            $nextMonth                            = date('Y-m-d', strtotime($someMonth . ' +1 month'));
+            $monthIncome                          = PurchaseLog::whereBetween('buy_date', [$someMonth, $nextMonth])->sum('price');
             $monthly_income_for_chart['labels'][] = date('Y-m', strtotime($someMonth));
-            $monthly_income_for_chart['datas'][] = $monthIncome;
-            $someMonth = $nextMonth;
+            $monthly_income_for_chart['datas'][]  = $monthIncome;
+            $someMonth                            = $nextMonth;
         }
         $monthly_income_for_chart = json_encode($monthly_income_for_chart);
 
         /**
          * 一周收入 chart
          */
-        $someDay = date('Y-m-d', strtotime("-6 days"));
+        $someDay               = date('Y-m-d', strtotime("-6 days"));
         $last_week_income_logs = PurchaseLog::where('buy_date', '>', $someDay)->get();
-        while ( $someDay<= date('Y-m-d')) {
+        while ($someDay <= date('Y-m-d')) {
             $weekly_income[date('m-d', strtotime($someDay))] = 0;
-            $someDay = date('Y-m-d', strtotime($someDay.' +1 day'));
+            $someDay                                         = date('Y-m-d', strtotime($someDay . ' +1 day'));
         }
         foreach ($last_week_income_logs as $log) {
             $weekly_income[date('m-d', strtotime($log->buy_date))] += $log->price;
         }
         foreach ($weekly_income as $k => $v) {
             $weekly_income_for_chart['labels'][] = $k;
-            $weekly_income_for_chart['datas'][] = $v;
+            $weekly_income_for_chart['datas'][]  = $v;
         }
         $weekly_income_for_chart['total'] = array_sum($weekly_income_for_chart['datas']);
-        $weekly_income_for_chart = json_encode($weekly_income_for_chart);
+        $weekly_income_for_chart          = json_encode($weekly_income_for_chart);
 
         /**
          * 当日收入 chart
@@ -180,7 +180,7 @@ class AdminController extends UserController
             $eachHour_income_for_chart['datas'][]  = $v;
         }
         $eachHour_income_for_chart['total'] = array_sum($eachHour_income_for_chart['datas']);
-        $eachHour_income_for_chart = json_encode($eachHour_income_for_chart);
+        $eachHour_income_for_chart          = json_encode($eachHour_income_for_chart);
 
         $path = substr($path, 0, strlen($path) - 1);
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
@@ -465,8 +465,8 @@ class AdminController extends UserController
             }
         }
 
-        // for ($i = 0; $i <= 24; $i++) {
-        for ($i = 0; $i <= (int) date('H'); $i++) {
+        for ($i = 0; $i <= 24; $i++) {
+            // for ($i = 0; $i <= (int) date('H'); $i++) {
             $eachHour_traffic[date('H a', strtotime("$i:00:00"))] = 0;
         }
         $nodes = Node::select(['id'])->get();
@@ -482,7 +482,7 @@ class AdminController extends UserController
          * 取产生流量最多的7个节点
          */
         // $nodes_traffic = array_slice($nodes_traffic, 0, 10, true);
-        
+
         foreach ($logs_for_eachHour_traffic_chart as $log) {
             $eachHour_traffic[date('H a', $log->log_time)] += ($log->d + $log->u);
         }
@@ -505,7 +505,21 @@ class AdminController extends UserController
         $nodes_traffic_for_chart             = json_encode($nodes_traffic_for_chart);
         $eachHour_traffic_for_chart          = json_encode($eachHour_traffic_for_chart);
 
-        return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('users_traffic_for_chart', $users_traffic_for_chart)->assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->assign('eachHour_traffic_for_chart', $eachHour_traffic_for_chart)->display('admin/trafficlog.tpl');
+        /**
+         * 用户本月流量使用降序排名 chart 4
+         */
+        $users = User::orderBy('d', 'DESC')->take(100)->get();
+        foreach ($users as $user) {
+            $users_traffic_thisMonth[$user->id] = round(Tools::flowToGB($user->d + $user->u), 2);
+        }
+        arsort($users_traffic_thisMonth);
+        foreach ($users_traffic_thisMonth as $uid => $traffic) {
+            $users_traffic_thisMonth_for_chart['labels'][] = $uid;
+            $users_traffic_thisMonth_for_chart['datas'][]  = $traffic;
+        }
+        $users_traffic_thisMonth_for_chart = json_encode($users_traffic_thisMonth_for_chart);
+
+        return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('users_traffic_for_chart', $users_traffic_for_chart)->assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->assign('eachHour_traffic_for_chart', $eachHour_traffic_for_chart)->assign('users_traffic_thisMonth_for_chart', $users_traffic_thisMonth_for_chart)->display('admin/trafficlog.tpl');
     }
 
     public function config($request, $response, $args)

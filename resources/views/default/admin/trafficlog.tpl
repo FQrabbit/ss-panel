@@ -41,6 +41,9 @@
         <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
             <canvas id="eachHour_traffic" height="400"></canvas>
         </div>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas id="users_traffic_thisMonth" height="400"></canvas>
+        </div>
         <!-- chart -->
 
         <div class="row">
@@ -89,7 +92,7 @@ var users_traffic = new Chart(ctx, {
         labels: {$users_traffic_for_chart}.labels,
         datasets: [
             {
-                label: "#(GB) Users Traffic",
+                label: "#(GB) Users Traffic Today",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$users_traffic_for_chart}.datas,
             }
@@ -161,7 +164,7 @@ var nodes_traffic = new Chart(ctx, {
         labels: {$nodes_traffic_for_chart}.labels,
         datasets: [
             {
-                label: "#(GB) Nodes Traffic",
+                label: "#(GB) Nodes Traffic Today",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$nodes_traffic_for_chart}.datas,
             }
@@ -275,6 +278,67 @@ var eachHour_traffic = new Chart(ctx, {
                 scaleLabel: {
                     display: true,
                     labelString: 'Time (Hour)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    autoSkip: true,
+                    autoSkipPadding: 2
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (GB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+var ctx = $("#users_traffic_thisMonth");
+var users_traffic_thisMonth = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$users_traffic_thisMonth_for_chart}.labels,
+        datasets: [
+            {
+                label: "#(GB) User Traffic This Month",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$users_traffic_thisMonth_for_chart}.datas,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'User',
                     fontColor: "#bbb"
                 },
                 ticks: {
