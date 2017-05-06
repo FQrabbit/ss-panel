@@ -25,6 +25,9 @@
 {if $requireChartjs}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 {/if}
+{if $requireWYSI}
+<script type="text/javascript" src="/assets/public/js/bootstrap3-wysihtml5.all.js"></script>
+{/if}
 <div style="display:none;">
     {$analyticsCode}
 </div>

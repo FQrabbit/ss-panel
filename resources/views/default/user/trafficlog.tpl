@@ -34,6 +34,10 @@
             <canvas height="400" id="chart2">
             </canvas>
         </div>
+        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
+            <canvas height="400" id="userWeeklyTraffic">
+            </canvas>
+        </div>
         <!-- chart -->
         <div class="row">
             <div class="col-xs-12">
@@ -237,6 +241,80 @@ var chart2 = new Chart(ctx, {
                 scaleLabel: {
                     display: true,
                     labelString: 'Traffic (MB)',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb",
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+var ctx = $("#userWeeklyTraffic");
+var userWeeklyTraffic = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {$users_weekly_traffic_for_chart}.labels,
+        datasets: [
+            {
+                label: "#(GB) Traffic in a week",
+                backgroundColor: "rgba(75,192,192,0.4)",
+                data: {$users_weekly_traffic_for_chart}.datas,
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            labels: {
+                fontColor: "#bbb"
+            }
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                // Use the footer callback to display the sum of the items showing in the tooltip
+                footer: function(tooltipItems, data) {
+                    var sum = 0;
+                    data.datasets[0].data.forEach(function(v) {
+                        sum += v;
+                    });
+                    if (sum>1024) {
+                        return 'Sum: ' + Math.round(sum/1024*100)/100 + " GB";
+                    }else{
+                        return 'Sum: ' + Math.round(sum) + " GB";
+                    }
+                },
+            },
+            footerFontStyle: 'bold'
+        },
+        hover: {
+            mode: 'index',
+            intersect: false
+        },
+        animation: {
+            duration: 2000
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Node Name',
+                    fontColor: "#bbb"
+                },
+                ticks: {
+                    fontColor: "#bbb"
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Traffic (GB)',
                     fontColor: "#bbb"
                 },
                 ticks: {

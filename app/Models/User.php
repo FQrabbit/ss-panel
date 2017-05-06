@@ -10,6 +10,7 @@ use App\Models\AnnLog;
 use App\Models\CheckInLog;
 use App\Models\Shop;
 use App\Models\Vote;
+use App\Models\TrafficLog;
 use App\Services\Config;
 use App\Utils\Hash;
 use App\Utils\Tools;
@@ -360,5 +361,12 @@ class User extends Model
             return Shop::find($product_id);
         }
         return null;
+    }
+
+    public function trafficToday()
+    {
+        $uid = $this->attributes['id'];
+        $traffic = TrafficLog::where('user_id', $uid)->sum('d') + TrafficLog::where('user_id', $uid)->sum('u');
+        return $traffic;
     }
 }

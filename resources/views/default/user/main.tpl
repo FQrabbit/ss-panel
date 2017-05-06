@@ -117,6 +117,12 @@
                 </li>
 
                 <li>
+                    <a href="/user/announcement">
+                        <i class="fa fa-list-alt"></i> <span>全部公告</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="/user/trafficlog">
                         <i class="fa fa-history"></i> <span>流量记录</span>
                     </a>

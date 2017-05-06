@@ -126,6 +126,10 @@
 
 {include file='admin/footer.tpl'}
 
+<script type="text/javascript">
+    $('textarea').wysihtml5();
+</script>
+
 <script>
     $(document).ready(function () {
         $("#update").click(function () {

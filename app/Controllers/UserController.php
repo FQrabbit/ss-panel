@@ -13,6 +13,7 @@ use App\Models\PurchaseLog;
 use App\Models\Shop;
 use App\Models\TrafficLog;
 use App\Models\User;
+use App\Models\UserDailyTrafficLog;
 use App\Models\Vote;
 use App\Services\Auth;
 use App\Services\Auth\EmailVerify;
@@ -43,12 +44,14 @@ class UserController extends BaseController
         $pagesThatRequireChartjs         = ['/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
         $pagesThatRequireJQueryConfirm   = ['/admin/user', '/admin/node', '/admin/purchaselog', '/admin/donatelog'];
+        $pagesThatRequireWYSI            = ['/admin/config', '/admin/email'];
 
         $requireChartjs         = in_array($uri, $pagesThatRequireChartjs);
         $requireJQueryDatatable = in_array($uri, $pagesThatRequireJQueryDatatable);
         $requireJQueryConfirm   = in_array($uri, $pagesThatRequireJQueryConfirm);
+        $requireWYSI            = in_array($uri, $pagesThatRequireWYSI);
 
-        return parent::view()->assign('userFooter', $userFooter)->assign('requireChartjs', $requireChartjs)->assign('requireJQueryDatatable', $requireJQueryDatatable)->assign('requireJQueryConfirm', $requireJQueryConfirm);
+        return parent::view()->assign('userFooter', $userFooter)->assign('requireChartjs', $requireChartjs)->assign('requireJQueryDatatable', $requireJQueryDatatable)->assign('requireJQueryConfirm', $requireJQueryConfirm)->assign('requireWYSI', $requireWYSI);
     }
 
     public function index($request, $response, $args)
@@ -64,6 +67,17 @@ class UserController extends BaseController
         $mid = $music->mid;
         $music->save();
         return $this->view()->assign('msg', $msg)->assign('new_ann', $new_ann)->assign('title', $title)->assign('mid', $mid)->display('user/index.tpl');
+    }
+
+    public function announcement($request, $response, $args)
+    {
+        $pageNum = 1;
+        if (isset($request->getQueryParams()["page"])) {
+            $pageNum = $request->getQueryParams()["page"];
+        }
+        $anns = Ann::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
+        $anns->setPath('/user/announcement');
+        return $this->view()->assign('anns', $anns)->display('user/announcement.tpl');
     }
 
     public function readAnn($request, $response, $args)
@@ -616,7 +630,15 @@ class UserController extends BaseController
         $array_for_chart = UserController::getTrafficInfoArrayForChart($this->user->id);
         $array_for_chart = json_encode($array_for_chart);
 
-        return $this->view()->assign('logs', $traffic)->assign('array_for_chart', $array_for_chart)->display('user/trafficlog.tpl');
+        $users_weekly_traffic_logs = UserDailyTrafficLog::where('uid', $this->user->id)->where('date', '>=', date('Y-m-d', strtotime('-6 days')))->get();
+        foreach ($users_weekly_traffic_logs as $log) {
+            $users_weekly_traffic_for_chart['labels'][] = $log->date;
+            $users_weekly_traffic_for_chart['datas'][]  = round(Tools::flowToGB($log->traffic), 3);
+        }
+        $users_weekly_traffic_for_chart['labels'][] = date('Y-m-d');
+        $users_weekly_traffic_for_chart['datas'][]  = round(Tools::flowToGB($this->user->trafficToday()), 3);
+        $users_weekly_traffic_for_chart             = json_encode($users_weekly_traffic_for_chart);
+        return $this->view()->assign('logs', $traffic)->assign('array_for_chart', $array_for_chart)->assign('users_weekly_traffic_for_chart', $users_weekly_traffic_for_chart)->display('user/trafficlog.tpl');
     }
 
     public function purchaseLog($request, $response, $args)

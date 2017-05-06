@@ -16,11 +16,14 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     <!-- <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/> -->
     {if $requireJQueryConfirm}
     <link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
     {/if}
+    {if $requireWYSI}
+    <link rel="stylesheet" type="text/css" href="/assets/public/css/bootstrap3-wysihtml5.min.css">
+    {/if}
+    <link href="/assets/public/css/main.min.css" rel="stylesheet" type="text/css"/>
     <style>
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
         padding: 5px;
