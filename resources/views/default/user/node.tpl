@@ -42,6 +42,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
+                                {$nodes->render()}
                                     <table class="table table-hover table-striped node-list">
                                         <thead>
                                             <tr>
@@ -160,6 +161,7 @@
                                     {/foreach}
                                         </tbody>
                                     </table>
+                                {$nodes->render()}
                                 </div>
                             </div>
                         </div>

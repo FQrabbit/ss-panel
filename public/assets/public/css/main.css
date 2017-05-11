@@ -330,6 +330,10 @@ table>tbody>tr, td, table>tbody>tr, th, table>tfoot>tr, td, table>tfoot>tr, th, 
     vertical-align: middle !important;
 }
 
+#t-name {
+    min-width: 57px;
+}
+
 #t-method {
     min-width: 110px;
 }
@@ -725,6 +729,12 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 }
 
 @media (max-width: 767px) {
+    .main-sidebar, .left-side {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
     .sidebar-open .main-header {
         -webkit-transform: translate(230px, 0);
         -ms-transform: translate(230px, 0);

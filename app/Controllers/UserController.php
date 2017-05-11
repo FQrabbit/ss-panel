@@ -99,19 +99,26 @@ class UserController extends BaseController
 
     public function node($request, $response, $args)
     {
-        $msg             = DbConfig::get('user-node');
-        $user            = Auth::getUser();
-        $android_add     = "";
-        $android_n_add   = "";
-        $android_add_new = "";
-        $ssqrs           = array();
-        $ssqrs_new       = array();
-        $allnodes        = Node::where('type', '>=', 0)->orderBy('sort')->get();
-        $free_nodes      = Node::where('type', 0)->orderBy('sort')->get();
+        $pageNum = 1;
+        if (isset($request->getQueryParams()["page"])) {
+            $pageNum = $request->getQueryParams()["page"];
+        }
+
+        $msg              = DbConfig::get('user-node');
+        $user             = Auth::getUser();
+        $android_add      = "";
+        $android_n_add    = "";
+        $android_add_new  = "";
+        $ssqrs            = array();
+        $ssqrs_new        = array();
+        $all_nodes        = Node::all();
+        $all_nodes_toShow = Node::orderBy('sort')->paginate(15, ['*'], 'page', $pageNum);
+        $all_nodes_toShow->setPath('/user/node');
+        $free_nodes = Node::where('type', 0)->orderBy('sort')->get();
         if ($user->isFreeUser()) {
             $nodes_available = $free_nodes;
         } else {
-            $nodes_available = $allnodes;
+            $nodes_available = $all_nodes;
         }
         foreach ($nodes_available as $node) {
             $ary['server']      = $node->server;
@@ -136,7 +143,7 @@ class UserController extends BaseController
         }
 
         return $this->view()->
-            assign('nodes', $allnodes)->
+            assign('nodes', $all_nodes_toShow)->
             assign('msg', $msg)->
             assign('android_add', $android_add)->
             assign('android_n_add', $android_n_add)->
@@ -158,7 +165,7 @@ class UserController extends BaseController
         arsort($nodes_traffic);
         foreach ($nodes_traffic as $k => $v) {
             $nodes_traffic_for_chart['labels'][] = Node::find($k)->name;
-            $nodes_traffic_for_chart['data'][]  = round(Tools::flowToGB($v), 2);
+            $nodes_traffic_for_chart['data'][]   = round(Tools::flowToGB($v), 2);
         }
         $nodes_traffic_for_chart['total'] = round(array_sum($nodes_traffic_for_chart['data']), 2);
         return $this->echoJson($response, $nodes_traffic_for_chart);
