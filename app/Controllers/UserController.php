@@ -141,7 +141,8 @@ class UserController extends BaseController
             assign('android_add', $android_add)->
             assign('android_n_add', $android_n_add)->
             assign('android_add_new', $android_add_new)->
-            assign('nodes_available', $nodes_available)->display('user/node.tpl');
+            assign('nodes_available', $nodes_available)->
+            display('user/node.tpl');
     }
 
     public function getNodesTraffic($request, $response, $args)

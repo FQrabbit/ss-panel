@@ -184,6 +184,14 @@ class Job
 
     public static function updateNodeUsage()
     {
+        $nodes = Node::all();
+        foreach ($nodes as $node) {
+            $usage = $node->getTrafficUsage();
+            echo $node->name . ":\t" . $usage . "\n";
+            $node->node_usage = $usage;
+            $node->save();
+        }
+        echo "from api:\n"
         // bandwagon-us1,us3
         $Bnodes = Node::where('vps', 'bandwagon')->get();
         foreach ($Bnodes as $node) {

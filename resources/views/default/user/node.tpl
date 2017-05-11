@@ -130,7 +130,7 @@
                                                         <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->getTrafficUsage()}" class="progress-bar progress-bar-{if $node->getTrafficUsage() < 40}success{elseif $node->getTrafficUsage() < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->getTrafficUsage()}%">
                                                             {$node->getTrafficUsage()}%
                                                             <span class="sr-only">
-                                                                {$node->getTrafficUsage()}% Complete
+                                                                {$node->node_usage}% Complete
                                                             </span>
                                                         </div>
                                                     </div>

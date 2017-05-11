@@ -172,9 +172,6 @@ class Node extends Model
         if ($transfer==0) {
             return 0;
         }
-        if ($this->attributes['node_usage']) {
-            return $this->attributes['node_usage'];
-        }
         $last_reset_date = $this->lastResetDate();
         $logs = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $last_reset_date)->get();
         $traffic = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');

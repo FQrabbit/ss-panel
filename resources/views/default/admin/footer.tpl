@@ -23,7 +23,7 @@
 <!-- AdminLTE App -->
 <script src="/assets/public/js/app.min.js" type="text/javascript"></script>
 {if $requireChartjs}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="/assets/public/js/Chart.min.js"></script>
 {/if}
 {if $requireWYSI}
 <script type="text/javascript" src="/assets/public/js/bootstrap3-wysihtml5.all.js"></script>
