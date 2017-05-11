@@ -741,7 +741,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         -o-transform: translate(230px, 0);
         transform: translate(230px, 0);
     }
-    #btn3 {
+    .download-config-btn {
         display: none;
     }
 }
@@ -753,7 +753,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     .main-sidebar, .left-side {
         position: fixed !important;
     }
-    #btn1, #btn2 {
+    .input-btn {
         display: none;
     }
     .main-sidebar, .left-side {

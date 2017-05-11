@@ -2,8 +2,8 @@
 
 namespace App\Utils;
 
-use App\Models\User;
 use App\Models\Shop;
+use App\Models\User;
 use App\Services\Config;
 use DateTime;
 use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
@@ -82,7 +82,7 @@ class Tools
     {
         // 密码字符集，可任意添加你需要的字符
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $char = '';
+        $char  = '';
         for ($i = 0; $i < $length; $i++) {
             $char .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
@@ -97,19 +97,18 @@ class Tools
         return self::genRandomChar(64);
     }
 
-
     /**
      * Unix time to Date Time
      * @param $timestamp
      * @return mixed
      */
-        public static function toDateTime($timestamp)
-        {
-            if (empty($timestamp)) {
-                $timestamp = time();
-            }
-            return date('Y-m-d H:i:s', $timestamp);
+    public static function toDateTime($timestamp)
+    {
+        if (empty($timestamp)) {
+            $timestamp = time();
         }
+        return date('Y-m-d H:i:s', $timestamp);
+    }
 
     /**
      * @param $seconds
@@ -126,24 +125,24 @@ class Tools
      * @param $html
      * @return mixed
      */
-    static function checkHtml($html)
+    public static function checkHtml($html)
     {
         $html = stripslashes($html);
         preg_match_all("/<([^<]+)>/is", $html, $ms);
-        $searchs[] = '<';
+        $searchs[]  = '<';
         $replaces[] = '<';
-        $searchs[] = '>';
+        $searchs[]  = '>';
         $replaces[] = '>';
         if ($ms[1]) {
             $allowtags = 'img|a|font|div|table|tbody|caption|tr|td|th|br
-						|p|b|strong|i|u|em|span|ol|ul|li|blockquote
-						|object|param|embed';//允许的标签
+                        |p|b|strong|i|u|em|span|ol|ul|li|blockquote
+                        |object|param|embed'; //允许的标签
             $ms[1] = array_unique($ms[1]);
             foreach ($ms[1] as $value) {
                 $searchs[] = "<" . $value . ">";
-                $value = shtmlspecialchars($value);
-                $value = str_replace(array('/', '/*'), array('.', '/.'), $value);
-                $skipkeys = array(
+                $value     = shtmlspecialchars($value);
+                $value     = str_replace(array('/', '/*'), array('.', '/.'), $value);
+                $skipkeys  = array(
                     'onabort', 'onactivate', 'onafterprint', 'onafterupdate',
                     'onbeforeactivate', 'onbeforecopy', 'onbeforecut',
                     'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste',
@@ -169,10 +168,10 @@ class Tools
                     'onselectionchange', 'onselectstart', 'onstart',
                     'onstop', 'onsubmit', 'onunload', 'javascript',
                     'script', 'eval', 'behaviour', 'expression',
-                    'style', 'class'
+                    'style', 'class',
                 );
                 $skipstr = implode('|', $skipkeys);
-                $value = preg_replace(array("/($skipstr)/i"), '.', $value);
+                $value   = preg_replace(array("/($skipstr)/i"), '.', $value);
                 if (!preg_match("/^[/|s]?($allowtags)(s+|$)/is", $value)) {
                     $value = '';
                 }
@@ -251,33 +250,32 @@ class Tools
         }
         return $fromport;
     }
-    
+
     public static function getAvPort()
     {
-        $retry=10;
-        $i=0;
-        while($i<$retry)
-        {
-            $port=(int)rand(10002,30000);
+        $retry = 10;
+        $i     = 0;
+        while ($i < $retry) {
+            $port = (int) rand(10002, 30000);
             $user = User::where('port', $port)->first();
             if ($user == null) {
-                return $port; 
-            }
-            else
-            {
+                return $port;
+            } else {
                 $i++;
             }
-            
+
         }
-        
-        return (int)Rand(0,65535);
-    }
-    
-    public static function base64_url_encode($input) {
-        return strtr(base64_encode($input), '+/', '-_');
+
+        return (int) Rand(0, 65535);
     }
 
-    public static function base64_url_decode($input) {
+    public static function base64_url_encode($input)
+    {
+        return strtr(base64_encode($input), ['+/' => '-_', '==' => '']);
+    }
+
+    public static function base64_url_decode($input)
+    {
         return base64_decode(strtr($input, '-_', '+/'));
     }
 

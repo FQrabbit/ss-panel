@@ -140,12 +140,12 @@ class Node extends Model
     public function getSSUrl($arr)
     {
         $ssurl = $arr['method'] . ":" . $arr['password'] . "@" . $arr['server'] . ":" . $arr['server_port'];
-        return "ss://" . base64_encode($ssurl);
+        return "ss://" . Tools::base64_url_encode($ssurl);
     }
     
     public function getNewSSUrl($arr)
     {
-        $ssurl = base64_encode($arr['method'] . ":" . $arr['password']) . "@" . $arr['server'] . ":" . $arr['server_port'];
+        $ssurl = Tools::base64_url_encode($arr['method'] . ":" . $arr['password']) . "@" . $arr['server'] . ":" . $arr['server_port'] . '#' . $this->attributes['name'];
         return "ss://" . $ssurl;
     }
     
