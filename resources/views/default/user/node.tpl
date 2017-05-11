@@ -240,22 +240,26 @@ $(".vote-btn").click(function(){
 
     $(this).toggleClass("vote-btn-clicked");
 })
+
 $(document).ready(function(){
-    var chartLabels,chartData,chartSum;
-    $.ajax({
-        type: "GET",
-        url: "/user/getnodestraffic",
-        dataType:"json",
-        success: function (data) {
-            chartLabels = data.labels;
-            chartData = data.data;
-            chartSum = data.total;
-            renderChart();
-        },
-        error: function (jqXHR) {
-            $("#msg-error").hide(10);
-            $("#msg-error").show(100);
-            $("#msg-error-p").html("发生错误：" + jqXHR.status);
+    var chartLabels,chartData,chartSum,rendered;
+    $(window).scroll(function(){
+        if (!rendered && $(window).scrollTop() > 500){
+            rendered = true;
+            $.ajax({
+                type: "GET",
+                url: "/user/getnodestraffic",
+                dataType:"json",
+                success: function (data) {
+                    chartLabels = data.labels;
+                    chartData = data.data;
+                    chartSum = data.total;
+                    renderChart();
+                },
+                error: function (jqXHR) {
+                    alert(jqXHR.status);
+                }
+            });
         }
     });
     function renderChart(){
