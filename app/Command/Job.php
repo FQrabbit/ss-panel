@@ -191,7 +191,7 @@ class Job
             $node->node_usage = $usage;
             $node->save();
         }
-        echo "from api:\n"
+        echo "from api:\n";
         // bandwagon-us1,us3
         $Bnodes = Node::where('vps', 'bandwagon')->get();
         foreach ($Bnodes as $node) {
