@@ -72,6 +72,7 @@ $app->group('/user', function () {
     $this->get('/qna', 'App\Controllers\UserController:qna');
     $this->get('/announcement', 'App\Controllers\UserController:announcement');
     // $this->get('/payreturn', 'App\Controllers\PayController:handlePay');
+    $this->get('/getnodestraffic', 'App\Controllers\UserController:getnodestraffic');
 })->add(new Auth());
 
 // Auth

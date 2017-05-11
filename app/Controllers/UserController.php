@@ -135,7 +135,19 @@ class UserController extends BaseController
             $android_add_new .= $ssqr_new . "|";
         }
 
-        foreach ($allnodes as $node) {
+        return $this->view()->
+            assign('nodes', $allnodes)->
+            assign('msg', $msg)->
+            assign('android_add', $android_add)->
+            assign('android_n_add', $android_n_add)->
+            assign('android_add_new', $android_add_new)->
+            assign('nodes_available', $nodes_available)->display('user/node.tpl');
+    }
+
+    public function getNodesTraffic($request, $response, $args)
+    {
+        $nodes = Node::all();
+        foreach ($nodes as $node) {
             $nodes_traffic[$node->id] = 0;
         }
         $logs_for_nodes_traffic_chart = TrafficLog::all();
@@ -145,11 +157,10 @@ class UserController extends BaseController
         arsort($nodes_traffic);
         foreach ($nodes_traffic as $k => $v) {
             $nodes_traffic_for_chart['labels'][] = Node::find($k)->name;
-            $nodes_traffic_for_chart['datas'][]  = round(Tools::flowToGB($v), 2);
+            $nodes_traffic_for_chart['data'][]  = round(Tools::flowToGB($v), 2);
         }
-        $nodes_traffic_for_chart['total'] = round(array_sum($nodes_traffic_for_chart['datas']), 2);
-        $nodes_traffic_for_chart          = json_encode($nodes_traffic_for_chart);
-        return $this->view()->assign('nodes', $allnodes)->assign('msg', $msg)->assign('android_add', $android_add)->assign('android_n_add', $android_n_add)->assign('android_add_new', $android_add_new)->assign('nodes_available', $nodes_available)->assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->display('user/node.tpl');
+        $nodes_traffic_for_chart['total'] = round(array_sum($nodes_traffic_for_chart['data']), 2);
+        return $this->echoJson($response, $nodes_traffic_for_chart);
     }
 
     public function nodeInfo($request, $response, $args)

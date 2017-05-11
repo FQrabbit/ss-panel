@@ -240,73 +240,94 @@ $(".vote-btn").click(function(){
 
     $(this).toggleClass("vote-btn-clicked");
 })
-
-var ctx = $("#nodes_traffic");
-var nodes_traffic = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: {$nodes_traffic_for_chart}.labels,
-        datasets: [
-            {
-                label: "#(GB) 今日流量使用情况",
-                backgroundColor: "rgba(75,192,192,0.4)",
-                data: {$nodes_traffic_for_chart}.datas,
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-            labels: {
-                fontColor: "#bbb"
-            }
+$(document).ready(function(){
+    var chartLabels,chartData,chartSum;
+    $.ajax({
+        type: "GET",
+        url: "/user/getnodestraffic",
+        dataType:"json",
+        success: function (data) {
+            chartLabels = data.labels;
+            chartData = data.data;
+            chartSum = data.total;
+            renderChart();
         },
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-            callbacks: {
-                // Use the footer callback to display the sum of the items showing in the tooltip
-                footer: function(tooltipItems, data) {
-                    return 'Sum: ' + {$nodes_traffic_for_chart}.total + " GB";
-                },
-            },
-            footerFontStyle: 'bold'
-        },
-        hover: {
-            mode: 'index',
-            intersect: false
-        },
-        animation: {
-            duration: 2000
-        },
-        scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: '节点',
-                    fontColor: "#bbb"
-                },
-                ticks: {
-                    fontColor: "#bbb",
-                    autoSkip: true,
-                    autoSkipPadding: 2
-                }
-            }],
-            yAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Traffic (GB)',
-                    fontColor: "#bbb"
-                },
-                ticks: {
-                    fontColor: "#bbb",
-                    beginAtZero: true
-                }
-            }]
+        error: function (jqXHR) {
+            $("#msg-error").hide(10);
+            $("#msg-error").show(100);
+            $("#msg-error-p").html("发生错误：" + jqXHR.status);
         }
+    });
+    function renderChart(){
+        var ctx = $("#nodes_traffic");
+        var nodesTraffic = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [
+                    {
+                        label: "#(GB) 今日流量使用情况",
+                        backgroundColor: "rgba(75,192,192,0.4)",
+                        data: chartData,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    labels: {
+                        fontColor: "#bbb"
+                    }
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        // Use the footer callback to display the sum of the items showing in the tooltip
+                        footer: function(tooltipItems, data) {
+                            return 'Sum: ' + chartSum + " GB";
+                        },
+                    },
+                    footerFontStyle: 'bold'
+                },
+                hover: {
+                    mode: 'index',
+                    intersect: false
+                },
+                animation: {
+                    duration: 2000
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '节点',
+                            fontColor: "#bbb"
+                        },
+                        ticks: {
+                            fontColor: "#bbb",
+                            autoSkip: true,
+                            autoSkipPadding: 2
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Traffic (GB)',
+                            fontColor: "#bbb"
+                        },
+                        ticks: {
+                            fontColor: "#bbb",
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     }
-});
+})
+
 </script>
