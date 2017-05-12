@@ -140,19 +140,19 @@ class Node extends Model
     public function getSSUrl($arr)
     {
         $ssurl = $arr['method'] . ":" . $arr['password'] . "@" . $arr['server'] . ":" . $arr['server_port'];
-        return "ss://" . Tools::base64_url_encode($ssurl);
+        return "ss://" . base64_encode($ssurl);
     }
     
     public function getNewSSUrl($arr)
     {
-        $ssurl = Tools::base64_url_encode($arr['method'] . ":" . $arr['password']) . "@" . $arr['server'] . ":" . $arr['server_port'] . '#' . $this->attributes['name'];
+        $ssurl = base64_encode($arr['method'] . ":" . $arr['password']) . "@" . $arr['server'] . ":" . $arr['server_port'] . '#' . $this->attributes['name'];
         return "ss://" . $ssurl;
     }
     
     public function getSSRUrl($arr)
     {
-        $ssurl = $arr['server'] . ":" . $arr['server_port'] . ":" . $arr['protocol'] . ":" . $arr['method'] . ":" . $arr['obfs'] . ":" . Tools::base64_url_encode($arr['password']) . "/?obfsparam=" . Tools::base64_url_encode($arr['obfs_param']) . "&remarks=" . Tools::base64_url_encode($this->attributes['name']) . "&group=" . Tools::base64_url_encode("shadowsky");
-        return "ssr://" . Tools::base64_url_encode($ssurl);
+        $ssurl = $arr['server'] . ":" . $arr['server_port'] . ":" . $arr['protocol'] . ":" . $arr['method'] . ":" . $arr['obfs'] . ":" . base64_encode($arr['password']) . "/?obfsparam=" . base64_encode($arr['obfs_param']) . "&remarks=" . base64_encode($this->attributes['name']) . "&group=" . base64_encode("shadowsky");
+        return "ssr://" . base64_encode($ssurl);
     }
 
     public function isFreeNode()

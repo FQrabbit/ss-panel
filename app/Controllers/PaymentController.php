@@ -106,6 +106,7 @@ class PaymentController extends BaseController
     {
         $log               = new PurchaseLog();
         $log->uid          = $array['uid'];
+        $log->product_id   = $array['product_id'];
         $log->body         = $array['body'];
         $log->price        = $array['price'];
         $log->buy_date     = Tools::toDateTime(time());
@@ -172,6 +173,7 @@ class PaymentController extends BaseController
         // 添加购买记录
         $purchase_log_arr = array(
             'uid'          => $uid,
+            'product_id'   => $product_id,
             'body'         => $product->name,
             'price'        => $product->price,
             'out_trade_no' => $alino,
@@ -221,11 +223,11 @@ class PaymentController extends BaseController
         $user->buy_date   = Tools::toDateTime(time());
         $user->user_type  = $product->price;
         $user->save();
-        
+
         try {
             $arr1 = [
                 'user'    => $user,
-                'product' => $product
+                'product' => $product,
             ];
             Mail::send($user->email, 'Shadowsky', 'news/purchase-report.tpl', $arr1, []);
 
