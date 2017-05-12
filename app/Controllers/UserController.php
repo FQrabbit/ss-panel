@@ -189,7 +189,7 @@ class UserController extends BaseController
         $json      = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
 
-        $ssqr     = $node->getSSUrl($ary); //原版
+        $ssqr     = $node->getNewSSUrl($ary); //原版
         $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
 
         $surge_base  = Config::get('baseUrl') . "/downloads/ProxyBase.conf";

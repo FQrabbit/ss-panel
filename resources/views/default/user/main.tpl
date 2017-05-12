@@ -118,7 +118,7 @@
 
                 <li>
                     <a href="/user/announcement">
-                        <i class="fa fa-list-alt"></i> <span>全部公告</span>
+                        <i class="fa fa-list-alt"></i> <span>历史公告</span>
                     </a>
                 </li>
 

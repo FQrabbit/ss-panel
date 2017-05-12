@@ -134,7 +134,7 @@ class AdminController extends UserController
         $income['monthlyFee'] = $monthlyFee;
         $income['dailyFee']   = $dailyFee;
 
-        $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m') . '-01 -6 months'));
+        $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m') . '-01 -12 months'));
         $someMonth          = $half_year_ago_date;
         while ($someMonth <= date('Y-m-d')) {
             $nextMonth                            = date('Y-m-d', strtotime($someMonth . ' +1 month'));
@@ -148,7 +148,7 @@ class AdminController extends UserController
         /**
          * 一周收入 chart
          */
-        $someDay               = date('Y-m-d', strtotime("-6 days"));
+        $someDay               = date('Y-m-d', strtotime("-30 days"));
         $last_week_income_logs = PurchaseLog::where('buy_date', '>', $someDay)->get();
         while ($someDay <= date('Y-m-d')) {
             $weekly_income[date('m-d', strtotime($someDay))] = 0;

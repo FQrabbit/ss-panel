@@ -113,11 +113,11 @@
             </canvas>
         </div>
         <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="300" id="weeklyIncomeChart">
+            <canvas height="350" id="weeklyIncomeChart">
             </canvas>
         </div>
         <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="300" id="monthlyIncomeChart">
+            <canvas height="400" id="monthlyIncomeChart">
             </canvas>
         </div>
         <!-- chart -->
@@ -308,7 +308,7 @@
             labels: {$eachHour_income_for_chart}.labels,
             datasets: [
             {
-                label: "日收入（元）",
+                label: "时收入（元）",
                 fill: false,
                 borderColor: "rgba(75,192,192,0.4)",
                 backgroundColor: "rgba(75,192,192,0.4)",
@@ -351,7 +351,7 @@
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Time (Each Hour)',
+                        labelString: 'Time (Hour)',
                         fontColor: "#bbb"
                     },
                     ticks: {
@@ -380,7 +380,7 @@
             labels: {$weekly_income_for_chart}.labels,
             datasets: [
             {
-                label: "周收入（元）",
+                label: "日收入（元）",
                 fill: false,
                 borderColor: "rgba(75,192,192,0.4)",
                 backgroundColor: "rgba(75,192,192,0.4)",
@@ -423,7 +423,7 @@
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Date (Each Day)',
+                        labelString: 'Date (Day)',
                         fontColor: "#bbb"
                     },
                     ticks: {
