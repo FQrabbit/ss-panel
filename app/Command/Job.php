@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Controllers\AdminController;
+use App\Models\Ann;
+use App\Models\AnnLog;
 use App\Models\CheckInLog;
 use App\Models\DelUser;
 use App\Models\EmailVerify;
@@ -266,17 +268,20 @@ class Job
         EmailVerify::truncate();
         echo "clear EmailVerifyLog\n";
 
-        NodeInfoLog::where('log_time', '<', (time() - 120))->delete();
+        NodeInfoLog::where('log_time', '<', strtotime('-2 minutes'))->delete();
         echo "clear NodeInfoLog\n";
 
-        CheckInLog::where('checkin_at', '<', (time() - 30 * 12 * 3600))->delete();
+        CheckInLog::where('checkin_at', '<', strtotime('-1 month'))->delete();
         echo "clear CheckinLog\n";
 
         PasswordReset::truncate();
         echo "clear PasswordResetLog\n";
 
-        NodeOnlineLog::where('log_time', '<', (time() - 120))->delete();
+        NodeOnlineLog::where('log_time', '<', strtotime('-2 minutes'))->delete();
         echo "clear NodeOnlineLog\n\n";
+
+        AnnLog::where('ann_id', '<', Ann::orderBy('id', 'desc')->first()->id)->delete();
+        echo "clear AnnLog\n\n";
     }
 
 }
