@@ -158,6 +158,12 @@ body {
 
 .panel {
     background-color: rgba(0, 0, 0, 0.22) !important;
+    border: none;
+}
+
+.panel>.panel-heading {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
