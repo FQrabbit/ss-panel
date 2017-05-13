@@ -268,7 +268,7 @@ class Job
         EmailVerify::truncate();
         echo "clear EmailVerifyLog\n";
 
-        NodeInfoLog::where('log_time', '<', strtotime('-2 minutes'))->delete();
+        NodeInfoLog::truncate();
         echo "clear NodeInfoLog\n";
 
         CheckInLog::where('checkin_at', '<', strtotime('-1 month'))->delete();
@@ -277,7 +277,7 @@ class Job
         PasswordReset::truncate();
         echo "clear PasswordResetLog\n";
 
-        NodeOnlineLog::where('log_time', '<', strtotime('-2 minutes'))->delete();
+        NodeOnlineLog::truncate();
         echo "clear NodeOnlineLog\n\n";
 
         AnnLog::where('ann_id', '<', Ann::orderBy('id', 'desc')->first()->id)->delete();
