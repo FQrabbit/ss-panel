@@ -36,131 +36,127 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                {$nodes->render()}
-                                    <table class="table table-hover table-striped node-list">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Vote
-                                                </th>
-                                                <th id="t-name">
-                                                    节点名
-                                                </th>
-                                                <th id="t-status">
-                                                    状态
-                                                </th>
-                                                <th id="t-online">
-                                                    在线
-                                                </th>
-                                                <th id="t-percent">
-                                                    流量使用情况
-                                                </th>
-                                                <th id="t-traffic">
-                                                    本日产生流量
-                                                </th>
-                                                <th>
-                                                    平均每日还可使用
-                                                </th>
-                                                <th id="t-traffic-reset-day">
-                                                    流量重置日
-                                                </th>
-                                                <th id="t-info">
-                                                    说明
-                                                </th>
-                                                <th id="t-uptime">
-                                                    负载
-                                                </th>
-                                                <th id="t-ip">
-                                                    ip地址
-                                                </th>
-                                                <th id="t-ip">
-                                                    ipv6地址
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                    {foreach $nodes as $node}
-                                            <tr>
-                                                <td>
-                                                    <button class="fa fa-thumbs-up vote-btn like-btn{if $user->getPollOfNode($node->id) == 1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
-                                                        <span>
-                                                            {$node->getPollCount(1)}
-                                                        </span>
-                                                    </button>
-                                                    <br>
-                                                    <button class="fa fa-thumbs-down vote-btn dislike-btn{if $user->getPollOfNode($node->id) == -1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
-                                                        <span>
-                                                            {$node->getPollCount(-1)}
-                                                        </span>
-                                                    </button>
-                                                </td>
-                                                <td{if $user->isFreeUser() and $node->isPaidNode()}{else} class="node-name" onclick="urlChange('{$node->id}')"{/if}>
-                                                    {$node->name}
-                                                </td>
-                                            {if is_numeric($node->getOnlineUserCount())}
-                                                <td>
-                                                    <span class="label" style="background-color:#00a65a">
-                                                        {$node->status}
+                        <div class="table-responsive">
+                        {$nodes->render()}
+                            <table class="table table-hover table-striped node-list">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Vote
+                                        </th>
+                                        <th id="t-name">
+                                            节点名
+                                        </th>
+                                        <th id="t-status">
+                                            状态
+                                        </th>
+                                        <th id="t-online">
+                                            在线
+                                        </th>
+                                        <th id="t-percent">
+                                            流量使用情况
+                                        </th>
+                                        <th id="t-traffic">
+                                            本日产生流量
+                                        </th>
+                                        <th>
+                                            平均每日还可使用
+                                        </th>
+                                        <th id="t-traffic-reset-day">
+                                            流量重置日
+                                        </th>
+                                        <th id="t-info">
+                                            说明
+                                        </th>
+                                        <th id="t-uptime">
+                                            负载
+                                        </th>
+                                        <th id="t-ip">
+                                            ip地址
+                                        </th>
+                                        <th id="t-ip">
+                                            ipv6地址
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            {foreach $nodes as $node}
+                                    <tr>
+                                        <td>
+                                            <button class="fa fa-thumbs-up vote-btn like-btn{if $user->getPollOfNode($node->id) == 1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
+                                                <span>
+                                                    {$node->getPollCount(1)}
+                                                </span>
+                                            </button>
+                                            <br>
+                                            <button class="fa fa-thumbs-down vote-btn dislike-btn{if $user->getPollOfNode($node->id) == -1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
+                                                <span>
+                                                    {$node->getPollCount(-1)}
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td{if $user->isFreeUser() and $node->isPaidNode()}{else} class="node-name" onclick="urlChange('{$node->id}')"{/if}>
+                                            {$node->name}
+                                        </td>
+                                    {if is_numeric($node->getOnlineUserCount())}
+                                        <td>
+                                            <span class="label" style="background-color:#00a65a">
+                                                {$node->status}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-dark-teal">
+                                                {$node->getOnlineUserCount()}
+                                            </span>
+                                        </td>
+                                    {else}
+                                        <td>
+                                            <span class="label" style="background-color:#444">
+                                                维护中
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background-color:#444">
+                                                {$node->getOnlineUserCount()}
+                                            </span>
+                                        </td>
+                                    {/if}
+                                        <td>
+                                            <div class="progress">
+                                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->node_usage}" class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->node_usage}%">
+                                                    {$node->node_usage}%
+                                                    <span class="sr-only">
+                                                        {$node->node_usage}% Complete
                                                     </span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-dark-teal">
-                                                        {$node->getOnlineUserCount()}
-                                                    </span>
-                                                </td>
-                                            {else}
-                                                <td>
-                                                    <span class="label" style="background-color:#444">
-                                                        维护中
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge" style="background-color:#444">
-                                                        {$node->getOnlineUserCount()}
-                                                    </span>
-                                                </td>
-                                            {/if}
-                                                <td>
-                                                    <div class="progress">
-                                                        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{$node->node_usage}" class="progress-bar progress-bar-{if $node->node_usage < 40}success{elseif $node->node_usage < 60}warning{else}danger{/if} progress-bar-striped" role="progressbar" style="width:{$node->node_usage}%">
-                                                            {$node->node_usage}%
-                                                            <span class="sr-only">
-                                                                {$node->node_usage}% Complete
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {$node->getTrafficFromLogs()}
-                                                </td>
-                                                <td>
-                                                    {$node->averageTrafficAvailableEveryDay()}
-                                                </td>
-                                                <td>
-                                                    {$node->transfer_reset_day}
-                                                </td>
-                                                <td class="info">
-                                                    {$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}
-                                                </td>
-                                                <td>
-                                                    {$node->getNodeUptime()}
-                                                </td>
-                                                <td>
-                                                    {if $user->isFreeUser() and $node->isPaidNode()}Meow{else}{$node->ip}{/if}
-                                                </td>
-                                                <td>
-                                                    {if $user->isFreeUser() and $node->isPaidNode()}Meow{else}{$node->ipv6}{/if}
-                                                </td>
-                                            </tr>
-                                    {/foreach}
-                                        </tbody>
-                                    </table>
-                                {$nodes->render()}
-                                </div>
-                            </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {$node->getTrafficFromLogs()}
+                                        </td>
+                                        <td>
+                                            {$node->averageTrafficAvailableEveryDay()}
+                                        </td>
+                                        <td>
+                                            {$node->transfer_reset_day}
+                                        </td>
+                                        <td class="info">
+                                            {$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}
+                                        </td>
+                                        <td>
+                                            {$node->getNodeUptime()}
+                                        </td>
+                                        <td>
+                                            {if $user->isFreeUser() and $node->isPaidNode()}Meow{else}{$node->ip}{/if}
+                                        </td>
+                                        <td>
+                                            {if $user->isFreeUser() and $node->isPaidNode()}Meow{else}{$node->ipv6}{/if}
+                                        </td>
+                                    </tr>
+                            {/foreach}
+                                </tbody>
+                            </table>
+                        {$nodes->render()}
                         </div>
                     </div>
                 </div>

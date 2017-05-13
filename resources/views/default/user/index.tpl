@@ -166,7 +166,7 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<div id="donateModal" class="w3-modal" style="z-index:999999">
+<div id="donateModal" class="w3-modal" style="z-index:999999;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container w3-teal">
             <span onclick=$("#donateModal").hide() class="w3-btn w3-large w3-display-topright">×</span>
@@ -197,7 +197,7 @@
     </div>
 </div>
 
-<div id="activate-modal" class="w3-modal" style="z-index:999999">
+<div id="activate-modal" class="w3-modal" style="z-index:999999;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container w3-teal">
             <span onclick=$("#activate-modal").hide() class="w3-btn w3-large w3-display-topright">×</span>
@@ -212,7 +212,7 @@
         </div>
     </div>
 </div>
-<div id="new-ann-modal" class="w3-modal" style="z-index:999999">
+<div id="new-ann-modal" class="w3-modal" style="z-index:999999;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container w3-teal">
             <span onclick=$("#new-ann-modal").hide() class="w3-btn w3-large w3-display-topright">×</span>

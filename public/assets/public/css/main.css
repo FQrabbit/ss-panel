@@ -83,12 +83,16 @@ body {
 .treeview-menu>li>a {
     padding-left: 30px !important;
 }
-.nav>li>a:focus {
-    background: none;
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .nav>li>a:focus, .nav>li>a:hover{
+    background-color: transparent;
 }
+
 .main-header .logo {
     background-color: rgba(0, 0, 0, 0) !important;
     font-family: 'Pacifico', 'Microsoft Yahei';
+    width: 230px;
+    margin: 0 auto;
 }
 
 .sidebar-toggle:hover {
@@ -163,7 +167,7 @@ body {
 
 .panel>.panel-heading {
     border: none;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {

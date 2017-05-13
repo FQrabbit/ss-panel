@@ -11,7 +11,7 @@
 </div><!-- ./wrapper -->
 
 <div class="bb-wrapper">
-    <ul class="bg-bubbles">
+    <ul class="bg-bubbles" style="list-style: none">
         <li></li>
         <li></li>
         <li></li>

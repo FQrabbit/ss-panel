@@ -383,6 +383,7 @@ class AdminController extends UserController
 
     public static function mergeUsersTrafficLogs($logs)
     {
+        $users_traffic = [];
         foreach ($logs as $log) {
             if (isset($users_traffic[$log->user_id])) {
                 $users_traffic[$log->user_id] += ($log->d + $log->u);
