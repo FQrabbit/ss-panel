@@ -223,7 +223,7 @@
             <p>{$new_ann->content}</p>
         </div>
         <footer class="w3-container w3-teal w3-padding">
-            <button id="read" class="pull-right w3-btn w3-teal w3-border" onclick="read({$new_ann->id})">已读</button>
+            <button id="read" class="pull-right w3-btn w3-teal w3-border" onclick="read({$new_ann->id})">知道了</button>
         </footer>
     </div>
 </div>
