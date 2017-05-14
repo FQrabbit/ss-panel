@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>{$config["appName"]}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- Bootstrap -->
-    <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
     <link href="/assets/public/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap -->
+    <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
     <link href="/assets/public/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/assets/public/css/w3.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     {if $requireJQueryDatatable}
     <!-- DataTables CSS -->
@@ -86,7 +86,7 @@
                 <div class="pull-left info">
                     <p>{$user->user_name}</p>
 
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <small href="#"><i class="fa fa-circle text-success"></i> Online</small>
                 </div>
             </div>
 
