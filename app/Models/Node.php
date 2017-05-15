@@ -17,6 +17,7 @@ class Node extends Model
     public static function getAllMethod()
     {
         return [
+            'none',
             'aes-128-cfb',
             'aes-192-cfb',
             'aes-256-cfb',
@@ -56,7 +57,8 @@ class Node extends Model
             'auth_sha1_v4',
             'auth_sha1_v4_compatible',
             'auth_aes128_md5',
-            'auth_aes128_sha1'
+            'auth_aes128_sha1',
+            'auth_chain_a'
         ];
     }
 

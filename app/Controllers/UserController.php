@@ -392,7 +392,9 @@ class UserController extends BaseController
 
         $protocol = $request->getParam('protocol');
         $protocol = strtolower($protocol);
-
+        if ($protocol == 'auth_chain_a') {
+            $method = 'none';
+        }
         $obfs = $request->getParam('obfs');
         $obfs = strtolower($obfs);
 
