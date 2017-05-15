@@ -92,7 +92,11 @@ body {
 }
 
 .main-sidebar, .main-header, .content-wrapper, .main-footer {
-    transition: transform .5s;
+    -webkit-transition: all .5s;
+       -moz-transition: all .5s;
+        -ms-transition: all .5s;
+         -o-transition: all .5s;
+            transition: all .5s;
 }
 
 .skin-blue .sidebar-menu>li a:hover, .skin-blue .sidebar-menu>li.active>a {
