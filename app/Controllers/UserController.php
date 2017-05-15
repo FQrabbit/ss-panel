@@ -130,8 +130,8 @@ class UserController extends BaseController
             $ary['obfs_param'] = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
             $ary['protocol']   = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
 
-            $ssqr = $node->getSSUrl($ary); //最新原版SS
-            $android_add .= $ssqr . ' ';
+            $ssqr = $node->getSSUrl($ary); //旧版SS
+            $android_add .= $ssqr . '|';
 
             $ssnqr = $node->getNewSSUrl($ary); //最新原版SS
             $android_n_add .= $ssnqr . ' ';
@@ -193,6 +193,7 @@ class UserController extends BaseController
         $json      = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
 
+        $ssqr_old     = $node->getSSUrl($ary); //原版（旧）
         $ssqr     = $node->getNewSSUrl($ary); //原版
         $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
 
@@ -200,7 +201,7 @@ class UserController extends BaseController
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
-        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('ssqr_new', $ssqr_new)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
+        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr_old', $ssqr_old)->assign('ssqr', $ssqr)->assign('ssqr_new', $ssqr_new)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
     }
 
     public function getconf($request, $response, $args)

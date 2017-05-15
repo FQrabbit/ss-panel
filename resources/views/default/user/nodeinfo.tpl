@@ -47,6 +47,19 @@ html{
                     <div class="box-header">
                         <i class="fa fa-code"></i>
 
+                        <h3 class="box-title">旧版ss配置地址</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <input id="ss-qr-text" class="form-control" value="{$ssqr_old}">
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-code"></i>
+
                         <h3 class="box-title">ss配置地址</h3>
                     </div>
                     <!-- /.box-header -->
@@ -70,13 +83,31 @@ html{
                 </div>
                 <!-- /.box -->
             </div>
-            <!-- /.col (right) -->
-            <div class="col-md-6">
+            
+            <div class="col-md-4">
                 <div class="box box-solid">
                     <div class="box-header">
                         <i class="fa fa-qrcode"></i>
 
-                        <h3 class="box-title">原版SS配置二维码(手机端点击二维码导入此节点)</h3>
+                        <h3 class="box-title">旧版SS配置二维码(手机端点击二维码导入此节点)</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="text-center">
+                            <a href="{$ssqr_old}"><div id="ss-qr-o" class="qr-background"></div></a>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+            <div class="col-md-4">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <i class="fa fa-qrcode"></i>
+
+                        <h3 class="box-title">SS配置二维码(手机端点击二维码导入此节点)</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -88,9 +119,8 @@ html{
                 </div>
                 <!-- /.box -->
             </div>
-            <!-- /.col (right) -->
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="box box-solid">
                     <div class="box-header">
                         <i class="fa fa-qrcode"></i>
@@ -107,7 +137,6 @@ html{
                 </div>
                 <!-- /.box -->
             </div>
-            <!-- /.col (right) -->
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -165,6 +194,11 @@ html{
 </div><!-- /.content-wrapper -->
 <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
 <script>
+    var text_qrcode0 = '{$ssqr_old}';
+    jQuery('#ss-qr-o').qrcode({
+        "text": text_qrcode1
+    });
+
     var text_qrcode1 = '{$ssqr}';
     jQuery('#ss-qr-y').qrcode({
         "text": text_qrcode1
