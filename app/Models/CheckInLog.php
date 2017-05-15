@@ -25,4 +25,9 @@ class CheckInLog extends Model
     {
         return Tools::toDateTime($this->attributes['checkin_at']);
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

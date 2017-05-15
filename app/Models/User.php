@@ -40,6 +40,26 @@ class User extends Model
      */
     protected $hidden = ['pass', 'last_get_gift_time', 'last_rest_pass_time', 'reg_ip', 'is_email_verify', 'user_name', 'ref_by', 'is_admin'];
 
+    public function trafficLogs()
+    {
+        return $this->hasMany('App\Models\TrafficLog');
+    }
+
+    public function checkinLogs()
+    {
+        return $this->hasMany('App\Models\CheckInLog');
+    }
+
+    public function donateLogs()
+    {
+        return $this->hasMany('App\Models\DonateLog', 'uid');
+    }
+
+    public function purchaseLogs()
+    {
+        return $this->hasMany('App\Models\PurchaseLog', 'uid');
+    }
+
     public function getGravatarAttribute()
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));

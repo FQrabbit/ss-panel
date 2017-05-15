@@ -84,10 +84,10 @@
                             </tr>
                             {foreach $logs as $log}
                                 <tr>
-                                    <td><a href="/admin/user/{$log->user()->id}/edit">#{$log->id}</a></td>
-                                    <td><a href="/admin/donatelog?uid={$log->user()->id}">{$log->uid}</a></td>
-                                    <td>{$log->user()->user_name}</td>
-                                    <td>{$log->user()->port}</td>
+                                    <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息"><a href="/admin/user/{$log->user->id}/edit">#{$log->id}</a></td>
+                                    <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户捐助记录"><a href="/admin/donatelog?uid={$log->user->id}">{$log->uid}</a></td>
+                                    <td>{$log->user->user_name}</td>
+                                    <td>{$log->user->port}</td>
                                     <td>{$log->money}</td>
                                     <td>{$log->fee}</td>
                                     <td>{$log->datetime}</td>

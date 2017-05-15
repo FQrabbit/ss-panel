@@ -71,7 +71,7 @@
                                     #{$log->id}
                                 </td>
                                 <td>
-                                    {$log->node()->name}
+                                    {$log->node->name}
                                 </td>
                                 <td>
                                     {$log->rate}

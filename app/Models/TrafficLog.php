@@ -11,7 +11,12 @@ class TrafficLog extends Model
 
     public function node()
     {
-        return Node::find($this->attributes['node_id']);
+        return $this->belongsTo('APP\Models\Node');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('APP\Models\User');
     }
 
     public function totalUsed()

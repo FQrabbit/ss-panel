@@ -63,9 +63,9 @@
                             </tr>
                             {foreach $logs as $log}
                                 <tr>
-                                    <td><a href="https://www.shadowsky.website/admin/user/{$log->user_id}/edit">#{$log->id}</a></td>
-                                    <td><a href="/admin/trafficlog?user_id={$log->user_id}">{$log->user_id}</a></td>
-                                    <td><a href="/admin/trafficlog?node_id={$log->node_id}">{$log->node()->name}</a></td>
+                                    <td><a href="https://www.shadowsky.website/admin/user/{$log->user_id}/edit" data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息">#{$log->id}</a></td>
+                                    <td><a href="/admin/trafficlog?user_id={$log->user_id}" data-toggle="tooltip" data-placement="top" data-original-title="查看用户流量记录">{$log->user_id}</a></td>
+                                    <td><a href="/admin/trafficlog?node_id={$log->node_id}" data-toggle="tooltip" data-placement="top" data-original-title="查看节点流量记录">{$log->node->name}</a></td>
                                     <td>{$log->rate}</td>
                                     <td>{$log->totalUsed()}</td>
                                     <td>{$log->traffic}</td>

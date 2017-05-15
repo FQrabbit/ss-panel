@@ -20,4 +20,9 @@ class PurchaseLog extends Model
     {
         return self::where('uid', $this->uid)->count();
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'uid');
+    }
 }

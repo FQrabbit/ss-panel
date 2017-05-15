@@ -37,7 +37,7 @@
                             {foreach $logs as $log}
                                 <tr>
                                     <td>#{$log->id}</td>
-                                    <td>{$log->user_id}</td>
+                                    <td data-toggle="tooltip" data-placement="top" data-original-title="{$log->user->user_name}">{$log->user_id}</td>
                                     <td>{$log->traffic()}</td>
                                     <td>{$log->CheckInTime()}</td>
                                 </tr>

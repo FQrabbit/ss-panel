@@ -164,21 +164,21 @@
                             </tr>
                             {foreach $logs as $log}
                             <tr>
-                                <td>
-                                    <a href="/admin/user/{$log->user()->id}/edit">
+                                <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息">
+                                    <a href="/admin/user/{$log->user->id}/edit">
                                         #{$log->id}
                                     </a>
                                 </td>
-                                <td>
-                                    <a href="/admin/purchaselog?uid={$log->user()->id}">
+                                <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户购买记录">
+                                    <a href="/admin/purchaselog?uid={$log->user->id}">
                                         {$log->uid}
                                     </a>
                                 </td>
                                 <td>
-                                    {$log->user()->user_name}
+                                    {$log->user->user_name}
                                 </td>
                                 <td>
-                                    {$log->user()->port}
+                                    {$log->user->port}
                                 </td>
                                 <td>
                                     {$log->transactionCount()}
