@@ -117,7 +117,7 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="javascript:void(0)"><i class="fa fa-dashboard"></i> 管理中心 <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)"><i class="fa fa-dashboard"></i> 管理中心 <i class="fa fa-angle-left pull-right" aria-hidden="true"></i></a>
                     <ul class="nav treeview-menu">
                         <li>
                             <a href="/admin/node">
@@ -146,7 +146,7 @@
                 </li>
 
                 <li class="treeview active">
-                    <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i> 记录日志 <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)"><i class="fa fa-file-text" aria-hidden="true"></i> 记录日志 <i class="fa fa-angle-left pull-right" aria-hidden="true"></i></a>
                     <ul class="nav treeview-menu menu-open">
                         <li>
                             <a href="/admin/trafficlog">

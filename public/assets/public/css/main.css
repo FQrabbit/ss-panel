@@ -71,6 +71,10 @@ body {
     scrollbar-arrow-color: #C1C1D1;
 }
 
+i.fa {
+    transition: all .5s;
+}
+
 .bg-aqua, .callout.callout-info, .alert-info, .label-info, .modal-info .modal-body {
     background-color: rgba(0,0,0,0.4) !important;
 }
