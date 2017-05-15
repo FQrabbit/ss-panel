@@ -13,13 +13,16 @@
                         </h4>
                         {$msg}
                         <div class="w3-bar">
-                            <a class="input-btn w3-btn w3-teal w3-small w3-round margin-top" href="{$android_n_add}" id="inputBtn" onclick="event.preventDefault();alert('请长按此按钮，复制链接地址，然后在客户端从剪切板导入。')">
+                            <a class="input-btn w3-btn w3-teal w3-small w3-round margin" href="{$android_add}">
+                                手机旧版SS导入所有节点
+                            </a>
+                            <a class="input-btn w3-btn w3-teal w3-small w3-round margin" href="{$android_n_add}" onclick="event.preventDefault();alert('请长按此按钮，复制链接地址，然后在客户端从剪切板导入。')">
                                 手机SS导入所有节点
                             </a>
-                            <a class="input-btn w3-btn w3-teal w3-small w3-round margin-top" href="{$android_add_new}">
+                            <a class="input-btn w3-btn w3-teal w3-small w3-round margin" href="{$android_add_new}">
                                 手机SSR导入所有节点
                             </a>
-                            <a class="download-config-btn w3-btn w3-teal w3-small w3-round" href="./getconf">
+                            <a class="download-config-btn w3-btn w3-teal w3-small w3-round margin" href="./getconf">
                                 下载pc配置文件
                             </a>
                         </div>
@@ -184,10 +187,6 @@
 </div>
 {include file='user/footer.tpl'}
 <script>
-// $('#inputBtn').click(function(event) {
-//     event.preventDefault();
-//     alert('请长按此按钮，复制链接地址，然后在客户端从剪切板导入');
-// });
 
 $(".vote-btn").click(function(){
     var v = $(this).children().first().text();

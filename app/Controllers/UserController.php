@@ -130,6 +130,9 @@ class UserController extends BaseController
             $ary['obfs_param'] = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
             $ary['protocol']   = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
 
+            $ssqr = $node->getSSUrl($ary); //最新原版SS
+            $android_add .= $ssqr . ' ';
+
             $ssnqr = $node->getNewSSUrl($ary); //最新原版SS
             $android_n_add .= $ssnqr . ' ';
             // $android_n_add .= $ssnqr . "%0A";
@@ -142,6 +145,7 @@ class UserController extends BaseController
         return $this->view()->
             assign('nodes', $all_nodes_toShow)->
             assign('msg', $msg)->
+            assign('android_add', $android_add)->
             assign('android_n_add', $android_n_add)->
             assign('android_add_new', $android_add_new)->
             assign('nodes_available', $nodes_available)->
