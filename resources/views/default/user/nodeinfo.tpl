@@ -6,7 +6,10 @@
 {/if}
 <style>
 html{
-    margin-right: 0;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;
 }
 </style>
 <div class="content-wrapper" style="margin:0">
@@ -217,14 +220,4 @@ html{
     jQuery('#surge-proxy-qr').qrcode({
         "text": text_surge_proxy
     });
-</script>
-
-<script>
-    $(document).ready(function(){
-        $(".content-wrapper,.main-footer").css("margin-left", 0);
-
-        function hidemodal () {
-            $("#nodeinfo").modal("hide");
-        }
-    })
 </script>

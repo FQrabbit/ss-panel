@@ -15,7 +15,6 @@
 
 body,h1,h2,h3,h4,h5,h6,a,i,small,input,select,textarea,span,button,label,legend,.form-control,.btn-default {
     color: white;
-    font-family: "Microsoft Yahei";
 }
 
 code, kbd, pre, samp {
@@ -55,13 +54,7 @@ b {
 html {
     margin-right: -8px;
     padding-right: 8px;
-}
-
-body {
-    background: #50a3a2;
-    background: -webkit-linear-gradient(top left, rgb(6, 31, 28) 0%, #128453 100%);
-    background: linear-gradient(to bottom right, rgb(6, 31, 28) 0%, #128453 100%);
-    position: relative;
+    overflow-x: hidden;
     scrollbar-face-color: #000000;
     scrollbar-shadow-color: #2D2C4D;
     scrollbar-highlight-color: #7D7E94;
@@ -69,6 +62,17 @@ body {
     scrollbar-darkshadow-color: #2D2C4D;
     scrollbar-track-color: #7D7E94;
     scrollbar-arrow-color: #C1C1D1;
+}
+
+body {
+    font-family: "Microsoft YaHei","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",Arial,"sans-serif";
+    background: -webkit-linear-gradient(top left, rgb(6, 31, 28) 0%, #128453 100%);
+    background: linear-gradient(to bottom right, rgb(6, 31, 28) 0%, #128453 100%);
+    position: relative;
+}
+
+code, kbd, pre, samp {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 
 i.fa {
@@ -302,14 +306,6 @@ input.w3-btn.w3-xxlarge.w3-center.w3-teal {
 .main-footer {
     background: rgba(0, 0, 0, 0.15) !important;
     color: white;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Microsoft Yahei" !important;
-}
-
-code, kbd, pre, samp {
-    font-family: "Yahei Consolas Hybrid" !important;
 }
 
 .margin {
@@ -754,6 +750,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     background-color: #242525;
 }
 
+.modal-open::-webkit-scrollbar {
+    width: 0;
+}
+
 .sidebar-open .main-sidebar, .sidebar-open .left-side {
     webkit-transform: translate(230px, 0);
     -ms-transform: translate(230px, 0);
@@ -761,35 +761,22 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     transform: translate(230px, 0);
 }
 
-@media (max-width: 767px) {
-    .main-sidebar, .left-side {
-        -webkit-transform: translate(0, 0);
-        -ms-transform: translate(0, 0);
-        -o-transform: translate(0, 0);
-        transform: translate(0, 0);
-    }
-    .sidebar-open .main-header {
-        -webkit-transform: translate(230px, 0);
-        -ms-transform: translate(230px, 0);
-        -o-transform: translate(230px, 0);
-        transform: translate(230px, 0);
-    }
-    .download-config-btn {
-        display: none;
-    }
+.download-config-btn {
+    display: none;
 }
 
 @media (min-width: 767px) {
     .dl-horizontal dt {
         width: 165px !important;
     }
-    .main-sidebar, .left-side {
-        position: fixed !important;
-    }
-    .input-btn {
+    .import-btn {
         display: none;
     }
+    .download-config-btn {
+        display: inline-block;
+    }
     .main-sidebar, .left-side {
+        position: fixed !important;
         webkit-transform: translate(230px, 0);
         -ms-transform: translate(230px, 0);
         -o-transform: translate(230px, 0);
