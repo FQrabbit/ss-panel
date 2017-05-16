@@ -134,11 +134,11 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td{if $node->trafficOverusage()} style="color:#a94442;"{/if}>
                                             {$node->getTrafficFromLogs()}
                                         </td>
                                         <td>
-                                            {$node->averageTrafficAvailableEveryDay()}
+                                            {$node->showAverageTrafficAvailableToday()}
                                         </td>
                                         <td>
                                             {$node->transfer_reset_day}

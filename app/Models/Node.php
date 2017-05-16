@@ -231,16 +231,35 @@ class Node extends Model
         return $total_transfer * ((100 - $this->getTrafficUsage())/100);
     }
 
+    public function avrTrafAvaTdInGB()
+    {
+        $traffic = round($this->transferLeft() / $this->daysUntilNextResetDate(), 2);
+        return $traffic;
+    }
+
     /**
      * 平均每日可用流量
      */
-    public function averageTrafficAvailableEveryDay()
+    public function showAverageTrafficAvailableToday()
     {
-        $traffic = round($this->transferLeft() / $this->daysUntilNextResetDate(), 2);
+        $traffic = $this->avrTrafAvaTdInGB();
         if ($traffic) {
             return $traffic.'GB';
         } else {
             return 'Unlimited';
         }
+    }
+
+    public function trafficOverusage()
+    {
+        if ($this->attributes['transfer']==0) {
+            return false;
+        }
+        if ($this->getTotalTraffic()>Tools::toGB($this->avrTrafAvaTdInGB())) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
