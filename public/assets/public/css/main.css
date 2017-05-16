@@ -754,7 +754,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     width: 0;
 }
 
-.sidebar-open .main-sidebar, .sidebar-open .left-side {
+.sidebar-open .main-sidebar, .sidebar-open .main-header, .sidebar-open .left-side {
     webkit-transform: translate(230px, 0);
     -ms-transform: translate(230px, 0);
     -o-transform: translate(230px, 0);
