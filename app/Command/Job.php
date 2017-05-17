@@ -61,9 +61,9 @@ class Job
     }
 
     /**
-     * 重置用户流量，每天8:00am执行
+     * 重置用户流量，每天 00:01 am 执行
      */
-    public static function restUserTraffic()
+    public static function resetUserTransfer()
     {
         /**
          * 查找本日流量需要重置的用户

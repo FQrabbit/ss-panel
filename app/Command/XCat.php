@@ -41,6 +41,8 @@ class XCat
                 return DailyMail::sendDbMail();
             case ("sendSiteMail"):
                 return DailyMail::sendSiteMail();
+            case ("resetUserTransfer"):
+                return Job::resetUserTransfer();
             case ("resetUserPlan"):
                 return Job::resetUserPlan();
             case ("updateNodeUsage"):
