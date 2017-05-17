@@ -22,6 +22,7 @@ use App\Services\DbConfig;
 use App\Utils\Check;
 use App\Utils\Hash;
 use App\Utils\Tools;
+use App\Command\Job;
 
 /**
  *  HomeController

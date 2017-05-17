@@ -71,7 +71,7 @@
                             <div class="box-header">
                                 <i class="fa fa-exchange"></i>
 
-                                <h3 class="box-title">本月流量使用情况</h3>
+                                <h3 class="box-title">流量使用情况</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -87,12 +87,16 @@
                                     </div>
                                 </div>
                                 <dl class="dl-horizontal">
-                                    <dt>(上月末剩余流量)总流量</dt>
+                                    <dt>总流量</dt>
                                     <dd>{$user->enableTraffic()}</dd>
                                     <dt>已用流量</dt>
                                     <dd>{$user->usedTraffic()}</dd>
                                     <dt>剩余流量</dt>
                                     <dd>{$user->unusedTraffic()}</dd>
+                                    {if $user->willResetTransfer()}
+                                    <dt>流量重置日</dt>
+                                    <dd>{$user->nextTransferResetDate()}</dd>
+                                    {/if}
                                 </dl>
                             </div>
                             <!-- /.box-body -->
@@ -120,7 +124,7 @@
                                     <dt>用户类型</dt>
                                     <dd>
                                         <span class="badge bg-green">
-                                            {$user->getUserClassName()} {if $user->product_id}| {$user->getProduct()->name}{/if}
+                                            {$user->getUserClassName()} {if $user->product_id}| {$user->product->name}{/if}
                                         </span>
                                         {if $user->isDonator()}
                                         <span class="badge bg-green">

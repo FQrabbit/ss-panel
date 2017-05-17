@@ -136,7 +136,7 @@
                                                     无
                                                 </option>
                                             {foreach $products as $product}
-                                                <option value='{$product->id}' {if $user->product_id && $user->getProduct()->name=={$product->name}}selected="selected"{/if}>
+                                                <option value='{$product->id}' {if $user->product_id && $user->product->name=={$product->name}}selected="selected"{/if}>
                                                     {$product->name}
                                                 </option>
                                             {/foreach}

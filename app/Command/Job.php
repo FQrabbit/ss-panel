@@ -13,6 +13,7 @@ use App\Models\NodeDailyTrafficLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\PasswordReset;
+use App\Models\Shop;
 use App\Models\TrafficLog;
 use App\Models\User;
 use App\Models\UserDailyTrafficLog;
@@ -34,7 +35,7 @@ class Job
 
                 //发送邮件
                 try {
-                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', ['user' => $user,], []);
+                    Mail::send($to, $subject, 'news/plan-reset-report.tpl', ['user' => $user], []);
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -48,13 +49,51 @@ class Job
                     $user->u               = 0;
                     $user->d               = 0;
                 }
-                $user->plan = 'A';
+                $user->plan       = 'A';
                 $user->product_id = 0;
-                $user->type = 1;
+                $user->type       = 1;
                 $user->save();
 
                 echo date('Y-m-d H:i:s') . "\n";
                 echo $user->user_name . '(id:' . $user->id . ')的会员已到期</br>';
+            }
+        }
+    }
+
+    /**
+     * 重置用户流量，每天8:00am执行
+     */
+    public static function restUserTraffic()
+    {
+        /**
+         * 查找本日流量需要重置的用户
+         */
+        $product_ids = Shop::where('type', 'A')->pluck('id')->toArray();
+        $users       = User::where('expire_date', '>=', date('Y-m-d', strtotime('+1 month')))->
+            where('buy_date', '<', date('Y-m-d'))->
+            whereIn('product_id', $product_ids)->
+            orderBy('expire_date', 'asc')->
+            get();
+
+        foreach ($users as $user) {
+            if ($user->isTransferResetDay()) {
+                /*$subject = Config::get('appName') . "-流量报告";
+                $to = $user->email;
+                try {
+                Mail::send($to, $subject, 'news/daily-traffic-report.tpl', [
+                "user" => $user
+                ], [
+                ]);
+                } catch (Exception $e) {
+                echo $e->getMessage();
+                }*/
+                $user->u               = 0;
+                $user->d               = 0;
+                $user->transfer_enable = Tools::toGB($user->product->transfer);
+                $user->save();
+                echo $user->expire_date . ' ';
+                echo $user->product->transfer . 'G ';
+                echo $user->id . '<br>';
             }
         }
     }

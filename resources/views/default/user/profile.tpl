@@ -32,7 +32,7 @@
                             <dt>用户类型</dt>
                             <dd>
                                 <span class="badge bg-green">
-                                    {$user->getUserClassName()} {if $user->product_id}| {$user->getProduct()->name}{/if}
+                                    {$user->getUserClassName()} {if $user->product_id}| {$user->product->name}{/if}
                                 </span>
                                 {if $user->isDonator()}
                                 <span class="badge bg-green">

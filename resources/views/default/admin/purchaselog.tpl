@@ -184,7 +184,7 @@
                                     {$log->transactionCount()}
                                 </td>
                                 <td>
-                                    {$log->body}
+                                    {$log->product->name}
                                 </td>
                                 <td>
                                     {$log->price}

@@ -25,4 +25,9 @@ class PurchaseLog extends Model
     {
         return $this->belongsTo('App\Models\User', 'uid');
     }
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Shop', 'id', 'product_id');
+    }
 }

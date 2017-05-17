@@ -110,6 +110,11 @@ class Tools
         return date('Y-m-d H:i:s', $timestamp);
     }
 
+    public static function formatToDate($date)
+    {
+        return date('Y-m-d', strtotime($date));
+    }
+
     /**
      * @param $seconds
      * @return mixed

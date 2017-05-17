@@ -60,6 +60,11 @@ class User extends Model
         return $this->hasMany('App\Models\PurchaseLog', 'uid');
     }
 
+    public function product()
+    {
+        return $this->hasOne('App\Models\Shop', 'id', 'product_id');
+    }
+
     public function getGravatarAttribute()
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
@@ -374,19 +379,33 @@ class User extends Model
         }
     }
 
-    public function getProduct()
-    {
-        $product_id = $this->attributes['product_id'];
-        if ($product_id) {
-            return Shop::find($product_id);
-        }
-        return null;
-    }
-
     public function trafficToday()
     {
         $uid = $this->attributes['id'];
         $traffic = TrafficLog::where('user_id', $uid)->sum('d') + TrafficLog::where('user_id', $uid)->sum('u');
         return $traffic;
+    }
+
+    public function isTransferResetDay()
+    {
+        $flag = false;
+        for ($i=Tools::formatToDate($this->expire_date); $i >= date('Y-m-d'); $i=Tools::formatToDate($i.' -1 month')) { 
+            if ($i == date('Y-m-d')) {
+                $flag = true;
+                break;
+            }
+        }
+        return $flag;
+    }
+
+    public function willResetTransfer()
+    {
+        return Tools::formatToDate($this->expire_date) > date('Y-m-d H:i:s', strtotime(' +1 month'));
+    }
+
+    public function nextTransferResetDate()
+    {
+        for ($i=Tools::formatToDate($this->expire_date); $i > date('Y-m-d'); $i=Tools::formatToDate($i.' -1 month'));
+        return Tools::formatToDate($i.' +1 month');
     }
 }

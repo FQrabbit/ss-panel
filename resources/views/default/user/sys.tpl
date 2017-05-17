@@ -43,7 +43,7 @@
                                             <tr>
                                                 <td>{$user->id}</td>
                                                 <td>{mb_substr($user->user_name, 0, 4, 'utf-8')}***</td>
-                                                <td>{$user->getProduct()->name}</td>
+                                                <td>{$user->product->name}</td>
                                             </tr>
                                         {/if}
                                     {/foreach}

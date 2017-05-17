@@ -261,7 +261,7 @@ class PaymentController extends BaseController
         if ($q['total'] <= '0') {
             return '输入的金额小于等于0！';
         }
-        if ($q['product_id'] != 0) {
+        if ($q['product_id'] > 0) {
             $product = Shop::find($q['product_id']);
             if ($product) {
                 if ($q['total'] != $product->price) {
@@ -270,6 +270,8 @@ class PaymentController extends BaseController
             } else {
                 return '商品不存在';
             }
+        } else {
+            return '商品id无效';
         }
         $total   = $q['total'];
         $uid     = $q['uid'];
