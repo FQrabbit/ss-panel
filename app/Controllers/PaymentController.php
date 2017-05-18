@@ -74,16 +74,16 @@ class PaymentController extends BaseController
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
                 $this->doDonate($uid, $price, $alino, $this->feeRate);
+                return '感谢您的捐助';
             }
         } else {
             if (PurchaseLog::hasTransaction($alino)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
                 $this->doPay($uid, $product_id, $alino, $this->feeRate);
+                return '购买成功';
             }
         }
-
-        return '购买成功';
     }
 
     /**
@@ -270,7 +270,8 @@ class PaymentController extends BaseController
             } else {
                 return '商品不存在';
             }
-        } else {
+        }
+        if ($q['product_id'] < 0) {
             return '商品id无效';
         }
         if ($q['product_id'] < 10) {
