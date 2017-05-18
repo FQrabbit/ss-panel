@@ -15,6 +15,7 @@ use App\Models\PurchaseLog;
 use App\Models\Shop;
 use App\Models\TrafficLog;
 use App\Models\User;
+use App\Models\UserDailyTrafficLog;
 use App\Models\Vote;
 use App\Services\Analytics;
 use App\Services\DbConfig;
@@ -509,14 +510,21 @@ class AdminController extends UserController
         /**
          * 用户本月流量使用降序排名 chart 4
          */
-        $users = User::orderBy('d', 'DESC')->take(100)->get();
-        foreach ($users as $user) {
-            $users_traffic_thisMonth[$user->id] = round(Tools::flowToGB($user->d + $user->u), 2);
+        $traffic_logs = UserDailyTrafficLog::where('date', '>=', date('Y-m').'-1')->get();
+        $users_traffic_thisMonth = [];
+        $users_traffic_thisMonth_for_chart = [];
+        foreach ($traffic_logs as $log) {
+            if (isset($users_traffic_thisMonth[$log->uid])) {
+                $users_traffic_thisMonth[$log->uid] += $log->traffic;
+            } else {
+                $users_traffic_thisMonth[$log->uid] = 0;
+            }
         }
         arsort($users_traffic_thisMonth);
+        $users_traffic_thisMonth = array_slice($users_traffic_thisMonth, 0, 50, true);
         foreach ($users_traffic_thisMonth as $uid => $traffic) {
             $users_traffic_thisMonth_for_chart['labels'][] = $uid;
-            $users_traffic_thisMonth_for_chart['datas'][]  = $traffic;
+            $users_traffic_thisMonth_for_chart['datas'][]  = round(Tools::flowToGB($traffic), 2);
         }
         $users_traffic_thisMonth_for_chart = json_encode($users_traffic_thisMonth_for_chart);
 
