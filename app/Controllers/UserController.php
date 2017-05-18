@@ -112,8 +112,8 @@ class UserController extends BaseController
         $android_add_new  = "";
         $ssqrs            = array();
         $ssqrs_new        = array();
-        $all_nodes        = Node::all();
-        $all_nodes_toShow = Node::orderBy('sort')->paginate(15, ['*'], 'page', $pageNum);
+        $all_nodes        = Node::where('type', '>=', '0')->get();
+        $all_nodes_toShow = Node::where('type', '>=', '0')->orderBy('sort')->paginate(15, ['*'], 'page', $pageNum);
         $all_nodes_toShow->setPath('/user/node');
         $free_nodes = Node::where('type', 0)->orderBy('sort')->get();
         if ($user->isFreeUser()) {
