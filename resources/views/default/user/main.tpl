@@ -92,80 +92,20 @@
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li>
-                    <a href="/user">
-                        <i class="fa fa-dashboard"></i> <span>用户中心</span>
+            {foreach $menuList as $item}
+                <li{if $uri == $item['uri']} class='active'{/if}>
+                    <a href="{$item['uri']}">
+                        <i class="fa fa-{$item['icon']}"></i> <span>{$item['name']}</span>
                     </a>
                 </li>
-
+            {/foreach}
+            {if $user->isAdmin()}
                 <li>
-                    <a href="/user/node">
-                        <i class="fa fa-sitemap"></i> <span>节点列表</span>
+                    <a href="/admin">
+                        <i class="fa fa-cog"></i> <span>管理面板</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="/user/profile">
-                        <i class="fa fa-user"></i> <span>我的信息</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/user/announcement">
-                        <i class="fa fa-list-alt"></i> <span>历史公告</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/user/trafficlog">
-                        <i class="fa fa-history"></i> <span>流量记录</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/user/purchaselog">
-                        <i class="fa fa-archive"></i> <span>购买记录</span>
-                    </a>
-                </li>
-
-
-                <!-- <li>
-                    <a href="/user/edit">
-                        <i class="fa  fa-pencil"></i> <span>修改资料</span>
-                    </a>
-                </li> -->
-
-                <!-- <li>
-                    <a href="/user/invite">
-                        <i class="fa fa-users"></i> <span>邀请好友</span>
-                    </a>
-                </li> -->
-
-                <li>
-                    <a href="/user/sys">
-                        <i class="fa fa-align-left"></i> <span>系统信息</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/user/qna">
-                        <i class="fa fa-question-circle"></i> <span>问题反馈</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/user/purchase">
-                        <i class="fa fa-shopping-cart"></i> <span>购买</span>
-                    </a>
-                </li>
-                {if $user->isAdmin()}
-                    <li>
-                        <a href="/admin">
-                            <i class="fa fa-cog"></i> <span>管理面板</span>
-                        </a>
-                    </li>
-                {/if}
-
+            {/if}
             </ul>
         </section>
         <!-- /.sidebar -->

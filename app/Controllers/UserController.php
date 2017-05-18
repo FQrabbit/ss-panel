@@ -22,7 +22,6 @@ use App\Services\DbConfig;
 use App\Utils\Check;
 use App\Utils\Hash;
 use App\Utils\Tools;
-use App\Command\Job;
 
 /**
  *  HomeController
@@ -40,7 +39,44 @@ class UserController extends BaseController
     public function view()
     {
         $userFooter = DbConfig::get('user-footer');
-        $uri        = strtok($_SERVER["REQUEST_URI"], '?');
+        $menuList   = [[
+                'name' => '用户中心',
+                'uri'  => '/user',
+                'icon' => 'dashboard',],
+                [
+                'name' => '节点列表',
+                'uri'  => '/user/node',
+                'icon' => 'sitemap',],
+                [
+                'name' => '我的信息',
+                'uri'  => '/user/profile',
+                'icon' => 'user',],
+                [
+                'name' => '历史公告',
+                'uri'  => '/user/announcement',
+                'icon' => 'list-alt',],
+                [
+                'name' => '流量记录',
+                'uri'  => '/user/trafficlog',
+                'icon' => 'history',],
+                [
+                'name' => '购买记录',
+                'uri'  => '/user/purchaselog',
+                'icon' => 'archive',],
+                [
+                'name' => '系统信息',
+                'uri'  => '/user/sys',
+                'icon' => 'align-left',],
+                [
+                'name' => '问题反馈',
+                'uri'  => '/user/qna',
+                'icon' => 'question-circle',],
+                [
+                'name' => '购买',
+                'uri'  => '/user/purchase',
+                'icon' => 'shopping-cart',]
+        ];
+        $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
         $pagesThatRequireChartjs         = ['/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
@@ -52,7 +88,7 @@ class UserController extends BaseController
         $requireJQueryConfirm   = in_array($uri, $pagesThatRequireJQueryConfirm);
         $requireWYSI            = in_array($uri, $pagesThatRequireWYSI);
 
-        return parent::view()->assign('userFooter', $userFooter)->assign('requireChartjs', $requireChartjs)->assign('requireJQueryDatatable', $requireJQueryDatatable)->assign('requireJQueryConfirm', $requireJQueryConfirm)->assign('requireWYSI', $requireWYSI);
+        return parent::view()->assign('menuList', $menuList)->assign('uri', $uri)->assign('userFooter', $userFooter)->assign('requireChartjs', $requireChartjs)->assign('requireJQueryDatatable', $requireJQueryDatatable)->assign('requireJQueryConfirm', $requireJQueryConfirm)->assign('requireWYSI', $requireWYSI);
     }
 
     public function index($request, $response, $args)
@@ -194,7 +230,7 @@ class UserController extends BaseController
         $json      = json_encode($ary);
         $json_show = json_encode($ary, JSON_PRETTY_PRINT);
 
-        $ssqr_old     = $node->getSSUrl($ary); //原版（旧）
+        $ssqr_old = $node->getSSUrl($ary); //原版（旧）
         $ssqr     = $node->getNewSSUrl($ary); //原版
         $ssqr_new = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
 
