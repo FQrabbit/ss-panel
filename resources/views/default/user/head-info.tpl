@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <title>{$config["appName"]}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link href="/assets/public/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap -->
     <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->

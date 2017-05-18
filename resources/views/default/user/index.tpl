@@ -181,7 +181,7 @@
                 <div class="w3-row">
                         <lable class="w3-label">请输入捐助金额：</label>
                         <input type="hidden" name="uid" value="{$user->id}">
-                        <input type="hidden" name="product_id" value="0">
+                        <input type="hidden" name="product_id" value="00">
                         <input class="w3-input" name="total" type="number" value=2 style="width:20%;display:inline">
                         <button class="w3-btn w3-teal" type="submit">确认</button>
                 </div>
@@ -191,7 +191,7 @@
                 <div class="w3-quarter">
                     <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
                         <input type="hidden" name="uid" value="{$user->id}">
-                        <input type="hidden" name="product_id" value="0">
+                        <input type="hidden" name="product_id" value="00">
                         <input type="submit" name="total" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
                     </form>
                 </div>

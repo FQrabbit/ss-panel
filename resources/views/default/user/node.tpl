@@ -41,7 +41,7 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                         {$nodes->render()}
-                            <table class="table table-hover table-striped node-list">
+                            <table class="table table-striped node-list">
                                 <thead>
                                     <tr>
                                         <th>
@@ -86,13 +86,15 @@
                             {foreach $nodes as $node}
                                     <tr>
                                         <td>
-                                            <button class="fa fa-thumbs-up vote-btn like-btn{if $user->getPollOfNode($node->id) == 1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
+                                            <button class="vote-btn like-btn{if $user->getPollOfNode($node->id) == 1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
+                                                <i class="fa fa-thumbs-up"></i>
                                                 <span>
                                                     {$node->getPollCount(1)}
                                                 </span>
                                             </button>
                                             <br>
-                                            <button class="fa fa-thumbs-down vote-btn dislike-btn{if $user->getPollOfNode($node->id) == -1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
+                                            <button class="vote-btn dislike-btn{if $user->getPollOfNode($node->id) == -1} vote-btn-clicked{/if}" data-node-id="{$node->id}"{if $user->isFreeUser() and $node->isPaidNode()} disabled="disabled"{/if}>
+                                                <i class="fa fa-thumbs-down"></i>
                                                 <span>
                                                     {$node->getPollCount(-1)}
                                                 </span>
@@ -189,7 +191,7 @@
 <script>
 
 $(".vote-btn").click(function(){
-    var v = $(this).children().first().text();
+    var v = $(this).children('span').first().text();
     var sib = $(this).siblings();
     var nodeid = this.getAttribute('data-node-id');
     var poll;
@@ -226,15 +228,15 @@ $(".vote-btn").click(function(){
         }
     });
     if (!$(this).hasClass("vote-btn-clicked")) {
-        $(this).children().first().html(++v);
+        $(this).children('span').first().html(++v);
     }else{
-        $(this).children().first().html(--v);
+        $(this).children('span').first().html(--v);
     }
 
     if (sib.hasClass("vote-btn-clicked")) {
-        v = sib.children().first().text();
+        v = sib.children('span').first().text();
         sib.removeClass("vote-btn-clicked");
-        sib.children().first().html(--v);
+        sib.children('span').first().html(--v);
     };
 
     $(this).toggleClass("vote-btn-clicked");
