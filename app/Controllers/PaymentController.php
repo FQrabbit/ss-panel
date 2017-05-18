@@ -67,7 +67,7 @@ class PaymentController extends BaseController
          * 商品id, 捐助 id 为 0
          * @var int
          */
-        $product_id = substr($alino, 9, 1);
+        $product_id = intval(substr($alino, 9, 2));
 
         if ($product_id == 0) {
             if (DonateLog::hasTransaction($alino)) {
@@ -272,6 +272,9 @@ class PaymentController extends BaseController
             }
         } else {
             return '商品id无效';
+        }
+        if ($q['product_id'] < 10) {
+            $q['product_id'] = '0' . $q['product_id'];
         }
         $total   = $q['total'];
         $uid     = $q['uid'];
