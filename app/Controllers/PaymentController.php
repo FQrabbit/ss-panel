@@ -264,13 +264,15 @@ class PaymentController extends BaseController
         if (!is_numeric($q['product_id']) || $q['product_id'] < 0) {
             return 'Invalid input';
         }
-        $product = Shop::find($q['product_id']);
-        if ($product) {
-            if ($q['total'] != $product->price) {
-                return 'Price do not match';
+        if ($q['product_id'] > 0) {
+            $product = Shop::find($q['product_id']);
+            if ($product) {
+                if ($q['total'] != $product->price) {
+                    return 'Price do not match';
+                }
+            } else {
+                return 'Could\'t find this product';
             }
-        } else {
-            return 'Could\'t find this product';
         }
         $q['product_id'] = sprintf('%02d', $q['product_id']);
         $total   = $q['total'];
