@@ -262,4 +262,13 @@ class Node extends Model
         }
 
     }
+
+    /**
+     * format the value of day of month to a string with 'am' or 'pm' suffix.
+     * @return string. '5 am', ex.
+     */
+    public function formateResetDay()
+    {
+        return date('jS' ,strtotime((date('Y-M-').$this->transfer_reset_day)));
+    }
 }

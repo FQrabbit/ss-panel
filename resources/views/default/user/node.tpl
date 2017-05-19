@@ -143,7 +143,7 @@
                                             {$node->showAverageTrafficAvailableToday()}
                                         </td>
                                         <td>
-                                            {$node->transfer_reset_day}
+                                            {$node->formateResetDay()}
                                         </td>
                                         <td class="info">
                                             {$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}

@@ -253,30 +253,26 @@ class PaymentController extends BaseController
     {
         $q = $this->getRequestBodyArray($request);
         if (empty($q['total'])) {
-            return '输入的信息不全！';
+            return 'Empty price';
         }
         if (!is_numeric($q['total'])) {
-            return '输入的金额不是数字！';
+            return 'Price is not a number';
         }
         if ($q['total'] <= '0') {
-            return '输入的金额小于等于0！';
+            return 'Invalid price value';
         }
-        if ($q['product_id'] > 0) {
-            $product = Shop::find($q['product_id']);
-            if ($product) {
-                if ($q['total'] != $product->price) {
-                    return '商品价格不符';
-                }
-            } else {
-                return '商品不存在';
+        if (!is_numeric($q['product_id']) || $q['product_id'] < 0) {
+            return 'Invalid input';
+        }
+        $product = Shop::find($q['product_id']);
+        if ($product) {
+            if ($q['total'] != $product->price) {
+                return 'Price do not match';
             }
+        } else {
+            return 'Could\'t find this product';
         }
-        if ($q['product_id'] < 0) {
-            return '商品id无效';
-        }
-        if ($q['product_id'] < 10) {
-            $q['product_id'] = '0' . $q['product_id'];
-        }
+        $q['product_id'] = sprintf('%02d', $q['product_id']);
         $total   = $q['total'];
         $uid     = $q['uid'];
         $apiid   = $this->apiid;

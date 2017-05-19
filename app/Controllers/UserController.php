@@ -611,12 +611,8 @@ class UserController extends BaseController
         $labels_hour = array(); // time odd hour
         $labels_node = array(); // node name
         $datas       = array();
-        for ($i = 0; $i <= date("H"); $i++) {
-            if ($i < 12) {
-                $label_name = $i . ' a.m.';
-            } else {
-                $label_name = $i . ' p.m.';
-            }
+        for ($i = 0; $i <= intval(date('H')); $i++) {
+            $label_name = date('G a', strtotime("$i:00:00"));
             array_push($labels_hour, $label_name);
         }
 
