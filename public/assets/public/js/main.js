@@ -12,33 +12,16 @@ $("#msg-error").hide();
 
 function urlChange(id) {
     var site = './node/'+id;
-        document.getElementById('infoifram').src = site;
+    document.getElementById('infoifram').src = site;
     $("#nodeinfo").modal();
+    $('html').css('overflow-y', 'hidden');
 }
 
 (function(){
 
-$(".poll-btn").click(function(){
-	alert();
-	var v = $(this).children().first().text();
-	var sib = $(this).siblings();
-
-	if (!$(this).hasClass("poll-btn-clicked")) {
-		$(this).children().first().html(++v);
-	}else{
-		$(this).children().first().html(--v);
-	}
-
-	if (sib.hasClass("poll-btn-clicked")) {
-		sib.removeClass("poll-btn-clicked");
-		sib.children().first().html(--v);
-	};
-
-	$(this).toggleClass("poll-btn-clicked");
-})
-
-$(".close").click(function(){
+$(".close,.modal").click(function(){
     $("#nodeinfo").modal("hide");
+    $('html').css('overflow-y', 'auto');
 })
 
 })();
