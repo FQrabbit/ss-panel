@@ -199,7 +199,7 @@ html{
 <script>
     var text_qrcode0 = '{$ssqr_old}';
     jQuery('#ss-qr-o').qrcode({
-        "text": text_qrcode1
+        "text": text_qrcode0
     });
 
     var text_qrcode1 = '{$ssqr}';
