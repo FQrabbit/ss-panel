@@ -1,6 +1,5 @@
 /*@import url(//fonts.googleapis.com/css?family=Pacifico);*/
 /*@import url(//fonts.googleapis.com/css?family=Roboto:400,300,400italic,700);*/
-
 @font-face {
     font-family: 'Pacifico';
     font-style: normal;
@@ -33,7 +32,7 @@ a:hover, a:active, a:focus {
 
 p a:hover, .main-footer a:hover {
     color: #009688;
-    text-decoration-color: #009688
+    text-decoration-color: #009688;
 }
 
 a, button {
@@ -738,12 +737,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 ::-webkit-scrollbar {
     width: 8px;
+    height: 10px;
     background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: #242525;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modal-open::-webkit-scrollbar {
