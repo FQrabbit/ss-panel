@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{$config["appName"]}</title>
+    <title>{$pageTitle} - {$config["appName"]}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Font Awesome Icons -->
     <link href="/assets/public/css/font-awesome.min.css" rel="stylesheet" type="text/css">

@@ -77,6 +77,7 @@ class UserController extends BaseController
                 'icon' => 'shopping-cart',]
         ];
         $uri = strtok($_SERVER["REQUEST_URI"], '?');
+        $pageTitle = $menuList[array_search($uri, array_column($menuList, 'uri'))]['name'];
 
         $pagesThatRequireChartjs         = ['/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
@@ -88,7 +89,15 @@ class UserController extends BaseController
         $requireJQueryConfirm   = in_array($uri, $pagesThatRequireJQueryConfirm);
         $requireWYSI            = in_array($uri, $pagesThatRequireWYSI);
 
-        return parent::view()->assign('menuList', $menuList)->assign('uri', $uri)->assign('userFooter', $userFooter)->assign('requireChartjs', $requireChartjs)->assign('requireJQueryDatatable', $requireJQueryDatatable)->assign('requireJQueryConfirm', $requireJQueryConfirm)->assign('requireWYSI', $requireWYSI);
+        return parent::view()->
+            assign('menuList', $menuList)->
+            assign('uri', $uri)->
+            assign('pageTitle', $pageTitle)->
+            assign('userFooter', $userFooter)->
+            assign('requireChartjs', $requireChartjs)->
+            assign('requireJQueryDatatable', $requireJQueryDatatable)->
+            assign('requireJQueryConfirm', $requireJQueryConfirm)->
+            assign('requireWYSI', $requireWYSI);
     }
 
     public function index($request, $response, $args)
@@ -103,7 +112,12 @@ class UserController extends BaseController
         $music->count += 1;
         $mid = $music->mid;
         $music->save();
-        return $this->view()->assign('msg', $msg)->assign('new_ann', $new_ann)->assign('title', $title)->assign('mid', $mid)->display('user/index.tpl');
+        return $this->view()->
+            assign('msg', $msg)->
+            assign('new_ann', $new_ann)->
+            assign('title', $title)->
+            assign('mid', $mid)->
+            display('user/index.tpl');
     }
 
     public function announcement($request, $response, $args)
@@ -114,7 +128,9 @@ class UserController extends BaseController
         }
         $anns = Ann::orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
         $anns->setPath('/user/announcement');
-        return $this->view()->assign('anns', $anns)->display('user/announcement.tpl');
+        return $this->view()->
+            assign('anns', $anns)->
+            display('user/announcement.tpl');
     }
 
     public function readAnn($request, $response, $args)
@@ -238,7 +254,16 @@ class UserController extends BaseController
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
-        return $this->view()->assign('node', $node)->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr_old', $ssqr_old)->assign('ssqr', $ssqr)->assign('ssqr_new', $ssqr_new)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
+        return $this->view()->
+            assign('node', $node)->
+            assign('json', $json)->
+            assign('json_show', $json_show)->
+            assign('ssqr_old', $ssqr_old)->
+            assign('ssqr', $ssqr)->
+            assign('ssqr_new', $ssqr_new)->
+            assign('surge_base', $surge_base)->
+            assign('surge_proxy', $surge_proxy)->
+            display('user/nodeinfo.tpl');
     }
 
     public function getconf($request, $response, $args)
@@ -286,7 +311,11 @@ class UserController extends BaseController
         $methods   = Node::getAllMethod();
         $obfses    = Node::getAllObfs();
         $protocols = Node::getAllProtocol();
-        return $this->view()->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('user/profile.tpl');
+        return $this->view()->
+            assign('methods', $methods)->
+            assign('obfses', $obfses)->
+            assign('protocols', $protocols)->
+            display('user/profile.tpl');
     }
 
     public function edit($request, $response, $args)
@@ -338,13 +367,8 @@ class UserController extends BaseController
     public function purchase()
     {
         $msg           = DbConfig::get('user-purchase');
-        $now_date      = date("Y-m-d H:i:s");
-        $B_count       = User::where("expire_date", ">", $now_date)->get()->count();
-        $nodes_count   = Node::all()->count();
-        $B_able_to_buy = (($nodes_count * 13) > $B_count) ? 1 : 0;
-        $user          = Auth::getUser();
         $products      = Shop::where('status', 1)->get();
-        return $this->view()->assign('products', $products)->assign('msg', $msg)->assign('B_able_to_buy', $B_able_to_buy)->display('user/purchase.tpl');
+        return $this->view()->assign('products', $products)->assign('msg', $msg)->display('user/purchase.tpl');
     }
 
     public function qna()
@@ -693,7 +717,11 @@ class UserController extends BaseController
         $users_weekly_traffic_for_chart['labels'][] = date('Y-m-d');
         $users_weekly_traffic_for_chart['datas'][]  = round(Tools::flowToGB($this->user->trafficToday()), 3);
         $users_weekly_traffic_for_chart             = json_encode($users_weekly_traffic_for_chart);
-        return $this->view()->assign('logs', $traffic)->assign('array_for_chart', $array_for_chart)->assign('users_weekly_traffic_for_chart', $users_weekly_traffic_for_chart)->display('user/trafficlog.tpl');
+        return $this->view()->
+            assign('logs', $traffic)->
+            assign('array_for_chart', $array_for_chart)->
+            assign('users_weekly_traffic_for_chart', $users_weekly_traffic_for_chart)->
+            display('user/trafficlog.tpl');
     }
 
     public function purchaseLog($request, $response, $args)
