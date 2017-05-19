@@ -13,6 +13,7 @@ body,h1,h2,h3,h4,h5,h6,a,i,small,input,select,textarea,span,button,label,legend,
     color: white;
 }
 
+
 code, kbd, pre, samp {
     color: #ccc;
     background-color: rgba(0, 0, 0, 0.49) !important;
@@ -35,7 +36,7 @@ p a:hover, .main-footer a:hover {
     text-decoration-color: #009688
 }
 
-a {
+a, button {
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
