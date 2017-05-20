@@ -39,7 +39,7 @@ class Job
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
-                if ($user->product_id && $user->getProduct()->isByTime()) {
+                if ($user->product_id && $user->product->isByTime()) {
                     $user->transfer_enable = Tools::toMB(100);
                     $user->u               = 0;
                     $user->d               = 0;

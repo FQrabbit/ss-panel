@@ -203,7 +203,7 @@ class PaymentController extends BaseController
             if ($user->isExpire()) {
                 $user->addTraffic($transfer_to_add);
             } else {
-                if ($user->product_id && $user->getProduct()->name == '试玩') {
+                if ($user->product_id && $user->product->name == '试玩') {
                     $user->addTraffic($transfer_to_add);
                 } else {
                     $user->updateEnableTransfer($pre['used_traffic_in_GB'] + $transfer_to_add);
