@@ -107,7 +107,7 @@
                                             <p>流量重置日:<br><code>{$user->nextTransferResetDate()}</code>
                                             </p>
                                         {/if}
-                                        {if $user->product->isByTime()}
+                                        {if $user->product->isByTime() && !$user->unlimitTransfer()}
                                             <p>平均每日还可使用: {$user->transferAvailableEveryDay()}G</p>
                                         {/if}
                                         </div>

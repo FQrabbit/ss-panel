@@ -424,13 +424,14 @@ class User extends Model
 
     public function daysUntilNextTransferResetDate()
     {
+        $secInADay = 86400;
         if ($this->willResetTransfer()) {
-            $secInADay = 86400;
-            $nextResetDate = $this->nextTransferResetDate();
-            $remain_days = floor((strtotime($nextResetDate)-time()) / $secInADay);
-            return $remain_days;
+            $nextCycleDate = $this->nextTransferResetDate();
+        } else {
+            $nextCycleDate = $this->expire_date;
         }
-        return null;
+        $remain_days = floor((strtotime($nextCycleDate)-time()) / $secInADay);
+        return $remain_days;
     }
 
     public function daysUntilExpireDate()
