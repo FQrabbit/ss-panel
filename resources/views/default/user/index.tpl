@@ -76,28 +76,43 @@
                             <!-- /.box-header -->
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="progress progress-striped">
+                                    <div class="col-md-6">
+                                        <canvas id="myPieChart" class="center" style="max-height: 250px;max-width: 250px"></canvas>
+                                        <!-- <div class="progress progress-striped">
                                             <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40"
                                                  aria-valuemin="0" aria-valuemax="100"
                                                  style="width: {$user->trafficUsagePercent()}%">
                                                 <span class="sr-only">Transfer</span>
                                             </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="center w3-padding">
+                                        {if $user->unlimitTransfer()}
+                                            <p>已用流量: <code>{$user->usedTraffic()}</code>
+                                            </p>
+                                            <p>购买日期: <br><code>{$user->buy_date}</code>
+                                            </p>
+                                            <p>到期日期: <br><code>{$user->expire_date}</code>
+                                            </p>
+                                        {else}
+                                            <p>总流量: <code>{$user->enableTraffic()}</code>
+                                            </p>
+                                            <p>已用流量: <code>{$user->usedTraffic()}</code>
+                                            </p>
+                                            <p>剩余流量: <code>{$user->unusedTraffic()}</code>
+                                            </p>
+                                        {/if}
+                                        {if $user->willResetTransfer()}
+                                            <p>流量重置日:<br><code>{$user->nextTransferResetDate()}</code>
+                                            </p>
+                                        {/if}
+                                        {if !$user->isExpire()}
+                                            <p>平均每日还可使用: {$user->transferAvailableEveryDay()}G</p>
+                                        {/if}
                                         </div>
                                     </div>
                                 </div>
-                                <dl class="dl-horizontal">
-                                    <dt>总流量</dt>
-                                    <dd>{$user->enableTraffic()}</dd>
-                                    <dt>已用流量</dt>
-                                    <dd>{$user->usedTraffic()}</dd>
-                                    <dt>剩余流量</dt>
-                                    <dd>{$user->unusedTraffic()}</dd>
-                                    {if $user->willResetTransfer()}
-                                    <dt>流量重置日</dt>
-                                    <dd>{$user->nextTransferResetDate()}</dd>
-                                    {/if}
-                                </dl>
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -236,6 +251,45 @@
 
 <script>
     $(document).ready(function () {
+        var ctx = $('#myPieChart');
+    {if $user->unlimitTransfer()}
+        var labels = ['已使用天数', '剩余天数'];
+        var used = {$user->daysFromBuyDate()};
+        var remain = {$user->daysUntilExpireDate()};
+    {else}
+        var labels = ['已使用流量(GB)', '剩余流量(GB)'];
+        var used = {$user->usedTrafficInGB()};
+        var remain = {$user->unusedTrafficInGB()};
+    {/if}
+        var data = {
+            labels: labels,
+            datasets: [
+                {
+                    data: [used, remain],
+                    backgroundColor: [
+                        'rgba(169, 68, 66, 0.7)',
+                        'rgba(0, 150, 136, 0.7)',
+                    ],
+                    borderWidth: 5,
+                    borderColor: 'rgba(0,0,0,0.1)',
+                }]
+        };
+        var myPieChart = new Chart(ctx,{
+            type: 'pie',
+            data: data,
+            options: {
+                animation:{
+                    animateScale:true
+                },
+                responsive: true,
+                legend: {
+                    labels: {
+                        fontColor: "#ddd"
+                    }
+                },
+            }
+        });
+
         $("#checkin").click(function () {
                 $(this).hide(0, function(){
                     $("#checkin-msg").html("loading...");

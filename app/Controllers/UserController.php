@@ -79,7 +79,7 @@ class UserController extends BaseController
         $uri = strtok($_SERVER["REQUEST_URI"], '?');
         $pageTitle = $menuList[array_search($uri, array_column($menuList, 'uri'))]['name'];
 
-        $pagesThatRequireChartjs         = ['/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
+        $pagesThatRequireChartjs         = ['/user', '/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
         $pagesThatRequireJQueryConfirm   = ['/admin/user', '/admin/node', '/admin/purchaselog', '/admin/donatelog'];
         $pagesThatRequireWYSI            = ['/admin/config', '/admin/email'];

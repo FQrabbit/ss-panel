@@ -23,13 +23,13 @@ class Tools
         $mb = 1048576;
         $gb = 1073741824;
         if (abs($value) > $gb) {
-            return round($value / $gb, 2) . "GB";
+            return round($value / $gb, 3) . "GB";
         } else if (abs($value) > $mb) {
-            return round($value / $mb, 2) . "MB";
+            return round($value / $mb, 3) . "MB";
         } else if (abs($value) > $kb) {
-            return round($value / $kb, 2) . "KB";
+            return round($value / $kb, 3) . "KB";
         } else {
-            return round($value, 2);
+            return round($value, 3);
         }
     }
 
@@ -60,7 +60,7 @@ class Tools
     public static function flowToGB($traffic)
     {
         $gb = 1048576 * 1024;
-        return $traffic / $gb;
+        return round($traffic / $gb, 3);
     }
 
     /**

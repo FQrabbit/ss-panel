@@ -262,6 +262,11 @@ class User extends Model
         return Tools::flowAutoShow($transfer_enable - $total);
     }
 
+    public function unusedTrafficInGB()
+    {
+        return Tools::flowToGB($this->unusedTrafficInB());
+    }
+
     public function unusedTrafficInB()
     {
         $total           = $this->attributes['u'] + $this->attributes['d'];
@@ -407,5 +412,39 @@ class User extends Model
     {
         for ($i=Tools::formatToDate($this->expire_date); $i > date('Y-m-d'); $i=Tools::formatToDate($i.' -1 month'));
         return Tools::formatToDate($i.' +1 month');
+    }
+
+    public function unlimitTransfer()
+    {
+        if ($this->product && $this->product->transfer == 999) {
+            return true;
+        }
+        return false;
+    }
+
+    public function daysUntilExpireDate()
+    {
+        if ($this->product->isByTime()) {
+            $secInADay = 86400;
+            $expireDate = $this->expire_date;
+            $remain_days = floor((strtotime($expireDate)-time()) / $secInADay);
+            return $remain_days;
+        }
+        return null;
+    }
+
+    public function daysFromBuyDate()
+    {
+        if ($this->product_id!=0) {
+            $secInADay = 86400;
+            $buyDate = $this->buy_date;
+            return floor((time()-strtotime($buyDate)) / $secInADay);
+        }
+        return null;
+    }
+
+    public function transferAvailableEveryDay()
+    {
+        return round($this->unusedTrafficInGB()/$this->daysUntilExpireDate(), 3);
     }
 }
