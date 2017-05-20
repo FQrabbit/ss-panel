@@ -422,6 +422,17 @@ class User extends Model
         return false;
     }
 
+    public function daysUntilNextTransferResetDate()
+    {
+        if ($this->willResetTransfer()) {
+            $secInADay = 86400;
+            $nextResetDate = $this->nextTransferResetDate();
+            $remain_days = floor((strtotime($nextResetDate)-time()) / $secInADay);
+            return $remain_days;
+        }
+        return null;
+    }
+
     public function daysUntilExpireDate()
     {
         if ($this->product->isByTime()) {
@@ -445,6 +456,6 @@ class User extends Model
 
     public function transferAvailableEveryDay()
     {
-        return round($this->unusedTrafficInGB()/$this->daysUntilExpireDate(), 3);
+        return round($this->unusedTrafficInGB()/$this->daysUntilNextTransferResetDate(), 3);
     }
 }
