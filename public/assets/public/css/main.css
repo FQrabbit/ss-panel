@@ -343,26 +343,10 @@ a.btn.w3-teal.w3-small.pull-right:hover {
     color: #B2DFDB !important;
 }
 
-table>tbody>tr, td, table>tbody>tr, th, table>tfoot>tr, td, table>tfoot>tr, th, table>thead>tr, td, table>thead>tr, th {
-    position: relative;
+tr, td, th{
     background-color: rgba(0, 0, 0, 0.33) !important;
     vertical-align: middle !important;
-}
-
-#t-name {
-    min-width: 57px;
-}
-
-#t-method {
-    min-width: 110px;
-}
-
-#t-qr {
-    min-width: 61px;
-}
-
-#t-qr-new {
-    min-width: 56px;
+    white-space: nowrap;
 }
 
 .qr-background {
@@ -370,31 +354,6 @@ table>tbody>tr, td, table>tbody>tr, th, table>tfoot>tr, td, table>tfoot>tr, th, 
     background-color: white;
     margin: 0 auto;
     width: 230px;
-}
-
-#t-percent {
-    min-width: 106px;
-}
-
-#t-traffic {
-    min-width: 106px;
-}
-
-#t-traffic-reset-day {
-    min-width: 60px;
-}
-
-#t-uptime {
-    min-width: 234px;
-}
-
-#t-info {
-    min-width: 400px;
-    text-align: left;
-}
-
-.node-list>tbody>tr>td.info {
-    text-align: left;
 }
 
 .progress {

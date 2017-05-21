@@ -1,17 +1,9 @@
 {include file='user/head-info.tpl'}
-{if $user->plan == "A" and $node->type == 1}
+{if $user->isFreeUser() and $node->isPaidNode()}
     <script>
         window.location.href = "/user/node";
     </script>
 {/if}
-<style>
-html{
-    overflow-x: hidden;
-}
-::-webkit-scrollbar {
-    width: 0;
-}
-</style>
 <div class="content-wrapper" style="margin:0">
     <section class="content-header">
         <h1>
@@ -195,6 +187,7 @@ html{
         <!-- END PROGRESS BARS -->
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
+<script src=" /assets/public/js/jquery.min.js "></script>
 <script src=" /assets/public/js/jquery.qrcode.min.js "></script>
 <script>
     var text_qrcode0 = '{$ssqr_old}';

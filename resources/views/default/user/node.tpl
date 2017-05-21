@@ -44,42 +44,18 @@
                             <table class="table table-striped node-list">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            Vote
-                                        </th>
-                                        <th id="t-name">
-                                            节点名
-                                        </th>
-                                        <th id="t-status">
-                                            状态
-                                        </th>
-                                        <th id="t-online">
-                                            在线
-                                        </th>
-                                        <th id="t-percent">
-                                            流量使用情况
-                                        </th>
-                                        <th id="t-traffic">
-                                            本日产生流量
-                                        </th>
-                                        <th>
-                                            平均每日还可使用
-                                        </th>
-                                        <th id="t-traffic-reset-day">
-                                            流量重置日
-                                        </th>
-                                        <th id="t-info">
-                                            说明
-                                        </th>
-                                        <th id="t-uptime">
-                                            负载
-                                        </th>
-                                        <th id="t-ip">
-                                            ip地址
-                                        </th>
-                                        <th id="t-ip">
-                                            ipv6地址
-                                        </th>
+                                        <th>Vote</th>
+                                        <th>节点名</th>
+                                        <th>状态</th>
+                                        <th>在线</th>
+                                        <th>流量使用情况</th>
+                                        <th>本日产生流量</th>
+                                        <th>平均每日还可使用</th>
+                                        <th>流量重置日</th>
+                                        <th>说明</th>
+                                        <th>负载</th>
+                                        <th>ip地址</th>
+                                        <th>ipv6地址</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,7 +121,7 @@
                                         <td>
                                             {$node->formateResetDay()}
                                         </td>
-                                        <td class="info">
+                                        <td>
                                             {$node->info} - 总流量: {if $node->transfer == 0}Unlimited{else}{$node->transfer}G{/if}
                                         </td>
                                         <td>
