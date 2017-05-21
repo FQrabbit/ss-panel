@@ -127,7 +127,7 @@
                                             {$product->description}
                                         </td>
                                         <td>
-                                            {$product->transfer}G
+                                            {if $product->unlimitTransfer()}不限流量{else}{$product->transfer}G{/if}
                                         </td>
                                         <td>
                                             ￥{$product->price}

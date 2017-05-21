@@ -17,4 +17,9 @@ class Shop extends Model
     {
     	return $this->attributes['type'] == 'B';
     }
+
+    public function unlimitTransfer()
+    {
+    	return $this->transfer == 999;
+    }
 }

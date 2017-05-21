@@ -8,8 +8,12 @@ $('.dropdown').on('hide.bs.dropdown', function() {
 $("#msg-success").hide();
 $("#msg-error").hide();
 
-// Node Page
+$('.sidebar-menu>li').on('click',function(){
+    $('.sidebar-menu>li.active').removeClass('active');
+    $(this).addClass('active');
+})
 
+// Node Page
 function urlChange(id) {
     var site = './node/'+id;
     document.getElementById('infoifram').src = site;
