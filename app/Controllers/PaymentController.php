@@ -251,36 +251,41 @@ class PaymentController extends BaseController
 
     public function prepay($request, $response, $args)
     {
-        $q = $this->getRequestBodyArray($request);
-        if (empty($q['total'])) {
+        $q          = $this->getRequestBodyArray($request);
+        $product_id = intval($q['product_id']);
+        $uid        = intval($q['uid']);
+        $total      = $q['total'];
+        if (empty($total)) {
             return 'Empty price';
         }
-        if (!is_numeric($q['total'])) {
+        if (!is_numeric($total)) {
             return 'Price is not a number';
         }
-        if ($q['total'] <= '0') {
+        if ($total <= '0') {
             return 'Invalid price value';
         }
-        if (!is_numeric($q['product_id']) || $q['product_id'] < 0) {
+        if ($product_id < 0) {
             return 'Invalid input';
         }
-        if ($q['product_id'] > 0) {
-            $product = Shop::find($q['product_id']);
+        $product = Shop::find($product_id);
+        $user    = User::find($uid);
+        if ($product_id > 0) {
             if ($product) {
-                if ($q['total'] != $product->price) {
+                if ($total != $product->price) {
                     return 'Price do not match';
                 }
             } else {
                 return 'Could\'t find this product';
             }
         }
-        $q['product_id'] = sprintf('%02d', $q['product_id']);
-        $total   = $q['total'];
-        $uid     = $q['uid'];
-        $apiid   = $this->apiid;
-        $apikey  = md5($this->key);
-        $showurl = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
-        $addnum  = 'alip' . $apiid . $q['product_id'] . User::find($uid)->port . time();
+        if ($product->isByTime() && $user->product->isByTime() && $user->product->transfer != $product->transfer && (strtotime($user->expire_date) - time()) > 86400 * 3) {
+            return '更换套餐需要在过期前三天内进行。';
+        }
+        $product_id = sprintf('%02d', $product_id);
+        $apiid      = $this->apiid;
+        $apikey     = md5($this->key);
+        $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
+        $addnum     = 'alip' . $apiid . $product_id . User::find($uid)->port . time();
         return "
         <form name='form1' action='https://api.jsjapp.com/plugin.php?id=add:alipay' method='POST'>
             <input type='hidden' name='uid' value='" . $uid . "'>
