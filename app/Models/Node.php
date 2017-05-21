@@ -6,11 +6,10 @@ namespace App\Models;
  * Node Model
  */
 
-use App\Utils\Tools;
 use App\Models\NodeDailyTrafficLog;
+use App\Utils\Tools;
 
 class Node extends Model
-
 {
     protected $table = "ss_node";
 
@@ -35,7 +34,7 @@ class Node extends Model
             'aes-256-cfb8',
             'salsa20',
             'chacha20',
-            'chacha20-ietf'
+            'chacha20-ietf',
         ];
     }
 
@@ -47,7 +46,7 @@ class Node extends Model
             'http_post',
             'http_post_compatible',
             'tls1.2_ticket_auth',
-            'tls1.2_ticket_auth_compatible'
+            'tls1.2_ticket_auth_compatible',
         ];
     }
 
@@ -58,13 +57,13 @@ class Node extends Model
             'auth_sha1_v4_compatible',
             'auth_aes128_md5',
             'auth_aes128_sha1',
-            'auth_chain_a'
+            'auth_chain_a',
         ];
     }
 
     public function getLastNodeInfoLog()
     {
-        $id = $this->attributes['id'];
+        $id  = $this->attributes['id'];
         $log = NodeInfoLog::where('node_id', $id)->orderBy('id', 'desc')->first();
         if ($log == null) {
             return null;
@@ -78,7 +77,7 @@ class Node extends Model
         if ($log == null) {
             return "暂无数据";
         }
-        return Tools::secondsToTime((int)$log->uptime);
+        return Tools::secondsToTime((int) $log->uptime);
     }
 
     public function getNodeLoad()
@@ -92,8 +91,8 @@ class Node extends Model
 
     public function getLastNodeOnlineLog()
     {
-        $id = $this->attributes['id'];
-        $log = NodeOnlineLog::where('node_id', $id)->where("log_time", ">", (time()-600))->orderBy('id', 'desc')->first();
+        $id  = $this->attributes['id'];
+        $log = NodeOnlineLog::where('node_id', $id)->where("log_time", ">", (time() - 600))->orderBy('id', 'desc')->first();
         if ($log == null) {
             return null;
         }
@@ -103,11 +102,11 @@ class Node extends Model
     public function getNodeIp()
     {
         $name = $this->attributes['server'];
-        $ip = gethostbyname($name);
+        $ip   = gethostbyname($name);
         return $ip;
     }
 
-    function getOnlineUserCount()
+    public function getOnlineUserCount()
     {
         $log = $this->getLastNodeOnlineLog();
         if ($log == null) {
@@ -116,7 +115,7 @@ class Node extends Model
         return $log->online_user;
     }
 
-    function getTrafficFromLogs()
+    public function getTrafficFromLogs()
     {
         $traffic = $this->getTotalTraffic();
         if ($traffic == 0) {
@@ -127,30 +126,30 @@ class Node extends Model
 
     public function getTotalTraffic()
     {
-        $id = $this->attributes['id'];
+        $id      = $this->attributes['id'];
         $traffic = TrafficLog::where('node_id', $id)->sum('u') + TrafficLog::where('node_id', $id)->sum('d');
         return $traffic;
     }
 
-    function getPollCount($p)
+    public function getPollCount($p)
     {
         $id = $this->attributes['id'];
-        $c = Vote::where('nodeid', $id)->where('poll', $p)->count();
+        $c  = Vote::where('nodeid', $id)->where('poll', $p)->count();
         return $c;
     }
-    
+
     public function getSSUrl($arr)
     {
         $ssurl = $arr['method'] . ':' . $arr['password'] . '@' . $arr['server'] . ':' . $arr['server_port'];
         return 'ss://' . Tools::base64_url_encode($ssurl);
     }
-    
+
     public function getNewSSUrl($arr)
     {
         $ssurl = Tools::base64_url_encode($arr['method'] . ':' . $arr['password']) . '@' . $arr['server'] . ':' . $arr['server_port'] . '#' . $this->attributes['name'];
         return 'ss://' . $ssurl;
     }
-    
+
     public function getSSRUrl($arr)
     {
         $ssurl = $arr['server'] . ':' . $arr['server_port'] . ':' . $arr['protocol'] . ':' . $arr['method'] . ':' . $arr['obfs'] . ':' . Tools::base64_url_encode($arr['password']) . '/?obfsparam=' . Tools::base64_url_encode($arr['obfs_param']) . '&remarks=' . Tools::base64_url_encode($this->attributes['name']) . '&group=' . Tools::base64_url_encode('shadowsky');
@@ -169,24 +168,24 @@ class Node extends Model
 
     public function getTrafficUsage()
     {
-        $id = $this->attributes['id'];
+        $id       = $this->attributes['id'];
         $transfer = $this->attributes['transfer'];
-        if ($transfer==0) {
+        if ($transfer == 0) {
             return 0;
         }
         $last_reset_date = $this->lastResetDate();
-        $logs = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $last_reset_date)->get();
-        $traffic = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');
+        $logs            = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $last_reset_date)->get();
+        $traffic         = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');
         $traffic += $this->getTotalTraffic();
         $traffic_in_GB = Tools::flowToGB($traffic);
-        return round($traffic_in_GB/$transfer, 4) * 100;
+        return round($traffic_in_GB / $transfer, 4) * 100;
     }
 
     public function lastResetDate()
     {
-        $id = $this->attributes['id'];
+        $id        = $this->attributes['id'];
         $reset_day = $this->attributes['transfer_reset_day'];
-        $reset_day = date('Y-m-d', strtotime(date('Y-m')."-$reset_day"));
+        $reset_day = date('Y-m-d', strtotime(date('Y-m') . "-$reset_day"));
         if ($reset_day <= date('Y-m-d')) {
             $last_reset_day = date('Y-m-d', strtotime($reset_day . ' -1 month'));
         } else {
@@ -197,9 +196,9 @@ class Node extends Model
 
     public function nextResetDate()
     {
-        $id = $this->attributes['id'];
+        $id        = $this->attributes['id'];
         $reset_day = $this->attributes['transfer_reset_day'];
-        $reset_day = date('Y-m-d', strtotime(date('Y-m')."-$reset_day"));
+        $reset_day = date('Y-m-d', strtotime(date('Y-m') . "-$reset_day"));
         if ($reset_day <= date('Y-m-d')) {
             $next_reset_day = date('Y-m-d', strtotime($reset_day . ' +1 month'));
         } else {
@@ -213,10 +212,10 @@ class Node extends Model
      */
     public function daysUntilNextResetDate()
     {
-        $secInADay = 24 * 3600;
+        $secInADay      = 24 * 3600;
         $next_reset_day = $this->nextResetDate();
-        $remain_days = floor((strtotime($next_reset_day)-time()) / $secInADay);
-        if ($remain_days==0) {
+        $remain_days    = floor((strtotime($next_reset_day) - time()) / $secInADay);
+        if ($remain_days == 0) {
             $remain_days = 30;
         }
         return $remain_days;
@@ -228,7 +227,10 @@ class Node extends Model
     public function transferLeft()
     {
         $total_transfer = $this->attributes['transfer'];
-        return $total_transfer * ((100 - $this->getTrafficUsage())/100);
+        if ($this->getTrafficUsage() > 100) {
+            return 0;
+        }
+        return $total_transfer * ((100 - $this->getTrafficUsage()) / 100);
     }
 
     public function avrTrafAvaTdInGB()
@@ -243,8 +245,8 @@ class Node extends Model
     public function showAverageTrafficAvailableToday()
     {
         $traffic = $this->avrTrafAvaTdInGB();
-        if ($traffic) {
-            return $traffic.'GB';
+        if ($this->transfer) {
+            return $traffic . 'GB';
         } else {
             return 'Unlimited';
         }
@@ -252,10 +254,10 @@ class Node extends Model
 
     public function trafficOverusage()
     {
-        if ($this->attributes['transfer']==0) {
+        if ($this->attributes['transfer'] == 0) {
             return false;
         }
-        if ($this->getTotalTraffic()>Tools::toGB($this->avrTrafAvaTdInGB())) {
+        if ($this->getTotalTraffic() > Tools::toGB($this->avrTrafAvaTdInGB())) {
             return true;
         } else {
             return false;
@@ -269,6 +271,6 @@ class Node extends Model
      */
     public function formateResetDay()
     {
-        return date('jS' ,strtotime((date('Y-M-').$this->transfer_reset_day)));
+        return date('jS', strtotime((date('Y-M-') . $this->transfer_reset_day)));
     }
 }
