@@ -78,13 +78,6 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <canvas id="myPieChart" class="center" style="max-height: 250px;max-width: 250px"></canvas>
-                                        <!-- <div class="progress progress-striped">
-                                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40"
-                                                 aria-valuemin="0" aria-valuemax="100"
-                                                 style="width: {$user->trafficUsagePercent()}%">
-                                                <span class="sr-only">Transfer</span>
-                                            </div>
-                                        </div> -->
                                     </div>
                                     <div class="col-md-6">
                                         <div class="center w3-padding">
@@ -103,11 +96,11 @@
                                             <p>剩余流量: <code>{$user->unusedTraffic()}</code>
                                             </p>
                                         {/if}
-                                        {if $user->willResetTransfer()}
+                                        {if $user->product_id and $user->product->isByTime() and $user->willResetTransfer()}
                                             <p>流量重置日:<br><code>{$user->nextTransferResetDate()}</code>
                                             </p>
                                         {/if}
-                                        {if $user->product->isByTime() && !$user->unlimitTransfer()}
+                                        {if $user->product_id and $user->product->isByTime() and !$user->unlimitTransfer()}
                                             <p>平均每日还可使用: {$user->transferAvailableEveryDay()}G</p>
                                         {/if}
                                         </div>

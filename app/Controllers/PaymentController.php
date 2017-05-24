@@ -267,9 +267,9 @@ class PaymentController extends BaseController
         if ($product_id < 0) {
             return 'Invalid input';
         }
-        $product = Shop::find($product_id);
-        $user    = User::find($uid);
         if ($product_id > 0) {
+            $product = Shop::find($product_id);
+            $user    = User::find($uid);
             if ($product) {
                 if ($total != $product->price) {
                     return 'Price do not match';
@@ -277,9 +277,10 @@ class PaymentController extends BaseController
             } else {
                 return 'Could\'t find this product';
             }
-        }
-        if ($product->isByTime() && $user->product->isByTime() && $user->product->transfer != $product->transfer && (strtotime($user->expire_date) - time()) > 86400 * 3) {
-            return '更换套餐需要在过期前三天内进行。';
+
+            if ($product->isByTime() && $user->product_id && $user->product->isByTime() && $user->product->transfer != $product->transfer && (strtotime($user->expire_date) - time()) > 86400 * 3) {
+                return '更换套餐需要在过期前三天内进行。';
+            }
         }
         $product_id = sprintf('%02d', $product_id);
         $apiid      = $this->apiid;
