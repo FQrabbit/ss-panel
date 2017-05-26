@@ -28,7 +28,7 @@
 			<div class="page-columns">
 				<div id="markdown" class="sixteen columns bottom">
 					<p>如果Github下载慢可用BitTorrent Sync下载</p>
-					<p>BitTorrent Sync：<a href="https://link.getsync.com/#f=SSR&sz=17E6&t=1&s=UFF5W6AX3S7UD2LMH7ODBISOXUVTWLO5&i=C3KEX75Y6BGHPAI7F6CRJESD6PJ2JW2XA&v=2.4">BHS55LP54SO7A434QBB5Z2O6B7A45B2BX</a></p>
+					<p>BitTorrent Sync：<a href="https://link.getsync.com/#f=SSR&sz=27E6&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CL2YN2Q75LASMQXV3AB7OL6KFFZQOQKOF&v=2.4">BIKEZT3XG6KCGWAHGO7G3DTSAA5G3WRB2</a></p>
 					<div id="download" class="container">
 						<div class="sixteen columns"><br></div>
 						<div class="one-third column">
