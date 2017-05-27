@@ -68,37 +68,39 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-body table-responsive no-padding">
-                        {$logs->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>ID</th>
-                                <th>用户ID</th>
-                                <th>用户名</th>
-                                <th>用户端口</th>
-                                <th>金额</th>
-                                <th>手续费</th>
-                                <th>捐助日期</th>
-                                <th>交易号</th>
-                                <th>操作</th>
-                            </tr>
-                            {foreach $logs as $log}
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            {$logs->render()}
+                            <table class="table table-hover">
                                 <tr>
-                                    <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息"><a href="/admin/user/{$log->user->id}/edit">#{$log->id}</a></td>
-                                    <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户捐助记录"><a href="/admin/donatelog?uid={$log->user->id}">{$log->uid}</a></td>
-                                    <td>{$log->user->user_name}</td>
-                                    <td>{$log->user->port}</td>
-                                    <td>{$log->money}</td>
-                                    <td>{$log->fee}</td>
-                                    <td>{$log->datetime}</td>
-                                    <td>{$log->trade_no}</td>
-                                    <td>
-                                        <a class="btn btn-default btn-sm" id="delete" href="javascript:void(0);" onclick="confirm_delete({$log->id});">删除</a>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>用户ID</th>
+                                    <th>用户名</th>
+                                    <th>用户端口</th>
+                                    <th>金额</th>
+                                    <th>手续费</th>
+                                    <th>捐助日期</th>
+                                    <th>交易号</th>
+                                    <th>操作</th>
                                 </tr>
-                            {/foreach}
-                        </table>
-                        {$logs->render()}
+                                {foreach $logs as $log}
+                                    <tr>
+                                        <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息"><a href="/admin/user/{$log->user->id}/edit">#{$log->id}</a></td>
+                                        <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户捐助记录"><a href="/admin/donatelog?uid={$log->user->id}">{$log->uid}</a></td>
+                                        <td>{$log->user->user_name}</td>
+                                        <td>{$log->user->port}</td>
+                                        <td>{$log->money}</td>
+                                        <td>{$log->fee}</td>
+                                        <td>{$log->datetime}</td>
+                                        <td>{$log->trade_no}</td>
+                                        <td>
+                                            <a class="btn btn-default btn-sm" id="delete" href="javascript:void(0);" onclick="confirm_delete({$log->id});">删除</a>
+                                        </td>
+                                    </tr>
+                                {/foreach}
+                            </table>
+                            {$logs->render()}
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>

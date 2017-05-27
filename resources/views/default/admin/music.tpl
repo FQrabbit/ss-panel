@@ -59,29 +59,31 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-body table-responsive">
-                        {$music->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>操作</th>
-                                <th>id</th>
-                                <th>mid</th>
-                                <th>歌名</th>
-                                <th>歌手</th>
-                            </tr>
-                            {foreach $music as $m}
-                            <tr>
-                                <td>
-                                    <a class="btn btn-danger btn-sm" id="delete" value="{$m->mid}" href="javascript:void(0);" onclick="confirm_delete({$m->mid});">删除</a>
-                                </td>
-                                <td>#{$m->id}</td>
-                                <td><a href="http://music.163.com/#/song?id={$m->mid}" target="_blank">{$m->mid}</a></td>
-                                <td>{$m->name}</td>
-                                <td>{$m->author}</td>
-                            </tr>
-                            {/foreach}
-                        </table>
-                        {$music->render()}
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            {$music->render()}
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>操作</th>
+                                    <th>id</th>
+                                    <th>mid</th>
+                                    <th>歌名</th>
+                                    <th>歌手</th>
+                                </tr>
+                                {foreach $music as $m}
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" id="delete" value="{$m->mid}" href="javascript:void(0);" onclick="confirm_delete({$m->mid});">删除</a>
+                                    </td>
+                                    <td>#{$m->id}</td>
+                                    <td><a href="http://music.163.com/#/song?id={$m->mid}" target="_blank">{$m->mid}</a></td>
+                                    <td>{$m->name}</td>
+                                    <td>{$m->author}</td>
+                                </tr>
+                                {/foreach}
+                            </table>
+                            {$music->render()}
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>

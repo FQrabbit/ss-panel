@@ -35,32 +35,34 @@
                 </div>
                 <p> <a class="btn btn-success btn-sm" href="/admin/node/create">添加</a> </p>
                 <div class="box">
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>ID</th>
-                                <th>节点</th>
-                                <th>加密</th>
-                                <th>IP地址</th>
-                                <th>描述</th>
-                                <th>排序</th>
-                                <th>操作</th>
-                            </tr>
-                            {foreach $nodes as $node}
-                            <tr>
-                                <td>#{$node->id}</td>
-                                <td> {$node->name}</td>
-                                <td>{$node->method}</td>
-                                <td>{$node->ip}</td>
-                                <td>{$node->info}</td>
-                                <td>{$node->sort}</td>
-                                <td>
-                                    <a class="btn btn-success btn-sm" href="/admin/node/{$node->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" id="delete" value="{$node->id}" href="javascript:void(0);" onclick="confirm_delete({$node->id});">删除</a>
-                                </td>
-                            </tr>
-                            {/foreach}
-                        </table>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>节点</th>
+                                    <th>加密</th>
+                                    <th>IP地址</th>
+                                    <th>描述</th>
+                                    <th>排序</th>
+                                    <th>操作</th>
+                                </tr>
+                                {foreach $nodes as $node}
+                                <tr>
+                                    <td>#{$node->id}</td>
+                                    <td> {$node->name}</td>
+                                    <td>{$node->method}</td>
+                                    <td>{$node->ip}</td>
+                                    <td>{$node->info}</td>
+                                    <td>{$node->sort}</td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="/admin/node/{$node->id}/edit">编辑</a>
+                                        <a class="btn btn-danger btn-sm" id="delete" value="{$node->id}" href="javascript:void(0);" onclick="confirm_delete({$node->id});">删除</a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+                            </table>
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>

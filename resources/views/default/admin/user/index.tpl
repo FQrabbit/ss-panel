@@ -74,56 +74,58 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-body table-responsive">
-                        {$users->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>操作</th>
-                                <th>ID</th>
-                                <th>用户名</th>
-                                <th>邮箱</th>
-                                <th>端口</th>
-                                <th>是否捐助</th>
-                                <th>plan</th>
-                                <th>套餐</th>
-                                <th>状态</th>
-                                <!-- <th>加密方式</th> -->
-                                <th>已用流量/总流量</th>
-                                <th>购买时间</th>
-                                <th>到期时间</th>
-                                <th>最后在线时间</th>
-                                <th>最后签到时间</th>
-                                <th>本月签到次数</th>
-                                <th>注册时间</th>
-                                <th>注册IP</th>
-                            </tr>
-                            {foreach $users as $user}
-                            <tr>
-                                <td>
-                                    <a class="btn bg-green btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
-                                    <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="javascript:void(0);" onclick="confirm_delete({$user->id});">删除</a>
-                                </td>
-                                <td>#{$user->id}</td>
-                                <td>{$user->user_name}</td>
-                                <td>{$user->email}</td>
-                                <td>{$user->port}</td>
-                                <td>{if $user->isDonator()}&check;{else}X{/if}</td>
-                                <td>{$user->plan}</td>
-                                <td>{if $user->product_id}{$user->product->name}{else}无{/if}</td>
-                                <td>{if $user->enable==1}&check;{else}X{/if}</td>
-                                <!-- <td>{$user->method}</td> -->
-                                <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
-                                <td>{$user->buy_date}</td>
-                                <td>{$user->expire_date}</td>
-                                <td>{$user->lastSsTime()}</td>
-                                <td>{$user->lastCheckInTime()}</td>
-                                <td>{$user->CheckInTimes()}</td>
-                                <td>{$user->reg_date}</td>
-                                <td>{$user->reg_ip}</td>
-                            </tr>
-                            {/foreach}
-                        </table>
-                        {$users->render()}
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            {$users->render()}
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>操作</th>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>邮箱</th>
+                                    <th>端口</th>
+                                    <th>是否捐助</th>
+                                    <th>plan</th>
+                                    <th>套餐</th>
+                                    <th>状态</th>
+                                    <!-- <th>加密方式</th> -->
+                                    <th>已用流量/总流量</th>
+                                    <th>购买时间</th>
+                                    <th>到期时间</th>
+                                    <th>最后在线时间</th>
+                                    <th>最后签到时间</th>
+                                    <th>本月签到次数</th>
+                                    <th>注册时间</th>
+                                    <th>注册IP</th>
+                                </tr>
+                                {foreach $users as $user}
+                                <tr>
+                                    <td>
+                                        <a class="btn bg-green btn-sm" href="/admin/user/{$user->id}/edit">编辑</a>
+                                        <a class="btn btn-danger btn-sm" id="delete" value="{$user->id}" href="javascript:void(0);" onclick="confirm_delete({$user->id});">删除</a>
+                                    </td>
+                                    <td>#{$user->id}</td>
+                                    <td>{$user->user_name}</td>
+                                    <td>{$user->email}</td>
+                                    <td>{$user->port}</td>
+                                    <td>{if $user->isDonator()}&check;{else}X{/if}</td>
+                                    <td>{$user->plan}</td>
+                                    <td>{if $user->product_id}{$user->product->name}{else}无{/if}</td>
+                                    <td>{if $user->enable==1}&check;{else}X{/if}</td>
+                                    <!-- <td>{$user->method}</td> -->
+                                    <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>
+                                    <td>{$user->buy_date}</td>
+                                    <td>{$user->expire_date}</td>
+                                    <td>{$user->lastSsTime()}</td>
+                                    <td>{$user->lastCheckInTime()}</td>
+                                    <td>{$user->CheckInTimes()}</td>
+                                    <td>{$user->reg_date}</td>
+                                    <td>{$user->reg_ip}</td>
+                                </tr>
+                                {/foreach}
+                            </table>
+                            {$users->render()}
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>

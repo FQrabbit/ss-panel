@@ -49,31 +49,39 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-body table-responsive no-padding">
-                        {$logs->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>ID</th>
-                                <th>用户</th>
-                                <th>使用节点</th>
-                                <th>倍率</th>
-                                <th>实际使用流量</th>
-                                <th>结算流量</th>
-                                <th>记录时间</th>
-                            </tr>
-                            {foreach $logs as $log}
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            {$logs->render()}
+                            <table class="table table-hover">
                                 <tr>
-                                    <td><a href="https://www.shadowsky.website/admin/user/{$log->user_id}/edit" data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息">#{$log->id}</a></td>
-                                    <td><a href="/admin/trafficlog?user_id={$log->user_id}" data-toggle="tooltip" data-placement="top" data-original-title="查看用户流量记录">{$log->user_id}</a></td>
-                                    <td><a href="/admin/trafficlog?node_id={$log->node_id}" data-toggle="tooltip" data-placement="top" data-original-title="查看节点流量记录">{$log->node->name}</a></td>
-                                    <td>{$log->rate}</td>
-                                    <td>{$log->totalUsed()}</td>
-                                    <td>{$log->traffic}</td>
-                                    <td>{$log->logTime()}</td>
+                                    <th>ID</th>
+                                    <th>用户</th>
+                                    <th>使用节点</th>
+                                    <th>倍率</th>
+                                    <th>实际使用流量</th>
+                                    <th>结算流量</th>
+                                    <th>记录时间</th>
                                 </tr>
-                            {/foreach}
-                        </table>
-                        {$logs->render()}
+                                {foreach $logs as $log}
+                                    <tr>
+                                        <td>
+                                            <a href="https://www.shadowsky.website/admin/user/{$log->user_id}/edit" data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息">#{$log->id}</a>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/trafficlog?user_id={$log->user_id}" data-toggle="tooltip" data-placement="top" data-original-title="查看用户流量记录">{$log->user_id}</a>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/trafficlog?node_id={$log->node_id}" data-toggle="tooltip" data-placement="top" data-original-title="查看节点流量记录">{$log->node->name}</a>
+                                        </td>
+                                        <td>{$log->rate}</td>
+                                        <td>{$log->totalUsed()}</td>
+                                        <td>{$log->traffic}</td>
+                                        <td>{$log->logTime()}</td>
+                                    </tr>
+                                {/foreach}
+                            </table>
+                            {$logs->render()}
+                        </div>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div>

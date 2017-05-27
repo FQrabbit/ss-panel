@@ -124,89 +124,47 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-body table-responsive no-padding">
-                        {$logs->render()}
-                        <table class="table table-hover">
-                            <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    用户ID
-                                </th>
-                                <th>
-                                    用户名
-                                </th>
-                                <th>
-                                    用户端口
-                                </th>
-                                <th>
-                                    购买次数
-                                </th>
-                                <th>
-                                    套餐
-                                </th>
-                                <th>
-                                    价格
-                                </th>
-                                <th>
-                                    手续费
-                                </th>
-                                <th>
-                                    购买日期
-                                </th>
-                                <th>
-                                    交易号
-                                </th>
-                                <th>
-                                    操作
-                                </th>
-                            </tr>
-                            {foreach $logs as $log}
-                            <tr>
-                                <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息">
-                                    <a href="/admin/user/{$log->user->id}/edit">
-                                        #{$log->id}
-                                    </a>
-                                </td>
-                                <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户购买记录">
-                                    <a href="/admin/purchaselog?uid={$log->user->id}">
-                                        {$log->uid}
-                                    </a>
-                                </td>
-                                <td>
-                                    {$log->user->user_name}
-                                </td>
-                                <td>
-                                    {$log->user->port}
-                                </td>
-                                <td>
-                                    {$log->transactionCount()}
-                                </td>
-                                <td>
-                                    {$log->product->name}
-                                </td>
-                                <td>
-                                    {$log->price}
-                                </td>
-                                <td>
-                                    {$log->fee}
-                                </td>
-                                <td>
-                                    {$log->buy_date}
-                                </td>
-                                <td>
-                                    {$log->out_trade_no}
-                                </td>
-                                <td>
-                                    <a class="btn btn-default btn-sm" href="javascript:void(0);" id="delete" onclick="confirm_delete({$log->id});">
-                                        删除
-                                    </a>
-                                </td>
-                            </tr>
-                            {/foreach}
-                        </table>
-                        {$logs->render()}
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            {$logs->render()}
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>用户ID</th>
+                                    <th>用户名</th>
+                                    <th>用户端口</th>
+                                    <th>购买次数</th>
+                                    <th>套餐</th>
+                                    <th>价格</th>
+                                    <th>手续费</th>
+                                    <th>购买日期</th>
+                                    <th>交易号</th>
+                                    <th>操作</th>
+                                </tr>
+                                {foreach $logs as $log}
+                                <tr>
+                                    <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户信息">
+                                        <a href="/admin/user/{$log->user->id}/edit">#{$log->id}</a>
+                                    </td>
+                                    <td data-toggle="tooltip" data-placement="top" data-original-title="查看用户购买记录">
+                                        <a href="/admin/purchaselog?uid={$log->user->id}">{$log->uid}</a>
+                                    </td>
+                                    <td>{$log->user->user_name}</td>
+                                    <td>{$log->user->port}</td>
+                                    <td>{$log->transactionCount()}</td>
+                                    <td>{$log->product->name}</td>
+                                    <td>{$log->price}</td>
+                                    <td>{$log->fee}</td>
+                                    <td>{$log->buy_date}</td>
+                                    <td>{$log->out_trade_no}</td>
+                                    <td>
+                                        <a class="btn btn-default btn-sm" href="javascript:void(0);" id="delete" onclick="confirm_delete({$log->id});">删除</a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+                            </table>
+                            {$logs->render()}
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
