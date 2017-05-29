@@ -32,17 +32,21 @@
             </div>
         </form>
 
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas id="users_traffic" height="400"></canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas id="nodes_traffic" height="400"></canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas id="eachHour_traffic" height="400"></canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas id="users_traffic_thisMonth" height="400"></canvas>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="users_traffic"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="nodes_traffic"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="eachHour_traffic"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="users_traffic_thisMonth"></canvas>
+                </div>
+            </div>
         </div>
         <!-- chart -->
 

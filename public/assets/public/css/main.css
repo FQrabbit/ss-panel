@@ -70,6 +70,11 @@ i.fa.fa-angle-left{
     transition: all .5s;
 }
 
+.chart-bg {
+    background-color:rgba(0, 0, 0, 0.6);
+    padding:10px;
+}
+
 .bg-aqua, .callout.callout-info, .alert-info, .label-info, .modal-info .modal-body {
     background-color: rgba(0,0,0,0.4) !important;
 }

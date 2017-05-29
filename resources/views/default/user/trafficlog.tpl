@@ -26,17 +26,18 @@
                 </div>
             </div>
         </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="400" id="chart1">
-            </canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="400" id="chart2">
-            </canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="400" id="userWeeklyTraffic">
-            </canvas>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="chart1"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="chart2"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="userWeeklyTraffic"></canvas>
+                </div>
+            </div>
         </div>
         <!-- chart -->
         <div class="row">

@@ -108,17 +108,18 @@
             本日收入：{$income["daily"]} 元 （其中支出手续费 {$income["dailyFee"]} 元）
         </p>
         <!-- chart -->
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="300" id="dailyIncomeChart">
-            </canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="350" id="weeklyIncomeChart">
-            </canvas>
-        </div>
-        <div class="margin-bottom" style="background-color:rgba(0, 0, 0, 0.6);padding:10px;">
-            <canvas height="400" id="monthlyIncomeChart">
-            </canvas>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart-bg margin-bottom">
+                    <canvas height="300" id="dailyIncomeChart"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="350" id="weeklyIncomeChart"></canvas>
+                </div>
+                <div class="chart-bg margin-bottom">
+                    <canvas height="400" id="monthlyIncomeChart"></canvas>
+                </div>
+            </div>
         </div>
         <!-- chart -->
         <div class="row">
