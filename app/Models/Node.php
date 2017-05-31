@@ -233,7 +233,7 @@ class Node extends Model
         if ($this->getTrafficUsage() > 100) {
             return 0;
         }
-        return $total_transfer * ((100 - $this->getTrafficUsage()) / 100);
+        return $total_transfer * ((100 - $this->node_usage) / 100);
     }
 
     public function avrTrafAvaTdInGB()
