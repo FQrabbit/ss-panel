@@ -111,7 +111,7 @@
 						<div class="plan">
 							<div class="plan-name">包月</div>
 							<div class="plan-content">
-								<p>50G</p>
+								<p>90G</p>
 								<p>免費節點+付費節點</p>
 								<h3>￥10</h3>
 							</div>
@@ -119,7 +119,7 @@
 						<div class="plan">
 							<div class="plan-name">包季</div>
 							<div class="plan-content">
-								<p>50G</p>
+								<p>90G</p>
 								<p>免費節點+付費節點</p>
 								<h3>￥25</h3>
 							</div>
@@ -127,7 +127,7 @@
 						<div class="plan">
 							<div class="plan-name">包年</div>
 							<div class="plan-content">
-								<p>50G</p>
+								<p>90G</p>
 								<p>免費節點+付費節點</p>
 								<h3>￥80</h3>
 							</div>
