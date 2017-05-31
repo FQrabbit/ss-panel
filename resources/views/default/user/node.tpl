@@ -113,7 +113,7 @@
                                             </div>
                                         </td>
                                         <td{if $node->trafficOverusage()} style="color:#a94442;"{/if}>
-                                            {$node->getTrafficFromLogs()}
+                                            {$node->getTrafficFromLogs()} {$node->daysUntilNextResetDate()}
                                         </td>
                                         <td>
                                             {$node->showAverageTrafficAvailableToday()}
