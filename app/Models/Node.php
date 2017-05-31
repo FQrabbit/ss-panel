@@ -174,22 +174,25 @@ class Node extends Model
             return 0;
         }
         $last_reset_date = $this->lastResetDate();
-        $logs            = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>', $last_reset_date)->get();
-        $traffic         = NodeDailyTrafficLog::where('node_id', $id)->sum('traffic');
+        $traffic         = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>=', $last_reset_date)->sum('traffic');
         $traffic += $this->getTotalTraffic();
         $traffic_in_GB = Tools::flowToGB($traffic);
-        return round($traffic_in_GB / $transfer, 4) * 100;
+        $usage = round($traffic_in_GB / $transfer, 4) * 100;
+        if ($usage > 100) {
+            return 100;
+        }
+        return $usage;
     }
 
     public function lastResetDate()
     {
         $id        = $this->attributes['id'];
         $reset_day = $this->attributes['transfer_reset_day'];
-        $reset_day = date('Y-m-d', strtotime(date('Y-m') . "-$reset_day"));
-        if ($reset_day <= date('Y-m-d')) {
-            $last_reset_day = date('Y-m-d', strtotime($reset_day . ' -1 month'));
+        $reset_date_this_month = date('Y-m-d', strtotime(date('Y-m') . "-$reset_day"));
+        if ($reset_date_this_month <= date('Y-m-d')) {
+            $last_reset_day = $reset_date_this_month;
         } else {
-            $last_reset_day = $reset_day;
+            $last_reset_day = date('Y-m-d', strtotime($reset_date_this_month . ' -1 month'));
         }
         return $last_reset_day;
     }
@@ -271,6 +274,6 @@ class Node extends Model
      */
     public function formateResetDay()
     {
-        return date('jS', strtotime((date('Y-M-') . $this->transfer_reset_day)));
+        return date('jS', strtotime((date('Y-m-') . $this->transfer_reset_day)));
     }
 }
