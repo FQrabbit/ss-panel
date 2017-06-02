@@ -317,6 +317,7 @@ input.w3-btn.w3-xxlarge.w3-center.w3-teal {
 }
 
 .btn.focus, .btn:focus, .btn:hover {
+    color: white;
     background-color: #009688 !important;
     border-color: #009688 !important;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
