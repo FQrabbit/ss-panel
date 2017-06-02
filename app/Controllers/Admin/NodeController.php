@@ -4,8 +4,9 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Node;
-use App\Models\Vote;
 use App\Models\TrafficLog;
+use App\Models\Vote;
+use App\Models\VpsMerchant;
 
 class NodeController extends AdminController
 {
@@ -13,7 +14,7 @@ class NodeController extends AdminController
     {
         $nodes = Node::orderBy("sort")->get();
         foreach ($nodes as $node) {
-            $nodes_polls['labels'][] = $node->name;
+            $nodes_polls['labels'][]   = $node->name;
             $nodes_polls['datas'][0][] = $node->getPollCount(-1);
             $nodes_polls['datas'][1][] = $node->getPollCount(1);
         }
@@ -26,7 +27,13 @@ class NodeController extends AdminController
         $methods   = Node::getAllMethod();
         $obfses    = Node::getAllObfs();
         $protocols = Node::getAllProtocol();
-        return $this->view()->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('admin/node/create.tpl');
+        $vpsMerchants = VpsMerchant::all();
+        return $this->view()->
+            assign('methods', $methods)->
+            assign('obfses', $obfses)->
+            assign('protocols', $protocols)->
+            assign('vpsMerchants', $vpsMerchants)->
+            display('admin/node/create.tpl');
     }
 
     public function add($request, $response, $args)
@@ -53,10 +60,17 @@ class NodeController extends AdminController
         if ($node == null) {
 
         }
-        $methods   = Node::getAllMethod();
-        $obfses    = Node::getAllObfs();
-        $protocols = Node::getAllProtocol();
-        return $this->view()->assign('node', $node)->assign('methods', $methods)->assign('obfses', $obfses)->assign('protocols', $protocols)->display('admin/node/edit.tpl');
+        $methods      = Node::getAllMethod();
+        $obfses       = Node::getAllObfs();
+        $protocols    = Node::getAllProtocol();
+        $vpsMerchants = VpsMerchant::all();
+        return $this->view()->
+            assign('node', $node)->
+            assign('vpsMerchants', $vpsMerchants)->
+            assign('methods', $methods)->
+            assign('obfses', $obfses)->
+            assign('protocols', $protocols)->
+            display('admin/node/edit.tpl');
     }
 
     public function update($request, $response, $args)
@@ -85,7 +99,7 @@ class NodeController extends AdminController
         /**
          * 返回信息
          */
-        $rs['msg']   = '';
+        $rs['msg'] = '';
 
         /**
          * clean logs related to this node

@@ -223,7 +223,11 @@
                                         <label for="vps" class="col-sm-3 control-label">主机商</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="vps" value="{$node->vps}">
+                                            <select class="form-control" id="vps">
+                                                {foreach $vpsMerchants as $mer}
+                                                <option value="{$mer->id}"{if $mer->id == $node->vps} selected{/if}>{$mer->name}</option>
+                                                {/foreach}
+                                            </select>
                                         </div>
                                     </div>
 

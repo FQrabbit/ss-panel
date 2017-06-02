@@ -210,7 +210,7 @@
                                         <label for="transfer_reset_day" class="col-sm-3 control-label">流量重置日</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="transfer_reset_day" value="1st">
+                                            <input class="form-control" id="transfer_reset_day" value="1">
                                         </div>
                                     </div>
 
@@ -218,7 +218,11 @@
                                         <label for="vps" class="col-sm-3 control-label">主机商</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="vps" value="vultr">
+                                            <select class="form-control" id="vps">
+                                                {foreach $vpsMerchants as $mer}
+                                                <option value="{$mer->id}">{$mer->name}</option>
+                                                {/foreach}
+                                            </select>
                                         </div>
                                     </div>
 

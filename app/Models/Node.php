@@ -61,6 +61,11 @@ class Node extends Model
         ];
     }
 
+    public function vpsMerchant()
+    {
+        return $this->belongsTo('App\Models\VpsMerchant', 'vps');
+    }
+
     public function getLastNodeInfoLog()
     {
         $id  = $this->attributes['id'];
