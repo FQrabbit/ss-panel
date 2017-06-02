@@ -150,7 +150,7 @@
                     <ul class="nav treeview-menu menu-open">
                         <li>
                             <a href="/admin/trafficlog">
-                                <i class="fa fa-history"></i> <span>流量记录</span>
+                                <i class="fa fa-history"></i> <span>流量日志</span>
                             </a>
                         </li>
 
@@ -169,6 +169,12 @@
                         <li>
                             <a href="/admin/donatelog">
                                 <i class="fa fa-users"></i> <span>捐助日志</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/admin/expenditurelog">
+                                <i class="fa fa-archive"></i> <span>支出日志</span>
                             </a>
                         </li>
                     </ul>

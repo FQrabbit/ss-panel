@@ -81,7 +81,7 @@ class UserController extends BaseController
 
         $pagesThatRequireChartjs         = ['/user', '/user/trafficlog', '/user/node', '/admin/trafficlog', '/admin/purchaselog', '/admin/node'];
         $pagesThatRequireJQueryDatatable = ['/user/sys'];
-        $pagesThatRequireJQueryConfirm   = ['/admin/user', '/admin/node', '/admin/purchaselog', '/admin/donatelog'];
+        $pagesThatRequireJQueryConfirm   = ['/admin/user', '/admin/node', '/admin/purchaselog', '/admin/donatelog', '/admin/expenditurelog'];
         $pagesThatRequireWYSI            = ['/admin/config', '/admin/email'];
 
         $requireChartjs         = in_array($uri, $pagesThatRequireChartjs);

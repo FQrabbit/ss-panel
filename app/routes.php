@@ -110,6 +110,12 @@ $app->group('/admin', function () {
     $this->post('/adddonate', 'App\Controllers\AdminController:addDonate');
     $this->delete('/donatelog/{id}', 'App\Controllers\AdminController:deleteDonateLog');
 
+    // expenditurelog manage
+    $this->get('/expenditurelog', 'App\Controllers\AdminController:expenditureLog');
+    $this->post('/addvpsmerchant', 'App\Controllers\AdminController:addVpsMerchant');
+    $this->post('/addexpenditure', 'App\Controllers\AdminController:addExpenditure');
+    $this->delete('/expenditurelog/{id}', 'App\Controllers\AdminController:deleteExpenditureLog');
+
     // Music Manage
     $this->get('/music', 'App\Controllers\AdminController:music');
     $this->post('/music', 'App\Controllers\AdminController:addMusic');

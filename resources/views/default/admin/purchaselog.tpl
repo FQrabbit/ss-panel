@@ -96,16 +96,19 @@
         </fieldset>
         <hr/>
         <p>
-            建站以来收入：{$income["all"]} 元
+            建站以来收入：<span class="badge income">￥{$income["all"]}</span>
         </p>
         <p>
-            本年收入：{$income["yearly"]} 元 （其中支出手续费 {$income["yearlyFee"]} 元）
+            本年收入：<span class="badge income">￥{$income["yearly"]}</span> （成本：<span class="badge cost">￥{$cost['total']['yearly']}</span> =
+            <span class="badge cost">alip手续费：{$cost['fee']['yearly']}</span> + <span class="badge cost">vps成本：{$cost['vps']['yearly']}</span>）
         </p>
         <p>
-            本月收入：{$income["monthly"]} 元 （其中支出手续费 {$income["monthlyFee"]} 元）
+            本月收入：<span class="badge income">￥{$income["monthly"]}</span> （成本：<span class="badge cost">￥{$cost['total']['monthly']}</span> =
+            <span class="badge cost">alip手续费：{$cost['fee']['monthly']}</span> + <span class="badge cost">vps成本：{$cost['vps']['monthly']}</span>）
         </p>
         <p>
-            本日收入：{$income["daily"]} 元 （其中支出手续费 {$income["dailyFee"]} 元）
+            本日收入：<span class="badge income">￥{$income["daily"]}</span> （成本：<span class="badge cost">￥{$cost['total']['daily']}</span> =
+            <span class="badge cost">alip手续费：{$cost['fee']['daily']}</span> + <span class="badge cost">vps成本：{$cost['vps']['daily']}</span>）
         </p>
         <!-- chart -->
         <div class="row">

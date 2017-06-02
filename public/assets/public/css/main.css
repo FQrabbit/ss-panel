@@ -66,6 +66,14 @@ code, kbd, pre, samp {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 
+.income {
+    background-color: #1c9666;
+}
+
+.cost {
+    background-color: #a94442;
+}
+
 i.fa.fa-angle-left{
     transition: all .5s;
 }

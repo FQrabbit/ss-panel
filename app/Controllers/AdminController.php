@@ -8,6 +8,7 @@ use App\Models\Ann;
 use App\Models\AnnLog;
 use App\Models\CheckInLog;
 use App\Models\DonateLog;
+use App\Models\ExpenditureLog;
 use App\Models\InviteCode;
 use App\Models\Music;
 use App\Models\Node;
@@ -17,6 +18,7 @@ use App\Models\TrafficLog;
 use App\Models\User;
 use App\Models\UserDailyTrafficLog;
 use App\Models\Vote;
+use App\Models\VpsMerchant;
 use App\Services\Analytics;
 use App\Services\DbConfig;
 use App\Services\Mail;
@@ -118,22 +120,34 @@ class AdminController extends UserController
         $monthlyIncome = PurchaseLog::where('buy_date', '>', date('Y-m'))->sum('price');
         $dailyIncome   = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->sum('price');
 
-        /**
-         * 使用支付接口的手续费
-         * @var float
-         */
-        $yearlyFee  = PurchaseLog::where('buy_date', '>', date('Y'))->sum('fee');
-        $monthlyFee = PurchaseLog::where('buy_date', '>', date('Y-m'))->sum('fee');
-        $dailyFee   = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->sum('fee');
-
         $income['all']     = PurchaseLog::sum('price');
         $income['yearly']  = $yearlyIncome;
         $income['monthly'] = $monthlyIncome;
         $income['daily']   = $dailyIncome;
 
-        $income['yearlyFee']  = $yearlyFee;
-        $income['monthlyFee'] = $monthlyFee;
-        $income['dailyFee']   = $dailyFee;
+        /**
+         * 使用支付接口的手续费
+         */
+        $yearlyFee  = PurchaseLog::where('buy_date', '>', date('Y'))->sum('fee');
+        $monthlyFee = PurchaseLog::where('buy_date', '>', date('Y-m'))->sum('fee');
+        $dailyFee   = PurchaseLog::where('buy_date', '>', date('Y-m-d'))->sum('fee');
+
+        /**
+         * vps成本
+         */
+        $yearlyVpsCost  = ExpenditureLog::where('date', '>', date('Y'))->sum('price');
+        $monthlyVpsCost = ExpenditureLog::where('date', '>', date('Y-m'))->sum('price');
+        $dailyVpsCost   = ExpenditureLog::where('date', '>', date('Y-m-d'))->sum('price');
+
+        $cost['fee']['yearly'] = $yearlyFee;
+        $cost['fee']['monthly'] = $monthlyFee;
+        $cost['fee']['daily'] = $dailyFee;
+        $cost['vps']['yearly'] = $yearlyVpsCost;
+        $cost['vps']['monthly'] = $monthlyVpsCost;
+        $cost['vps']['daily'] = $dailyVpsCost;
+        $cost['total']['yearly'] = $cost['fee']['yearly'] + $cost['vps']['yearly'];
+        $cost['total']['monthly'] = $cost['fee']['monthly'] + $cost['vps']['monthly'];
+        $cost['total']['daily'] = $cost['fee']['daily'] + $cost['vps']['daily'];
 
         $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m') . '-01 -12 months'));
         $someMonth          = $half_year_ago_date;
@@ -187,7 +201,16 @@ class AdminController extends UserController
         $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
         $logs->setPath($path);
         $products = Shop::where('status', 1)->get();
-        return $this->view()->assign('logs', $logs)->assign('q', $q)->assign('income', $income)->assign('products', $products)->assign('eachHour_income_for_chart', $eachHour_income_for_chart)->assign('weekly_income_for_chart', $weekly_income_for_chart)->assign('monthly_income_for_chart', $monthly_income_for_chart)->display('admin/purchaselog.tpl');
+        return $this->view()->
+            assign('logs', $logs)->
+            assign('q', $q)->
+            assign('income', $income)->
+            assign('cost', $cost)->
+            assign('products', $products)->
+            assign('eachHour_income_for_chart', $eachHour_income_for_chart)->
+            assign('weekly_income_for_chart', $weekly_income_for_chart)->
+            assign('monthly_income_for_chart', $monthly_income_for_chart)->
+            display('admin/purchaselog.tpl');
     }
 
     public function addPurchase($request, $response, $args)
@@ -329,6 +352,101 @@ class AdminController extends UserController
     {
         $id     = $args["id"];
         $record = DonateLog::find($id);
+        if (!$record->delete()) {
+            $rs['ret'] = 0;
+            $rs['msg'] = "删除失败";
+            return $response->getBody()->write(json_encode($rs));
+        }
+        $rs['ret'] = 1;
+        $rs['msg'] = "删除成功";
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function expenditureLog($request, $response, $args)
+    {
+        $q = $request->getQueryParams();
+        if (!isset($q['page'])) {
+            $q['page'] = 1;
+        }
+        $logs = ExpenditureLog::where('id', '>', 0);
+        $path = '/admin/expenditurelog?';
+        foreach ($q as $k => $v) {
+            if ($v != '' && $k != 'page') {
+                $logs = $logs->where($k, $v);
+                $path .= $k . '=' . $v . '&';
+            }
+        }
+        $path = substr($path, 0, strlen($path) - 1);
+        $logs = $logs->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $q['page']);
+        $logs->setPath($path);
+
+        $yearlyExpenditure  = ExpenditureLog::where('date', '>', date('Y'))->sum('price');
+        $monthlyExpenditure = ExpenditureLog::where('date', '>', date('Y-m'))->sum('price');
+
+        $expenditure['yearly']  = $yearlyExpenditure;
+        $expenditure['monthly'] = $monthlyExpenditure;
+        $expenditure['all']     = ExpenditureLog::sum('price');
+
+        $vpsMerchants = VpsMerchant::all();
+        $nodes        = Node::all();
+
+        return $this->view()->
+            assign('logs', $logs)->
+            assign('vpsMerchants', $vpsMerchants)->
+            assign('nodes', $nodes)->
+            assign('expenditure', $expenditure)->
+            display('admin/expenditurelog.tpl');
+    }
+
+    public function addVpsMerchant($request, $response, $args)
+    {
+        $q = $request->getParsedBody();
+        if ($q['name'] == '') {
+            $rs['ret'] = 0;
+            $rs['msg'] = '输入不完整';
+            return $response->getBody()->write(json_encode($rs));
+        }
+        $log          = new VpsMerchant();
+        $log->name    = $q['name'];
+        $log->api     = $q['api'];
+        $log->website = $q['website'];
+        if ($log->save()) {
+            $rs['ret'] = 1;
+            $rs['msg'] = 'vps供应商添加成功！';
+        } else {
+            $rs['ret'] = 0;
+            $rs['msg'] = '操作失败！';
+        }
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function addExpenditure($request, $response, $args)
+    {
+        $q = $request->getParsedBody();
+        if ($q['vps_merchant_id'] == '' || $q['node_id'] == '' || $q['price'] == '') {
+            $rs['ret'] = 0;
+            $rs['msg'] = '输入不完整';
+            return $response->getBody()->write(json_encode($rs));
+        }
+        $log                  = new ExpenditureLog();
+        $log->vps_merchant_id = $q['vps_merchant_id'];
+        $log->node_id         = $q['node_id'];
+        $log->price           = $q['price'];
+        $log->date            = date('Y-m-d H:i:s');
+        if ($log->save()) {
+            $rs['ret'] = 1;
+            $rs['msg'] = '支出记录添加成功！';
+        } else {
+            $rs['ret'] = 0;
+            $rs['msg'] = '操作失败！';
+        }
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function deleteExpenditureLog($request, $response, $args)
+    {
+        $id     = $args["id"];
+        $record = ExpenditureLog::find($id);
         if (!$record->delete()) {
             $rs['ret'] = 0;
             $rs['msg'] = "删除失败";
@@ -510,8 +628,8 @@ class AdminController extends UserController
         /**
          * 用户本月流量使用降序排名 chart 4
          */
-        $traffic_logs = UserDailyTrafficLog::where('date', '>=', date('Y-m').'-1')->get();
-        $users_traffic_thisMonth = [];
+        $traffic_logs                      = UserDailyTrafficLog::where('date', '>=', date('Y-m') . '-1')->get();
+        $users_traffic_thisMonth           = [];
         $users_traffic_thisMonth_for_chart = [];
         foreach ($traffic_logs as $log) {
             if (isset($users_traffic_thisMonth[$log->uid])) {
