@@ -47,6 +47,8 @@ class Node extends Model
             'http_post_compatible',
             'tls1.2_ticket_auth',
             'tls1.2_ticket_auth_compatible',
+            'tls1.2_ticket_fastauth',
+            'tls1.2_ticket_fastauth_compatible',
         ];
     }
 
