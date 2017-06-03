@@ -42,6 +42,9 @@ $app->get('/dopay', 'App\Controllers\PaymentController:doReturn');
 $app->post('/dopay', 'App\Controllers\PaymentController:doReturn');
 $app->post('/prepay', 'App\Controllers\PaymentController:prepay');
 
+// Feed
+$app->get('/feed', 'App\Controllers\HomeController:feed');
+
 // User Center
 $app->group('/user', function () {
     $this->get('', 'App\Controllers\UserController:index');

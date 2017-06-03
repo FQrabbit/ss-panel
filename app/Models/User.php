@@ -459,4 +459,9 @@ class User extends Model
     {
         return round($this->unusedTrafficInGB()/$this->daysUntilNextTransferResetDate(), 3);
     }
+
+    public function feedToken()
+    {
+        return hash('ripemd160', $this->passwd);
+    }
 }

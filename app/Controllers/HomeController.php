@@ -8,12 +8,15 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 use App\Models\InviteCode;
+use App\Models\User;
+use App\Models\Node;
 use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
 use App\Services\Logger;
 use App\Utils\Check;
 use App\Utils\Http;
+use App\Utils\Tools;
 
 /**
  *  HomeController
@@ -84,5 +87,39 @@ class HomeController extends BaseController
             "params" => $request->getParams() 
         ];
         return $this->echoJson($response, $res);
+    }
+
+    public function feed($request, $response, $args)
+    {
+        $q = $request->getParams();
+        $uid = $q['uid'];
+        $token = $q['token'];
+
+        $user = User::find($uid);
+        if ($token != hash('ripemd160', $user->passwd)) {
+            return '';
+        }
+
+        if ($user->isFreeUser()) {
+            $nodes = Node::where('type', 0)->orderBy('sort')->get();
+        } else {
+            $nodes = Node::where('type', '>=', '0')->orderBy('sort')->get();
+        }
+
+        $feed = '';
+        foreach ($nodes as $node) {
+            $ary['server']      = $node->server;
+            $ary['server_port'] = $user->port;
+            $ary['password']    = $user->passwd;
+            $ary['method']      = ($node->custom_method == 1 ? $user->method : $node->method);
+
+            $ary['obfs']       = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->obfs : $node->obfs));
+            $ary['obfs_param'] = str_replace("_compatible", "", (($node->custom_rss == 1 && $user->obfs_param != null) ? $user->obfs_param : $node->obfs_param));
+            $ary['protocol']   = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
+
+            $ssrUrl = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
+            $feed .= $ssrUrl . ' ';
+        }
+        return $feed;
     }
 }

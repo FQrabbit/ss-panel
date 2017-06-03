@@ -311,10 +311,15 @@ class UserController extends BaseController
         $methods   = Node::getAllMethod();
         $obfses    = Node::getAllObfs();
         $protocols = Node::getAllProtocol();
+
+        $user = $this->user;
+        $feedToken = $user->feedToken();
+        $feedUrl = Config::getPublicConfig()['baseUrl'] . '/feed?token=' . $feedToken . '&uid=' . $user->id;
         return $this->view()->
             assign('methods', $methods)->
             assign('obfses', $obfses)->
             assign('protocols', $protocols)->
+            assign('feedUrl', $feedUrl)->
             display('user/profile.tpl');
     }
 

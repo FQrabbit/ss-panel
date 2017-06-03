@@ -295,6 +295,46 @@
 
                 </div>
                 <!-- /.box -->
+                
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-key"></i>
+
+                        <h3 class="box-title">SSR Feed</h3>
+                    </div>
+                    <!-- /.box-header --><!-- form start -->
+
+                    <div class="box-body">
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">URL</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="{$feedUrl}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Token</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="{$user->feedToken()}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Decrypt Key</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
             </div>
             <!-- /.col (right) -->
 
