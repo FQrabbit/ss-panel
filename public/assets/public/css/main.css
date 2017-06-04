@@ -52,7 +52,7 @@ p a:hover, .main-footer a:hover {
     text-decoration-color: #009688;
 }
 
-a, button, .w3-btn {
+a, button, .w3-btn, .btn {
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
@@ -67,7 +67,7 @@ a, button, .w3-btn {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.btn:active, btn:focus {
+.btn:active, .btn:focus {
     color: white !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
 }

@@ -372,7 +372,7 @@ class UserController extends BaseController
     public function purchase()
     {
         $msg           = DbConfig::get('user-purchase');
-        $products      = Shop::where('status', 1)->get();
+        $products      = Shop::where('status', 1)->orderBy('sort')->get();
         return $this->view()->assign('products', $products)->assign('msg', $msg)->display('user/purchase.tpl');
     }
 

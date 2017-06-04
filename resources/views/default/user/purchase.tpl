@@ -39,44 +39,23 @@
                                 </caption>
                                 <thead>
                                     <tr>
-                                        <th>
-                                            套餐名
-                                        </th>
-                                        <th>
-                                            流量
-                                        </th>
-                                        <th>
-                                            价格
-                                        </th>
-                                        <th>
-                                            期限
-                                        </th>
-                                        <th>
-                                            节点
-                                        </th>
-                                        <th>
-                                        </th>
+                                        <th>套餐名</th>
+                                        <th>流量</th>
+                                        <th>价格</th>
+                                        <th>期限</th>
+                                        <th>节点</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {foreach $products as $product}
-                                    {if $product->type != 'A'}
+                                    {if $product->isByMete() || $product->type == 'AB'}
                                     <tr>
-                                        <td>
-                                            {$product->description}
-                                        </td>
-                                        <td>
-                                            {$product->transfer}G
-                                        </td>
-                                        <td>
-                                            ￥{$product->price}
-                                        </td>
-                                        <td>
-                                            {$product->period_for_show}
-                                        </td>
-                                        <td>
-                                            免费节点+付费节点
-                                        </td>
+                                        <td>{$product->description}</td>
+                                        <td>{$product->transfer}G</td>
+                                        <td>￥{$product->price}</td>
+                                        <td>{$product->period_for_show}</td>
+                                        <td>免费节点+付费节点</td>
                                         <td>
                                             <form accept-charset="utf-8" action="/prepay" method="post" name="alipaypay" target="_blank">
                                                 <input name="uid" type="hidden" value="{$user->id}">
@@ -96,45 +75,65 @@
                             <table class="table table-striped table-hover">
                                 <caption class="center">
                                     <h4>
-                                        <strong>
-                                            按时间购买
-                                        </strong>
+                                        <strong>按时间购买</strong>
                                     </h4>
                                 </caption>
                                 <thead>
                                     <tr>
-                                        <th>
-                                            套餐名
-                                        </th>
-                                        <th>
-                                            每月流量
-                                        </th>
-                                        <th>
-                                            价格
-                                        </th>
-                                        <th>
-                                            节点
-                                        </th>
-                                        <th>
-                                        </th>
+                                        <th>套餐名</th>
+                                        <th>每月流量</th>
+                                        <th>价格</th>
+                                        <th>节点</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {foreach $products as $product}
                                     {if $product->type == 'A'}
                                     <tr>
+                                        <td>{$product->description}</td>
+                                        <td>{if $product->unlimitTransfer()}不限流量{else}{$product->transfer}G{/if}</td>
+                                        <td>￥{$product->price}</td>
+                                        <td>免费节点+付费节点</td>
                                         <td>
-                                            {$product->description}
+                                            <form accept-charset="utf-8" action="/prepay" method="post" name="alipaypay" target="_blank">
+                                                <input name="uid" type="hidden" value="{$user->id}">
+                                                <input name="total" type="hidden" value="{$product->price}">
+                                                <input name="product_id" type="hidden" value="{$product->id}">
+                                                <input class="btn btn-default btn-flat" type="submit" value="购买">
+                                            </form>
                                         </td>
-                                        <td>
-                                            {if $product->unlimitTransfer()}不限流量{else}{$product->transfer}G{/if}
-                                        </td>
-                                        <td>
-                                            ￥{$product->price}
-                                        </td>
-                                        <td>
-                                            免费节点+付费节点
-                                        </td>
+                                    </tr>
+                                    {/if}
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr/>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <caption class="center">
+                                    <h4>
+                                        <strong>流量加油包</strong>
+                                    </h4>
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th>套餐名</th>
+                                        <th>每月流量</th>
+                                        <th>期限</th>
+                                        <th>价格</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {foreach $products as $product}
+                                    {if $product->type == 'C'}
+                                    <tr>
+                                        <td>{$product->description}</td>
+                                        <td>{$product->transfer}G</td>
+                                        <td>{$product->period_for_show}</td>
+                                        <td>￥{$product->price}</td>
                                         <td>
                                             <form accept-charset="utf-8" action="/prepay" method="post" name="alipaypay" target="_blank">
                                                 <input name="uid" type="hidden" value="{$user->id}">

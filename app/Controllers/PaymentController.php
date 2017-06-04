@@ -210,8 +210,11 @@ class PaymentController extends BaseController
                 }
             }
             $user->resetExpireDate();
+        } elseif ($product->type == 'C') {
+            // 流量加油包
+            $user->addTraffic($transfer_to_add);
         } else {
-            //试用套餐
+            // 试用套餐
             $user->addTraffic($transfer_to_add);
             $user->updateExpireDate($product->id);
         }
@@ -280,6 +283,13 @@ class PaymentController extends BaseController
 
             if ($product->isByTime() && $user->product_id && $user->product->isByTime() && $user->product->transfer != $product->transfer && (strtotime($user->expire_date) - time()) > 86400 * 3) {
                 return '更换套餐需要在过期前三天内进行。';
+            }
+
+            /**
+             * 加油包
+             */
+            if ($product->type == 'C' && !$user->product->isByTime()) {
+                return '当前套餐无法购买加油包';
             }
         }
         $product_id = sprintf('%02d', $product_id);
