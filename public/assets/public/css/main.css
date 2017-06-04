@@ -8,6 +8,21 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
+html {
+    margin-right: -8px;
+    padding-right: 8px;
+    overflow-x: hidden;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans Pro', sans-serif, Helvetica, Tahoma, Arial, "Microsoft YaHei", "微软雅黑",  STXihei, "华文细黑",SimSun, "宋体", Heiti, "黑体", sans-serif;
+    background: -webkit-linear-gradient(top left, rgb(6, 31, 28) 0%, #128453 100%);
+    background: linear-gradient(to bottom right, rgb(6, 31, 28) 0%, #128453 100%);
+    position: relative;
+}
+
 body,h1,h2,h3,h4,h5,h6,a,i,small,input,select,textarea,span,button,label,legend,.form-control,.btn-default {
     color: white;
 }
@@ -26,8 +41,10 @@ code, kbd, pre, samp {
     color: #ddd;
 }
 
-a:hover, a:active, a:focus {
-    color: white;
+a:hover, a:active, a:focus, button:hover, button:active, button:focus {
+    color: white !important;
+    border-color: white !important;
+    outline: none !important;
 }
 
 p a:hover, .main-footer a:hover {
@@ -35,7 +52,7 @@ p a:hover, .main-footer a:hover {
     text-decoration-color: #009688;
 }
 
-a, button {
+a, button, .w3-btn {
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
     -o-transition: all .2s ease-out;
@@ -43,23 +60,20 @@ a, button {
     transition: all .2s ease-out;
 }
 
+.btn:hover {
+    color: white;
+    background-color: #009688 !important;
+    border-color: #009688 !important;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn:active, btn:focus {
+    color: white !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
 b {
     color: #4db6ac !important;
-}
-
-html {
-    margin-right: -8px;
-    padding-right: 8px;
-    overflow-x: hidden;
-}
-
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-family: 'Source Sans Pro', sans-serif, Helvetica, Tahoma, Arial, "Microsoft YaHei", "微软雅黑",  STXihei, "华文细黑",SimSun, "宋体", Heiti, "黑体", sans-serif;
-    background: -webkit-linear-gradient(top left, rgb(6, 31, 28) 0%, #128453 100%);
-    background: linear-gradient(to bottom right, rgb(6, 31, 28) 0%, #128453 100%);
-    position: relative;
 }
 
 code, kbd, pre, samp {
@@ -164,8 +178,58 @@ i.fa.fa-angle-left{
     background-color: rgba(0, 0, 0, 0.72);
 }
 
-.w3-modal .w3-modal-content {
+.w3-modal>.w3-modal-content {
     background-color: rgba(0, 0, 0, 0.75);
+}
+
+.w3-modal .close-btn{
+    background-color: transparent;
+}
+
+.w3-modal .close-btn:hover {
+    box-shadow: none;
+    transform: rotate(180deg);
+    padding-bottom: 10px;
+}
+
+.w3-modal .w3-btn:active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.w3-modal .w3-btn.close-btn:active {
+    background-color: transparent;
+}
+
+.w3-modal hr {
+    margin: 0;
+}
+
+.w3-modal>.w3-modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.w3-modal>.w3-modal-content::before {
+    background-color: #055e54;
+    width: 100%;
+    height: 100%;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    z-index: -5;
+}
+
+#donateModal .w3-modal-content::before {
+    background-color: #3E2723;
+}
+
+#donateModal button.w3-btn.w3-xxlarge.w3-center {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    width: 98%;
+    margin-bottom: 5px;
 }
 
 .btn-default {
@@ -179,11 +243,6 @@ i.fa.fa-angle-left{
 
 .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default {
     color: #fff !important;
-}
-
-.btn-default:hover, .btn-default:active, .btn-default.hover {
-    background-color: rgba(255, 255, 255, 0.11) !important;
-    color: white !important;
 }
 
 .box, .box-primary {
@@ -302,11 +361,6 @@ option {
     margin: 0 auto;
 }
 
-input.w3-btn.w3-xxlarge.w3-center.w3-teal {
-    width: 98%;
-    margin-bottom: 5px;
-}
-
 .main-footer {
     background: rgba(0, 0, 0, 0.15) !important;
     color: white;
@@ -314,13 +368,6 @@ input.w3-btn.w3-xxlarge.w3-center.w3-teal {
 
 .margin {
     margin: 2px !important;
-}
-
-.btn.focus, .btn:focus, .btn:hover {
-    color: white;
-    background-color: #009688 !important;
-    border-color: #009688 !important;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card {

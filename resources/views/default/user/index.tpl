@@ -178,12 +178,14 @@
     <!-- /.content -->
 </div><!-- /.content-wrapper -->
 
-<div id="donateModal" class="w3-modal" style="z-index:999999;display:none;">
+<div id="donateModal" class="w3-modal" style="z-index:10001;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
-        <header class="w3-container w3-teal">
-            <span onclick=$("#donateModal").hide() class="w3-btn w3-large w3-display-topright">×</span>
+        <header class="w3-container">
+            <span onclick="$('#donateModal').fadeOut()" class="w3-btn w3-large w3-display-topright close-btn">×</span>
             <h3>捐助Shadowsky</h3>
         </header>
+        <hr>
+        <br>
         <div class="w3-container">
             <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
                 <div class="w3-row">
@@ -191,7 +193,7 @@
                         <input type="hidden" name="uid" value="{$user->id}">
                         <input type="hidden" name="product_id" value="0">
                         <input class="w3-input" name="total" type="number" value=2 style="width:20%;display:inline">
-                        <button class="w3-btn w3-teal" type="submit">确认</button>
+                        <button class="w3-btn w3-border" type="submit">确认</button>
                 </div>
             </form>
             <div class="w3-row w3-margin-top">
@@ -200,7 +202,8 @@
                     <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
                         <input type="hidden" name="uid" value="{$user->id}">
                         <input type="hidden" name="product_id" value="0">
-                        <input type="submit" name="total" class="w3-btn w3-xxlarge w3-center w3-teal" value={$a}>
+                        <input type="hidden" name="total" value="{$a}">
+                        <button class="w3-btn w3-xxlarge w3-center" type="submit">￥{$a}</button>
                     </form>
                 </div>
                 {/foreach}
@@ -209,33 +212,35 @@
     </div>
 </div>
 
-<div id="activate-modal" class="w3-modal" style="z-index:999999;display:none;">
+<div id="activate-modal" class="w3-modal" style="z-index:10001;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
-        <header class="w3-container w3-teal">
-            <span onclick=$("#activate-modal").hide() class="w3-btn w3-large w3-display-topright">×</span>
+        <header class="w3-container">
+            <span onclick="$('#activate-modal').fadeOut()" class="w3-btn w3-large w3-display-topright close-btn">×</span>
             <h3>激活账号</h3>
         </header>
+        <hr>
         <div class="w3-container">
             <br>
             <p>Hello, {$user->user_name}。由于您已超过一个月没有使用本站的ss了，为了释放服务器资源，您的账号已被冻结，点击下面的按钮可重新激活账号。</p>
-            <button id="activate" class="btn btn-default btn-flat btn-sm w3-margin">点此激活账号</button>
-            <br>
+            <button id="activate" class="w3-btn w3-border w3-margin">点此激活账号</button>
             <p id="activate-msg"></p>
         </div>
     </div>
 </div>
-<div id="new-ann-modal" class="w3-modal" style="z-index:999999;display:none;">
+<div id="new-ann-modal" class="w3-modal" style="z-index:10001;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
-        <header class="w3-container w3-teal">
-            <span onclick=$("#new-ann-modal").hide() class="w3-btn w3-large w3-display-topright">×</span>
+        <header class="w3-container">
+            <span onclick="$('#new-ann-modal').fadeOut()" class="w3-btn w3-large w3-display-topright close-btn">×</span>
             <h3>{$new_ann->title}</h3>
         </header>
+        <hr>
         <div class="w3-container">
             <br>
             <p>{$new_ann->content}</p>
         </div>
-        <footer class="w3-container w3-teal w3-padding">
-            <button id="read" class="pull-right w3-btn w3-teal w3-border" onclick="read({$new_ann->id})">知道了</button>
+        <hr>
+        <footer class="w3-container w3-padding">
+            <button id="read" class="pull-right w3-btn w3-border" onclick="read({$new_ann->id})">知道了</button>
         </footer>
     </div>
 </div>
@@ -293,7 +298,7 @@
                     dataType: "json",
                     success: function (data) {
                         $("#checkin-msg").html(data.msg);
-                        $("#checkin-btn").hide();
+                        $("#checkin-btn").fadeOut();
                     },
                     error: function (jqXHR) {
                         alert("发生错误：" + jqXHR.status);
