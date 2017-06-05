@@ -107,7 +107,9 @@ class HomeController extends BaseController
         }
 
         $feed = '';
+        $nodes_count = 0;
         foreach ($nodes as $node) {
+            $nodes_count++;
             $ary['server']      = $node->server;
             $ary['server_port'] = $user->port;
             $ary['password']    = $user->passwd;
@@ -118,8 +120,8 @@ class HomeController extends BaseController
             $ary['protocol']   = str_replace("_compatible", "", ($node->custom_rss == 1 ? $user->protocol : $node->protocol));
 
             $ssrUrl = $node->getSSRUrl($ary); //SSR 新版(3.8.3之后)
-            $feed .= $ssrUrl . ' ';
+            $feed .= $ssrUrl . "\n";
         }
-        return $feed;
+        return Tools::base64_url_encode("MAX=".$nodes_count."\n".$feed);
     }
 }
