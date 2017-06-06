@@ -212,7 +212,7 @@
     </div>
 </div>
 
-<div id="activate-modal" class="w3-modal" style="z-index:10001;display:block;">
+<div id="activate-modal" class="w3-modal" style="z-index:10001;display:none;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container">
             <span onclick="$('#activate-modal').fadeOut()" class="w3-btn w3-large w3-display-topright close-btn">×</span>
