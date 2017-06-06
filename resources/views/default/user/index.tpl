@@ -189,7 +189,7 @@
         <div class="w3-container">
             <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
                 <div class="w3-row">
-                        <lable class="w3-label">请输入捐助金额：</label>
+                        <label class="w3-label">请输入捐助金额：</label>
                         <input type="hidden" name="uid" value="{$user->id}">
                         <input type="hidden" name="product_id" value="0">
                         <input class="w3-input" name="total" type="number" value=2 style="width:20%;display:inline">
