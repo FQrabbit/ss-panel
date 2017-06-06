@@ -312,7 +312,7 @@
 
                                 <div class="col-sm-9">
                                     <div class="input-group">
-                                        <input id="feedUrl" type="text" class="form-control" value="{$feedUrl}">
+                                        <input id="feedUrl" type="text" class="form-control" value="{$feedUrl}" readonly>
                                         <span class="input-group-btn">
                                             <button class="btn btn-default btn-flat copy" data-clipboard-target="#feedUrl" data-clipboard-demo>复制</button>
                                         </span>
