@@ -311,25 +311,15 @@
                                 <label class="col-sm-3 control-label">URL</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" value="{$feedUrl}">
+                                    <div class="input-group">
+                                        <input id="feedUrl" type="text" class="form-control" value="{$feedUrl}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default btn-flat copy" data-clipboard-target="#feedUrl" data-clipboard-demo>复制</button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Token</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" value="{$user->feedToken()}">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Decrypt Key</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" value="">
-                                </div>
-                            </div>
+                            <p>说明：如需重置此URL，更改ss密码即可。</p>
                         </div>
                     </div>
                     <!-- /.box-body -->

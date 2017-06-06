@@ -38,11 +38,13 @@
 <!-- FastClick -->
 <script src='/assets/public/plugins/fastclick/fastclick.min.js'></script>
 <!-- AdminLTE App -->
-<script src="/assets/public/js/app.min.js" type="text/javascript"></script>
+<script src="/assets/public/js/app.min.js"></script>
+<!-- Clipboard -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.1/clipboard.min.js"></script>
 <script src="/assets/public/js/main.js"></script>
 {if $requireJQueryDatatable}
 <!-- DataTables -->
-<script type="text/javascript" charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script>
+<script charset="utf8" src="/assets/public/js/jquery.dataTables.min.js"></script>
 {/if}
 {if $requireChartjs}
 <!-- chart -->

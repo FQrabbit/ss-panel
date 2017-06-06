@@ -196,7 +196,7 @@
                         <button class="w3-btn w3-border" type="submit">确认</button>
                 </div>
             </form>
-            <div class="w3-row w3-margin-top">
+            <div class="w3-row w3-margin-top w3-margin-bottom">
                 {foreach [2,5,10,20] as $a}
                 <div class="w3-quarter">
                     <form name="alipaypay" method="post" accept-charset="utf-8" action="/prepay" target="_blank">
@@ -212,7 +212,7 @@
     </div>
 </div>
 
-<div id="activate-modal" class="w3-modal" style="z-index:10001;display:none;">
+<div id="activate-modal" class="w3-modal" style="z-index:10001;display:block;">
     <div class="w3-modal-content w3-animate-zoom w3-card-8" style="width:50%">
         <header class="w3-container">
             <span onclick="$('#activate-modal').fadeOut()" class="w3-btn w3-large w3-display-topright close-btn">×</span>
@@ -221,7 +221,8 @@
         <hr>
         <div class="w3-container">
             <br>
-            <p>Hello, {$user->user_name}。由于您已超过一个月没有使用本站的ss了，为了释放服务器资源，您的账号已被冻结，点击下面的按钮可重新激活账号。</p>
+            <p>Hello, {$user->user_name}</p>
+            <p>由于您已超过一个月没有使用本站的ss了，为了释放服务器资源，您的账号已被冻结，点击下面的按钮可重新激活账号。</p>
             <button id="activate" class="w3-btn w3-border w3-margin">点此激活账号</button>
             <p id="activate-msg"></p>
         </div>

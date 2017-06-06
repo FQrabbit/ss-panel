@@ -13,6 +13,31 @@ $('.sidebar-menu>li').on('click',function(){
     $(this).addClass('active');
 })
 
+$('.btn').tooltip({
+  trigger: 'click',
+  placement: 'bottom'
+});
+
+function setTooltip(btn, message) {
+  btn.tooltip('hide')
+    .attr('data-original-title', message)
+    .tooltip('show');
+}
+
+function hideTooltip(btn) {
+  setTimeout(function() {
+    btn.tooltip('hide');
+  }, 1000);
+}
+
+var clipboard = new Clipboard('.btn');
+
+clipboard.on('success', function(e) {
+    var btn = $(e.trigger);
+  setTooltip(btn, 'Copied');
+  hideTooltip(btn);
+});
+
 // Node Page
 function urlChange(id) {
     var site = './node/'+id;

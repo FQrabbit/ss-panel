@@ -62,12 +62,10 @@ a, button, .w3-btn, .btn {
 
 .btn:hover {
     color: white;
-    background-color: #009688 !important;
-    border-color: #009688 !important;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.btn:active, .btn:focus {
+.btn:active {
     color: white !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
 }
@@ -281,6 +279,10 @@ i.fa.fa-angle-left{
 
 input, optgroup, select, textarea {
     background-color: rgba(0, 0, 0, 0.11) !important;
+}
+
+.form-control:focus {
+    border-color: #009688!important;
 }
 
 option {
@@ -746,7 +748,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     color: #8a6d3b;
 }
 
-#__lpform_oldpwd, #__lpform_pwd, #__lpform_repwd, #__lpform_sspwd {
+#__lpform_oldpwd, #__lpform_pwd, #__lpform_repwd, #__lpform_sspwd, #__lpform_sspwd_numspan {
     display: none;
 }
 
