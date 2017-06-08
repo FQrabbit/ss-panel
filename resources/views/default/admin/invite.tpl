@@ -65,7 +65,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button id="invite" type="submit" name="action" value="add" class="btn btn-primary">生成</button>
+                        <button id="invite" type="submit" name="action" value="add" class="btn btn-default">生成</button>
                     </div>
 
                 </div>

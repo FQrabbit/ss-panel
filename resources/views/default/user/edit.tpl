@@ -78,7 +78,7 @@
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" id="pwd-update" class="btn btn-primary">修改</button>
+                        <button type="submit" id="pwd-update" class="btn btn-default">修改</button>
                     </div>
 
                 </div>
@@ -102,7 +102,7 @@
                                     <div class="input-group">
                                         <input type="text" id="sspwd" placeholder="输入新连接密码" class="form-control">
                                         <div class="input-group-btn">
-                                            <button type="submit" id="ss-pwd-update" class="btn btn-primary">修改</button>
+                                            <button type="submit" id="ss-pwd-update" class="btn btn-default">修改</button>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                     <div class="input-group">
                                         <input type="text" id="ssport" placeholder="{$user->port}" class="form-control" disabled>
                                         <div class="input-group-btn">
-                                            <button type="submit" id="portreset" class="btn btn-primary">重置端口</button>
+                                            <button type="submit" id="portreset" class="btn btn-default">重置端口</button>
                                         </div>
                                     </div>
                                 </div>

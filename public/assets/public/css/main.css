@@ -41,7 +41,7 @@ code, kbd, pre, samp {
     color: #ddd;
 }
 
-a:hover, a:active, a:focus, button:hover, button:active, button:focus {
+a:hover, a:active, a:focus, button:hover, button:active, button:focus, .btn:hover, .btn:active, .btn:focus {
     color: white !important;
     border-color: white !important;
     outline: none !important;
@@ -52,7 +52,7 @@ p a:hover, .main-footer a:hover {
     text-decoration-color: #009688;
 }
 
-a, button, .w3-btn, .btn {
+.w3-btn, .btn-default {
     background-color: transparent;
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
@@ -61,13 +61,15 @@ a, button, .w3-btn, .btn {
     transition: all .2s ease-out;
 }
 
-.btn:hover {
-    color: white;
+.btn-default {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.btn-default:hover {
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.btn:active {
-    color: white !important;
+.btn-default:active {
     background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -231,10 +233,6 @@ i.fa.fa-angle-left{
     margin-bottom: 5px;
 }
 
-.btn-default {
-    background-color: rgba(96, 125, 139, 0.19) !important;
-}
-
 .nav .dropdown-menu {
     background-color: rgba(0, 0, 0, 0) !important;
     border-color: rgba(0, 0, 0, 0) !important;
@@ -322,7 +320,8 @@ option {
 }
 
 .input-group .input-group-addon {
-    background-color: rgba(0, 0, 0, 0.31);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 #join {
@@ -459,6 +458,10 @@ tr, td, th{
     height: 40px;
     background-color: rgba(255, 255, 255, 0);
     bottom: -160px;
+   -webkit-transform: translate3d(0, 0, 0);
+   -moz-transform: translate3d(0, 0, 0);
+   -ms-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0);
     -webkit-animation: square 25s infinite;
     animation: square 25s infinite;
     -webkit-transition-timing-function: linear;
@@ -773,11 +776,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     width: 0;
 }
 
-.sidebar-open .main-sidebar, .sidebar-open .main-header, .sidebar-open .content-wrapper, .sidebar-open .left-side , .sidebar-open .main-footer {
-    webkit-transform: translate(230px, 0);
-    -ms-transform: translate(230px, 0);
-    -o-transform: translate(230px, 0);
-    transform: translate(230px, 0);
+.sidebar-open .main-sidebar, .sidebar-open .main-header {
+    webkit-transform: translate3d(230px, 0, 0);
+    -ms-transform: translate3d(230px, 0, 0);
+    -o-transform: translate3d(230px, 0, 0);
+    transform: translate3d(230px, 0, 0);
 }
 
 .download-config-btn {
@@ -795,20 +798,34 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
         display: inline-block;
     }
     .main-sidebar, .left-side {
-        position: fixed !important;
-        webkit-transform: translate(230px, 0);
-        -ms-transform: translate(230px, 0);
-        -o-transform: translate(230px, 0);
-        transform: translate(230px, 0);
+        webkit-transform: translate3d(230px, 0, 0);
+        -ms-transform: translate3d(230px, 0, 0);
+        -o-transform: translate3d(230px, 0, 0);
+        transform: translate3d(230px, 0, 0);
     }
-    .sidebar-collapse .main-sidebar, .sidebar-collapse .left-side {
-        webkit-transform: translate(-230px, 0);
-        -ms-transform: translate(-230px, 0);
-        -o-transform: translate(-230px, 0);
-        transform: translate(-230px, 0);
-    }
-    .content-wrapper, .main-footer {
+    .content-wrapper, .main-footer, .sidebar-open .content-wrapper, .sidebar-open .main-footer  {
         margin-left: 230px;
+    }
+    .sidebar-collapse .content-wrapper, .sidebar-collapse .main-footer {
+        margin-left: 0;
+    }
+    .sidebar-open .main-header {
+        webkit-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    .sidebar-collapse .main-header, .sidebar-collapse .left-side {
+        webkit-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    .sidebar-collapse .main-sidebar {
+        webkit-transform: translate3d(-100px, 0, 0);
+        -ms-transform: translate3d(-100px, 0, 0);
+        -o-transform: translate3d(-100px, 0, 0);
+        transform: translate3d(-100px, 0, 0);
     }
 }
 

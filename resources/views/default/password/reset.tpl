@@ -17,7 +17,7 @@
         <div class="row">
 
             <div class="col-xs-4">
-                <button id="reset" type="submit" class="btn btn-primary btn-block btn-flat">重置密码</button>
+                <button id="reset" type="submit" class="btn btn-primary btn-block btn-flat margin-bottom">重置密码</button>
             </div><!-- /.col -->
         </div>
         <div id="msg-success" class="alert alert-info alert-dismissable" style="display: none;">

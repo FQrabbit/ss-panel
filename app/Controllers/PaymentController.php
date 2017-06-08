@@ -251,6 +251,7 @@ class PaymentController extends BaseController
             $arr2  = [
                 'user' => $user,
                 'pre'  => $pre,
+                'product' => $product,
             ];
             // return $user;
             Mail::send($this->adminEmail, $title, $tpl, $arr2, []);

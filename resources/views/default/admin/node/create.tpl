@@ -263,7 +263,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" id="submit" name="action" value="add" class="btn btn-primary">添加</button>
+                        <button type="submit" id="submit" name="action" value="add" class="btn btn-default">添加</button>
                     </div>
                 </div>
                 <!-- /.box -->

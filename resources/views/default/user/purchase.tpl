@@ -61,7 +61,7 @@
                                                 <input name="uid" type="hidden" value="{$user->id}">
                                                 <input name="total" type="hidden" value="{$product->price}">
                                                 <input name="product_id" type="hidden" value="{$product->id}">
-                                                <input class="btn btn-default btn-flat" type="submit" value="购买">
+                                                <button class="btn btn-default btn-flat" type="submit">购买</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -100,7 +100,7 @@
                                                 <input name="uid" type="hidden" value="{$user->id}">
                                                 <input name="total" type="hidden" value="{$product->price}">
                                                 <input name="product_id" type="hidden" value="{$product->id}">
-                                                <input class="btn btn-default btn-flat" type="submit" value="购买">
+                                                <button class="btn btn-default btn-flat" type="submit">购买</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -139,7 +139,7 @@
                                                 <input name="uid" type="hidden" value="{$user->id}">
                                                 <input name="total" type="hidden" value="{$product->price}">
                                                 <input name="product_id" type="hidden" value="{$product->id}">
-                                                <input class="btn btn-default btn-flat" type="submit" value="购买">
+                                                <button class="btn btn-default btn-flat" type="submit">购买</button>
                                             </form>
                                         </td>
                                     </tr>

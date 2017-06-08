@@ -49,7 +49,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <button type="submit" id="submit" name="action" value="add" class="btn btn-primary">发送测试邮件
+                        <button type="submit" id="submit" name="action" value="add" class="btn btn-default">发送测试邮件
                         </button>
                     </div>
                 </div>

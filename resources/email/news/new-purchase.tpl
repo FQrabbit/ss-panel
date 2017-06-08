@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <p>{$user->user_name}(uid:{$user->id}, port:{$user->port})已购买{$user->type}套餐.</p>
+  <p>{$user->user_name}(uid:{$user->id}, port:{$user->port})已购买{$product->name}套餐.</p>
   <p>金额: {$user->user_type}元.</p>
   <p>原plan: {$pre['plan']}.</p>
   <p>原套餐: {$pre['type']}.</p>

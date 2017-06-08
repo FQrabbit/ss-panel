@@ -8,8 +8,11 @@
   	color: black;
   }
   a{
-  	color: #348eda;
+  	color: #00BCD4;
   	text-decoration: none;
+  }
+  a:visited {
+    color: #00BCD4;
   }
   </style>
 </head>
