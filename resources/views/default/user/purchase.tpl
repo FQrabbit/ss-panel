@@ -17,16 +17,15 @@
                     <div class="box-body">
                         <dov class="row">
                             <div class="col-sm-6">
-                                <p>
-                                    {$msg}
-                                </p>
+                                <p>如果3分钟内没有自动开通请<a href="mailto:shadowskyinfo@gmail.com"><b>联系﻿站长</b></a></p>
+                                <p>如发现滥用行为账号将被禁用。</p>
                             </div>
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                                 <div class="center" style="width:200px;background-color:white">
                                     <img alt="二维码" src="/assets/public/images/ali-qr.png" style="width:200px;margin:0">
                                     </img>
                                 </div>
-                            </div>
+                            </div> -->
                         </dov>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
