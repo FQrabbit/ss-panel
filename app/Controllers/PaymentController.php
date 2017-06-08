@@ -196,8 +196,12 @@ class PaymentController extends BaseController
         $transfer_to_add = $product->transfer;
         if ($product->isByTime()) {
             // 时间套餐
-            $user->addTraffic($transfer_to_add);
-            $user->updateExpireDate($product->id);
+            if ($product->unlimitTransfer() && $user->product_id && $user->product->isByTime()) {
+                $user->updateExpireDate($product->id);
+            } else {
+                $user->addTraffic($transfer_to_add);
+                $user->updateExpireDate($product->id);
+            }
         } elseif ($product->isByMete()) {
             // 流量套餐
             if ($user->isExpire()) {
@@ -225,6 +229,14 @@ class PaymentController extends BaseController
         $user->type       = $product->name;
         $user->buy_date   = Tools::toDateTime(time());
         $user->user_type  = $product->price;
+
+        /**
+         * 如果购买加油包套餐则不改变原套餐
+         */
+        if ($product->type == 'C') {
+            $user->product_id = $pre['product_id'];
+            $user->type       = $pre['type'];
+        }
         $user->save();
 
         try {

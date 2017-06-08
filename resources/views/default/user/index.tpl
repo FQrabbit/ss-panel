@@ -21,7 +21,7 @@
                             <div class="box-header">
                                 <i class="fa fa-bullhorn"></i>
 
-                                <h3 class="box-title">公告&FAQ</h3>
+                                <h3 class="box-title">公告&amp;FAQ</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
@@ -30,7 +30,7 @@
                                         <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-bar-item w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
                                         <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-bar-item w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
                                 </div>
-                                <button class="w3-btn w3-teal w3-block" style="margin-top:10px" onclick=$("#donateModal").show()>捐助</button>
+                                <button class="w3-btn w3-teal w3-block" style="margin-top:10px" onclick="$('#donateModal').show()">捐助</button>
                             </div><!-- /.box-body -->
                         </div>
                         <!-- /.box -->
