@@ -74,6 +74,9 @@ a:focus{
 	outline-offset:inherit;
 	color:white;
 }
+.navbar-default .navbar-toggle {
+	border: none;
+}
 .section-style{
 	background-attachment:inherit;
 	background-position:50% 0;
@@ -835,7 +838,7 @@ section#contact {
 #footer-section p{
 	margin: 0;
 	color: #1a1a1a;
-	font-size: xx-small;
+	font-size: small;
 	font-weight: bolder;
 	display: block;
 	position: relative;
