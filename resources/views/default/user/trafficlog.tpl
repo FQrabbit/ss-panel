@@ -87,7 +87,7 @@ var chart1 = new Chart(ctx, {
         labels: {$array_for_chart}[0][0],
         datasets: [
             {
-                label: "#(MB) Traffic in an hour",
+                label: "#(MB) Traffic",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$array_for_chart}[1][0],
             }
@@ -132,7 +132,7 @@ var chart1 = new Chart(ctx, {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Time Period(Hour)',
+                    labelString: 'Time',
                     fontColor: "#bbb"
                 },
                 ticks: {
@@ -163,7 +163,7 @@ var chart2 = new Chart(ctx, {
         labels: {$array_for_chart}[0][1],
         datasets: [
             {
-                label: "#(MB) Traffic by Node",
+                label: "#(MB) Traffic",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$array_for_chart}[1][1],
             }
@@ -208,7 +208,7 @@ var chart2 = new Chart(ctx, {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Node Name',
+                    labelString: 'Node',
                     fontColor: "#bbb"
                 },
                 ticks: {
@@ -237,7 +237,7 @@ var userWeeklyTraffic = new Chart(ctx, {
         labels: {$users_weekly_traffic_for_chart}.labels,
         datasets: [
             {
-                label: "#(GB) Traffic in a week",
+                label: "#(GB) Traffic",
                 backgroundColor: "rgba(75,192,192,0.4)",
                 data: {$users_weekly_traffic_for_chart}.datas,
             }
@@ -254,20 +254,6 @@ var userWeeklyTraffic = new Chart(ctx, {
         tooltips: {
             mode: 'index',
             intersect: false,
-            callbacks: {
-                // Use the footer callback to display the sum of the items showing in the tooltip
-                footer: function(tooltipItems, data) {
-                    var sum = 0;
-                    data.datasets[0].data.forEach(function(v) {
-                        sum += v;
-                    });
-                    if (sum>1024) {
-                        return 'Sum: ' + Math.round(sum/1024*100)/100 + " GB";
-                    }else{
-                        return 'Sum: ' + Math.round(sum) + " GB";
-                    }
-                },
-            },
             footerFontStyle: 'bold'
         },
         hover: {
@@ -282,7 +268,7 @@ var userWeeklyTraffic = new Chart(ctx, {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Node Name',
+                    labelString: 'Date',
                     fontColor: "#bbb"
                 },
                 ticks: {

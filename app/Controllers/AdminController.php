@@ -163,7 +163,7 @@ class AdminController extends UserController
         /**
          * 一周收入 chart
          */
-        $someDay               = date('Y-m-d', strtotime("-30 days"));
+        $someDay               = date('Y-m-d', strtotime("-6 days"));
         $last_week_income_logs = PurchaseLog::where('buy_date', '>', $someDay)->get();
         while ($someDay <= date('Y-m-d')) {
             $weekly_income[date('m-d', strtotime($someDay))] = 0;
