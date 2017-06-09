@@ -809,7 +809,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .download-config-btn {
     display: none;
 }
-
+.table-responsive {
+    border-color: rgba(255, 255, 255, 0.6);
+}
 @media (min-width: 767px) {
     .dl-horizontal dt {
         width: 165px !important;
