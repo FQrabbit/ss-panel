@@ -660,16 +660,17 @@ class UserController extends BaseController
             /**
              * 用户每个节点使用的流量 $datas[1][{节点名}]
              */
-            if (isset($datas[1][Node::where('id', $log->node_id)->get()->first()->name])) {
-                $datas[1][Node::where('id', $log->node_id)->get()->first()->name] += round((($log->u + $log->d) / 1048576), 2);
+            if (isset($datas[1][Node::where('id', $log->node_id)->first()->name])) {
+                $datas[1][Node::where('id', $log->node_id)->first()->name] += round((($log->u + $log->d) / 1048576), 2);
             } else {
-                $datas[1][Node::where('id', $log->node_id)->get()->first()->name] = round((($log->u + $log->d) / 1048576), 2);
+                $datas[1][Node::where('id', $log->node_id)->first()->name] = round((($log->u + $log->d) / 1048576), 2);
             }
             foreach ($datas[1] as $k => $v) {
                 $datas[1][$k] = round($datas[1][$k], 2);
             }
         }
-
+        ksort($datas[1]);
+        
         $d = array('0' => array(), '1' => array());
 
         for ($i = 0; $i <= date('H', time()); $i++) {
