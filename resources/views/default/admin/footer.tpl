@@ -26,7 +26,7 @@
 <script src="/assets/public/js/Chart.min.js"></script>
 {/if}
 {if $requireWYSI}
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
 {/if}
 <div style="display:none;">
     {$analyticsCode}
