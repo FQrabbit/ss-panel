@@ -403,6 +403,12 @@ a.btn.w3-teal.w3-small.pull-right:hover {
     background: #1B8655 !important;
 }
 
+table a:not(.btn), .table a:not(.btn) {
+    text-decoration: none;
+    border-bottom: 1px solid white;
+    padding-bottom: 1px;
+}
+
 .node-list>tbody>tr>td, .node-list>thead>tr>th {
     padding: 6px !important;
     border: none;
