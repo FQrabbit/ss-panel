@@ -43,7 +43,6 @@ code, kbd, pre, samp {
 
 a:hover, a:active, a:focus, button:hover, button:active, button:focus, .btn:hover, .btn:active, .btn:focus {
     color: white !important;
-    border-color: white !important;
     outline: none !important;
 }
 
@@ -52,7 +51,12 @@ p a:hover, .main-footer a:hover {
     text-decoration-color: #009688;
 }
 
-.w3-btn, .btn-default {
+hr {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+a, button, .w3-btn, .btn-default {
+    border: none;
     background-color: transparent;
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
@@ -66,16 +70,16 @@ p a:hover, .main-footer a:hover {
 }
 
 .btn-default:hover {
-    background-color: rgba(0, 0, 0, 0.1) !important;
+    background-color: rgba(255, 255, 255, 0.09) !important;
 }
 
 .btn-default:active {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
-
+/* 
 b {
     color: #4db6ac !important;
-}
+} */
 
 code, kbd, pre, samp {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
@@ -255,7 +259,8 @@ i.fa.fa-angle-left{
     border-left: 3px solid #009688;
 }
 .box-footer {
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: transparent;
+    border-top: none;
 }
 
 .panel {
@@ -633,22 +638,32 @@ tr, td, th{
 }
 
 /**
- * Admin Email page
+ * WYSIWYG
  */
-.wysihtml5-toolbar .modal-content {
+.note-editor button.active {
+    background-color: #795548 !important;
+}
+.note-editor .modal-content {
     background-color: #333;
 }
-.wysihtml5-toolbar .dropdown-menu {
+.note-editor .dropdown-menu {
     background-color: #333;
 }
-.wysihtml5-toolbar .dropdown-menu>li>a:hover {
-    background-color: #444;
+.note-editor .dropdown-menu>li>a:hover {
+    background-color: #795548;
 }
-ul.wysihtml5-toolbar a.btn.wysihtml5-command-active {
-    background-color: #444 !important;
+.note-editor.note-frame .note-editing-area .note-editable {
+    color: #fff !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+.note-editor.note-frame .note-statusbar .note-resizebar {
+    background-color: rgba(0, 0, 0, 0.81);
+}
+.note-editor.note-frame .note-statusbar .note-resizebar .note-icon-bar {
+
 }
 /**
- * Admin Email page
+ * WYSIWYG
  */
 
 .modal-dialog {
@@ -708,7 +723,7 @@ ul.wysihtml5-toolbar a.btn.wysihtml5-command-active {
     color: #8D6E63;
 }
 
-input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active, textarea:-webkit-autofill, select:-webkit-autofill {
     background-color: transparent;
     transition: background-color 5000s ease-in-out 0s;
     color: rgb(255, 255, 255) !important;
@@ -752,7 +767,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     color: #8a6d3b;
 }
 
-#__lpform_oldpwd, #__lpform_pwd, #__lpform_repwd, #__lpform_sspwd, #__lpform_sspwd_numspan {
+#__lpform_oldpwd, #__lpform_pwd, #__lpform_repwd, #__lpform_sspwd, #__lpform_sspwd_numspan, #__lpform_app-name_icon {
     display: none;
 }
 

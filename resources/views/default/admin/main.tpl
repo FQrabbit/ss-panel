@@ -15,7 +15,7 @@
     <link href="/assets/public/css/jquery-confirm.css" rel="stylesheet" type="text/css"/>
     {/if}
     {if $requireWYSI}
-    <link rel="stylesheet" type="text/css" href="/assets/public/css/bootstrap3-wysihtml5.min.css">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
     {/if}
     <link href="/assets/public/css/main.css" rel="stylesheet" type="text/css"/>
     <style>

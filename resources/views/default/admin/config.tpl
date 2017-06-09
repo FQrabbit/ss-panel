@@ -127,7 +127,7 @@
 {include file='admin/footer.tpl'}
 
 <script type="text/javascript">
-    $('textarea').wysihtml5();
+    $('textarea').summernote();
 </script>
 
 <script>

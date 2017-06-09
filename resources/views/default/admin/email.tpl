@@ -139,7 +139,7 @@
 
 {include file='admin/footer.tpl'}
 <script type="text/javascript">
-    $('textarea').wysihtml5();
+    $('textarea').summernote();
 </script>
 <script type="text/javascript">
     $("#send_email").click(function () {

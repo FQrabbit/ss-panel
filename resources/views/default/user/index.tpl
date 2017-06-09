@@ -50,10 +50,10 @@
                                 <p>上次签到时间：<span class="badge bg-green">{$user->lastCheckInTime()}</span></p>
                                 {if $user->isAbleToCheckin() }
                                     <p id="checkin-btn">
-                                        <button id="checkin" class="btn btn-default  btn-flat">签到</button>
+                                        <button id="checkin" class="btn btn-default  btn-flat w3-border">签到</button>
                                     </p>
                                 {else}
-                                    <p><a class="btn btn-default btn-flat disabled" href="#">不能签到</a></p>
+                                    <p><a class="btn btn-default btn-flat disabled w3-border" href="#">不能签到</a></p>
                                 {/if}
                                 <p id="checkin-msg"></p>
                             </div>
