@@ -85,6 +85,14 @@ code, kbd, pre, samp {
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 
+.progress {
+    height: 20px;
+}
+
+.progress .progress-bar {
+    line-height: 20px;
+}
+
 .income {
     background-color: #1c9666;
 }
