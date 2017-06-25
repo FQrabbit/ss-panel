@@ -25,7 +25,12 @@
                 <input name="user_id" type="number" placeholder="输入用户id" class="form-control" value="{$q['user_id']}">
             </div>
             <div class="form-group">
-                <input name="node_id" type="number" placeholder="输入节点id" class="form-control" value="{$q['node_id']}">
+                <select class="form-control" name="node_id">
+                    <option value="">选择节点</option>
+                    {foreach $nodes as $node}
+                    <option value="{$node->id}"{if $node->id == $q['node_id']} selected{/if}>{$node->name}</option>
+                    {/foreach}
+                </select>
             </div>
             <div class="form-group">
                 <button type="submit" class="form-control btn btn-default btn-flat">查询</button>

@@ -139,15 +139,15 @@ class AdminController extends UserController
         $monthlyVpsCost = ExpenditureLog::where('date', '>', date('Y-m'))->sum('price');
         $dailyVpsCost   = ExpenditureLog::where('date', '>', date('Y-m-d'))->sum('price');
 
-        $cost['fee']['yearly'] = $yearlyFee;
-        $cost['fee']['monthly'] = $monthlyFee;
-        $cost['fee']['daily'] = $dailyFee;
-        $cost['vps']['yearly'] = $yearlyVpsCost;
-        $cost['vps']['monthly'] = $monthlyVpsCost;
-        $cost['vps']['daily'] = $dailyVpsCost;
-        $cost['total']['yearly'] = $cost['fee']['yearly'] + $cost['vps']['yearly'];
+        $cost['fee']['yearly']    = $yearlyFee;
+        $cost['fee']['monthly']   = $monthlyFee;
+        $cost['fee']['daily']     = $dailyFee;
+        $cost['vps']['yearly']    = $yearlyVpsCost;
+        $cost['vps']['monthly']   = $monthlyVpsCost;
+        $cost['vps']['daily']     = $dailyVpsCost;
+        $cost['total']['yearly']  = $cost['fee']['yearly'] + $cost['vps']['yearly'];
         $cost['total']['monthly'] = $cost['fee']['monthly'] + $cost['vps']['monthly'];
-        $cost['total']['daily'] = $cost['fee']['daily'] + $cost['vps']['daily'];
+        $cost['total']['daily']   = $cost['fee']['daily'] + $cost['vps']['daily'];
 
         $half_year_ago_date = date('Y-m-d', strtotime(date('Y-m') . '-01 -12 months'));
         $someMonth          = $half_year_ago_date;
@@ -521,6 +521,7 @@ class AdminController extends UserController
         $users_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
         $nodes_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
         $eachHour_traffic_for_chart = ['labels' => array(), 'datas' => array(), 'total' => 0];
+        $nodes                      = Node::select(['id', 'name'])->get();
 
         $q = $request->getQueryParams();
         if (!isset($request->getQueryParams()['page'])) {
@@ -589,7 +590,6 @@ class AdminController extends UserController
             // for ($i = 0; $i <= (int) date('H'); $i++) {
             $eachHour_traffic[date('H a', strtotime("$i:00:00"))] = 0;
         }
-        $nodes = Node::select(['id'])->get();
         foreach ($nodes as $node) {
             $nodes_traffic[$node->id] = 0;
         }
@@ -645,8 +645,15 @@ class AdminController extends UserController
             $users_traffic_thisMonth_for_chart['datas'][]  = round(Tools::flowToGB($traffic), 2);
         }
         $users_traffic_thisMonth_for_chart = json_encode($users_traffic_thisMonth_for_chart);
-
-        return $this->view()->assign('q', $q)->assign('logs', $logs)->assign('users_traffic_for_chart', $users_traffic_for_chart)->assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->assign('eachHour_traffic_for_chart', $eachHour_traffic_for_chart)->assign('users_traffic_thisMonth_for_chart', $users_traffic_thisMonth_for_chart)->display('admin/trafficlog.tpl');
+        return $this->view()->
+            assign('nodes', $nodes)->
+            assign('q', $q)->
+            assign('logs', $logs)->
+            assign('users_traffic_for_chart', $users_traffic_for_chart)->
+            assign('nodes_traffic_for_chart', $nodes_traffic_for_chart)->
+            assign('eachHour_traffic_for_chart', $eachHour_traffic_for_chart)->
+            assign('users_traffic_thisMonth_for_chart', $users_traffic_thisMonth_for_chart)->
+            display('admin/trafficlog.tpl');
     }
 
     public function config($request, $response, $args)
