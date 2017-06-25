@@ -37,9 +37,9 @@ class PaymentController extends BaseController
     /**
      * Verify
      */
-    public function verify($apikey, $alino)
+    public function verify($apikey, $addnum, $uid, $total)
     {
-        if ($apikey != md5($this->key . $alino)) {
+        if ($apikey != md5($this->key . $addnum . $uid . $total)) {
             return false;
         } else {
             return true;
@@ -54,12 +54,12 @@ class PaymentController extends BaseController
     {
         $q = $this->getRequestBodyArray($request);
 
-        $alino  = $q['addnum'];
+        $addnum = $q['addnum'];
         $uid    = $q['uid'];
         $price  = $q['total'];
         $apikey = $q['apikey'];
 
-        if (!$this->verify($apikey, $alino)) {
+        if (!$this->verify($apikey, $addnum)) {
             return $response->withStatus(302)->withHeader('Location', 'user');
         }
 
@@ -67,20 +67,20 @@ class PaymentController extends BaseController
          * 商品id, 捐助 id 为 0
          * @var int
          */
-        $product_id = intval(substr($alino, 9, 2));
+        $product_id = intval(substr($addnum, 8, 2));
 
         if ($product_id == 0) {
-            if (DonateLog::hasTransaction($alino)) {
+            if (DonateLog::hasTransaction($addnum)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
-                $this->doDonate($uid, $price, $alino, $this->feeRate);
+                $this->doDonate($uid, $price, $addnum, $this->feeRate);
                 return '感谢您的捐助';
             }
         } else {
-            if (PurchaseLog::hasTransaction($alino)) {
+            if (PurchaseLog::hasTransaction($addnum)) {
                 return $response->withStatus(302)->withHeader('Location', 'user');
             } else {
-                $this->doPay($uid, $product_id, $alino, $this->feeRate);
+                $this->doPay($uid, $product_id, $addnum, $this->feeRate);
                 return '购买成功';
             }
         }
@@ -126,14 +126,14 @@ class PaymentController extends BaseController
         $log->save();
     }
 
-    public function doDonate($uid, $money, $alino, $feeRate)
+    public function doDonate($uid, $money, $addnum, $feeRate)
     {
         $user = User::find($uid);
         // 添加购买记录
         $donate_log_arr = array(
             'uid'      => $uid,
             'money'    => $money,
-            'trade_no' => $alino,
+            'trade_no' => $addnum,
             'fee'      => $money * $feeRate,
         );
         $this->addDonateLog($donate_log_arr);
@@ -164,9 +164,9 @@ class PaymentController extends BaseController
     /**
      * Do logic
      *
-     * param: $uid, $product_id, $alino
+     * param: $uid, $product_id, $addnum
      */
-    public function doPay($uid, $product_id, $alino, $feeRate)
+    public function doPay($uid, $product_id, $addnum, $feeRate)
     {
         $user    = User::find($uid);
         $product = Shop::find($product_id);
@@ -176,7 +176,7 @@ class PaymentController extends BaseController
             'product_id'   => $product_id,
             'body'         => $product->name,
             'price'        => $product->price,
-            'out_trade_no' => $alino,
+            'out_trade_no' => $addnum,
             'fee'          => $feeRate * $product->price,
         );
         $this->addPurchaseLog($purchase_log_arr);
@@ -249,8 +249,8 @@ class PaymentController extends BaseController
             $title = 'Shadowsky - 用户购买通知';
             $tpl   = 'news/new-purchase.tpl';
             $arr2  = [
-                'user' => $user,
-                'pre'  => $pre,
+                'user'    => $user,
+                'pre'     => $pre,
                 'product' => $product,
             ];
             // return $user;
@@ -309,9 +309,9 @@ class PaymentController extends BaseController
         $apiid      = $this->apiid;
         $apikey     = md5($this->key);
         $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
-        $addnum     = 'alip' . $apiid . $product_id . User::find($uid)->port . time();
+        $addnum     = 'pay' . $apiid . $product_id . User::find($uid)->port . time();
         return "
-        <form name='form1' action='https://api.jsjapp.com/plugin.php?id=add:alipay' method='POST'>
+        <form name='form1' action='https://api.jsjapp.com/pay/syt.php' method='POST'>
             <input type='hidden' name='uid' value='" . $uid . "'>
             <input type='hidden' name='total' value='" . $total . "'>
             <input type='hidden' name='apiid' value='" . $apiid . "'>
