@@ -59,7 +59,7 @@ class PaymentController extends BaseController
         $price  = $q['total'];
         $apikey = $q['apikey'];
 
-        if (!$this->verify($apikey, $addnum)) {
+        if (!$this->verify($apikey, $addnum, $uid, $price)) {
             return $response->withStatus(302)->withHeader('Location', 'user');
         }
 
