@@ -196,7 +196,7 @@ class PaymentController extends BaseController
         $transfer_to_add = $product->transfer;
         if ($product->isByTime()) {
             // 时间套餐
-            if ($product->unlimitTransfer() && $user->product_id && $user->product->isByTime()) {
+            if ($user->product_id && $user->product->isByTime()) {
                 $user->updateExpireDate($product->id);
             } else {
                 $user->addTraffic($transfer_to_add);
