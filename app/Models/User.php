@@ -430,7 +430,7 @@ class User extends Model
         } else {
             $nextCycleDate = $this->expire_date;
         }
-        $remain_days = floor((strtotime($nextCycleDate)-time()) / $secInADay);
+        $remain_days = ceil((strtotime($nextCycleDate)-time()) / $secInADay);
         return $remain_days;
     }
 
@@ -439,7 +439,7 @@ class User extends Model
         if ($this->product->isByTime()) {
             $secInADay = 86400;
             $expireDate = $this->expire_date;
-            $remain_days = floor((strtotime($expireDate)-time()) / $secInADay);
+            $remain_days = ceil((strtotime($expireDate)-time()) / $secInADay);
             return $remain_days;
         }
         return null;

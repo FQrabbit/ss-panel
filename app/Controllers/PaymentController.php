@@ -308,7 +308,8 @@ class PaymentController extends BaseController
         $product_id = sprintf('%02d', $product_id);
         $apiid      = $this->apiid;
         $apikey     = md5($this->key);
-        $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
+        $showurl    = "https://www.shadowsky.info/dopay";
+        // $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
         $addnum     = 'pay' . $apiid . $product_id . User::find($uid)->port . time();
         return "
         <form name='form1' action='https://api.jsjapp.com/pay/syt.php' method='POST'>
