@@ -17,7 +17,7 @@ use App\Utils\Tools;
 class PaymentController extends BaseController
 {
     private $key, $apiid;
-    public $adminEmail, $feeRate = 0.03;
+    public $adminEmail, $feeRate, $alipayFeeRate=0.03, $wechatFeeRate=0.05;
 
     public function __construct()
     {
@@ -58,9 +58,18 @@ class PaymentController extends BaseController
         $uid    = $q['uid'];
         $price  = $q['total'];
         $apikey = $q['apikey'];
+        $payMethod = $q['sort']; // 1为支付宝，2为微信，3为QQ
 
         if (!$this->verify($apikey, $addnum, $uid, $price)) {
             return $response->withStatus(302)->withHeader('Location', 'user');
+        }
+
+        if ($payMethod==1) {
+        	// 支付方式为支付宝
+        	$this->feeRate = $this->alipayFeeRate;
+        } else {
+        	// 支付方式为微信或QQ
+        	$this->feeRate = $this->wechatFeeRate;
         }
 
         /**
