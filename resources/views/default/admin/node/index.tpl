@@ -44,6 +44,7 @@
                                     <th>加密</th>
                                     <th>IP地址</th>
                                     <th>描述</th>
+                                    <th>vps</th>
                                     <th>排序</th>
                                     <th>操作</th>
                                 </tr>
@@ -54,6 +55,7 @@
                                     <td>{$node->method}</td>
                                     <td>{$node->ip}</td>
                                     <td>{$node->info}</td>
+                                    <td><a href="{$node->vpsMerchant->website}">{$node->vpsMerchant->name}</a></td>
                                     <td>{$node->sort}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="/admin/node/{$node->id}/edit">编辑</a>
