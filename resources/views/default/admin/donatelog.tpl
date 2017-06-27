@@ -79,6 +79,7 @@
                                     <th>用户端口</th>
                                     <th>金额</th>
                                     <th>手续费</th>
+                                    <th>支付方式</th>
                                     <th>捐助日期</th>
                                     <th>交易号</th>
                                     <th>操作</th>
@@ -91,6 +92,7 @@
                                         <td>{$log->user->port}</td>
                                         <td>{$log->money}</td>
                                         <td>{$log->fee}</td>
+                                        <td>{$log->payment_method}</td>
                                         <td>{$log->datetime}</td>
                                         <td>{$log->trade_no}</td>
                                         <td>

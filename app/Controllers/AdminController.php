@@ -247,10 +247,14 @@ class AdminController extends UserController
         if (empty($q['buy_date'])) {
             $q['buy_date'] = Tools::toDateTime(time());
         }
+        $product = Shop::find($q['product_id']);
 
-        $product_id = $q['product_id'];
-        $pay        = new PaymentController();
-        $rs         = $pay->doPay($q['uid'], $product_id, time() . $q['uid'], 0);
+        $pay                 = new PaymentController();
+        $pay->uid            = $user->id;
+        $pay->product_id     = $q['product_id'];
+        $pay->total          = $product->price;
+        $pay->addnum         = 'p' . $user->port . 't' . time();
+        $rs                  = $pay->doPay();
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -343,8 +347,12 @@ class AdminController extends UserController
             }
         }
 
-        $pay = new PaymentController();
-        $rs  = $pay->doDonate($q['uid'], $q['money'], time() . $q['uid'], 0);
+        $pay                 = new PaymentController();
+        $pay->uid            = $user->id;
+        $pay->product_id     = 0;
+        $pay->total          = $q['money'];
+        $pay->addnum         = 'p' . $user->port . 't' . time();
+        $rs                  = $pay->doDonate();
         return $response->getBody()->write(json_encode($rs));
     }
 

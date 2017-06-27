@@ -141,6 +141,7 @@
                                     <th>套餐</th>
                                     <th>价格</th>
                                     <th>手续费</th>
+                                    <th>支付方式</th>
                                     <th>购买日期</th>
                                     <th>交易号</th>
                                     <th>操作</th>
@@ -159,6 +160,7 @@
                                     <td>{$log->product->name}</td>
                                     <td>{$log->price}</td>
                                     <td>{$log->fee}</td>
+                                    <td>{$log->payment_method}</td>
                                     <td>{$log->buy_date}</td>
                                     <td>{$log->out_trade_no}</td>
                                     <td>

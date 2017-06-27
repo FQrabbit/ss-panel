@@ -16,83 +16,19 @@ use App\Utils\Tools;
  */
 class PaymentController extends BaseController
 {
-    private $key, $apiid;
-    public $adminEmail, $feeRate, $alipayFeeRate=0.03, $wechatFeeRate=0.05;
+    private $key, $apiid, $apikey;
+    public $adminEmail, $alipayFeeRate, $wechatFeeRate;
+    public $uid, $product_id, $total, $addnum, $payment_method, $feeRate;
 
     public function __construct()
     {
-        $this->key        = DbConfig::get('apikey');
-        $this->apiid      = DbConfig::get('apiid');
-        $this->adminEmail = Config::get('adminEmail');
-    }
-
-    /**
-     * Get key
-     */
-    public function getKey()
-    {
-        return DbConfig::get('apikey');
-    }
-
-    /**
-     * Verify
-     */
-    public function verify($apikey, $addnum, $uid, $total)
-    {
-        if ($apikey != md5($this->key . $addnum . $uid . $total)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * get notify 同步、异步通知
-     * @return string 返回提示
-     */
-    public function doReturn($request, $response, $args)
-    {
-        $q = $this->getRequestBodyArray($request);
-
-        $addnum = $q['addnum'];
-        $uid    = $q['uid'];
-        $price  = $q['total'];
-        $apikey = $q['apikey'];
-        $payMethod = $q['sort']; // 1为支付宝，2为微信，3为QQ
-
-        if (!$this->verify($apikey, $addnum, $uid, $price)) {
-            return $response->withStatus(302)->withHeader('Location', 'user');
-        }
-
-        if ($payMethod==1) {
-        	// 支付方式为支付宝
-        	$this->feeRate = $this->alipayFeeRate;
-        } else {
-        	// 支付方式为微信或QQ
-        	$this->feeRate = $this->wechatFeeRate;
-        }
-
-        /**
-         * 商品id, 捐助 id 为 0
-         * @var int
-         */
-        $product_id = intval(substr($addnum, 8, 2));
-
-        if ($product_id == 0) {
-            if (DonateLog::hasTransaction($addnum)) {
-                return $response->withStatus(302)->withHeader('Location', 'user');
-            } else {
-                $this->doDonate($uid, $price, $addnum, $this->feeRate);
-                return '感谢您的捐助';
-            }
-        } else {
-            if (PurchaseLog::hasTransaction($addnum)) {
-                return $response->withStatus(302)->withHeader('Location', 'user');
-            } else {
-                $this->doPay($uid, $product_id, $addnum, $this->feeRate);
-                return '购买成功';
-            }
-        }
+        $this->key            = DbConfig::get('apikey');
+        $this->apiid          = DbConfig::get('apiid');
+        $this->adminEmail     = Config::get('adminEmail');
+        $this->payment_method = '';
+        $this->feeRate        = 0;
+        $this->alipayFeeRate  = 0.03;
+        $this->wechatFeeRate  = 0.05;
     }
 
     /**
@@ -111,54 +47,134 @@ class PaymentController extends BaseController
         return $q;
     }
 
+    /**
+     * Take out product id from addnum
+     * @param  [char] $addnum [order number]
+     * @return [int]          [product id]
+     */
+    public function takeProductId()
+    {
+        return intval(substr($this->addnum, 8, 2));
+    }
+
+    /**
+     * Verify
+     */
+    public function verify()
+    {
+        if ($this->apikey != md5($this->key . $this->addnum . $this->uid . $this->total)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * get notify 同步、异步通知
+     * @return string 返回提示
+     */
+    public function doReturn($request, $response, $args)
+    {
+        $q = $this->getRequestBodyArray($request);
+
+        $this->uid          = $q['uid'];
+        $this->total        = $q['total'];
+        $this->addnum       = $q['addnum'];
+        $this->apikey       = $q['apikey'];
+        $payment_method_num = $q['sort'];
+        $this->product_id   = $this->takeProductId();
+
+        switch ($payment_method_num) {
+            case 1:
+                $this->feeRate        = $this->alipayFeeRate;
+                $this->payment_method = '支付宝';
+                break;
+            case 2:
+                $this->feeRate        = $this->wechatFeeRate;
+                $this->payment_method = '微信';
+                break;
+            case 3:
+                $this->feeRate        = $this->wechatFeeRate;
+                $this->payment_method = 'QQ';
+                break;
+            default:
+                $this->feeRate        = 0;
+                $this->payment_method = '';
+                break;
+        }
+
+        if (!$this->verify()) {
+            return $response->withStatus(302)->withHeader('Location', 'user');
+        }
+
+        if ($this->product_id == 0) {
+            if (DonateLog::hasTransaction($this->addnum)) {
+                return $response->withStatus(302)->withHeader('Location', 'user');
+            } else {
+                $this->doDonate();
+                return '感谢您的捐助';
+            }
+        } else {
+            if (PurchaseLog::hasTransaction($this->addnum)) {
+                return $response->withStatus(302)->withHeader('Location', 'user');
+            } else {
+                $this->doPay();
+                return '购买成功';
+            }
+        }
+    }
+
     public function addPurchaseLog($array)
     {
-        $log               = new PurchaseLog();
-        $log->uid          = $array['uid'];
-        $log->product_id   = $array['product_id'];
-        $log->body         = $array['body'];
-        $log->price        = $array['price'];
-        $log->buy_date     = Tools::toDateTime(time());
-        $log->out_trade_no = $array['out_trade_no'];
-        $log->fee          = $array['fee'];
+        $log                 = new PurchaseLog();
+        $log->uid            = $array['uid'];
+        $log->product_id     = $array['product_id'];
+        $log->body           = $array['body'];
+        $log->price          = $array['price'];
+        $log->buy_date       = Tools::toDateTime(time());
+        $log->out_trade_no   = $array['out_trade_no'];
+        $log->fee            = $array['fee'];
+        $log->payment_method = $array['payment_method'];
         $log->save();
     }
 
     public function addDonateLog($array)
     {
-        $log           = new DonateLog();
-        $log->uid      = $array['uid'];
-        $log->money    = $array['money'];
-        $log->datetime = Tools::toDateTime(time());
-        $log->trade_no = $array['trade_no'];
-        $log->fee      = $array['fee'];
+        $log                 = new DonateLog();
+        $log->uid            = $array['uid'];
+        $log->money          = $array['money'];
+        $log->datetime       = Tools::toDateTime(time());
+        $log->trade_no       = $array['trade_no'];
+        $log->fee            = $array['fee'];
+        $log->payment_method = $array['payment_method'];
         $log->save();
     }
 
-    public function doDonate($uid, $money, $addnum, $feeRate)
+    public function doDonate()
     {
-        $user = User::find($uid);
+        $user = User::find($this->uid);
         // 添加购买记录
         $donate_log_arr = array(
-            'uid'      => $uid,
-            'money'    => $money,
-            'trade_no' => $addnum,
-            'fee'      => $money * $feeRate,
+            'uid'            => $this->uid,
+            'money'          => $this->total,
+            'trade_no'       => $this->addnum,
+            'fee'            => $this->total * $this->feeRate,
+            'payment_method' => $this->payment_method,
         );
         $this->addDonateLog($donate_log_arr);
         $user->becomeDonator();
-        $user->addMoney($money);
+        $user->addMoney($this->total);
         $user->activate();
 
         try {
             $arr1 = [
                 'user_name'   => $user->user_name,
-                'money'       => $money,
+                'money'       => $this->total,
                 'total_money' => $user->money,
             ];
             Mail::send($user->email, 'Shadowsky', 'news/donate-report.tpl', $arr1, []);
 
-            $content = "{$user->user_name}(uid: {$uid})捐助Shadowsky{$money}元。总捐助额：{$user->money}。";
+            $content = "{$user->user_name}(uid: {$this->uid})捐助Shadowsky{$this->total}元。总捐助额：{$user->money}。";
             Mail::send($this->adminEmail, 'Shadowsky - 用户捐助通知', 'news/general-report.tpl', ['content' => $content], []);
 
             $rs['ret'] = 1;
@@ -172,21 +188,20 @@ class PaymentController extends BaseController
 
     /**
      * Do logic
-     *
-     * param: $uid, $product_id, $addnum
      */
-    public function doPay($uid, $product_id, $addnum, $feeRate)
+    public function doPay()
     {
-        $user    = User::find($uid);
-        $product = Shop::find($product_id);
+        $user    = User::find($this->uid);
+        $product = Shop::find($this->product_id);
         // 添加购买记录
         $purchase_log_arr = array(
-            'uid'          => $uid,
-            'product_id'   => $product_id,
-            'body'         => $product->name,
-            'price'        => $product->price,
-            'out_trade_no' => $addnum,
-            'fee'          => $feeRate * $product->price,
+            'uid'            => $this->uid,
+            'product_id'     => $this->product_id,
+            'body'           => $product->name,
+            'price'          => $product->price,
+            'out_trade_no'   => $this->addnum,
+            'fee'            => $this->feeRate * $product->price,
+            'payment_method' => $this->payment_method,
         );
         $this->addPurchaseLog($purchase_log_arr);
 
@@ -319,7 +334,7 @@ class PaymentController extends BaseController
         $apikey     = md5($this->key);
         $showurl    = "https://www.shadowsky.info/dopay";
         // $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
-        $addnum     = 'pay' . $apiid . $product_id . User::find($uid)->port . time();
+        $addnum = 'pay' . $apiid . $product_id . User::find($uid)->port . time();
         return "
         <form name='form1' action='https://api.jsjapp.com/pay/syt.php' method='POST'>
             <input type='hidden' name='uid' value='" . $uid . "'>
