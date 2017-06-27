@@ -63,6 +63,14 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="ipv6" class="col-sm-3 control-label">IPV6地址</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="ipv6" value="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="method" class="col-sm-3 control-label">加密方式</label>
 
                                         <div class="col-sm-9">
@@ -289,6 +297,7 @@
                     name: $("#name").val(),
                     server: $("#server").val(),
                     ip: $("#ip").val(),
+                    ipv6: $("#ipv6").val(),
                     method: $("#method").val(),
                     protocol: $("#protocol").val(),
                     obfs: $("#obfs").val(),

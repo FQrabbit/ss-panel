@@ -58,7 +58,7 @@ class NodeController extends AdminController
         $id   = $args['id'];
         $node = Node::find($id);
         if ($node == null) {
-
+            return;
         }
         $methods      = Node::getAllMethod();
         $obfses       = Node::getAllObfs();
