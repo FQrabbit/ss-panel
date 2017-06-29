@@ -113,7 +113,7 @@ class Job
             $date = date('Y-m-d H:i:s');
             $users_count = count($users);
             echo "$date 删除以下长时间未使用用户 sum: $users_count\n";
-            echo "uid\t用户名\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量\n";
+            echo "uid\t用户名\t注册时间\t\t上次签到时间\t\t上次使用时间(sort)\t流量\n";
             foreach ($users as $user) {
                 $user_id = $user->id;
                 $user_plan = $user->plan;
@@ -147,7 +147,7 @@ class Job
             $date = date('Y-m-d H:i:s');
             $users_count = count($users);
             echo "$date 删除以下长时间未签到用户 sum: $users_count\n";
-            echo "uid\t用户名\t注册时间\t上次签到时间(sort)\t上次使用时间\t流量\n";
+            echo "uid\t用户名\t注册时间\t\t上次签到时间(sortort)\t上次使用时间\t流量\n";
             foreach ($users as $user) {
                 $user_id = $user->id;
                 $user_plan = $user->plan;
@@ -189,7 +189,7 @@ class Job
             $date = date('Y-m-d H:i:s');
             $users_count = count($users);
             echo "$date 冻结以下30天未使用用户 sum: $users_count\n";
-            echo "uid\t用户名\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量\n";
+            echo "uid\t用户名\t注册时间\t\t上次签到时间\t\t上次使用时间(sort)\t流量\n";
             foreach ($users as $user) {
                 // 发送邮件
                 $arr['user_name'] = $user->user_name;
