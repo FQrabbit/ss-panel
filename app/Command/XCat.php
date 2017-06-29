@@ -121,20 +121,16 @@ class XCat
             // $users = User::where("id", 1)->get();
             foreach ($users as $user) {
                 if ($user->plan == 'C') {
-                    $transfer              = Tools::toGB(999);
-                    $user->transfer_enable = $transfer;
-                } elseif ($user->plan == 'B') {
-                    if ($user->product_id && $user->product->isByTime()) {
-                        $transfer              = Tools::toGB($user->product->transfer);
-                        $user->transfer_enable = $transfer;
-                    } else {
-                        $user->transfer_enable = $user->unusedTrafficInB();
-                    }
+                    $user->transfer_enable = Tools::toGB(999);
+                    $user->u = 0;
+                    $user->d = 0;
+                } elseif ($user->product_id && $user->product->isByTime()) {
+                    continue;
                 } else {
                     $user->transfer_enable = $user->unusedTrafficInB();
+                    $user->u = 0;
+                    $user->d = 0;
                 }
-                $user->u = 0;
-                $user->d = 0;
                 $user->save();
             }
             echo date('Y-m-d H:i:s') . "\n";

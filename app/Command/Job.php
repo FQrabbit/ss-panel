@@ -31,7 +31,7 @@ class Job
         if ($users) {
             foreach ($users as $user) {
                 $to      = $user->email;
-                $subject = Config::get('appName') . '-会员到期提醒';
+                $subject = Config::get('appName') . ' - 会员到期提醒';
 
                 //发送邮件
                 try {
@@ -44,18 +44,16 @@ class Job
                     $user->u               = 0;
                     $user->d               = 0;
                 }
-                if (in_array($user->type, ['包月', '包季', '包年'])) {
-                    $user->transfer_enable = Tools::toMB(100);
-                    $user->u               = 0;
-                    $user->d               = 0;
-                }
                 $user->plan       = 'A';
                 $user->product_id = 0;
                 $user->type       = 1;
                 $user->save();
 
-                echo date('Y-m-d H:i:s') . "\n";
-                echo $user->user_name . '(id:' . $user->id . ')的会员已到期</br>';
+                // 输出日志
+                $date = date('Y-m-d H:i:s');
+                $uname = $user->user_name;
+                $uid = $user->id;
+                echo "$date 会员到期 $uid(套餐:$utype, $uname)\n";
             }
         }
     }
@@ -77,25 +75,27 @@ class Job
 
         foreach ($users as $user) {
             if ($user->isTransferResetDay()) {
-                /*$subject = Config::get('appName') . "-流量报告";
-                $to = $user->email;
-                try {
-                Mail::send($to, $subject, 'news/daily-traffic-report.tpl', [
-                "user" => $user
-                ], [
-                ]);
-                } catch (Exception $e) {
-                echo $e->getMessage();
-                }*/
+                // $to      = $user->email;
+                // $subject = Config::get('appName') . " - 流量报告";
+                // try {
+                //     Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ["user" => $user], []);
+                // } catch (Exception $e) {
+                //     echo $e->getMessage();
+                // }
                 $user->u               = 0;
                 $user->d               = 0;
                 $user->transfer_enable = Tools::toGB($user->product->transfer);
                 $user->save();
-                echo $user->expire_date . ' ';
-                echo $user->product->transfer . 'G ';
-                echo $user->id . '<br>';
+
+                // 输出日志
+                $date = date('Y-m-d H:i:s');
+                $uname = $user->user_name;
+                $uid = $user->id;
+                $utype = $user->type;
+                echo "$date 流量重置 $uid(套餐:$utype, $uname)\n";
             }
         }
+        echo "\n";
     }
 
     public static function getNoTransferUser()
@@ -108,15 +108,25 @@ class Job
             ->where('t', '<', (time() - 60 * $day))
             ->orderBy('t')
             ->get();
+        // 输出日志
         if (!$users->isEmpty()) {
-            echo date('Y-m-d H:i:s', time()) . ' 删除以下长时间未使用用户：</br>';
-            echo 'sum:' . count($users) . "\n";
-            echo "<table><thead><tr><th>uid</th><th>用户名</th><th>plan</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
+            $date = date('Y-m-d H:i:s');
+            $users_count = count($users);
+            echo "$date 删除以下长时间未使用用户 sum: $users_count\n";
+            echo "uid\t用户名\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量\n";
             foreach ($users as $user) {
-                echo '<tr><td>' . $user->id . '</td><td>' . $user->user_name . '</td><td>' . $user->plan . '</td><td>' . $user->reg_date . '</td><td>' . date('Y-m-d H:i:s', $user->last_check_in_time) . '</td><td>' . date('Y-m-d H:i:s', $user->t) . '</td><td>' . $user->usedTraffic() . '/' . $user->enableTraffic() . "</td></tr>\n";
+                $user_id = $user->id;
+                $user_plan = $user->plan;
+                $user_reg_date = $user->reg_date;
+                $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
+                $user_t = date('Y-m-d H:i:s', $user->t);
+                $user_used_traffic = $user->usedTraffic();
+                $user_enable_traffic = $user->enableTraffic();
+                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
             }
-            echo '</tbody></table></br>';
+            echo "\n";
         }
+
         return $users;
     }
 
@@ -129,16 +139,28 @@ class Job
             ->where('ref_by', '!=', 3)
             ->where('buy_date', '0000-00-00 00:00:00')
             ->where('reg_date', '<', $last_three_week_date)
+            ->orderBy('last_check_in_time')
             ->get();
+
+        // 输出日志
         if (!$users->isEmpty()) {
-            echo date('Y-m-d H:i:s', time()) . ' 删除以下长时间未签到用户：</br>';
-            echo 'sum:' . count($users) . "\n";
-            echo "<table><thead><tr><th>uid</th><th>用户名</th><th>plan</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
+            $date = date('Y-m-d H:i:s');
+            $users_count = count($users);
+            echo "$date 删除以下长时间未签到用户 sum: $users_count\n";
+            echo "uid\t用户名\t注册时间\t上次签到时间(sort)\t上次使用时间\t流量\n";
             foreach ($users as $user) {
-                echo '<tr><td>' . $user->id . '</td><td>' . $user->user_name . '</td><td>' . $user->plan . '</td><td>' . $user->reg_date . '</td><td>' . date('Y-m-d H:i:s', $user->last_check_in_time) . '</td><td>' . date('Y-m-d H:i:s', $user->t) . '</td><td>' . $user->usedTraffic() . '/' . $user->enableTraffic() . "</td></tr>\n";
+                $user_id = $user->id;
+                $user_plan = $user->plan;
+                $user_reg_date = $user->reg_date;
+                $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
+                $user_t = date('Y-m-d H:i:s', $user->t);
+                $user_used_traffic = $user->usedTraffic();
+                $user_enable_traffic = $user->enableTraffic();
+                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
             }
-            echo '</tbody></table></br>';
+            echo "\n";
         }
+
         return $users;
     }
 
@@ -155,17 +177,21 @@ class Job
             ->get();
         // $users = User::find(1);
         if (!$users->isEmpty()) {
+            // update 'enable' to 0
             User::where('t', '<', $t)
                 ->where('reg_date', '<', $period)
                 ->where('plan', '!=', 'C')
                 ->where('enable', 1)
                 ->orderBy('t')
                 ->update(['enable' => 0]);
-            echo date('Y-m-d H:i:s', time()) . ' 冻结以下用户：</br>';
-            echo 'sum:' . count($users) . "\n";
-            echo "<table><thead><tr><th>uid</th><th>用户名</th><th>plan</th><th>注册时间</th><th>上次签到时间</th><th>上次使用时间(sort)</th><th>流量</th></tr></thead><tbody>\n";
-            foreach ($users as $user) {
 
+            // 输出日志
+            $date = date('Y-m-d H:i:s');
+            $users_count = count($users);
+            echo "$date 冻结以下30天未使用用户 sum: $users_count\n";
+            echo "uid\t用户名\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量\n";
+            foreach ($users as $user) {
+                // 发送邮件
                 $arr['user_name'] = $user->user_name;
                 try {
                     Mail::send($user->email, '账号冻结提醒 - Shadowsky', 'news/freeze-report.tpl', $arr, []);
@@ -173,9 +199,16 @@ class Job
                     echo $e->getMessage() . "\n";
                 }
 
-                echo '<tr><td>' . $user->id . '</td><td>' . $user->user_name . '</td><td>' . $user->plan . '</td><td>' . $user->reg_date . '</td><td>' . date('Y-m-d H:i:s', $user->last_check_in_time) . '</td><td>' . date('Y-m-d H:i:s', $user->t) . '</td><td>' . $user->usedTraffic() . '/' . $user->enableTraffic() . "</td></tr>\n";
+                $user_id = $user->id;
+                $user_plan = $user->plan;
+                $user_reg_date = $user->reg_date;
+                $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
+                $user_t = date('Y-m-d H:i:s', $user->t);
+                $user_used_traffic = $user->usedTraffic();
+                $user_enable_traffic = $user->enableTraffic();
+                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
             }
-            echo '</tbody></table></br></br>';
+            echo "\n";
         }
     }
 
