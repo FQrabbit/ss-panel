@@ -332,7 +332,7 @@ class PaymentController extends BaseController
         $product_id = sprintf('%02d', $product_id);
         $apiid      = $this->apiid;
         $apikey     = md5($this->key);
-        $showurl    = "https://www.shadowsky.info/dopay";
+        $showurl    = Config::get('baseUrl') . "/dopay";
         // $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
         $addnum = 'pay' . $apiid . $product_id . User::find($uid)->port . time();
         return "
