@@ -9,12 +9,6 @@ use App\Services\Mail;
 
 class DailyMail
 {
-    public $adminEmail;
-
-    public function __construct()
-    {
-        $this->adminEmail = Config::get('adminEmail');
-    }
 
     public static function sendDailyMail()
     {
@@ -37,34 +31,37 @@ class DailyMail
                     }
                 }
             }
-            echo date('Y-m-d H:i:s', time()) . "\n";
-            echo 'Finished sending Monthly Traffic Report Email. Sum: ' . $count . "\n";
+            
+            $date = date('Y-m-d H:i:s');
+            echo "$date Sent Monthly Traffic Report Email - Sum: $count\n\n";
         }
     }
 
     public static function sendDbMail()
     {
         try {
-            $to      = $this->adminEmail;
+            $to      = Config::get('adminEmail');
             $subject = '备份数据库';
             $file    = ['/root/backup/database.sql'];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-        echo date('Y-m-d H:i:s', time()) . "\n";
-        echo "Sent database backup successful\n\n";
+
+        $date = date('Y-m-d H:i:s');
+        echo "$date Sent database backup\n\n";
     }
 
     public static function sendSiteMail()
     {
         try {
-            $to      = $this->adminEmail;
+            $to      = Config::get('adminEmail');
             $subject = '备份网站';
             $file    = ['/root/backup/site.tgz'];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
-            echo date('Y-m-d H:i:s', time()) . "\n";
-            echo 'Sent website backup successful\n\n';
+
+            $date = date('Y-m-d H:i:s');
+            echo "$date Sent website backup\n\n";
         } catch (Exception $e) {
             echo $e->getMessage();
         }
