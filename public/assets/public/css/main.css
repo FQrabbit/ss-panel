@@ -183,12 +183,8 @@ i.fa.fa-angle-left{
     background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.skin-blue .main-header li.user-header {
-    background-color: rgba(0, 0, 0, 0.64) !important;
-}
-
-.navbar-nav>.user-menu>.dropdown-menu>.user-footer {
-    background-color: rgba(0, 0, 0, 0.72);
+.skin-blue .main-header .dropdown-menu>li {
+    background-color: rgba(12, 12, 12, 0.95) !important;
 }
 
 .w3-modal>.w3-modal-content {
