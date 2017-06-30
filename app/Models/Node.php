@@ -226,7 +226,7 @@ class Node extends Model
         $next_reset_day = $this->nextResetDate();
         $remain_days    = round((strtotime($next_reset_day) - time()) / $secInADay);
         if ($remain_days == 0) {
-            $remain_days = 30;
+            $remain_days = 1;
         }
         return $remain_days;
     }

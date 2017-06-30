@@ -30,10 +30,10 @@ class Job
         $users = User::where('expire_date', '>', '0000-00-00 00:00:00')->where('expire_date', '<', date('Y-m-d H:i:s'))->where('plan', 'B')->get();
         if ($users) {
             foreach ($users as $user) {
+                $utype = $user->type;
+                //发送邮件
                 $to      = $user->email;
                 $subject = Config::get('appName') . ' - 会员到期提醒';
-
-                //发送邮件
                 try {
                     Mail::send($to, $subject, 'news/plan-reset-report.tpl', ['user' => $user], []);
                 } catch (Exception $e) {
@@ -50,9 +50,9 @@ class Job
                 $user->save();
 
                 // 输出日志
-                $date = date('Y-m-d H:i:s');
+                $date  = date('Y-m-d H:i:s');
                 $uname = $user->user_name;
-                $uid = $user->id;
+                $uid   = $user->id;
                 echo "$date 会员到期 $uid(套餐:$utype, $uname)\n";
             }
         }
@@ -88,9 +88,9 @@ class Job
                 $user->save();
 
                 // 输出日志
-                $date = date('Y-m-d H:i:s');
+                $date  = date('Y-m-d H:i:s');
                 $uname = $user->user_name;
-                $uid = $user->id;
+                $uid   = $user->id;
                 $utype = $user->type;
                 echo "$date 流量重置 $uid(套餐:$utype, $uname)\n";
             }
@@ -110,18 +110,18 @@ class Job
             ->get();
         // 输出日志
         if (!$users->isEmpty()) {
-            $date = date('Y-m-d H:i:s');
+            $date        = date('Y-m-d H:i:s');
             $users_count = count($users);
             echo "$date 删除以下长时间未使用用户 sum: $users_count\n";
             echo "uid\t用户名\t注册时间\t\t上次签到时间\t\t上次使用时间(sort)\t流量\n";
             foreach ($users as $user) {
-                $user_id = $user->id;
-                $user_plan = $user->plan;
-                $user_reg_date = $user->reg_date;
+                $user_id                 = $user->id;
+                $user_plan               = $user->plan;
+                $user_reg_date           = $user->reg_date;
                 $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
-                $user_t = date('Y-m-d H:i:s', $user->t);
-                $user_used_traffic = $user->usedTraffic();
-                $user_enable_traffic = $user->enableTraffic();
+                $user_t                  = date('Y-m-d H:i:s', $user->t);
+                $user_used_traffic       = $user->usedTraffic();
+                $user_enable_traffic     = $user->enableTraffic();
                 echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
             }
             echo "\n";
@@ -144,18 +144,18 @@ class Job
 
         // 输出日志
         if (!$users->isEmpty()) {
-            $date = date('Y-m-d H:i:s');
+            $date        = date('Y-m-d H:i:s');
             $users_count = count($users);
             echo "$date 删除以下长时间未签到用户 sum: $users_count\n";
             echo "uid\t用户名\t注册时间\t\t上次签到时间(sortort)\t上次使用时间\t流量\n";
             foreach ($users as $user) {
-                $user_id = $user->id;
-                $user_plan = $user->plan;
-                $user_reg_date = $user->reg_date;
+                $user_id                 = $user->id;
+                $user_plan               = $user->plan;
+                $user_reg_date           = $user->reg_date;
                 $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
-                $user_t = date('Y-m-d H:i:s', $user->t);
-                $user_used_traffic = $user->usedTraffic();
-                $user_enable_traffic = $user->enableTraffic();
+                $user_t                  = date('Y-m-d H:i:s', $user->t);
+                $user_used_traffic       = $user->usedTraffic();
+                $user_enable_traffic     = $user->enableTraffic();
                 echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
             }
             echo "\n";
@@ -186,7 +186,7 @@ class Job
                 ->update(['enable' => 0]);
 
             // 输出日志
-            $date = date('Y-m-d H:i:s');
+            $date        = date('Y-m-d H:i:s');
             $users_count = count($users);
             echo "$date 冻结以下30天未使用用户 sum: $users_count\n";
             echo "uid\t用户名\t注册时间\t\t上次签到时间\t\t上次使用时间(sort)\t流量\n";
@@ -199,13 +199,13 @@ class Job
                     echo $e->getMessage() . "\n";
                 }
 
-                $user_id = $user->id;
-                $user_plan = $user->plan;
-                $user_reg_date = $user->reg_date;
+                $user_id                 = $user->id;
+                $user_plan               = $user->plan;
+                $user_reg_date           = $user->reg_date;
                 $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
-                $user_t = date('Y-m-d H:i:s', $user->t);
-                $user_used_traffic = $user->usedTraffic();
-                $user_enable_traffic = $user->enableTraffic();
+                $user_t                  = date('Y-m-d H:i:s', $user->t);
+                $user_used_traffic       = $user->usedTraffic();
+                $user_enable_traffic     = $user->enableTraffic();
                 echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
             }
             echo "\n";
