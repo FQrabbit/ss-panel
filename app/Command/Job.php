@@ -267,11 +267,11 @@ class Job
         }
         echo "from api:\n";
         // bandwagon-us1,us3
-        $Bnodes = Node::where('vps', 'bandwagon')->get();
+        $Bnodes = Node::where('vps', 1)->get();
         foreach ($Bnodes as $node) {
             try {
                 $request          = $node->api;
-                $result           = json_decode(file_get_contents($request));
+                $result           = json_decode(file_get_contents((string) $request));
                 $usage            = round(($result->data_counter / $result->plan_monthly_data) * 100, 2);
                 $node->node_usage = $usage;
                 $node->save();
@@ -281,11 +281,11 @@ class Job
             }
         }
         // vultr - jp1,jp2,jp4
-        $Vnodes = Node::where('vps', 'vultr')->get();
+        $Vnodes = Node::where('vps', 12)->get();
         foreach ($Vnodes as $node) {
             try {
                 $request          = $node->api;
-                $result           = json_decode(file_get_contents($request));
+                $result           = json_decode(file_get_contents((string) $request));
                 $subid            = $node->subid;
                 $usage            = round(($result->$subid->current_bandwidth_gb / $result->$subid->allowed_bandwidth_gb) * 100, 2);
                 $node->node_usage = $usage;
