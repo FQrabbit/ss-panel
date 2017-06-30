@@ -356,7 +356,7 @@ class Job
         echo "clear PasswordResetLog\n";
 
         NodeOnlineLog::truncate();
-        echo "clear NodeOnlineLog\n\n";
+        echo "clear NodeOnlineLog\n";
 
         AnnLog::where('ann_id', '<', Ann::orderBy('id', 'desc')->first()->id)->delete();
         echo "clear AnnLog\n\n";
