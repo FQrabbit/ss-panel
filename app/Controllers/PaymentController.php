@@ -325,7 +325,7 @@ class PaymentController extends BaseController
             /**
              * 加油包
              */
-            if ($product->type == 'C' && !$user->product->isByTime()) {
+            if ($product->type == 'C' && !$user->product_id || ($user->product_id && !$user->product->isByTime())) {
                 return '当前套餐无法购买加油包';
             }
         }
