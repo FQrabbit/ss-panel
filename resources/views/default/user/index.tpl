@@ -26,11 +26,12 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
-                                <div class="w3-bar" style="margin-top:10px">
-                                        <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn w3-bar-item w3-green w3-border-right" style="width:50%;border-color:rgba(0,0,0,0.2) !important">Telegram群组</a>
-                                        <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn w3-bar-item w3-green w3-border-right w3-border-left" style="width:50%;border-color:rgba(0,0,0,0.2) !important">G+社群</a>
+                                <div class="social">
+                                    <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn col-md-4 col-xs-6 w3-border-right">Telegram群组</a>
+                                    <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn col-md-4 col-xs-6 w3-border-right">G+社群</a>
+                                    <a href="http://shadowsky-join-slack.herokuapp.com/" target="_blank" class="w3-btn col-md-4 col-xs-12">Slack(不用番茄)</a>
                                 </div>
-                                <button class="w3-btn w3-teal w3-block" style="margin-top:10px" onclick="$('#donateModal').show()">捐助</button>
+                                <button class="w3-btn w3-block donate-btn" onclick="$('#donateModal').show()">捐助</button>
                             </div><!-- /.box-body -->
                         </div>
                         <!-- /.box -->
@@ -266,10 +267,10 @@
                 {
                     data: [used, remain],
                     backgroundColor: [
-                        'rgba(169, 68, 66, 0.7)',
-                        'rgba(0, 150, 136, 0.7)',
+                        'rgba(12, 12, 12, 0.2)',
+                        'rgba(3, 144, 81, 1)',
                     ],
-                    borderWidth: 5,
+                    borderWidth: 3,
                     borderColor: 'rgba(0,0,0,0.1)',
                 }]
         };

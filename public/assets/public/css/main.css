@@ -241,6 +241,22 @@ i.fa.fa-angle-left{
     margin-bottom: 5px;
 }
 
+.social {
+    margin-top: 10px;
+}
+
+.social > a{
+    background-color: rgba(0, 166, 90, 0.8);
+    margin-bottom: 4px;
+    padding: 8px 0;
+    border-color: rgba(0,0,0,0.2) !important;
+}
+
+.donate-btn {
+    background-color: rgba(0, 150, 136, 0.8);
+    margin-top:4px;
+}
+
 .nav .dropdown-menu {
     background-color: rgba(0, 0, 0, 0) !important;
     border-color: rgba(0, 0, 0, 0) !important;
