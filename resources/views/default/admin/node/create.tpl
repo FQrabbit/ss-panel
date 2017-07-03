@@ -50,7 +50,7 @@
                                         <label for="server" class="col-sm-3 control-label">节点地址</label>
 
                                         <div class="col-sm-9">
-                                            <input class="form-control" id="server" value=".shadowsky.website">
+                                            <input class="form-control" id="server" value="{$config['baseUrl']}">
                                         </div>
                                     </div>
 
@@ -235,6 +235,14 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="renewal_day" class="col-sm-3 control-label">续费日</label>
+
+                                        <div class="col-sm-9">
+                                            <input class="form-control" id="renewal_day" value="1">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="subid" class="col-sm-3 control-label">subid</label>
 
                                         <div class="col-sm-9">
@@ -311,6 +319,7 @@
                     transfer: $("#transfer").val(),
                     transfer_reset_day: $("#transfer_reset_day").val(),
                     vps: $("#vps").val(),
+                    renewal_day: $("#renewal_day").val(),
                     subid: $("#subid").val(),
                     api: $("#api").val(),
                     node_usage: $("#node_usage").val()
