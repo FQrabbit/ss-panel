@@ -40,7 +40,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <select class="form-control" name="node">
+                <select class="form-control" name="node_id">
                     <option value="">节点</option>
                     {foreach $nodes as $node}
                     <option value="{$node->id}">{$node->name}</option>
