@@ -117,9 +117,9 @@ class Job
             foreach ($users as $user) {
                 $user_id                 = $user->id;
                 $user_plan               = $user->plan;
-                $user_reg_date           = $user->reg_date;
-                $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
-                $user_t                  = date('Y-m-d H:i:s', $user->t);
+                $user_reg_date           = date('Y-m-d', strtotime($user->reg_date));
+                $user_last_check_in_time = date('Y-m-d', $user->last_check_in_time);
+                $user_t                  = date('Y-m-d', $user->t);
                 $user_used_traffic       = $user->usedTraffic();
                 $user_enable_traffic     = $user->enableTraffic();
                 echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
@@ -151,9 +151,9 @@ class Job
             foreach ($users as $user) {
                 $user_id                 = $user->id;
                 $user_plan               = $user->plan;
-                $user_reg_date           = $user->reg_date;
-                $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
-                $user_t                  = date('Y-m-d H:i:s', $user->t);
+                $user_reg_date           = date('Y-m-d', strtotime($user->reg_date));
+                $user_last_check_in_time = date('Y-m-d', $user->last_check_in_time);
+                $user_t                  = date('Y-m-d', $user->t);
                 $user_used_traffic       = $user->usedTraffic();
                 $user_enable_traffic     = $user->enableTraffic();
                 echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
@@ -201,9 +201,9 @@ class Job
 
                 $user_id                 = $user->id;
                 $user_plan               = $user->plan;
-                $user_reg_date           = $user->reg_date;
-                $user_last_check_in_time = date('Y-m-d H:i:s', $user->last_check_in_time);
-                $user_t                  = date('Y-m-d H:i:s', $user->t);
+                $user_reg_date           = date('Y-m-d', strtotime($user->reg_date));
+                $user_last_check_in_time = date('Y-m-d', $user->last_check_in_time);
+                $user_t                  = date('Y-m-d', $user->t);
                 $user_used_traffic       = $user->usedTraffic();
                 $user_enable_traffic     = $user->enableTraffic();
                 echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
