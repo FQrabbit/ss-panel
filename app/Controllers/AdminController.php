@@ -395,8 +395,8 @@ class AdminController extends UserController
         $expenditure['monthly'] = $monthlyExpenditure;
         $expenditure['all']     = ExpenditureLog::sum('price');
 
-        $vpsMerchants = VpsMerchant::all();
-        $nodes        = Node::all();
+        $vpsMerchants = VpsMerchant::rightJoin('ss_node', 'vps_merchant.id', '=', 'ss_node.vps')->select('vps_merchant.id', 'vps_merchant.name')->groupBy('name')->orderBy('name')->get();
+        $nodes        = Node::orderBy('sort')->get();
 
         return $this->view()->
             assign('logs', $logs)->
