@@ -529,7 +529,7 @@ class AdminController extends UserController
         $users_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
         $nodes_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
         $eachHour_traffic_for_chart = ['labels' => array(), 'datas' => array(), 'total' => 0];
-        $nodes                      = Node::select(['id', 'name'])->get();
+        $nodes                      = Node::select(['id', 'name'])->orderBy('sort')->get();
 
         $q = $request->getQueryParams();
         if (!isset($request->getQueryParams()['page'])) {
