@@ -270,9 +270,9 @@ class Job
         $Bnodes = Node::where('vps', 1)->get();
         foreach ($Bnodes as $node) {
             try {
-                $request          = $node->api;
-                $result           = json_decode(file_get_contents((string) $request));
-                $usage            = round(($result->data_counter / $result->plan_monthly_data) * 100, 2);
+                $request = $node->api;
+                $result  = json_decode(file_get_contents((string) $request));
+                $usage   = round(($result->data_counter / $result->plan_monthly_data) * 100, 2);
                 if ($usage > 100) {
                     $usage = 100;
                 }
@@ -287,10 +287,10 @@ class Job
         $Vnodes = Node::where('vps', 12)->get();
         foreach ($Vnodes as $node) {
             try {
-                $request          = $node->api;
-                $result           = json_decode(file_get_contents((string) $request));
-                $subid            = $node->subid;
-                $usage            = round(($result->$subid->current_bandwidth_gb / $result->$subid->allowed_bandwidth_gb) * 100, 2);
+                $request = $node->api;
+                $result  = json_decode(file_get_contents((string) $request));
+                $subid   = $node->subid;
+                $usage   = round(($result->$subid->current_bandwidth_gb / $result->$subid->allowed_bandwidth_gb) * 100, 2);
                 if ($usage > 100) {
                     $usage = 100;
                 }
@@ -308,7 +308,8 @@ class Job
     {
         echo date('Y-m-d H:i:s', time()) . "\n";
 
-        $traffic_logs = TrafficLog::all();
+        $t            = strtotime(date('Y-m-d'));
+        $traffic_logs = TrafficLog::where('log_time', '>=', $t)->get();
         $date         = date('Y-m-d', strtotime('-1 day'));
 
         /**

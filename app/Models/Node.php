@@ -138,6 +138,23 @@ class Node extends Model
         return $traffic;
     }
 
+    public function showTrafficToday()
+    {
+        $traffic = $this->getTrafficToday();
+        if ($traffic == 0) {
+            return "暂无数据";
+        }
+        return Tools::flowAutoShow($traffic);
+    }
+
+    public function getTrafficToday()
+    {
+        $id      = $this->attributes['id'];
+        $t       = strtotime(date('Y-m-d'));
+        $traffic = TrafficLog::where('node_id', $id)->where('log_time', '>', $t)->sum('u') + TrafficLog::where('node_id', $id)->where('log_time', '>', $t)->sum('d');
+        return $traffic;
+    }
+
     public function getPollCount($p)
     {
         $id = $this->attributes['id'];
@@ -184,7 +201,7 @@ class Node extends Model
         $traffic         = NodeDailyTrafficLog::where('node_id', $id)->where('date', '>=', $last_reset_date)->sum('traffic');
         $traffic += $this->getTotalTraffic();
         $traffic_in_GB = Tools::flowToGB($traffic);
-        $usage = round($traffic_in_GB / $transfer, 4) * 100;
+        $usage         = round($traffic_in_GB / $transfer, 4) * 100;
         if ($usage > 100) {
             return 100;
         }
@@ -193,8 +210,8 @@ class Node extends Model
 
     public function lastResetDate()
     {
-        $id        = $this->attributes['id'];
-        $reset_day = $this->attributes['transfer_reset_day'];
+        $id                    = $this->attributes['id'];
+        $reset_day             = $this->attributes['transfer_reset_day'];
         $reset_date_this_month = date('Y-m-d', strtotime(date('Y-m') . "-$reset_day"));
         if ($reset_date_this_month <= date('Y-m-d')) {
             $last_reset_day = $reset_date_this_month;
