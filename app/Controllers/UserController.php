@@ -279,11 +279,45 @@ class UserController extends BaseController
         $feedUrl = $this->getFeedUrl();
         $config_arr = [
             'index' => $index,
+            'random' => true,
             'sysProxyMode' => 3,
+            'shareOverLan' => false,
+            'localPort' => 1080,
+            'localAuthPassword' => '',
+            'dnsServer' => '',
+            'reconnectTimes' => 2,
+            'randomAlgorithm' => 3,
+            'randomInGroup' => false,
+            'TTL' => 0,
+            'connectTimeout' => 5,
+            'proxyRuleMode' => 2,
+            'proxyEnable' => false,
+            'pacDirectGoProxy' => false,
+            'proxyType' => 0,
+            'proxyHost' => null,
+            'proxyPort' => 0,
+            'proxyAuthUser' => null,
+            'proxyAuthPass' => null,
+            'proxyUserAgent' => null,
+            'authUser' => null,
+            'authPass' => null,
+            'autoBan' => false,
+            'sameHostForSameTarget' => false,
+            'keepVisitTime' => 180,
+            'isHideTips' => false,
+            'nodeFeedAutoUpdate' => true,
             'serverSubscribes' => [
-                'URL' => $feedUrl,
-                'Group' => 'shadowsky'
+                [
+                    'URL' => 'https://raw.githubusercontent.com/breakwa11/breakwa11.github.io/master/free/freenodeplain.txt',
+                    'Group' => 'FreeSSR-public'
+                ],
+                [
+                    'URL' => $feedUrl,
+                    'Group' => 'shadowsky'
+                ]
             ],
+            'token' => [],
+            'portMap' => []
         ];
 
         $temparray = array();
