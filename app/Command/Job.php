@@ -332,11 +332,12 @@ class Job
          */
         $merged_users_traffic_logs = AdminController::mergeUsersTrafficLogs($traffic_logs);
         foreach ($merged_users_traffic_logs as $uid => $traffic) {
-            // echo "$uid\t$traffic\n";
-            if ($traffic > 0) {
+            if ($traffic > 0 && User::find($uid)) {
+                // echo "$uid\t$traffic\n";
                 UserDailyTrafficLog::create(['uid' => $uid, 'traffic' => $traffic, 'date' => $date]);
             }
         }
+// return;
 
         UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-1 month')))->delete();
         echo "clear old UserDailyTrafficLog\n";
