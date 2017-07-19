@@ -497,8 +497,10 @@ class UserController extends BaseController
         $protocol = strtolower($protocol);
         if ($protocol == 'auth_chain_a') {
             $method = 'none';
-        } elseif ($method='none') {
-        	$method = 'aes-256-cfb';
+        } else {
+            if ($method == 'none') {
+            	$method = 'aes-256-cfb';
+            }
         }
         $obfs = $request->getParam('obfs');
         $obfs = strtolower($obfs);
