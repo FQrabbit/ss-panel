@@ -271,16 +271,21 @@ class UserController extends BaseController
         $user = Auth::getUser();
         if ($user->plan == "A") {
             $nodes = Node::where('type', 0)->orderBy('sort')->get();
+            $index = 1;
         } else {
             $nodes = Node::where('type', ">=", 0)->orderBy('sort')->get();
+            $index = mt_rand(2, count($nodes));
         }
-        $string = '
-{
-    "index" : 1
-}
-        ';
+        $feedUrl = $this->getFeedUrl();
+        $config_arr = [
+            'index' => $index,
+            'sysProxyMode' => 3,
+            'serverSubscribes' => [
+                'URL' => $feedUrl,
+                'Group' => 'shadowsky'
+            ],
+        ];
 
-        $json      = json_decode($string, true);
         $temparray = array();
         foreach ($nodes as $node) {
             array_push($temparray, array(
@@ -299,10 +304,10 @@ class UserController extends BaseController
                 "enable"          => true,
             ));
         }
-        $json["configs"] = $temparray;
-        $json            = json_encode($json, JSON_PRETTY_PRINT);
+        $config_arr["configs"] = $temparray;
+        $config_json            = json_encode($config_arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         $newResponse     = $response->withHeader('Content-type', ' application/octet-stream')->withHeader('Content-Disposition', ' attachment; filename=gui-config.json');
-        $newResponse->getBody()->write($json);
+        $newResponse->getBody()->write($config_json);
         return $newResponse;
     }
 
@@ -312,9 +317,7 @@ class UserController extends BaseController
         $obfses    = Node::getAllObfs();
         $protocols = Node::getAllProtocol();
 
-        $user = $this->user;
-        $feedToken = $user->feedToken();
-        $feedUrl = Config::getPublicConfig()['baseUrl'] . '/feed?token=' . $feedToken . '&uid=' . $user->id;
+        $feedUrl = $this->getFeedUrl();
         return $this->view()->
             assign('methods', $methods)->
             assign('obfses', $obfses)->
@@ -741,5 +744,13 @@ class UserController extends BaseController
         $logs = PurchaseLog::where('uid', $this->user->id)->orderBy('id', 'desc')->paginate(15, ['*'], 'page', $pageNum);
         $logs->setPath('/user/purchaselog');
         return $this->view()->assign('logs', $logs)->display('user/purchaselog.tpl');
+    }
+
+    public function getFeedUrl()
+    {
+        $user = $this->user;
+        $feedToken = $user->feedToken();
+        $feedUrl = Config::getPublicConfig()['baseUrl'] . '/feed?token=' . $feedToken . '&uid=' . $user->id;
+        return $feedUrl;
     }
 }
