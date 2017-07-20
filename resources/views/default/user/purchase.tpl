@@ -113,13 +113,13 @@
                             <table class="table table-striped table-hover">
                                 <caption class="center">
                                     <h4>
-                                        <strong>流量加油包</strong>
+                                        <strong>流量加油包(原套餐为按时间购买)</strong>
                                     </h4>
                                 </caption>
                                 <thead>
                                     <tr>
                                         <th>套餐名</th>
-                                        <th>每月流量</th>
+                                        <th>流量</th>
                                         <th>期限</th>
                                         <th>价格</th>
                                         <th></th>
