@@ -38,7 +38,11 @@ class AuthController extends BaseController
 
     public function login($request, $response, $args)
     {
-        return $this->view()->display('auth/login.tpl');
+        $goto = '/user';
+        if (isset($request->getQueryParams()['goto'])) {
+            $goto = $request->getQueryParams()['goto'];
+        }
+        return $this->view()->assign('goto', $goto)->display('auth/login.tpl');
     }
 
     public function loginHandle($request, $response, $args)

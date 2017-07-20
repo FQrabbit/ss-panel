@@ -93,7 +93,7 @@
                         $("#msg-error").hide(10);
                         $("#msg-success").show(100);
                         $("#msg-success-p").html(data.msg);
-                        window.setTimeout("location.href='/user'", 2000);
+                        window.setTimeout("location.href='{$goto}'", 2000);
                     }else{
                         $("#msg-success").hide(10);
                         $("#msg-error").show(100);

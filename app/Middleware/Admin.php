@@ -18,7 +18,7 @@ class Admin
         }
         $user = AuthService::getUser();
         if (!$user->isLogin) {
-            $newResponse = $response->withStatus(302)->withHeader('Location', '/auth/login');
+            $newResponse = $response->withStatus(302)->withHeader('Location', '/auth/login?goto=' . $request->getUri()->getPath());
             return $newResponse;
         }
 
