@@ -40,7 +40,7 @@ $app->post('/debug', 'App\Controllers\HomeController:postDebug');
 // Payment
 $app->get('/dopay', 'App\Controllers\PaymentController:doReturn');
 $app->post('/dopay', 'App\Controllers\PaymentController:doReturn');
-$app->post('/prepay', 'App\Controllers\PaymentController:prepay');
+$app->post('/prepay', 'App\Controllers\PaymentController:prepay')->add(new Auth());
 
 // Feed
 $app->get('/feed', 'App\Controllers\HomeController:feed');

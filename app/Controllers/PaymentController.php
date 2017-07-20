@@ -6,6 +6,7 @@ use App\Models\DonateLog;
 use App\Models\PurchaseLog;
 use App\Models\Shop;
 use App\Models\User;
+use App\Services\Auth;
 use App\Services\Config;
 use App\Services\DbConfig;
 use App\Services\Mail;
@@ -291,9 +292,10 @@ class PaymentController extends BaseController
 
     public function prepay($request, $response, $args)
     {
+        $user       = Auth::getUser();
         $q          = $this->getRequestBodyArray($request);
         $product_id = intval($q['product_id']);
-        $uid        = intval($q['uid']);
+        $uid        = $user->id;
         $total      = $q['total'];
         if (empty($total)) {
             return 'Empty price';
@@ -309,7 +311,6 @@ class PaymentController extends BaseController
         }
         if ($product_id > 0) {
             $product = Shop::find($product_id);
-            $user    = User::find($uid);
             if ($product) {
                 if ($total != $product->price) {
                     return 'Price do not match';
@@ -325,7 +326,7 @@ class PaymentController extends BaseController
             /**
              * 加油包
              */
-            if ($product->type == 'C' && $user->product_id?!$user->product->isByTime():0) {
+            if ($product->type == 'C' && (($user->product_id) ? (!$user->product->isByTime()) : true)) {
                 return '当前套餐无法购买加油包';
             }
         }
@@ -334,7 +335,7 @@ class PaymentController extends BaseController
         $apikey     = md5($this->key);
         $showurl    = Config::get('baseUrl') . "/dopay";
         // $showurl    = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/dopay";
-        $addnum = 'pay' . $apiid . $product_id . User::find($uid)->port . time();
+        $addnum = 'pay' . $apiid . $product_id . $user->port . time();
         return "
         <form name='form1' action='https://api.jsjapp.com/pay/syt.php' method='POST'>
             <input type='hidden' name='uid' value='" . $uid . "'>
