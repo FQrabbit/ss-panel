@@ -312,7 +312,7 @@ class Job
         /**
          * 记录节点每日总流量
          */
-        $traffic_logs = TrafficLog::groupBy('node_id')->selectRaw('node_id, sum(u)+sum(d) as traffic')->get();
+        $traffic_logs = TrafficLog::where('log_time', '>=', $t)->where('log_time', '<', strtotime(date('Y-m-d')))->groupBy('node_id')->selectRaw('node_id, sum(u)+sum(d) as traffic')->get();
 // print_r($traffic_logs);return;
         foreach ($traffic_logs as $log) {
             try {
@@ -326,7 +326,7 @@ class Job
         /**
          * 记录用户每日总流量
          */
-        $traffic_logs = TrafficLog::groupBy('user_id')->selectRaw('user_id, sum(u)+sum(d) as traffic')->get();
+        $traffic_logs = TrafficLog::where('log_time', '>=', $t)->where('log_time', '<', strtotime(date('Y-m-d')))->groupBy('user_id')->selectRaw('user_id, sum(u)+sum(d) as traffic')->get();
         foreach ($traffic_logs as $log) {
             try {
                 UserDailyTrafficLog::create(['uid' => $log->user_id, 'traffic' => $log->traffic, 'date' => $date]);
@@ -344,7 +344,7 @@ class Job
         try {
             self::arrangeTrafficLog();
             echo 'Arranged TrafficLog' . PHP_EOL;
-            
+
             UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-1 month')))->delete();
             echo "clear old UserDailyTrafficLog" . PHP_EOL;
 
