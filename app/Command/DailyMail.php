@@ -26,7 +26,7 @@ class DailyMail
                     try {
                         Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ['user' => $user], []);
                         // echo "Sent Traffic Report Email to " . $user->user_name . "\n";
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                         echo $e->getMessage();
                     }
                 }
@@ -44,7 +44,7 @@ class DailyMail
             $subject = '备份数据库';
             $file    = ['/root/backup/database.sql'];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
 
@@ -62,7 +62,7 @@ class DailyMail
 
             $date = date('Y-m-d H:i:s');
             echo "$date Sent website backup\n\n";
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
     }
@@ -86,7 +86,7 @@ class DailyMail
                     $to      = $user->email;
                     $subject = "Shadowsky - " . $title;
                     Mail::send($to, $subject, 'news/announcement.tpl', $arr, []);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
                 echo "Sent to " . $user->user_name . "\n";

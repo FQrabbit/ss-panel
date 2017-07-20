@@ -55,6 +55,8 @@ class XCat
                 return Job::getUncheckinUser();
             case ("delUncheckinUser"):
                 return Job::delUncheckinUser();
+            case ("arrangeTrafficLog"):
+                return Job::arrangeTrafficLog();
             case ("clearLog"):
                 return Job::clearLog();
             case ("freezeuser"):

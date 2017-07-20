@@ -34,7 +34,7 @@ class EmailVerify
                 'verification' => $verification,
                 'ttl' => $ttl
             ],[]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
         return true;

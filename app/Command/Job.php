@@ -36,7 +36,7 @@ class Job
                 $subject = Config::get('appName') . ' - 会员到期提醒';
                 try {
                     Mail::send($to, $subject, 'news/plan-reset-report.tpl', ['user' => $user], []);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
                 if ($user->product_id && $user->product->isByTime()) {
@@ -53,7 +53,7 @@ class Job
                 $date  = date('Y-m-d H:i:s');
                 $uname = $user->user_name;
                 $uid   = $user->id;
-                echo "$date 会员到期 $uid(套餐:$utype，$uname)\n";
+                echo "$date 会员到期 $uid(套餐:$utype，$uname)" . PHP_EOL;
             }
         }
     }
@@ -79,7 +79,7 @@ class Job
                 // $subject = Config::get('appName') . " - 流量报告";
                 // try {
                 //     Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ["user" => $user], []);
-                // } catch (Exception $e) {
+                // } catch (\Exception $e) {
                 //     echo $e->getMessage();
                 // }
                 $user->u               = 0;
@@ -92,10 +92,10 @@ class Job
                 $uname = $user->user_name;
                 $uid   = $user->id;
                 $utype = $user->type;
-                echo "$date 流量重置 $uid(套餐:$utype，$uname)\n";
+                echo "$date 流量重置 $uid(套餐:$utype，$uname)" . PHP_EOL;
             }
         }
-        echo "\n";
+        echo PHP_EOL;
     }
 
     public static function getNoTransferUser()
@@ -112,8 +112,8 @@ class Job
         if (!$users->isEmpty()) {
             $date        = date('Y-m-d H:i:s');
             $users_count = count($users);
-            echo "$date 删除以下长时间未使用用户 sum: $users_count\n";
-            echo "uid\tPlan\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量\n";
+            echo "$date 删除以下长时间未使用用户 sum: $users_count" . PHP_EOL;
+            echo "uid\tPlan\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量" . PHP_EOL;
             foreach ($users as $user) {
                 $user_id                 = $user->id;
                 $user_plan               = $user->plan;
@@ -122,9 +122,9 @@ class Job
                 $user_t                  = date('Y-m-d', $user->t);
                 $user_used_traffic       = $user->usedTraffic();
                 $user_enable_traffic     = $user->enableTraffic();
-                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
+                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic" . PHP_EOL;
             }
-            echo "\n";
+            echo PHP_EOL;
         }
 
         return $users;
@@ -146,8 +146,8 @@ class Job
         if (!$users->isEmpty()) {
             $date        = date('Y-m-d H:i:s');
             $users_count = count($users);
-            echo "$date 删除以下长时间未签到用户 sum: $users_count\n";
-            echo "uid\tPlan\t注册时间\t上次签到时间(sortort)\t上次使用时间\t流量\n";
+            echo "$date 删除以下长时间未签到用户 sum: $users_count" . PHP_EOL;
+            echo "uid\tPlan\t注册时间\t上次签到时间(sortort)\t上次使用时间\t流量" . PHP_EOL;
             foreach ($users as $user) {
                 $user_id                 = $user->id;
                 $user_plan               = $user->plan;
@@ -156,9 +156,9 @@ class Job
                 $user_t                  = date('Y-m-d', $user->t);
                 $user_used_traffic       = $user->usedTraffic();
                 $user_enable_traffic     = $user->enableTraffic();
-                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
+                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic" . PHP_EOL;
             }
-            echo "\n";
+            echo PHP_EOL;
         }
 
         return $users;
@@ -188,15 +188,15 @@ class Job
             // 输出日志
             $date        = date('Y-m-d H:i:s');
             $users_count = count($users);
-            echo "$date 冻结以下30天未使用用户 sum: $users_count\n";
-            echo "uid\tPlan\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量\n";
+            echo "$date 冻结以下30天未使用用户 sum: $users_count" . PHP_EOL;
+            echo "uid\tPlan\t注册时间\t上次签到时间\t上次使用时间(sort)\t流量" . PHP_EOL;
             foreach ($users as $user) {
                 // 发送邮件
                 $arr['user_name'] = $user->user_name;
                 try {
                     Mail::send($user->email, '账号冻结提醒 - Shadowsky', 'news/freeze-report.tpl', $arr, []);
                 } catch (\Exception $e) {
-                    echo $e->getMessage() . "\n";
+                    echo $e->getMessage() . PHP_EOL;
                 }
 
                 $user_id                 = $user->id;
@@ -206,9 +206,9 @@ class Job
                 $user_t                  = date('Y-m-d', $user->t);
                 $user_used_traffic       = $user->usedTraffic();
                 $user_enable_traffic     = $user->enableTraffic();
-                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic\n";
+                echo "$user_id\t$user_plan\t$user_reg_date\t$user_last_check_in_time\t$user_t\t$user_used_traffic / $user_enable_traffic" . PHP_EOL;
             }
-            echo "\n";
+            echo PHP_EOL;
         }
     }
 
@@ -261,11 +261,11 @@ class Job
         $nodes = Node::all();
         foreach ($nodes as $node) {
             $usage = $node->getTrafficUsage();
-            echo $node->name . ":\t" . $usage . "\n";
+            echo $node->name . ":\t" . $usage . PHP_EOL;
             $node->node_usage = $usage;
             $node->save();
         }
-        echo "from api:\n";
+        echo "from api:" . PHP_EOL;
         // bandwagon-us1,us3
         $Bnodes = Node::where('vps', 1)->get();
         foreach ($Bnodes as $node) {
@@ -278,9 +278,9 @@ class Job
                 }
                 $node->node_usage = $usage;
                 $node->save();
-                echo $node->name . ":\t" . $usage . "\n";
-            } catch (Exception $e) {
-                echo $e->getMessage() . "\n";
+                echo $node->name . ":\t" . $usage . PHP_EOL;
+            } catch (\Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
             }
         }
         // vultr - jp1,jp2,jp4
@@ -296,72 +296,78 @@ class Job
                 }
                 $node->node_usage = $usage;
                 $node->save();
-                echo $node->name . ":\t" . $usage . "\n";
-            } catch (Exception $e) {
-                echo $e->getMessage() . "\n";
+                echo $node->name . ":\t" . $usage . PHP_EOL;
+            } catch (\Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
             }
         }
-        echo date('Y-m-d H:i:s', time()) . "\n\n";
+        echo date('Y-m-d H:i:s', time()) . PHP_EOL . PHP_EOL;
     }
 
-    public static function clearLog()
+    public static function arrangeTrafficLog()
     {
-        echo date('Y-m-d H:i:s', time()) . "\n";
-
-        $t            = strtotime(date('Y-m-d'));
-        $traffic_logs = TrafficLog::where('log_time', '>=', $t)->get();
-        $date         = date('Y-m-d', strtotime('-1 day'));
+        echo date('Y-m-d H:i:s', time()) . PHP_EOL;
+        echo 'Arranged TrafficLog' . PHP_EOL;
+        $t            = strtotime('-1 day');
+        $date         = date('Y-m-d', $t);
 
         /**
          * 记录节点每日总流量
          */
-        $nodes = Node::all();
-        foreach ($nodes as $node) {
-            $nodes_traffic[$node->id] = 0;
-        }
+        $traffic_logs = TrafficLog::groupBy('node_id')->selectRaw('node_id, sum(u)+sum(d) as traffic')->get();
+// print_r($traffic_logs);return;
         foreach ($traffic_logs as $log) {
-            $nodes_traffic[$log->node_id] += ($log->d + $log->u);
-        }
-        foreach ($nodes_traffic as $node_id => $traffic) {
-            // echo "$node_id\t$traffic\n";
-            NodeDailyTrafficLog::create(['node_id' => $node_id, 'traffic' => $traffic, 'date' => $date]);
+            try {
+                NodeDailyTrafficLog::create(['node_id' => $log->node_id, 'traffic' => $log->traffic, 'date' => $date]);
+            } catch (\Exception $e) {
+// echo $log->node_id. ': ' . Tools::flowAutoShow($log->traffic) . PHP_EOL;
+                echo $e->getMessage() . PHP_EOL . PHP_EOL;
+            }
         }
 
         /**
          * 记录用户每日总流量
          */
-        $merged_users_traffic_logs = AdminController::mergeUsersTrafficLogs($traffic_logs);
-        foreach ($merged_users_traffic_logs as $uid => $traffic) {
-            if ($traffic > 0 && User::find($uid)) {
-                // echo "$uid\t$traffic\n";
-                UserDailyTrafficLog::create(['uid' => $uid, 'traffic' => $traffic, 'date' => $date]);
+        $traffic_logs = TrafficLog::groupBy('user_id')->selectRaw('user_id, sum(u)+sum(d) as traffic')->get();
+        foreach ($traffic_logs as $log) {
+            try {
+                UserDailyTrafficLog::create(['uid' => $log->user_id, 'traffic' => $log->traffic, 'date' => $date]);
+            } catch (\Exception $e) {
+// echo $log->user_id. ': ' . Tools::flowAutoShow($log->traffic) . PHP_EOL;
+                echo $e->getMessage() . PHP_EOL . PHP_EOL;
             }
         }
-// return;
+    }
 
-        UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-1 month')))->delete();
-        echo "clear old UserDailyTrafficLog\n";
+    public static function clearLog()
+    {
+        try {
+            UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-1 month')))->delete();
+            echo "clear old UserDailyTrafficLog" . PHP_EOL;
 
-        TrafficLog::truncate();
-        echo "clear TrafficLog\n";
+            TrafficLog::truncate();
+            echo "clear TrafficLog" . PHP_EOL;
 
-        EmailVerify::truncate();
-        echo "clear EmailVerifyLog\n";
+            EmailVerify::truncate();
+            echo "clear EmailVerifyLog" . PHP_EOL;
 
-        NodeInfoLog::truncate();
-        echo "clear NodeInfoLog\n";
+            NodeInfoLog::truncate();
+            echo "clear NodeInfoLog" . PHP_EOL;
 
-        CheckInLog::where('checkin_at', '<', strtotime('-1 month'))->delete();
-        echo "clear CheckinLog\n";
+            CheckInLog::where('checkin_at', '<', strtotime('-1 month'))->delete();
+            echo "clear CheckinLog" . PHP_EOL;
 
-        PasswordReset::truncate();
-        echo "clear PasswordResetLog\n";
+            PasswordReset::truncate();
+            echo "clear PasswordResetLog" . PHP_EOL;
 
-        NodeOnlineLog::truncate();
-        echo "clear NodeOnlineLog\n";
+            NodeOnlineLog::truncate();
+            echo "clear NodeOnlineLog" . PHP_EOL;
 
-        AnnLog::where('ann_id', '<', Ann::orderBy('id', 'desc')->first()->id)->delete();
-        echo "clear AnnLog\n\n";
+            AnnLog::where('ann_id', '<', Ann::orderBy('id', 'desc')->first()->id)->delete();
+            echo "clear AnnLog" . PHP_EOL . PHP_EOL;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
 }

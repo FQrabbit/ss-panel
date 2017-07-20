@@ -552,7 +552,7 @@ class UserController extends BaseController
             $res['msg'] = "激活成功，稍等片刻您的账号就可以正常使用了。";
             $res['ret'] = 1;
             return $this->echoJson($response, $res);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
         }
     }
 
