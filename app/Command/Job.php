@@ -306,8 +306,6 @@ class Job
 
     public static function arrangeTrafficLog()
     {
-        echo date('Y-m-d H:i:s', time()) . PHP_EOL;
-        echo 'Arranged TrafficLog' . PHP_EOL;
         $t            = strtotime('-1 day');
         $date         = date('Y-m-d', $t);
 
@@ -341,7 +339,12 @@ class Job
 
     public static function clearLog()
     {
+        echo date('Y-m-d H:i:s', time()) . PHP_EOL;
+
         try {
+            self::arrangeTrafficLog();
+            echo 'Arranged TrafficLog' . PHP_EOL;
+            
             UserDailyTrafficLog::where('date', '<', date('Y-m-d', strtotime('-1 month')))->delete();
             echo "clear old UserDailyTrafficLog" . PHP_EOL;
 

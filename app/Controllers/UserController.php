@@ -678,9 +678,13 @@ class UserController extends BaseController
     public static function getTrafficInfoArrayForChart($uid)
     {
         $logs        = TrafficLog::where('user_id', $uid)->orderBy('id', 'ASC')->get();
-        $labels_hour = array(); // time odd hour
-        $labels_node = array(); // node name
-        $datas       = array();
+        $labels_hour = []; // time odd hour
+        $labels_node = []; // node name
+        $datas       = [
+            [], // Hours
+            [] // Nodes
+        ];
+
         for ($i = 0; $i <= intval(date('H')); $i++) {
             $label_name = date('G a', strtotime("$i:00:00"));
             array_push($labels_hour, $label_name);
