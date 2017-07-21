@@ -403,6 +403,18 @@ class User extends Model
         return $flag;
     }
 
+    public function isTransferResetTime()
+    {
+        $flag = false;
+        for ($i=strtotime($this->expire_date); strtotime(date('Y-m-d H:i', $i)) >= strtotime(date('Y-m-d H:i')); $i=strtotime('-1 month', $i)) {
+            if (date('Y-m-d H:i', $i) == date('Y-m-d H:i')) {
+                $flag = true;
+                break;
+            }
+        }
+        return $flag;
+    }
+
     public function willResetTransfer()
     {
         return Tools::formatToDate($this->expire_date) > date('Y-m-d H:i:s', strtotime(' +1 month'));

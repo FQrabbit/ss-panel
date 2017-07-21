@@ -53,13 +53,13 @@ class Job
                 $date  = date('Y-m-d H:i:s');
                 $uname = $user->user_name;
                 $uid   = $user->id;
-                echo "$date 会员到期 $uid(套餐:$utype,$uname)" . PHP_EOL;
+                echo "$date 会员到期 $uid(套餐:$utype, $uname)" . PHP_EOL;
             }
         }
     }
 
     /**
-     * 重置用户流量,每天 00:01 am 执行
+     * 重置用户流量,每分钟执行一次
      */
     public static function resetUserTransfer()
     {
@@ -68,13 +68,12 @@ class Job
          */
         $product_ids = Shop::where('type', 'A')->pluck('id')->toArray();
         $users       = User::where('expire_date', '>=', date('Y-m-d', strtotime('+1 month')))->
-            where('buy_date', '<', date('Y-m-d'))->
             whereIn('product_id', $product_ids)->
             orderBy('expire_date', 'asc')->
             get();
-
+// $users = User::where('id', 1)->get();
         foreach ($users as $user) {
-            if ($user->isTransferResetDay()) {
+            if ($user->isTransferResetTime()) {
                 // $to      = $user->email;
                 // $subject = Config::get('appName') . " - 流量报告";
                 // try {
@@ -92,7 +91,7 @@ class Job
                 $uname = $user->user_name;
                 $uid   = $user->id;
                 $utype = $user->type;
-                echo "$date 流量重置 $uid(套餐:$utype,$uname)" . PHP_EOL;
+                echo "$date 流量重置 $uid(套餐:$utype, $uname)" . PHP_EOL;
             }
         }
         echo PHP_EOL;
@@ -306,8 +305,8 @@ class Job
 
     public static function arrangeTrafficLog()
     {
-        $t            = strtotime('-1 day');
-        $date         = date('Y-m-d', $t);
+        $t    = strtotime('-1 day');
+        $date = date('Y-m-d', $t);
 
         /**
          * 记录节点每日总流量
