@@ -391,6 +391,11 @@ class User extends Model
         return $traffic;
     }
 
+    public function haveResetTransferToday()
+    {
+        return date('Y-m-d', $this->last_transfer_reset_time) == date('Y-m-d');
+    }
+
     public function isTransferResetDay()
     {
         $flag = false;

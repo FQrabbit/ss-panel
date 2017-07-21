@@ -73,7 +73,7 @@ class Job
             get();
 // $users = User::where('id', 1)->get();
         foreach ($users as $user) {
-            if ($user->isTransferResetTime()) {
+            if (!$user->haveResetTransferToday() && $user->isTransferResetDay()) {
                 // $to      = $user->email;
                 // $subject = Config::get('appName') . " - 流量报告";
                 // try {
@@ -84,14 +84,16 @@ class Job
                 $user->u               = 0;
                 $user->d               = 0;
                 $user->transfer_enable = Tools::toGB($user->product->transfer);
+                $user->last_transfer_reset_time = time();
                 $user->save();
 
                 // 输出日志
                 $date  = date('Y-m-d H:i:s');
+                $expire_date = $user->expire_date;
                 $uname = $user->user_name;
                 $uid   = $user->id;
                 $utype = $user->type;
-                echo "$date 流量重置 $uid(套餐:$utype, $uname)" . PHP_EOL;
+                echo "$date 流量重置 $uid(过期日期:$expire_date, 套餐:$utype, $uname)" . PHP_EOL;
             }
         }
         echo PHP_EOL;
