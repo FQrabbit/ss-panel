@@ -249,12 +249,12 @@ class AdminController extends UserController
         }
         $product = Shop::find($q['product_id']);
 
-        $pay                 = new PaymentController();
-        $pay->uid            = $user->id;
-        $pay->product_id     = $q['product_id'];
-        $pay->total          = $product->price;
-        $pay->addnum         = 'p' . $user->port . 't' . time();
-        $rs                  = $pay->doPay();
+        $pay             = new PaymentController();
+        $pay->uid        = $user->id;
+        $pay->product_id = $q['product_id'];
+        $pay->total      = $product->price;
+        $pay->addnum     = 'p' . $user->port . 't' . time();
+        $rs              = $pay->doPay();
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -347,12 +347,12 @@ class AdminController extends UserController
             }
         }
 
-        $pay                 = new PaymentController();
-        $pay->uid            = $user->id;
-        $pay->product_id     = 0;
-        $pay->total          = $q['money'];
-        $pay->addnum         = 'p' . $user->port . 't' . time();
-        $rs                  = $pay->doDonate();
+        $pay             = new PaymentController();
+        $pay->uid        = $user->id;
+        $pay->product_id = 0;
+        $pay->total      = $q['money'];
+        $pay->addnum     = 'p' . $user->port . 't' . time();
+        $rs              = $pay->doDonate();
         return $response->getBody()->write(json_encode($rs));
     }
 
@@ -562,95 +562,66 @@ class AdminController extends UserController
         /**
          * 用户本日流量使用(某个节点或所有节点)降序排名 chart 1
          */
+        $logs_a = TrafficLog::groupBy('user_id')->selectRaw('user_id, node_id, sum(u+d) as traffic')->orderBy('traffic', 'desc')->take(10);
         if ($node_id) {
-            $logs_for_users_traffic_ranking_chart = TrafficLog::where('node_id', $node_id)->get();
+            $logs_a = $logs_a->where('node_id', $node_id)->get();
         } else {
-            $logs_for_users_traffic_ranking_chart = TrafficLog::all();
+            $logs_a = $logs_a->get();
         }
-        $users_traffic = self::mergeUsersTrafficLogs($logs_for_users_traffic_ranking_chart);
-        arsort($users_traffic);
-        $most_users_traffic = array_slice($users_traffic, 0, 10, true);
-        reset($most_users_traffic);
-        $most_traffic_user_id = key($most_users_traffic);
-        foreach ($most_users_traffic as $k => $v) {
-            array_push($users_traffic_for_chart['labels'], $k);
-            array_push($users_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
+        foreach ($logs_a as $log) {
+            $users_traffic_for_chart['total'] += $log->traffic;
+            array_push($users_traffic_for_chart['labels'], $log->user_id);
+            array_push($users_traffic_for_chart['datas'], round(Tools::flowToGB($log->traffic), 2));
         }
-        $users_traffic_for_chart['total'] = round(Tools::flowToGB(array_sum($users_traffic)), 2);
+        // return json_encode($logs_a);
+        $users_traffic_for_chart['total'] = round(Tools::flowToGB($users_traffic_for_chart['total']), 2);
         $users_traffic_for_chart          = json_encode($users_traffic_for_chart);
 
         /**
          * 各节点流量、各小时（某个用户或所有用户）使用情况 chart 2, 3
          */
         if ($user_id) {
-            $logs_for_nodes_traffic_chart    = TrafficLog::where('user_id', $user_id)->get();
-            $logs_for_eachHour_traffic_chart = $logs_for_nodes_traffic_chart;
+            $logs_for_nodes_traffic_chart    = TrafficLog::where('user_id', $user_id)->groupBy('node_id')->selectRaw('node_id, sum(u+d) as traffic')->orderBy('traffic', 'desc')->get();
+            $logs_for_eachHour_traffic_chart = TrafficLog::where('user_id', $user_id);
         } else {
-            $logs_for_nodes_traffic_chart = TrafficLog::all();
+            $logs_for_nodes_traffic_chart = TrafficLog::groupBy('node_id')->selectRaw('node_id, sum(u+d) as traffic')->orderBy('traffic', 'desc')->get();
             if ($node_id) {
-                $logs_for_eachHour_traffic_chart = TrafficLog::where('node_id', $node_id)->get();
+                $logs_for_eachHour_traffic_chart = TrafficLog::where('node_id', $node_id);
             } else {
-                $logs_for_eachHour_traffic_chart = $logs_for_nodes_traffic_chart;
+                $logs_for_eachHour_traffic_chart = TrafficLog::where('id', '>', 1);
             }
         }
 
-        for ($i = 0; $i <= 24; $i++) {
-            // for ($i = 0; $i <= (int) date('H'); $i++) {
-            $eachHour_traffic[date('H a', strtotime("$i:00:00"))] = 0;
-        }
-        foreach ($nodes as $node) {
-            $nodes_traffic[$node->id] = 0;
-        }
-
         foreach ($logs_for_nodes_traffic_chart as $log) {
-            $nodes_traffic[$log->node_id] += ($log->d + $log->u);
+            $nodes_traffic_for_chart['labels'][] = Node::find($log->node_id)->name . ' (id: ' . $log->node_id . ')';
+            $nodes_traffic_for_chart['datas'][]  = round(Tools::flowToGB($log->traffic), 2);
+            $nodes_traffic_for_chart['total'] += $log->traffic;
         }
-        arsort($nodes_traffic);
-        /**
-         * 取产生流量最多的7个节点
-         */
-        // $nodes_traffic = array_slice($nodes_traffic, 0, 10, true);
 
-        foreach ($logs_for_eachHour_traffic_chart as $log) {
-            $eachHour_traffic[date('H a', $log->log_time)] += ($log->d + $log->u);
+        for ($i = 0; $i <= 23; $i++) {
+            // for ($i = 0; $i <= (int) date('H'); $i++) {
+            $a_time                                 = strtotime(date('Y-m-d') . " $i:00:00");
+            $b_time                                 = strtotime('+1 hour', $a_time);
+            $log                                    = $logs_for_eachHour_traffic_chart->whereBetween('log_time', [$a_time, $b_time])->selectRaw('sum(u+d) as traffic')->get()->first();
+            $traffic                                = $log ? ($log->traffic) : 0;
+            $eachHour_traffic_for_chart['labels'][] = date('H a', strtotime("$i:00:00"));
+            $eachHour_traffic_for_chart['datas'][]  = round(Tools::flowToGB($traffic), 2);
         }
-        /**
-         * 去掉值为0的元素
-         * @var array
-         */
-        // $nodes_traffic = array_filter($nodes_traffic);
-        $eachHour_traffic = array_filter($eachHour_traffic);
-        foreach ($nodes_traffic as $k => $v) {
-            array_push($nodes_traffic_for_chart['labels'], Node::find($k)->name . " (id: $k)");
-            array_push($nodes_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
-        }
-        foreach ($eachHour_traffic as $k => $v) {
-            array_push($eachHour_traffic_for_chart['labels'], $k);
-            array_push($eachHour_traffic_for_chart['datas'], round(Tools::flowToGB($v), 2));
-        }
-        $nodes_traffic_for_chart['total']    = round(array_sum($nodes_traffic_for_chart['datas']), 2);
-        $eachHour_traffic_for_chart['total'] = round(array_sum($eachHour_traffic_for_chart['datas']), 2);
-        $nodes_traffic_for_chart             = json_encode($nodes_traffic_for_chart);
-        $eachHour_traffic_for_chart          = json_encode($eachHour_traffic_for_chart);
+        $nodes_traffic_for_chart['total'] = round(Tools::flowToGB($nodes_traffic_for_chart['total']), 2);
+        $eachHour_traffic_for_chart['total'] += $nodes_traffic_for_chart['total'];
+
+        $nodes_traffic_for_chart    = json_encode($nodes_traffic_for_chart);
+        $eachHour_traffic_for_chart = json_encode($eachHour_traffic_for_chart);
 
         /**
          * 用户本月流量使用降序排名 chart 4
          */
-        $traffic_logs                      = UserDailyTrafficLog::where('date', '>=', date('Y-m') . '-1')->get();
+        $traffic_logs                      = UserDailyTrafficLog::where('date', '>=', date('Y-m') . '-1')->groupBy('uid')->selectRaw('uid, sum(traffic) as traffic')->orderBy('traffic', 'desc')->take(30)->get();
         $users_traffic_thisMonth           = [];
         $users_traffic_thisMonth_for_chart = [];
         foreach ($traffic_logs as $log) {
-            if (isset($users_traffic_thisMonth[$log->uid])) {
-                $users_traffic_thisMonth[$log->uid] += $log->traffic;
-            } else {
-                $users_traffic_thisMonth[$log->uid] = 0;
-            }
-        }
-        arsort($users_traffic_thisMonth);
-        $users_traffic_thisMonth = array_slice($users_traffic_thisMonth, 0, 50, true);
-        foreach ($users_traffic_thisMonth as $uid => $traffic) {
-            $users_traffic_thisMonth_for_chart['labels'][] = $uid;
-            $users_traffic_thisMonth_for_chart['datas'][]  = round(Tools::flowToGB($traffic), 2);
+            $users_traffic_thisMonth_for_chart['labels'][] = $log->uid;
+            $users_traffic_thisMonth_for_chart['datas'][]  = round(Tools::flowToGB($log->traffic), 2);
         }
         $users_traffic_thisMonth_for_chart = json_encode($users_traffic_thisMonth_for_chart);
         return $this->view()->

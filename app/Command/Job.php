@@ -68,6 +68,7 @@ class Job
          */
         $product_ids = Shop::where('type', 'A')->pluck('id')->toArray();
         $users       = User::where('expire_date', '>=', date('Y-m-d', strtotime('+1 month')))->
+            where('buy_date', '<', date('Y-m-d H:i:s'))->
             whereIn('product_id', $product_ids)->
             orderBy('expire_date', 'asc')->
             get();
