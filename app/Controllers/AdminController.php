@@ -581,15 +581,9 @@ class AdminController extends UserController
          * 各节点流量、各小时（某个用户或所有用户）使用情况 chart 2, 3
          */
         if ($user_id) {
-            $logs_for_nodes_traffic_chart    = TrafficLog::where('user_id', $user_id)->groupBy('node_id')->selectRaw('node_id, sum(u+d) as traffic')->orderBy('traffic', 'desc')->get();
-            $logs_for_eachHour_traffic_chart = TrafficLog::where('user_id', $user_id);
+            $logs_for_nodes_traffic_chart = TrafficLog::where('user_id', $user_id)->groupBy('node_id')->selectRaw('node_id, sum(u+d) as traffic')->orderBy('traffic', 'desc')->get();
         } else {
             $logs_for_nodes_traffic_chart = TrafficLog::groupBy('node_id')->selectRaw('node_id, sum(u+d) as traffic')->orderBy('traffic', 'desc')->get();
-            if ($node_id) {
-                $logs_for_eachHour_traffic_chart = TrafficLog::where('node_id', $node_id);
-            } else {
-                $logs_for_eachHour_traffic_chart = TrafficLog::where('id', '>', 1);
-            }
         }
 
         foreach ($logs_for_nodes_traffic_chart as $log) {
@@ -598,12 +592,22 @@ class AdminController extends UserController
             $nodes_traffic_for_chart['total'] += $log->traffic;
         }
 
-        for ($i = 0; $i <= 23; $i++) {
-            // for ($i = 0; $i <= (int) date('H'); $i++) {
-            $a_time                                 = strtotime(date('Y-m-d') . " $i:00:00");
-            $b_time                                 = strtotime('+1 hour', $a_time);
-            $log                                    = $logs_for_eachHour_traffic_chart->whereBetween('log_time', [$a_time, $b_time])->selectRaw('sum(u+d) as traffic')->get()->first();
-            $traffic                                = $log ? ($log->traffic) : 0;
+        // for ($i = 0; $i <= 23; $i++) {
+        for ($i = 0; $i <= (int) date('H'); $i++) {
+            $a_time = strtotime(date('Y-m-d') . " $i:00:00");
+            $b_time = strtotime('+1 hour', $a_time);
+            if ($user_id) {
+                $log = TrafficLog::where('user_id', $user_id);
+            } else {
+                if ($node_id) {
+                    $log = TrafficLog::where('node_id', $node_id);
+                } else {
+                    $log = TrafficLog::where('id', '>', 1);
+                }
+            }
+            $log     = $log->whereBetween('log_time', [$a_time, $b_time])->selectRaw('sum(u+d) as traffic')->get()->first();
+            $traffic = $log ? ($log->traffic) : 0;
+
             $eachHour_traffic_for_chart['labels'][] = date('H a', strtotime("$i:00:00"));
             $eachHour_traffic_for_chart['datas'][]  = round(Tools::flowToGB($traffic), 2);
         }
