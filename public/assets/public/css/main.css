@@ -23,7 +23,7 @@ body {
     position: relative;
 }
 
-body,h1,h2,h3,h4,h5,h6,a,i,small,input,select,textarea,span,button,label,legend,.form-control,.btn-default {
+body,h1,h2,h3,h4,h5,h6,a,i,input,select,textarea,button,label,legend,.form-control,.btn-default {
     color: white;
 }
 
@@ -347,6 +347,10 @@ option {
 .input-group .input-group-addon {
     color: white;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.input-group-addon {
+    border-color: transparent !important;
 }
 
 #join {
