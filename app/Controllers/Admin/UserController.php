@@ -13,17 +13,29 @@ class UserController extends AdminController
     public function index($request, $response, $args)
     {
         $q = $request->getQueryParams();
-        if (!isset($request->getQueryParams()['page'])) {
+        if (!isset($q['page'])) {
             $q['page'] = 1;
         }
+        $users = User::where('id', '>', 0);
         $path  = '/admin/user?';
-        $users = User::where('id', ">", 0);
         foreach ($q as $k => $v) {
-            if ($v != "" && $k != 'page') {
-                if (in_array($k, ['email', 'user_name'])) {
-                    $users = $users->where($k, 'like', "%$v%");
-                } else {
-                    $users = $users->where($k, $v);
+            if ($v != '' && $k != 'page') {
+                switch ($k) {
+                    case 'order':
+                        $a = 'asc';
+                        $order = explode(',', $q['order']);
+                        if (isset($order[1])) {
+                            $a = $order[1];
+                        }
+                        $users = $users->orderBy($order[0], $a);
+                        break;
+                    default:
+                        if (in_array($k, ['email', 'user_name'])) {
+                            $users = $users->where($k, 'like', "%$v%");
+                        } else {
+                            $users = $users->where($k, $v);
+                        }
+                        break;
                 }
                 $path .= $k . '=' . $v . '&';
             }

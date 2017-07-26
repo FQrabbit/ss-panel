@@ -371,6 +371,9 @@ class User extends Model
 
     public function getFormatedDateTime($datetime)
     {
+        if ($datetime=='0000-00-00 00:00:00') {
+            return '0000-00-00T00:00:00';
+        } 
         return strftime('%Y-%m-%dT%H:%M:%S', strtotime($datetime));
     }
 
@@ -433,7 +436,7 @@ class User extends Model
 
     public function unlimitTransfer()
     {
-        if ($this->product && $this->product->transfer == 999) {
+        if ($this->product && $this->product->isByTime() && $this->transfer_enable >= Tools::toGB(900)) {
             return true;
         }
         return false;
@@ -474,7 +477,7 @@ class User extends Model
 
     public function transferAvailableEveryDay()
     {
-        return round($this->unusedTrafficInGB()/$this->daysUntilNextTransferResetDate(), 3);
+        return round($this->unusedTrafficInGB()/$this->daysUntilNextTransferResetDate(), 2);
     }
 
     public function feedToken()

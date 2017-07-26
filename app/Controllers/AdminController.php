@@ -523,13 +523,14 @@ class AdminController extends UserController
 
     public function trafficLog($request, $response, $args)
     {
-        $users_traffic              = [];
-        $eachHour_traffic           = [];
-        $nodes_traffic              = [];
-        $users_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
-        $nodes_traffic_for_chart    = ['labels' => array(), 'datas' => array(), 'total' => 0];
-        $eachHour_traffic_for_chart = ['labels' => array(), 'datas' => array(), 'total' => 0];
-        $nodes                      = Node::select(['id', 'name'])->orderBy('sort')->get();
+        $users_traffic                     = [];
+        $eachHour_traffic                  = [];
+        $nodes_traffic                     = [];
+        $users_traffic_for_chart           = ['labels' => array(), 'datas' => array(), 'total' => 0];
+        $nodes_traffic_for_chart           = ['labels' => array(), 'datas' => array(), 'total' => 0];
+        $eachHour_traffic_for_chart        = ['labels' => array(), 'datas' => array(), 'total' => 0];
+        $users_traffic_thisMonth_for_chart = ['labels' => array(), 'datas' => array()];
+        $nodes                             = Node::select(['id', 'name'])->orderBy('sort')->get();
 
         $q = $request->getQueryParams();
         if (!isset($request->getQueryParams()['page'])) {
@@ -620,9 +621,7 @@ class AdminController extends UserController
         /**
          * 用户本月流量使用降序排名 chart 4
          */
-        $traffic_logs                      = UserDailyTrafficLog::where('date', '>=', date('Y-m') . '-1')->groupBy('uid')->selectRaw('uid, sum(traffic) as traffic')->orderBy('traffic', 'desc')->take(30)->get();
-        $users_traffic_thisMonth           = [];
-        $users_traffic_thisMonth_for_chart = [];
+        $traffic_logs = UserDailyTrafficLog::where('date', '>=', date('Y-m') . '-1')->groupBy('uid')->selectRaw('uid, sum(traffic) as traffic')->orderBy('traffic', 'desc')->take(30)->get();
         foreach ($traffic_logs as $log) {
             $users_traffic_thisMonth_for_chart['labels'][] = $log->uid;
             $users_traffic_thisMonth_for_chart['datas'][]  = round(Tools::flowToGB($log->traffic), 2);

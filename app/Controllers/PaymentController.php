@@ -221,7 +221,7 @@ class PaymentController extends BaseController
         $transfer_to_add = $product->transfer;
         if ($product->isByTime()) {
             // 时间套餐
-            if ($user->product_id && $user->product->isByTime()) {
+            if ($user->product && $user->product->isByTime()) {
                 $user->updateExpireDate($product->id);
             } else {
                 $user->addTraffic($transfer_to_add);
@@ -232,7 +232,7 @@ class PaymentController extends BaseController
             if ($user->isExpire()) {
                 $user->addTraffic($transfer_to_add);
             } else {
-                if ($user->product_id && $user->product->name == '试玩') {
+                if ($user->product && $user->product->name == '试玩') {
                     $user->addTraffic($transfer_to_add);
                 } else {
                     $user->updateEnableTransfer($pre['used_traffic_in_GB'] + $transfer_to_add);

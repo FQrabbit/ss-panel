@@ -83,26 +83,19 @@
                                     <div class="col-md-6">
                                         <div class="center w3-padding">
                                         {if $user->unlimitTransfer()}
-                                            <p>已用流量: <code>{$user->usedTraffic()}</code>
-                                            </p>
-                                            <p>购买日期: <br><code>{$user->buy_date}</code>
-                                            </p>
-                                            <p>到期日期: <br><code>{$user->expire_date}</code>
-                                            </p>
+                                            <p>已用流量: <code>{$user->usedTraffic()}</code></p>
+                                            <!-- <p>购买日期: <br><code>{$user->buy_date}</code></p> -->
+                                            <p>到期日期: <br><code>{$user->expire_date}</code></p>
                                         {else}
-                                            <p>总流量: <code>{$user->enableTraffic()}</code>
-                                            </p>
-                                            <p>已用流量: <code>{$user->usedTraffic()}</code>
-                                            </p>
-                                            <p>剩余流量: <code>{$user->unusedTraffic()}</code>
-                                            </p>
+                                            <p>总流量: <code>{$user->enableTraffic()}</code></p>
+                                            <p>已用流量: <code>{$user->usedTraffic()}</code></p>
+                                            <p>剩余流量: <code>{$user->unusedTraffic()}</code></p>
                                         {/if}
-                                        {if $user->product_id and $user->product->isByTime() and $user->willResetTransfer()}
-                                            <p>流量重置日:<br><code>{$user->nextTransferResetDate()}</code>
-                                            </p>
+                                        {if $user->product && $user->product->isByTime() && $user->willResetTransfer()}
+                                            <p>流量重置日:<br><code>{$user->nextTransferResetDate()}</code></p>
                                         {/if}
-                                        {if $user->product_id and $user->product->isByTime() and !$user->unlimitTransfer()}
-                                            <p>平均每日还可使用: {$user->transferAvailableEveryDay()}G</p>
+                                        {if $user->product && $user->product->isByTime() && !$user->unlimitTransfer()}
+                                            <p>平均每日还可使用: <code>{$user->transferAvailableEveryDay()} G</code></p>
                                         {/if}
                                         </div>
                                     </div>
@@ -133,7 +126,7 @@
                                     <dt>用户类型</dt>
                                     <dd>
                                         <span class="badge bg-green">
-                                            {$user->getUserClassName()} {if $user->product_id}| {$user->product->name}{/if}
+                                            {$user->getUserClassName()} {if $user->product}| {$user->product->name}{/if}
                                         </span>
                                         {if $user->isDonator()}
                                         <span class="badge bg-green">

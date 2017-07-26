@@ -23,13 +23,13 @@ class Tools
         $mb = 1048576;
         $gb = 1073741824;
         if (abs($value) > $gb) {
-            return round($value / $gb, 3) . "GB";
+            return round($value / $gb, 2) . " GB";
         } else if (abs($value) > $mb) {
-            return round($value / $mb, 3) . "MB";
+            return round($value / $mb, 2) . " MB";
         } else if (abs($value) > $kb) {
-            return round($value / $kb, 3) . "KB";
+            return round($value / $kb, 2) . " KB";
         } else {
-            return round($value, 3);
+            return round($value, 2);
         }
     }
 

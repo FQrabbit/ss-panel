@@ -110,7 +110,7 @@
                                     <td>{$user->port}</td>
                                     <td>{if $user->isDonator()}&check;{else}X{/if}</td>
                                     <td>{$user->plan}</td>
-                                    <td>{if $user->product_id}{$user->product->name}{else}无{/if}</td>
+                                    <td>{if $user->product}{$user->product->name}{else}无{/if}</td>
                                     <td>{if $user->enable==1}&check;{else}X{/if}</td>
                                     <!-- <td>{$user->method}</td> -->
                                     <td>{$user->usedTraffic()}/{$user->enableTraffic()}</td>

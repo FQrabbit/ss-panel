@@ -132,11 +132,11 @@
 
                                         <div class="col-sm-9">
                                             <select class="form-control" id="product">
-                                                <option value='0' {if $user->product_id==0}selected="selected"{/if}>
+                                                <option value='0' {if !$user->product}selected="selected"{/if}>
                                                     无
                                                 </option>
                                             {foreach $products as $product}
-                                                <option value='{$product->id}' {if $user->product_id && $user->product->name=={$product->name}}selected="selected"{/if}>
+                                                <option value='{$product->id}' {if $user->product && $user->product->name=={$product->name}}selected="selected"{/if}>
                                                     {$product->name}
                                                 </option>
                                             {/foreach}

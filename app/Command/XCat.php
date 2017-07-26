@@ -126,7 +126,7 @@ class XCat
                     $user->transfer_enable = Tools::toGB(999);
                     $user->u = 0;
                     $user->d = 0;
-                } elseif ($user->product_id && $user->product->isByTime()) {
+                } elseif ($user->product && $user->product->isByTime()) {
                     continue;
                 } else {
                     $user->transfer_enable = $user->unusedTrafficInB();

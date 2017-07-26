@@ -17,7 +17,7 @@ class DailyMail
         if ($users) {
             $count = 0;
             foreach ($users as $user) {
-                if ($user->product_id && $user->product->isByTime()) {
+                if ($user->product && $user->product->isByTime()) {
                     continue;
                 } else {
                     $count++;
