@@ -45,7 +45,8 @@
 
 									<li>shadowsocksR(增强版，支持混淆插件)
 										<ul>
-											<li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li>
+											<!-- <li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li> -->
+											<li><a href="https://github.com/shadowsocksr-backup/shadowsocksr-csharp/releases">Github</a></li>
 										</ul>
 									</li>
 								</ul>
@@ -58,7 +59,8 @@
 							<ul>
 								<li>ShadowsocksX-NG:
 									<ul>
-										<li><a href="https://github.com/shadowsocksr/ShadowsocksX-NG/releases">Github</a></li>
+										<!-- <li><a href="https://github.com/shadowsocksr/ShadowsocksX-NG/releases">Github</a></li> -->
+										<li><a href="https://github.com/shadowsocksr-backup/ShadowsocksX-NG/releases">Github</a></li>
 									</ul>
 								</li>
 								<li>GoAgentX:
@@ -91,7 +93,8 @@
 								</li>
 								<li>ssr-android:
 									<ul>
-										<li><a href="https://github.com/shadowsocksr/shadowsocksr-android/releases">Github</a></li>
+										<!-- <li><a href="https://github.com/shadowsocksr/shadowsocksr-android/releases">Github</a></li> -->
+										<li><a href="https://github.com/shadowsocksr-backup/shadowsocksr-android/releases">Github</a></li>
 									</ul>
 								</li>
 							</ul>
