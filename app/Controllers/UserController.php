@@ -495,7 +495,7 @@ class UserController extends BaseController
 
         $protocol = $request->getParam('protocol');
         $protocol = strtolower($protocol);
-        if ($protocol == 'auth_chain_a') {
+        if (in_array($protocol, ['auth_chain_a','auth_chain_b'])) {
             $method = 'none';
         } else {
             if ($method == 'none') {
