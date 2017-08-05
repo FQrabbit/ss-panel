@@ -30,28 +30,26 @@
 					<p>如果Github下载慢可用BitTorrent Sync下载</p>
 					<p>BitTorrent Sync：<a href="https://link.resilio.com/#f=shadowsocks&sz=0&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CPZ7FPANVLE5RGKC542T3LMPLMS237F6L&v=2.5">BIKEZT3XG6KCGWAHGO7G3DTSAA5G3WRB2</a></p>
 					<div id="download" class="container">
-						<div class="sixteen columns"><br></div>
 						<div class="one-third column">
-						<h3><i class="fa fa-windows fa-3x"></i> &nbsp; Windows</h3>
-						<p><strong>GUI Client</strong></p>
-						<ul>
-							<li>shadowsocks-win:
-								<ul>
-									<li>shadowsocks(原版)
-										<ul>
-											<li><a href="https://github.com/shadowsocks/shadowsocks-csharp/releases">Github</a></li>
-										</ul>
-									</li>
+							<h3><i class="fa fa-windows fa-3x"></i> &nbsp; Windows</h3>
+							<ul>
+								<li>shadowsocks-win:
+									<ul>
+										<li>shadowsocks
+											<ul>
+												<li><a href="https://github.com/shadowsocks/shadowsocks-csharp/releases">Github</a></li>
+											</ul>
+										</li>
 
-									<li>shadowsocksR(增强版，支持混淆插件)
-										<ul>
-											<!-- <li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li> -->
-											<li><a href="https://github.com/shadowsocksr-backup/shadowsocksr-csharp/releases">Github</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
+										<li>shadowsocksR
+											<ul>
+												<!-- <li><a href="https://github.com/breakwa11/shadowsocks-csharp/releases">Github</a></li> -->
+												<li><a href="https://github.com/shadowsky20/ss/raw/master/Windows/shadowsocksR/ShadowsocksR-4.7.0-win.7z">Github</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</div>
 						<div class="one-third column">
 							<h3><i class="fa fa-apple fa-3x"></i> &nbsp; Mac OS X</h3>
@@ -76,25 +74,37 @@
 						</div>
 						<div class="one-third column">
 							<h3><i class="fa fa-linux fa-3x"></i> &nbsp; Linux</h3>
-							<p><strong>GUI Client</strong></p><ul><li>Shadowsocks-Qt5:
+							<p><strong>GUI Client</strong></p>
 							<ul>
-								<li><a href="https://github.com/shadowsocks/shadowsocks-qt5/wiki/Installation">Latest release</a></li>
-							</ul></li></ul><p><strong>Command-line Client</strong></p><ul><li>shadowsocks-python:<ul><li><code>pip install shadowsocks</code></li></ul></li></ul>
+								<li>Shadowsocks-Qt5:
+									<ul>
+										<li><a href="https://github.com/shadowsocks/shadowsocks-qt5/wiki/Installation">Latest release</a></li>
+									</ul>
+								</li>
+							</ul>
+							<p><strong>Command-line Client</strong></p>
+							<ul>
+								<li>shadowsocks-python:
+									<ul>
+										<li><code>pip install shadowsocks</code>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</div>
-						<p class="sixteen columns"></p>
 						<div class="one-third column last">
 							<h3><i class="fa fa-android fa-3x"></i> &nbsp; Android</h3>
 							<ul>
-								<li>shadowsocks-android:
+								<li>shadowsocks:
 									<ul>
 										<li><a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks">Google Play</a></li>
 										<li><a href="https://github.com/shadowsocks/shadowsocks-android/releases">Github</a></li>
 									</ul>
 								</li>
-								<li>ssr-android:
+								<li>shadowsocksR:
 									<ul>
 										<!-- <li><a href="https://github.com/shadowsocksr/shadowsocksr-android/releases">Github</a></li> -->
-										<li><a href="https://github.com/shadowsocksr-backup/shadowsocksr-android/releases">Github</a></li>
+										<li><a href="https://github.com/shadowsky20/ss/raw/master/Android/shadowsocksr/ssr-3.4.0.6.apk">Github</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -110,6 +120,7 @@
 										<li><a href="https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8">Surge</a></li>
 										<li><a href="https://itunes.apple.com/cn/app/id1178584911">Wingy</a></li>
 									</ul>
+								</li>
 								<li>Big Boss:
 									<ul>
 										<li><a href="http://apt.thebigboss.org/onepackage.php?bundleid=com.linusyang.shadowsocks">MobileShadowSocks</a></li>
@@ -120,21 +131,22 @@
 						<div class="one-third column last">
 							<h3><i class="fa fa-rss fa-flip-horizontal fa-3x"></i> &nbsp; OpenWRT</h3>
 							<ul>
-								<li>shadowsocks-libev</li>
+								<li>shadowsocks-libev
 									<ul>
 										<li><code>opkg install shadowsocks-libev</code></li>
 									</ul>
-								<li>shadowsocks-libev-polarssl</li>
+								</li>
+								<li>shadowsocks-libev-polarssl
 									<ul>
 										<li><code>opkg install shadowsocks-libev-polarssl</code></li>
 									</ul>
+								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="push"></div>
 	</div>
 	<script src="/assets/public/js/jquery.min.js" type="text/javascript"></script>
 </body>

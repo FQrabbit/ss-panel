@@ -319,8 +319,8 @@ class PaymentController extends BaseController
                 return 'Could\'t find this product';
             }
 
-            if ($product->isByTime() && $user->product_id && $user->product->isByTime() && $user->product->transfer != $product->transfer && (strtotime($user->expire_date) - time()) > 86400 * 3) {
-                return '更换套餐需要在过期前三天内进行。';
+            if ($product->isByTime() && $user->product_id && $user->product->isByTime() && $user->product->transfer != $product->transfer && (strtotime($user->expire_date) - time()) > 86400 * 30) {
+                return '更换套餐需要在过期前一个月内进行。';
             }
 
             /**
