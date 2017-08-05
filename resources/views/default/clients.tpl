@@ -30,6 +30,7 @@
 					<p>如果Github下载慢可用BitTorrent Sync下载</p>
 					<p>BitTorrent Sync：<a href="https://link.resilio.com/#f=shadowsocks&sz=0&t=1&s=4C4Q5MMF43IZYPYCMX3CZMGDF2R4DERX&i=CPZ7FPANVLE5RGKC542T3LMPLMS237F6L&v=2.5">BIKEZT3XG6KCGWAHGO7G3DTSAA5G3WRB2</a></p>
 					<div id="download" class="container">
+						<div class="sixteen columns"><br></div>
 						<div class="one-third column">
 							<h3><i class="fa fa-windows fa-3x"></i> &nbsp; Windows</h3>
 							<ul>
@@ -92,6 +93,7 @@
 								</li>
 							</ul>
 						</div>
+						<p class="sixteen columns"></p>
 						<div class="one-third column last">
 							<h3><i class="fa fa-android fa-3x"></i> &nbsp; Android</h3>
 							<ul>
