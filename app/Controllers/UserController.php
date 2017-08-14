@@ -207,7 +207,7 @@ class UserController extends BaseController
 
     public function getNodesTraffic($request, $response, $args)
     {
-        $nodes = Node::all();
+        $nodes = Node::where('type', '>=', 0)->get();
         foreach ($nodes as $node) {
             $nodes_traffic[$node->id] = 0;
         }
