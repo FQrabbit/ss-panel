@@ -15,6 +15,7 @@ class DailyMail
         $users = User::all();
         // $users = User::where("id", 1)->get(); //test
         if ($users) {
+            $log = '';
             $count = 0;
             foreach ($users as $user) {
                 if ($user->product && $user->product->isByTime()) {
@@ -24,36 +25,40 @@ class DailyMail
                     $subject = Config::get('appName') . ' - 月流量报告';
                     $to      = $user->email;
                     try {
-                        Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ['user' => $user], []);
+                        // Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ['user' => $user], []);
                         // echo "Sent Traffic Report Email to " . $user->user_name . "\n";
                     } catch (\Exception $e) {
-                        echo $e->getMessage();
+                        $log .= $e->getMessage();
                     }
                 }
             }
             
             $date = date('Y-m-d H:i:s');
-            echo "$date Sent Monthly Traffic Report Email - Sum: $count\n\n";
+            $log .= "$date Sent Monthly Traffic Report Email - Sum: $count\n\n";
+            Job::appendLog($log, 'site.log');
         }
     }
 
     public static function sendDbMail()
     {
+        $log = '';
         try {
             $to      = Config::get('adminEmail');
             $subject = '备份数据库';
             $file    = ['/root/backup/database.sql'];
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            $log .= $e->getMessage();
         }
 
         $date = date('Y-m-d H:i:s');
-        echo "$date Sent database backup\n\n";
+        $log .= "$date Sent database backup\n\n";
+        Job::appendLog($log, 'backup.log');
     }
 
     public static function sendSiteMail()
     {
+        $log = '';
         try {
             $to      = Config::get('adminEmail');
             $subject = '备份网站';
@@ -61,10 +66,11 @@ class DailyMail
             Mail::send($to, $subject, 'news/backup-report.tpl', [], $file);
 
             $date = date('Y-m-d H:i:s');
-            echo "$date Sent website backup\n\n";
+            $log .= "$date Sent website backup\n\n";
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            $log .= $e->getMessage();
         }
+        Job::appendLog($log, 'backup.log');
     }
 
     public static function sendAnnMail()
