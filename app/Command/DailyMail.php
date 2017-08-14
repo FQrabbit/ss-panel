@@ -25,7 +25,7 @@ class DailyMail
                     $subject = Config::get('appName') . ' - 月流量报告';
                     $to      = $user->email;
                     try {
-                        // Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ['user' => $user], []);
+                        Mail::send($to, $subject, 'news/daily-traffic-report.tpl', ['user' => $user], []);
                         // echo "Sent Traffic Report Email to " . $user->user_name . "\n";
                     } catch (\Exception $e) {
                         $log .= $e->getMessage();
