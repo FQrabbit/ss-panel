@@ -99,6 +99,11 @@
                     </a>
                 </li>
             {/foreach}
+                <li id="xlm_mobile_li">
+                    <a href="{$xlm['mobile_url']}" target="_blank">
+                        <i class="fa fa-comments" aria-hidden="true"></i> <span>闲聊么</span>
+                    </a>
+                </li>
             {if $user->isAdmin()}
                 <li>
                     <a href="/admin">

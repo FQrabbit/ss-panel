@@ -834,7 +834,16 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .table-responsive {
     border-color: rgba(255, 255, 255, 0.6);
 }
+#xianliaome_window {
+    display: none;
+}
 @media (min-width: 767px) {
+    #xianliaome_window {
+        display: block;
+    }
+    #xlm_mobile_li {
+        display: none;
+    }
     .dl-horizontal dt {
         width: 165px !important;
     }
