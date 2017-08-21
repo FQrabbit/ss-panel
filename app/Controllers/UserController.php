@@ -89,7 +89,14 @@ class UserController extends BaseController
         $requireJQueryConfirm   = in_array($uri, $pagesThatRequireJQueryConfirm);
         $requireWYSI            = in_array($uri, $pagesThatRequireWYSI);
 
+        // 闲聊么
+        $xlm = array();
+        $xlm['id'] = DbConfig::get('xlm_id');
+        $xlm['sso_key'] = DbConfig::get('xlm_sso_key');
+        $xlm['hash'] = hash('sha512', $xlm['id'] . '_' . $this->user->id . '_' . time() . '_' . $xlm['sso_key']);
+        $xlm['mobile_url'] = "https://xianliao.me/website/" . $xlm['id'] . "?mobile=1&uid=1&username=" . urlencode($this->user->user_name) . "&avatar=" . urlencode($this->user->gravatar) . "&ts=" . time() . "&token=" . $xlm['hash'];
         return parent::view()->
+            assign('xlm', $xlm)->
             assign('menuList', $menuList)->
             assign('uri', $uri)->
             assign('pageTitle', $pageTitle)->

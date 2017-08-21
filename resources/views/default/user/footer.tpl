@@ -24,6 +24,16 @@
         <li></li>
     </ul>
 </div>
+<script>
+    var xlm_wid='{$xlm["id"]}';
+    var xlm_url='https://www.xianliao.me/';
+    var xlm_uid='{$user->id}'; //登录用户的ID，游客使用0
+    var xlm_name='{$user->user_name}'; //登录用户的用户名，游客使用空字符
+    var xlm_avatar='{$user->gravatar}';//登录用户的头像URL，游客使用空字符
+    var xlm_time='{time()}'; //现在服务器的Linux timestamp, 如：1481673726
+    var xlm_hash='{$xlm["hash"]}'; //为保障用户的登录安全，xlm_hash须在后台生成，见下附的xlm_hash的生成方法
+</script>
+<script type='text/javascript' charset='UTF-8' src='https://www.xianliao.me/embed.js'></script>
 
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>
