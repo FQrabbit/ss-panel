@@ -105,6 +105,8 @@ $app->group('/admin', function () {
 
     // purchaselog manage
     $this->get('/purchaselog', 'App\Controllers\AdminController:purchaseLog');
+    $this->get('/purchaselog/{id}/edit', 'App\Controllers\AdminController:editPurchaseLog');
+    $this->put('/purchaselog/{id}', 'App\Controllers\AdminController:updatePurchaseLog');
     $this->delete('/purchaselog/{id}', 'App\Controllers\AdminController:deletePurchaseLog');
     $this->post('/addpurchase', 'App\Controllers\AdminController:addPurchase');
 

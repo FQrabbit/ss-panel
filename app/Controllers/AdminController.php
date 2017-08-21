@@ -210,7 +210,7 @@ class AdminController extends UserController
             assign('eachHour_income_for_chart', $eachHour_income_for_chart)->
             assign('weekly_income_for_chart', $weekly_income_for_chart)->
             assign('monthly_income_for_chart', $monthly_income_for_chart)->
-            display('admin/purchaselog.tpl');
+            display('admin/purchaselog/index.tpl');
     }
 
     public function addPurchase($request, $response, $args)
@@ -255,6 +255,37 @@ class AdminController extends UserController
         $pay->total      = $product->price;
         $pay->addnum     = 'p' . $user->port . 't' . time();
         $rs              = $pay->doPay();
+        return $response->getBody()->write(json_encode($rs));
+    }
+
+    public function editPurchaseLog($request, $response, $args)
+    {
+        $log             = PurchaseLog::find($args['id']);
+        $products        = Shop::all();
+        $payment_methods = ['QQ', '微信', '支付宝'];
+        return $this->view()->assign('log', $log)->assign('products', $products)->assign('payment_methods', $payment_methods)->display('admin/purchaselog/edit.tpl');
+    }
+
+    public function updatePurchaseLog($request, $response, $args)
+    {
+        $log_id              = $args['id'];
+        $q                   = $request->getParams();
+        $log                 = PurchaseLog::find($log_id);
+
+        $log->uid            = $q['uid'];
+        $log->product_id     = $q['product_id'];
+        $log->out_trade_no   = $q['out_trade_no'];
+        $log->payment_method = $q['payment_method'];
+        $log->fee            = $q['fee'];
+
+        try {
+            $log->save();
+            $rs['ret'] = 1;
+            $rs['msg'] = '更新购买日志成功！';
+        } catch (\Exception $e) {
+            $rs['ret'] = 0;
+            $rs['msg'] = $e->getMessage();
+        }
         return $response->getBody()->write(json_encode($rs));
     }
 
