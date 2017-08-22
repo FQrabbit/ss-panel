@@ -10,6 +10,14 @@
 </footer>
 </div><!-- ./wrapper -->
 
+<div aria-hidden="true" class="modal fade" id="xlm" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content" style="overflow:hidden">
+            <iframe class="iframe-seamless" id="xlmifram" title="Modal with iFrame"></iframe>
+        </div>
+    </div>
+</div>
+
 <div class="bb-wrapper">
     <ul class="bg-bubbles" style="list-style: none">
         <li></li>
@@ -25,15 +33,23 @@
     </ul>
 </div>
 <script>
+var xlm_mobile_url = '{$xlm["mobile_url"]}';
+function showXlm() {
+    document.getElementById('xlmifram').src = xlm_mobile_url;
+    $("#xlm").modal();
+    $('html').css('overflow-y', 'hidden');
+}
+if (screen && screen.width > 767) {
     var xlm_wid='{$xlm["id"]}';
     var xlm_url='https://www.xianliao.me/';
-    var xlm_uid='{$user->id}'; //登录用户的ID，游客使用0
-    var xlm_name='{$user->user_name}'; //登录用户的用户名，游客使用空字符
-    var xlm_avatar='{$user->gravatar}';//登录用户的头像URL，游客使用空字符
-    var xlm_time='{time()}'; //现在服务器的Linux timestamp, 如：1481673726
-    var xlm_hash='{$xlm["hash"]}'; //为保障用户的登录安全，xlm_hash须在后台生成，见下附的xlm_hash的生成方法
+    var xlm_uid='{$user->id}';
+    var xlm_name='{$user->user_name}-{$user->id}';
+    var xlm_avatar='{$user->gravatar}';
+    var xlm_time='{time()}';
+    var xlm_hash='{$xlm["hash"]}';
+    document.write("<script type='text/javascript' charset='UTF-8' src='https://www.xianliao.me/embed.js'><\/script>");
+}
 </script>
-<script type='text/javascript' charset='UTF-8' src='https://www.xianliao.me/embed.js'></script>
 
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>

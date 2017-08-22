@@ -42,6 +42,11 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <!-- User Account: style can be found in dropdown.less -->
+                    <li id="xlm_mobile_li" onclick="showXlm()">
+                        <a href="javascript:void(0)">
+                            <i class="fa fa-comments-o" aria-hidden="true"></i> <span>闲聊么</span>
+                        </a>
+                    </li>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{$user->gravatar}" class="user-image" alt="User Image"/>
@@ -99,11 +104,6 @@
                     </a>
                 </li>
             {/foreach}
-                <li id="xlm_mobile_li">
-                    <a href="{$xlm['mobile_url']}" target="_blank">
-                        <i class="fa fa-comments" aria-hidden="true"></i> <span>闲聊么</span>
-                    </a>
-                </li>
             {if $user->isAdmin()}
                 <li>
                     <a href="/admin">
