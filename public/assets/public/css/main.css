@@ -661,7 +661,7 @@ tr, td, th{
 
 .modal-dialog.modal-full .modal-content {
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #303030;
 }
 
 .modal-dialog.modal-full {
@@ -705,6 +705,14 @@ tr, td, th{
     font-size: 4em;
     position: absolute;
     right: 3%;
+}
+
+#xlm .close, #xlm .close:hover {
+    font-size: 34px;
+    position: absolute;
+    right: 104px;
+    color: #333 !important;
+    opacity: 1;
 }
 
 .vote-btn {

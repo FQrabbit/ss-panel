@@ -39,9 +39,13 @@ clipboard.on('success', function(e) {
 });
 
 // Node Page
+var lastId;
 function urlChange(id) {
-    var site = './node/'+id;
-    document.getElementById('infoifram').src = site;
+    if (id != lastId) {
+        var site = './node/'+id;
+        document.getElementById('infoifram').src = site;
+        lastId = id;
+    }
     $("#nodeinfo").modal();
     $('html').css('overflow-y', 'hidden');
 }
