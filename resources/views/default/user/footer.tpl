@@ -63,11 +63,7 @@ if (screen && screen.width > 767) {
     s.src = "https://www.xianliao.me/embed.js";
     document.querySelector('body').append(s);
 } else {
-    // window.setTimeout(function(){
-    //     if (!xlmifram.src) {
-    //         xlmifram.src = xlm_mobile_url;
-    //     }
-    // }, 2000)
+    xlmifram.src = xlm_mobile_url;
 }
 </script>
 <!-- jQuery 2.1.3 -->
