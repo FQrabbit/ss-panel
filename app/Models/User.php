@@ -67,8 +67,11 @@ class User extends Model
 
     public function getGravatarAttribute()
     {
+        $default = Config::get('baseUrl') . '/assets/public/images/avatar/g.jpg';
+        // $default = Config::get('baseUrl') . '/assets/public/images/avatar/' . rand(1, 8) . '.jpg';
+        $size = 90;
         $hash = md5(strtolower(trim($this->attributes['email'])));
-        return "https://secure.gravatar.com/avatar/$hash";
+        return "https://secure.gravatar.com/avatar/$hash?d=" . urlencode( $default ) . "&s=" . $size;
     }
 
     public function isAdmin()

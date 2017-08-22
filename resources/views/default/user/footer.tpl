@@ -25,6 +25,51 @@
     </ul>
 </div>
 
+<div aria-hidden="true" class="modal fade" id="xlm" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content" style="overflow:hidden">
+            <button aria-label="Close" class="close" data-dismiss="modal" type="button" style="display: none">
+                <span aria-hidden="true">
+                    ×
+                </span>
+            </button>
+            <iframe class="iframe-seamless" id="xlmifram" title="Modal with iFrame"></iframe>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var xlmifram = document.getElementById('xlmifram');
+var xlm_mobile_url = '{$xlm["mobile_url"]}';
+
+function showXlm() {
+    if (!xlmifram.src) {
+        xlmifram.src = xlm_mobile_url;
+    }
+    $("#xlm").modal();
+    $('html').css('overflow-y', 'hidden');
+}
+if (screen && screen.width > 767) {
+    var xlm_wid='{$xlm["id"]}';
+    var xlm_url='https://www.xianliao.me/';
+    var xlm_uid='{$user->id}';
+    var xlm_name='{$user->user_name}-{$user->id}';
+    var xlm_avatar='{$user->gravatar}';
+    var xlm_time='{time()}';
+    var xlm_hash='{$xlm["hash"]}';
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.charset = "UTF-8";
+    s.src = "https://www.xianliao.me/embed.js";
+    document.querySelector('body').append(s);
+} else {
+    // window.setTimeout(function(){
+    //     if (!xlmifram.src) {
+    //         xlmifram.src = xlm_mobile_url;
+    //     }
+    // }, 2000)
+}
+</script>
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>
 {if $requireJQueryConfirm}
@@ -53,44 +98,5 @@
 <div style="display:none;">
     {$analyticsCode}
 </div>
-
-<div aria-hidden="true" class="modal fade" id="xlm" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-full">
-        <div class="modal-content" style="overflow:hidden">
-<!--             <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                <span aria-hidden="true">
-                    ×
-                </span>
-            </button> -->
-            <iframe class="iframe-seamless" id="xlmifram" title="Modal with iFrame"></iframe>
-        </div>
-    </div>
-</div>
-
-<script>
-var xlm_mobile_url = '{$xlm["mobile_url"]}';
-function showXlm() {
-    var xlmifram = document.getElementById('xlmifram');
-    if (!xlmifram.src) {
-        xlmifram.src = xlm_mobile_url;
-    }
-    $("#xlm").modal();
-    $('html').css('overflow-y', 'hidden');
-}
-if (screen && screen.width > 767) {
-    var xlm_wid='{$xlm["id"]}';
-    var xlm_url='https://www.xianliao.me/';
-    var xlm_uid='{$user->id}';
-    var xlm_name='{$user->user_name}-{$user->id}';
-    var xlm_avatar='{$user->gravatar}';
-    var xlm_time='{time()}';
-    var xlm_hash='{$xlm["hash"]}';
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.charset = "UTF-8";
-    s.src = "https://www.xianliao.me/embed.js";
-    document.querySelector('body').append(s);
-}
-</script>
 </body>
 </html>
