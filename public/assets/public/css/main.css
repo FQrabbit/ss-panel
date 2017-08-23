@@ -845,6 +845,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 }
 #xianliaome_window {
     display: none;
+    z-index: 1 !important;
 }
 @media (min-width: 767px) {
     #xianliaome_window {
