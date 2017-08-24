@@ -39,9 +39,15 @@
 </div>
 
 <script type="text/javascript">
-var xlmifram = document.getElementById('xlmifram');
+var xlm_wid='{$xlm["id"]}';
+var xlm_url='https://www.xianliao.me/';
+var xlm_uid='{$user->id}';
+var xlm_name='{$user->user_name}-{$user->id}';
+var xlm_avatar='{$user->gravatar}';
+var xlm_time='{time()}';
+var xlm_hash='{$xlm["hash"]}';
 var xlm_mobile_url = '{$xlm["mobile_url"]}';
-
+var xlmifram = document.getElementById('xlmifram');
 function showXlm() {
     $("#xlm").modal();
     $('html').css('overflow-y', 'hidden');
@@ -51,24 +57,17 @@ function showXlm() {
         }
     })
 }
-if (screen && screen.width > 767) {
-    var xlm_wid='{$xlm["id"]}';
-    var xlm_url='https://www.xianliao.me/';
-    var xlm_uid='{$user->id}';
-    var xlm_name='{$user->user_name}-{$user->id}';
-    var xlm_avatar='{$user->gravatar}';
-    var xlm_time='{time()}';
-    var xlm_hash='{$xlm["hash"]}';
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.charset = "UTF-8";
-    s.src = "https://www.xianliao.me/embed.js";
-    document.querySelector('body').append(s);
-} else {
-    document.addEventListener('DOMContentLoaded', function(){
-        // xlmifram.src = xlm_mobile_url;
-    })
-}
+document.addEventListener('DOMContentLoaded', function(){
+    if (screen && screen.width > 767) {
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.charset = "UTF-8";
+        s.src = "https://www.xianliao.me/embed.js";
+        document.querySelector('body').append(s);
+    } else {
+        xlmifram.src = xlm_mobile_url;
+    }
+})
 </script>
 <!-- jQuery 2.1.3 -->
 <script src="/assets/public/js/jquery.min.js"></script>
