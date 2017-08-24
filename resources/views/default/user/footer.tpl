@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function(){
         s.src = "https://www.xianliao.me/embed.js";
         document.querySelector('body').append(s);
     } else {
-        xlmifram.src = xlm_mobile_url;
+        // xlmifram.src = xlm_mobile_url;
     }
 })
 </script>
