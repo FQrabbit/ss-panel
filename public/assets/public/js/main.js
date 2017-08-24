@@ -41,13 +41,15 @@ clipboard.on('success', function(e) {
 // Node Page
 var lastId;
 function urlChange(id) {
-    if (id != lastId) {
-        var site = './node/'+id;
-        document.getElementById('infoifram').src = site;
-        lastId = id;
-    }
     $("#nodeinfo").modal();
     $('html').css('overflow-y', 'hidden');
+    $("#nodeinfo").on('shown.bs.modal', function(){
+        if (id != lastId) {
+            var site = './node/'+id;
+            document.getElementById('infoifram').src = site;
+            lastId = id;
+        }
+    });
 }
 
 $(document).ready(function () {

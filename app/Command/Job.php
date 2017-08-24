@@ -395,7 +395,7 @@ class Job
     public static function appendLog($txt, $file)
     {
         $file = BASE_PATH . 'public/tools/' . $file;
-        $txt .= file_get_contents($file);
+        $txt = iconv(mb_detect_encoding($txt), "GBK", $txt) . file_get_contents($file);
         file_put_contents($file, $txt);
     }
 }

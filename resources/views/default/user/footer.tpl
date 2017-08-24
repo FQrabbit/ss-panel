@@ -43,11 +43,13 @@ var xlmifram = document.getElementById('xlmifram');
 var xlm_mobile_url = '{$xlm["mobile_url"]}';
 
 function showXlm() {
-    if (!xlmifram.src) {
-        xlmifram.src = xlm_mobile_url;
-    }
     $("#xlm").modal();
     $('html').css('overflow-y', 'hidden');
+    $("#xlm").on('shown.bs.modal', function(){
+        if (!xlmifram.src) {
+            xlmifram.src = xlm_mobile_url;
+        }
+    })
 }
 if (screen && screen.width > 767) {
     var xlm_wid='{$xlm["id"]}';
@@ -63,7 +65,9 @@ if (screen && screen.width > 767) {
     s.src = "https://www.xianliao.me/embed.js";
     document.querySelector('body').append(s);
 } else {
-    xlmifram.src = xlm_mobile_url;
+    document.addEventListener('DOMContentLoaded', function(){
+        // xlmifram.src = xlm_mobile_url;
+    })
 }
 </script>
 <!-- jQuery 2.1.3 -->
