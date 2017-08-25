@@ -17,8 +17,7 @@
                     <div class="box-body">
                         <dov class="row">
                             <div class="col-sm-6">
-                                <p>如果3分钟内没有自动开通请<a href="mailto:shadowskyinfo@gmail.com"><b>联系﻿站长</b></a></p>
-                                <p>如发现滥用行为账号将被禁用。</p>
+                                {$msg}
                             </div>
                             <!-- <div class="col-sm-6">
                                 <div class="center" style="width:200px;background-color:white">

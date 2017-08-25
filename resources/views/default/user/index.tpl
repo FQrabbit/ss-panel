@@ -27,9 +27,9 @@
                             <div class="box-body" style="margin-top:-13px">
                                 <p>{$msg}</p>
                                 <div class="social">
-                                    <a href="https://telegram.me/shadowsky" target="_blank" class="w3-btn col-md-4 col-xs-6 w3-border-right">Telegram群组</a>
-                                    <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" class="w3-btn col-md-4 col-xs-6 w3-border-right">G+社群</a>
-                                    <a href="http://shadowsky-join-slack.herokuapp.com/" target="_blank" class="w3-btn col-md-4 col-xs-12">Slack(不用番茄)</a>
+                                    <a href="https://telegram.me/shadowsky" target="_blank" rel="noopener" class="w3-btn col-md-4 col-xs-6 w3-border-right">Telegram群组</a>
+                                    <a href="https://plus.google.com/communities/102799415585211637190" target="_blank" rel="noopener" class="w3-btn col-md-4 col-xs-6 w3-border-right">G+社群</a>
+                                    <a href="http://shadowsky-join-slack.herokuapp.com/" target="_blank" rel="noopener" class="w3-btn col-md-4 col-xs-12">Slack(不用番茄)</a>
                                 </div>
                                 <button class="w3-btn w3-block donate-btn" onclick="$('#donateModal').show()">捐助</button>
                             </div><!-- /.box-body -->
